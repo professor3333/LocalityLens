@@ -262,9 +262,33 @@ is accounted for:
 Both systems have run on the sample: the rules baseline
 ([report](eval/reports/audit-50-rules-1.md), [findings](eval/reports/audit-50-rules-1-findings.md))
 and Qwen3.5-4B ([report](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.md),
-[findings](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km-findings.md)). These are **system
-outcomes, not accuracy**: correctness waits for blind annotation of the
-[worksheet](eval/audit/worksheet.csv).
+[findings](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km-findings.md)), then both were scored
+against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv),
+[scores](eval/reports/audit-50-score.md)).
+
+> **First answer: not yet.** On these 50 labels, Qwen3.5-4B with prompt v1 gives **fewer** correct
+> proposal candidates than the rules: **9 of 31** answerable records against **13 of 31**
+> (paired difference −13 points, 95% CI −32 to +6, sign test p = 0.34; one annotator). The
+> project's target was +10 points. The LLM is ahead on distance-and-direction labels and on
+> flagging unsupported ones, and behind on plain named places.
+
+| Scored against annotations | Rules `rules-1` | LLM `llm-x1g2` |
+|---|---|---|
+| **Correct proposal candidates** (critical interpretation and top reference right, of 31 answerable) | **13 (42%)** | **9 (29%)** |
+| Relation read correctly (of 50) | 26 (52%) | 30 (60%) |
+| Critical interpretation exact (of 50) | 24 (48%) | 20 (40%) |
+| Acceptable reference ranked first (of 31) | 16 (52%) | 11 (36%) |
+| Distance-and-direction labels right (of 9 answerable) | 5 | 7 |
+| Named-place labels right (of 20 answerable) | 7 | 2 |
+| Unsupported labels flagged unsupported (of 4) | 0 | 4 |
+| Mean fields a curator must correct per record | 1.88 | 2.08 |
+
+<sub>A correct proposal candidate becomes a correct proposal once the feature extent is supplied.
+Excluding the 10 rows the annotator marked unsure gives 11/24 against 9/24. The audit records are
+dev data and too few for the final comparison, which uses the locked benchmark.</sub>
+
+<details>
+<summary><b>System outcomes before scoring</b></summary>
 
 | On 50 real labels | Rules `rules-1` | LLM `llm-x1g2` (Qwen3.5-4B Q4_K_M) |
 |---|---|---|
@@ -273,6 +297,8 @@ outcomes, not accuracy**: correctness waits for blind annotation of the
 | Retrieval | candidates found 33 · absent from GNIS 14 · no reference 3 | candidates found 22 · absent from GNIS 12 · no reference 7 |
 | Proposal | needs information 46 · unsupported 3 · computed 1 | needs information 27 · unsupported 13 · computed 1 |
 | Time per record | milliseconds | p50 10.2 s · p95 14.7 s (Apple M1, 8 GB) |
+
+</details>
 
 <details>
 <summary><b>What the audit already shows</b></summary>
@@ -299,7 +325,7 @@ outcomes, not accuracy**: correctness waits for blind annotation of the
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · 🚧 50-record audit (rules and LLM run; scoring waits for annotation) | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
@@ -320,7 +346,8 @@ outcomes, not accuracy**: correctness waits for blind annotation of the
 | `ingest/normalize.py` | NFC and whitespace normalization with an exact offset map back to the original |
 | `ingest/dwca.py` | Darwin Core Archive reader that streams from the zip, driven by `meta.xml`, with strict header and field counts |
 | `ingest/specimens.py` | Screening with exclusion reasons, model-input allowlist, duplicate-locality groups |
-| `evaluation/audit.py` | Seeded per-group audit sample, blind annotation worksheet, rules-baseline report |
+| `evaluation/audit.py` | Seeded per-group audit sample, blind annotation worksheet, reports for any extractor |
+| `evaluation/annotations.py` · `evaluation/score.py` | Worksheet checks (inventories, GNIS IDs, consistency) and paired scoring with bootstrap intervals and a sign test |
 | `geo/` | Exact unit conversion, 16-point compass parsing, datum-aware geodesic forward/inverse |
 | `geo/uncertainty.py` | Uncertainty policy `gbif-bp-2020/1`: heading, distance precision, coordinate precision, datum, extent defaults, each cited |
 | `geo/georeference.py` | Point-radius proposals: offset point, combined radius, lower bound, assumptions, blocking questions |
@@ -330,7 +357,7 @@ outcomes, not accuracy**: correctness waits for blind annotation of the
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit score` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -389,7 +416,7 @@ src/localitylens/
 ├── baseline/     rules extractor (the comparison system the LLM must beat)
 ├── resolve/      candidate retrieval with admin context
 ├── pipeline/     per-record orchestration
-├── evaluation/   feasibility audit: sampling, worksheet, reports
+├── evaluation/   feasibility audit: sampling, worksheet checks, reports, scoring
 └── cli.py        command-line entry point
 tests/
 ├── unit/         behaviour tests (synthetic GNIS + DwC-A fixtures, no network)

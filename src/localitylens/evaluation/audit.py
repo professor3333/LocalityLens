@@ -26,6 +26,7 @@ from localitylens.ingest.specimens import SpecimenRecord
 
 if TYPE_CHECKING:
     from localitylens.extract.llm_client import ModelClient
+    from localitylens.extract.schema import Interpretation
     from localitylens.pipeline.interpret import Extractor
     from localitylens.release import ReleaseManifest
 
@@ -142,7 +143,8 @@ def run_system(
                 )
             except ModelCallError as exc:
                 row |= {"relation": None, "reference": None, "validation_errors": [],
-                        "retrieval": None, "candidates": 0, "top_candidate": None,
+                        "retrieval": None, "candidates": 0, "candidate_ids": [],
+                        "interpretation": None, "top_candidate": None,
                         "proposal": f"failed:{exc.category.value}",
                         "radius_lower_bound_m": None, "radius_m": None}  # fmt: skip
                 _add_trace(row, extractor, started)
@@ -164,6 +166,8 @@ def run_system(
                 ],
                 "retrieval": retrieval.outcome.value if retrieval else None,
                 "candidates": len(retrieval.candidates) if retrieval else 0,
+                "candidate_ids": [c.feature_id for c in retrieval.candidates] if retrieval else [],
+                "interpretation": None if interp is None else _summary(interp),
                 "top_candidate": None
                 if top is None
                 else {
@@ -199,6 +203,18 @@ def run_system(
             "proposal": dict(Counter(str(r["proposal"]) for r in rows).most_common()),
         },
         "records": rows,
+    }
+
+
+def _summary(interp: Interpretation) -> dict[str, Any]:
+    """The critical interpretation fields that scoring compares (CLAUDE.md §17)."""
+    d = interp.distance
+    return {
+        "relation": interp.relation.value,
+        "distance": d.quantity.value if d is not None else None,
+        "unit": d.unit.value if d is not None and d.unit is not None else None,
+        "direction": interp.direction.point.value if interp.direction is not None else None,
+        "qualifiers": sorted({q.kind.value for q in interp.qualifiers}),
     }
 
 

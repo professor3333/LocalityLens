@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import sqlite3
 from collections import defaultdict
+from collections.abc import Iterable
 from enum import StrEnum
 from pathlib import Path
 from typing import Final
@@ -199,6 +200,17 @@ class Gazetteer:
     def name_keys(self) -> frozenset[str]:
         """Every indexed name key (official and variant)."""
         return frozenset(self._by_key)
+
+    def describe(self, feature_ids: Iterable[int]) -> dict[int, str]:
+        """``{id: "Name (Class, County)"}`` for the IDs that exist; missing IDs are absent."""
+        out: dict[int, str] = {}
+        for fid in set(feature_ids):
+            row = self._con.execute(
+                "SELECT name, feature_class, county_name FROM feature WHERE feature_id = ?", (fid,)
+            ).fetchone()
+            if row is not None:
+                out[fid] = f"{row['name']} ({row['feature_class']}, {row['county_name']})"
+        return out
 
     def county_names(self, state: str = "Colorado") -> frozenset[str]:
         rows = self._con.execute(

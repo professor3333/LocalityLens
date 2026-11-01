@@ -159,6 +159,40 @@ def _audit_llm(args: argparse.Namespace) -> int:
     return 0
 
 
+def _audit_score(args: argparse.Namespace) -> int:
+    import json
+
+    from localitylens.evaluation.annotations import check_worksheet
+    from localitylens.evaluation.audit import load_sample
+    from localitylens.evaluation.score import score, write_score_report
+    from localitylens.gazetteer.index import Gazetteer
+
+    sample = load_sample(Path(args.sample))
+    with Gazetteer(Path(args.index)) as gaz:
+        check = check_worksheet(Path(args.worksheet), sample, gaz)
+    for p in check.problems:
+        print(f"  {p.level.value:<7} {p.audit_id:<4} {p.column:<20} {p.message}")
+    if check.errors:
+        print(f"{len(check.errors)} worksheet errors; fix them before scoring", file=sys.stderr)
+        return 2
+    reports = {
+        "rules": json.loads(Path(args.rules).read_text(encoding="utf-8")),
+        "llm": json.loads(Path(args.llm).read_text(encoding="utf-8")),
+    }
+    meta = {name: rep["extractor_version"] for name, rep in reports.items()}
+    meta["specimens"] = sample.snapshot_id
+    full = score(check.annotations, reports)
+    sure = score(check.annotations, reports, exclude_unsure=True)
+    json_path, md_path = write_score_report(full, sure, meta, Path(args.out))
+    for key in ("critical_exact_match", "reference_top1", "correct_proposal_candidates"):
+        cells = "  ".join(
+            f"{n}={full['systems'][n][key]['hits']}/{full['systems'][n][key]['n']}" for n in reports
+        )
+        print(f"{key:<28} {cells}")
+    print(f"  report  {md_path}\n  data    {json_path}")
+    return 0
+
+
 def _build(args: argparse.Namespace) -> int:
     from localitylens.data.manifest import load_manifest
     from localitylens.gazetteer.index import build_index
@@ -399,6 +433,14 @@ def main(argv: list[str] | None = None) -> int:
     alm.add_argument("--url", default="http://127.0.0.1:8080")
     alm.add_argument("--release", default="release/manifest.json")
     alm.set_defaults(func=_audit_llm)
+    asc = aud.add_parser("score", help="check the worksheet and score both systems against it")
+    asc.add_argument("--sample", default="eval/audit/audit-50.json")
+    asc.add_argument("--worksheet", default="eval/audit/worksheet.csv")
+    asc.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    asc.add_argument("--rules", default="eval/reports/audit-50-rules-1.json")
+    asc.add_argument("--llm", default="eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.json")
+    asc.add_argument("--out", default="eval/reports")
+    asc.set_defaults(func=_audit_score)
 
     mod = sub.add_parser("model", help="pinned local LLM").add_subparsers(
         dest="model_command", required=True

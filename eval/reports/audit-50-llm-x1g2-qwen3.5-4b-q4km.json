@@ -55,6 +55,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -65,8 +67,8 @@
         "completion_tokens": 127,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.99,
-        "record_seconds": 11.17
+        "model_seconds": 16.04,
+        "record_seconds": 16.15
       }
     },
     {
@@ -78,6 +80,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        204691,
+        204701
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 5.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204691,
         "name": "Eaton",
@@ -94,8 +107,8 @@
         "completion_tokens": 120,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.77,
-        "record_seconds": 9.86
+        "model_seconds": 9.93,
+        "record_seconds": 10.04
       }
     },
     {
@@ -107,6 +120,20 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 3,
+      "candidate_ids": [
+        188934,
+        178716,
+        172604
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 6.0,
+        "unit": "mile",
+        "direction": "NE",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 188934,
         "name": "Almont",
@@ -123,8 +150,8 @@
         "completion_tokens": 122,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.0,
-        "record_seconds": 11.1
+        "model_seconds": 10.0,
+        "record_seconds": 10.05
       }
     },
     {
@@ -136,6 +163,19 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        204750,
+        204668
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 18.0,
+        "unit": "mile",
+        "direction": "SE",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 204750,
         "name": "Silverton",
@@ -152,8 +192,8 @@
         "completion_tokens": 162,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.75,
-        "record_seconds": 14.92
+        "model_seconds": 13.4,
+        "record_seconds": 13.46
       }
     },
     {
@@ -165,6 +205,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        196663
+      ],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": 1.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 196663,
         "name": "Johnson Village",
@@ -181,8 +233,8 @@
         "completion_tokens": 167,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.22,
-        "record_seconds": 13.39
+        "model_seconds": 15.95,
+        "record_seconds": 16.11
       }
     },
     {
@@ -196,6 +248,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -206,8 +260,8 @@
         "completion_tokens": 128,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.18,
-        "record_seconds": 10.22
+        "model_seconds": 13.05,
+        "record_seconds": 13.21
       }
     },
     {
@@ -219,6 +273,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        178631,
+        189905
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 178631,
         "name": "Flagstaff Mountain",
@@ -235,8 +300,8 @@
         "completion_tokens": 106,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.97,
-        "record_seconds": 9.04
+        "model_seconds": 11.05,
+        "record_seconds": 11.37
       }
     },
     {
@@ -248,6 +313,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        204798
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 15.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204798,
         "name": "Pueblo",
@@ -264,8 +339,8 @@
         "completion_tokens": 93,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.11,
-        "record_seconds": 8.16
+        "model_seconds": 9.23,
+        "record_seconds": 9.35
       }
     },
     {
@@ -277,6 +352,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        902295,
+        78956
+      ],
+      "interpretation": {
+        "relation": "itinerary",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 902295,
         "name": "Mancos River",
@@ -293,8 +379,8 @@
         "completion_tokens": 109,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.29,
-        "record_seconds": 9.34
+        "model_seconds": 10.32,
+        "record_seconds": 10.39
       }
     },
     {
@@ -306,6 +392,22 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 5,
+      "candidate_ids": [
+        172322,
+        173365,
+        173495,
+        173517,
+        173660
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "near"
+        ]
+      },
       "top_candidate": {
         "feature_id": 172322,
         "name": "Rainbow Lake",
@@ -322,8 +424,8 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.93,
-        "record_seconds": 8.0
+        "model_seconds": 8.88,
+        "record_seconds": 8.98
       }
     },
     {
@@ -335,6 +437,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        202381,
+        179061
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 202381,
         "name": "Lone Cone",
@@ -351,8 +464,8 @@
         "completion_tokens": 77,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.37,
-        "record_seconds": 7.43
+        "model_seconds": 8.58,
+        "record_seconds": 8.67
       }
     },
     {
@@ -364,6 +477,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -374,8 +495,8 @@
         "completion_tokens": 68,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.15,
-        "record_seconds": 7.22
+        "model_seconds": 7.88,
+        "record_seconds": 7.98
       }
     },
     {
@@ -387,6 +508,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        186589
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 5.0,
+        "unit": "mile",
+        "direction": "SSW",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 186589,
         "name": "Paonia",
@@ -403,8 +536,8 @@
         "completion_tokens": 143,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.75,
-        "record_seconds": 13.91
+        "model_seconds": 12.49,
+        "record_seconds": 12.6
       }
     },
     {
@@ -416,6 +549,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 8.0,
+        "unit": "mile",
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -426,8 +567,8 @@
         "completion_tokens": 114,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.87,
-        "record_seconds": 10.04
+        "model_seconds": 10.99,
+        "record_seconds": 11.11
       }
     },
     {
@@ -439,6 +580,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        178680
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 7.0,
+        "unit": "mile",
+        "direction": "S",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 178680,
         "name": "Boulder",
@@ -455,8 +606,8 @@
         "completion_tokens": 108,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.58,
-        "record_seconds": 9.65
+        "model_seconds": 11.55,
+        "record_seconds": 11.78
       }
     },
     {
@@ -468,6 +619,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -478,8 +637,8 @@
         "completion_tokens": 68,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 6.87,
-        "record_seconds": 6.9
+        "model_seconds": 8.44,
+        "record_seconds": 8.57
       }
     },
     {
@@ -491,6 +650,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -501,8 +668,8 @@
         "completion_tokens": 104,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.18,
-        "record_seconds": 9.23
+        "model_seconds": 11.13,
+        "record_seconds": 11.57
       }
     },
     {
@@ -514,6 +681,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": "N",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -524,8 +699,8 @@
         "completion_tokens": 110,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.69,
-        "record_seconds": 9.77
+        "model_seconds": 12.19,
+        "record_seconds": 13.51
       }
     },
     {
@@ -540,6 +715,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -550,8 +727,8 @@
         "completion_tokens": 137,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.47,
-        "record_seconds": 11.53
+        "model_seconds": 11.51,
+        "record_seconds": 11.56
       }
     },
     {
@@ -563,6 +740,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 2.69,
+        "unit": "kilometre",
+        "direction": "S",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -573,8 +758,8 @@
         "completion_tokens": 126,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.72,
-        "record_seconds": 10.78
+        "model_seconds": 10.75,
+        "record_seconds": 10.8
       }
     },
     {
@@ -586,6 +771,22 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 5,
+      "candidate_ids": [
+        181125,
+        182569,
+        183317,
+        171420,
+        172680
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "near"
+        ]
+      },
       "top_candidate": {
         "feature_id": 181125,
         "name": "Deer Creek",
@@ -602,8 +803,8 @@
         "completion_tokens": 88,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.67,
-        "record_seconds": 8.84
+        "model_seconds": 9.03,
+        "record_seconds": 9.15
       }
     },
     {
@@ -615,6 +816,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        204686
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204686,
         "name": "Aspen",
@@ -631,8 +842,8 @@
         "completion_tokens": 91,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.6,
-        "record_seconds": 10.74
+        "model_seconds": 9.43,
+        "record_seconds": 9.66
       }
     },
     {
@@ -647,6 +858,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -657,8 +870,8 @@
         "completion_tokens": 169,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.53,
-        "record_seconds": 14.68
+        "model_seconds": 14.06,
+        "record_seconds": 14.2
       }
     },
     {
@@ -670,6 +883,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        181399,
+        204770
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 181399,
         "name": "James Peak",
@@ -686,8 +910,8 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.34,
-        "record_seconds": 9.55
+        "model_seconds": 8.6,
+        "record_seconds": 8.68
       }
     },
     {
@@ -701,6 +925,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -711,8 +937,8 @@
         "completion_tokens": 94,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.04,
-        "record_seconds": 9.11
+        "model_seconds": 10.02,
+        "record_seconds": 10.1
       }
     },
     {
@@ -724,6 +950,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -734,8 +968,8 @@
         "completion_tokens": 82,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.26,
-        "record_seconds": 8.34
+        "model_seconds": 10.71,
+        "record_seconds": 11.04
       }
     },
     {
@@ -747,6 +981,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -757,8 +999,8 @@
         "completion_tokens": 68,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.08,
-        "record_seconds": 7.23
+        "model_seconds": 8.36,
+        "record_seconds": 8.65
       }
     },
     {
@@ -770,6 +1012,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        179135
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 2.0,
+        "unit": "mile",
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 179135,
         "name": "Hesperus",
@@ -786,8 +1038,8 @@
         "completion_tokens": 95,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.61,
-        "record_seconds": 8.72
+        "model_seconds": 9.61,
+        "record_seconds": 9.88
       }
     },
     {
@@ -799,6 +1051,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        192225
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 5.0,
+        "unit": "mile",
+        "direction": "SW",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 192225,
         "name": "Wetmore",
@@ -815,8 +1079,8 @@
         "completion_tokens": 109,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.51,
-        "record_seconds": 9.56
+        "model_seconds": 10.02,
+        "record_seconds": 10.17
       }
     },
     {
@@ -828,6 +1092,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -838,8 +1110,8 @@
         "completion_tokens": 82,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.93,
-        "record_seconds": 7.96
+        "model_seconds": 7.87,
+        "record_seconds": 7.94
       }
     },
     {
@@ -851,6 +1123,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 0.2,
+        "unit": "mile",
+        "direction": "SE",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -861,8 +1141,8 @@
         "completion_tokens": 150,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.42,
-        "record_seconds": 12.48
+        "model_seconds": 12.11,
+        "record_seconds": 12.17
       }
     },
     {
@@ -874,6 +1154,19 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        192409,
+        175203
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 2.0,
+        "unit": "mile",
+        "direction": "WSW",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 192409,
         "name": "Crestone",
@@ -890,8 +1183,8 @@
         "completion_tokens": 127,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.27,
-        "record_seconds": 11.35
+        "model_seconds": 11.07,
+        "record_seconds": 11.14
       }
     },
     {
@@ -903,6 +1196,19 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        179898,
+        204684
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "near"
+        ]
+      },
       "top_candidate": {
         "feature_id": 179898,
         "name": "Fremont Pass",
@@ -919,8 +1225,8 @@
         "completion_tokens": 90,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.55,
-        "record_seconds": 8.61
+        "model_seconds": 8.5,
+        "record_seconds": 8.55
       }
     },
     {
@@ -932,6 +1238,16 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": 3.4,
+        "unit": "mile",
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -942,8 +1258,8 @@
         "completion_tokens": 192,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.1,
-        "record_seconds": 15.19
+        "model_seconds": 14.86,
+        "record_seconds": 14.9
       }
     },
     {
@@ -955,6 +1271,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        170233,
+        178165
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 1.0,
+        "unit": "kilometre",
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 170233,
         "name": "Lone Pine Lake",
@@ -971,8 +1298,8 @@
         "completion_tokens": 124,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.6,
-        "record_seconds": 10.68
+        "model_seconds": 10.5,
+        "record_seconds": 10.55
       }
     },
     {
@@ -984,6 +1311,21 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 4,
+      "candidate_ids": [
+        204797,
+        181177,
+        1794711,
+        190896
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 28.0,
+        "unit": "mile",
+        "direction": "SE",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 204797,
         "name": "Colorado Springs",
@@ -1000,8 +1342,8 @@
         "completion_tokens": 126,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.79,
-        "record_seconds": 10.85
+        "model_seconds": 13.0,
+        "record_seconds": 13.07
       }
     },
     {
@@ -1015,6 +1357,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -1025,8 +1369,8 @@
         "completion_tokens": 135,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.7,
-        "record_seconds": 11.74
+        "model_seconds": 12.4,
+        "record_seconds": 12.46
       }
     },
     {
@@ -1038,6 +1382,16 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": 6.0,
+        "unit": "mile",
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -1048,8 +1402,8 @@
         "completion_tokens": 153,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.73,
-        "record_seconds": 12.79
+        "model_seconds": 13.54,
+        "record_seconds": 13.59
       }
     },
     {
@@ -1061,6 +1415,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -1071,8 +1433,8 @@
         "completion_tokens": 65,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 6.88,
-        "record_seconds": 6.91
+        "model_seconds": 7.3,
+        "record_seconds": 7.33
       }
     },
     {
@@ -1084,6 +1446,16 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": 1.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -1094,8 +1466,8 @@
         "completion_tokens": 171,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.62,
-        "record_seconds": 13.67
+        "model_seconds": 14.15,
+        "record_seconds": 14.2
       }
     },
     {
@@ -1107,6 +1479,16 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": 1.9,
+        "unit": "mile",
+        "direction": "W",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -1117,8 +1499,8 @@
         "completion_tokens": 134,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.94,
-        "record_seconds": 11.99
+        "model_seconds": 11.77,
+        "record_seconds": 11.81
       }
     },
     {
@@ -1130,6 +1512,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        170650
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 3.0,
+        "unit": "mile",
+        "direction": "WSW",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 170650,
         "name": "Five Spring",
@@ -1146,8 +1540,8 @@
         "completion_tokens": 144,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.42,
-        "record_seconds": 13.5
+        "model_seconds": 12.86,
+        "record_seconds": 12.9
       }
     },
     {
@@ -1161,6 +1555,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -1171,8 +1567,8 @@
         "completion_tokens": 113,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.88,
-        "record_seconds": 10.92
+        "model_seconds": 10.56,
+        "record_seconds": 10.61
       }
     },
     {
@@ -1187,6 +1583,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -1197,8 +1595,8 @@
         "completion_tokens": 103,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.35,
-        "record_seconds": 10.39
+        "model_seconds": 10.19,
+        "record_seconds": 10.23
       }
     },
     {
@@ -1210,6 +1608,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 3.5,
+        "unit": "mile",
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -1220,8 +1626,8 @@
         "completion_tokens": 135,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.93,
-        "record_seconds": 12.98
+        "model_seconds": 12.31,
+        "record_seconds": 12.36
       }
     },
     {
@@ -1235,6 +1641,8 @@
       ],
       "retrieval": null,
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
       "top_candidate": null,
       "proposal": "invalid_extraction",
       "radius_lower_bound_m": null,
@@ -1245,8 +1653,8 @@
         "completion_tokens": 148,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.06,
-        "record_seconds": 14.1
+        "model_seconds": 12.98,
+        "record_seconds": 13.03
       }
     },
     {
@@ -1258,6 +1666,16 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "near"
+        ]
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -1268,8 +1686,8 @@
         "completion_tokens": 74,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.65,
-        "record_seconds": 8.71
+        "model_seconds": 8.25,
+        "record_seconds": 8.31
       }
     },
     {
@@ -1281,6 +1699,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -1291,8 +1717,8 @@
         "completion_tokens": 95,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.2,
-        "record_seconds": 10.24
+        "model_seconds": 9.78,
+        "record_seconds": 9.87
       }
     },
     {
@@ -1304,6 +1730,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 1.5,
+        "unit": "mile",
+        "direction": "N",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -1314,8 +1748,8 @@
         "completion_tokens": 126,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.27,
-        "record_seconds": 12.33
+        "model_seconds": 11.43,
+        "record_seconds": 11.48
       }
     },
     {
@@ -1327,6 +1761,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        204752
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204752,
         "name": "Powderhorn",
@@ -1343,8 +1787,8 @@
         "completion_tokens": 84,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.25,
-        "record_seconds": 9.31
+        "model_seconds": 8.78,
+        "record_seconds": 8.85
       }
     }
   ]

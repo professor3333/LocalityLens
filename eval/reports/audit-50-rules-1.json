@@ -37,6 +37,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -51,6 +59,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        204691,
+        204701
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 5.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204691,
         "name": "Eaton",
@@ -71,6 +90,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 3,
+      "candidate_ids": [
+        188934,
+        178716,
+        172604
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "NE",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 188934,
         "name": "Almont",
@@ -91,6 +122,20 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        204750,
+        204668
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 18.0,
+        "unit": "mile",
+        "direction": "SE",
+        "qualifiers": [
+          "approximate",
+          "near"
+        ]
+      },
       "top_candidate": {
         "feature_id": 204750,
         "name": "Silverton",
@@ -111,6 +156,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        196663
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 1.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 196663,
         "name": "Johnson Village",
@@ -131,6 +188,20 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 5,
+      "candidate_ids": [
+        174453,
+        174831,
+        185731,
+        186902,
+        187044
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 174453,
         "name": "Mesa Creek",
@@ -151,6 +222,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        178631,
+        189905
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 178631,
         "name": "Flagstaff Mountain",
@@ -171,6 +253,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        204798
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 15.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204798,
         "name": "Pueblo",
@@ -191,6 +283,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        902295,
+        78956
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 902295,
         "name": "Mancos River",
@@ -211,6 +314,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -225,6 +336,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        202381,
+        179061
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 202381,
         "name": "Lone Cone",
@@ -245,6 +367,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -259,6 +389,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        186589
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "SSW",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 186589,
         "name": "Paonia",
@@ -279,6 +419,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 8.0,
+        "unit": "mile",
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -293,6 +441,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        178680
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 7.0,
+        "unit": "mile",
+        "direction": "S",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 178680,
         "name": "Boulder",
@@ -313,6 +471,19 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 4,
+      "candidate_ids": [
+        187543,
+        190192,
+        2354575,
+        180446
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 187543,
         "name": "South Park",
@@ -333,6 +504,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -347,6 +526,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -361,6 +548,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -375,6 +570,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 2.69,
+        "unit": "kilometre",
+        "direction": "S",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -389,6 +592,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        187931
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "near"
+        ]
+      },
       "top_candidate": {
         "feature_id": 187931,
         "name": "East Deer Creek",
@@ -409,6 +624,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        204686
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "E",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204686,
         "name": "Aspen",
@@ -429,6 +654,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        171304
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "NE",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 171304,
         "name": "Craig",
@@ -449,6 +684,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        181024
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 181024,
         "name": "Tolland",
@@ -469,6 +714,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        186534,
+        204751
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "N",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 186534,
         "name": "Hotchkiss",
@@ -489,6 +745,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -503,6 +767,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -517,6 +789,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        179135
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 2.0,
+        "unit": "mile",
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 179135,
         "name": "Hesperus",
@@ -537,6 +819,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        192225
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 5.0,
+        "unit": "mile",
+        "direction": "SW",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 192225,
         "name": "Wetmore",
@@ -557,6 +851,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        204755
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204755,
         "name": "Pitkin",
@@ -577,6 +881,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 0.2,
+        "unit": "mile",
+        "direction": "SE",
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -591,6 +903,17 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 0.5,
+        "unit": "mile",
+        "direction": "S",
+        "qualifiers": [
+          "approximate",
+          "near"
+        ]
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -605,6 +928,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        179898,
+        204684
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 179898,
         "name": "Fremont Pass",
@@ -625,6 +959,19 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 4,
+      "candidate_ids": [
+        204777,
+        184024,
+        189068,
+        173676
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204777,
         "name": "Wet Mountains",
@@ -645,6 +992,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        170233,
+        178165
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 170233,
         "name": "Lone Pine Lake",
@@ -665,6 +1023,21 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 4,
+      "candidate_ids": [
+        204797,
+        181177,
+        1794711,
+        190896
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 28.0,
+        "unit": "mile",
+        "direction": "SE",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 204797,
         "name": "Colorado Springs",
@@ -685,6 +1058,21 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 4,
+      "candidate_ids": [
+        204950,
+        202505,
+        202532,
+        203936
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 16.0,
+        "unit": "mile",
+        "direction": "N",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 204950,
         "name": "Grand Lake",
@@ -705,6 +1093,20 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 3,
+      "candidate_ids": [
+        177536,
+        177256,
+        181345
+      ],
+      "interpretation": {
+        "relation": "distance_only",
+        "distance": 6.0,
+        "unit": "mile",
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 177536,
         "name": "Fall River",
@@ -725,6 +1127,20 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 5,
+      "candidate_ids": [
+        190391,
+        169805,
+        170536,
+        171274,
+        171279
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 190391,
         "name": "Dry Creek",
@@ -745,6 +1161,16 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "E",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -759,6 +1185,16 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -773,6 +1209,18 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        170650
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 3.0,
+        "unit": "mile",
+        "direction": "WSW",
+        "qualifiers": [
+          "approximate"
+        ]
+      },
       "top_candidate": {
         "feature_id": 170650,
         "name": "Five Spring",
@@ -793,6 +1241,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "other",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -807,6 +1263,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        179135
+      ],
+      "interpretation": {
+        "relation": "direction_only",
+        "distance": null,
+        "unit": null,
+        "direction": "W",
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 179135,
         "name": "Hesperus",
@@ -827,6 +1293,14 @@
       "validation_errors": [],
       "retrieval": "feature_absent_from_index",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -841,6 +1315,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        201785
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 201785,
         "name": "Two Butte Creek",
@@ -861,6 +1345,14 @@
       "validation_errors": [],
       "retrieval": "no_reference_feature",
       "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "other",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": null,
       "proposal": "unsupported",
       "radius_lower_bound_m": null,
@@ -875,6 +1367,17 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 2,
+      "candidate_ids": [
+        169781,
+        169692
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 169781,
         "name": "Chokecherry Draw",
@@ -895,6 +1398,20 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 5,
+      "candidate_ids": [
+        183844,
+        195665,
+        183872,
+        169739,
+        175543
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 183844,
         "name": "Rule Creek",
@@ -915,6 +1432,16 @@
       "validation_errors": [],
       "retrieval": "candidates_found",
       "candidates": 1,
+      "candidate_ids": [
+        204752
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
       "top_candidate": {
         "feature_id": 204752,
         "name": "Powderhorn",
