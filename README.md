@@ -72,6 +72,8 @@ git clone https://github.com/professor3333/LocalityLens.git && cd LocalityLens
 uv sync
 uv run localitylens data fetch-gnis                        # ~23 MB from USGS, checksummed
 uv run localitylens gazetteer build --snapshot data/raw/gnis/2026-09-29
+# optional, needs a free GBIF account (GBIF_USER, GBIF_PWD, GBIF_EMAIL in .env):
+uv run localitylens data fetch-gbif                        # ~165 MB Darwin Core Archive + DOI
 ```
 
 **Interpret a whole label** with the rules baseline: extraction, validation and retrieval in one
@@ -211,7 +213,7 @@ the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Tab
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · specimen snapshot · 50-record audit | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · 50-record audit | 🚧 in progress |
 | **2 · MVP** | LLM extraction (llama.cpp, Qwen3.5) · candidate disambiguation · footprints · map review · CSV export | 🔜 |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
@@ -230,12 +232,12 @@ the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Tab
 | `geo/uncertainty.py` | Uncertainty policy `gbif-bp-2020/1`: heading, distance precision, coordinate precision, datum, extent defaults, each cited |
 | `geo/georeference.py` | Point-radius proposals: offset point, combined radius, lower bound, assumptions, blocking questions |
 | `domain/status.py` | Record lifecycle with a single checked transition function |
-| `data/` | Snapshot manifests and the GNIS fetcher (immutable, checksummed) |
+| `data/` | Snapshot manifests, the GNIS fetcher and the GBIF download client (DOI, immutable, checksummed) |
 | `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence |
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
-| `cli.py` | `data fetch-gnis` · `gazetteer build` · `gazetteer search` · `baseline run` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `gazetteer build` · `gazetteer search` · `baseline run` |
 
 </details>
 
@@ -244,10 +246,13 @@ the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Tab
 | Source | Snapshot | Terms |
 |---|---|---|
 | **USGS GNIS**: Domestic Names (CO) + All Names (National) | [`gnis-co-2026-09-29`](data/manifests/gnis-co-2026-09-29.json): 26,429 features · 4,190 variant names | U.S. public domain. *"Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data."* |
-| **University of Colorado Herbarium** via GBIF | 🔜 pinned download with DOI | CC BY 4.0 |
+| **University of Colorado Herbarium** vascular plants via GBIF | [`gbif-cu-2026-11-01`](data/manifests/gbif-cu-2026-11-01.json): 311,988 records, the whole dataset as a Darwin Core Archive · DOI [10.15468/dl.hqxjjf](https://doi.org/10.15468/dl.hqxjjf) | CC BY 4.0. Cite as *GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf* |
 
 Raw files are not committed. Each manifest records URLs, SHA-256 hashes, sizes and
-publication dates, so a snapshot can be re-downloaded and verified byte for byte.
+publication dates, so a snapshot can be re-downloaded and verified byte for byte. The GBIF
+manifest also stores the DOI and the exact download query. The whole dataset is requested on
+purpose: filtering to Colorado and to usable locality text will run locally (next step), so that
+every excluded record keeps a stated reason instead of vanishing inside a server-side filter.
 
 <details>
 <summary><b>Known gazetteer limitations</b></summary>

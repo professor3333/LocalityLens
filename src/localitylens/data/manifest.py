@@ -11,7 +11,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
 
-MANIFEST_VERSION = "1"
+MANIFEST_VERSION = "2"  # 2: optional doi, record_count, query (GBIF downloads)
 _CHUNK = 1 << 20
 
 
@@ -37,6 +37,9 @@ class SnapshotManifest(BaseModel):
     citation: str
     horizontal_datum: str | None = None
     ellipsoid: str | None = None
+    doi: str | None = None  # GBIF download DOI, the citable identifier of the exact records
+    record_count: int | None = None
+    query: str | None = None  # the download filter as JSON, so the request can be reissued
     files: tuple[SnapshotFile, ...]
     notes: tuple[str, ...] = ()
 

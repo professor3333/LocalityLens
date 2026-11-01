@@ -23,6 +23,26 @@ def _fetch_gnis(args: argparse.Namespace) -> int:
     return 0
 
 
+def _fetch_gbif(args: argparse.Namespace) -> int:
+    from localitylens.data.gbif_fetch import fetch_gbif, read_credentials
+
+    credentials = None if args.key else read_credentials(Path(args.env))
+    path, manifest = fetch_gbif(
+        Path(args.raw_root),
+        Path(args.manifest_dir),
+        credentials,
+        key=args.key,
+        poll_s=args.poll_seconds,
+        on_status=lambda s: print(f"  {s}", flush=True),
+    )
+    print(f"{manifest.snapshot_id} -> {path}")
+    print(f"  doi        https://doi.org/{manifest.doi}")
+    print(f"  records    {manifest.record_count:,}" if manifest.record_count else "  records    ?")
+    for f in manifest.files:
+        print(f"  {f.name}  {f.size_bytes:>11,} bytes  sha256={f.sha256}")
+    return 0
+
+
 def _build(args: argparse.Namespace) -> int:
     from localitylens.data.manifest import load_manifest
     from localitylens.gazetteer.index import build_index
@@ -210,6 +230,15 @@ def main(argv: list[str] | None = None) -> int:
     fg.add_argument("--raw-root", default="data/raw/gnis")
     fg.add_argument("--manifest-dir", default="data/manifests")
     fg.set_defaults(func=_fetch_gnis)
+    fb = data.add_parser(
+        "fetch-gbif", help="request + download the CU Herbarium GBIF snapshot (DOI) + manifest"
+    )
+    fb.add_argument("--env", default=".env", help="file with GBIF_USER, GBIF_PWD, GBIF_EMAIL")
+    fb.add_argument("--key", help="resume an existing GBIF download key instead of requesting")
+    fb.add_argument("--raw-root", default="data/raw/gbif")
+    fb.add_argument("--manifest-dir", default="data/manifests")
+    fb.add_argument("--poll-seconds", type=float, default=60.0)
+    fb.set_defaults(func=_fetch_gbif)
 
     gaz = sub.add_parser("gazetteer", help="GNIS name index").add_subparsers(
         dest="gaz_command", required=True

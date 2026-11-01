@@ -1,0 +1,39 @@
+{
+  "manifest_version": "2",
+  "snapshot_id": "gbif-cu-2026-11-01",
+  "source": "GBIF occurrence download 0020715-261023074918325 (DWCA)",
+  "publisher": "University of Colorado Museum of Natural History Herbarium Vascular Plant Collection",
+  "retrieved_at": "2026-11-01T10:01:01+00:00",
+  "licence": "CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/legalcode)",
+  "usage_constraints": "Attribute the publisher and cite the download DOI. Annotations derived from these records are modifications and are marked as such.",
+  "citation": "GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf",
+  "horizontal_datum": null,
+  "ellipsoid": null,
+  "doi": "10.15468/dl.hqxjjf",
+  "record_count": 311988,
+  "query": "{\"key\": \"DATASET_KEY\", \"matchCase\": false, \"type\": \"equals\", \"value\": \"7c5e863f-3f70-4933-b05d-fc57c66dd3f3\"}",
+  "files": [
+    {
+      "name": "0020715-261023074918325.zip",
+      "url": "https://api.gbif.org/v1/occurrence/download/request/0020715-261023074918325.zip",
+      "sha256": "089633a5b80aed4861eb5d8db60b20ff34fe6081a49b1e933be5cfa7d5482328",
+      "size_bytes": 164985562,
+      "publication_date": "2026-11-01",
+      "server_last_modified": null
+    },
+    {
+      "name": "download-status.json",
+      "url": "https://api.gbif.org/v1/occurrence/download/0020715-261023074918325",
+      "sha256": "adb5812c9dc9b461a1dba06f3b7f0eb77a212cc623210124950781148f293d41",
+      "size_bytes": 795,
+      "publication_date": "2026-11-01",
+      "server_last_modified": null
+    }
+  ],
+  "notes": [
+    "Dataset 7c5e863f-3f70-4933-b05d-fc57c66dd3f3 (dataset DOI 10.15468/wyofjv), requested whole; Colorado and locality filtering are done locally with reasons.",
+    "download-status.json is the GBIF status response with account details removed.",
+    "GBIF may erase the archive file after 2027-05-01; the DOI stays resolvable and the query above can be reissued.",
+    "Coordinates and georeference fields in the archive are answer-bearing and never reach a model prompt."
+  ]
+}
