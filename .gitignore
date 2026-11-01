@@ -1,0 +1,52 @@
+# --- Data -------------------------------------------------------------
+# Raw snapshots (GBIF Darwin Core Archive, GNIS extract) are large and
+# reproducible from data/manifests/; never commit them.
+data/raw/
+data/quarantine/
+data/derived/
+# Data manifests ARE committed.
+!data/manifests/
+
+# --- Models / inference ----------------------------------------------
+models/
+*.gguf
+llama.cpp/
+
+# --- Application state -----------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+*-wal
+*-shm
+annotation-tool/
+
+# --- Evaluation caches (reports and benchmark annotations ARE committed)
+eval/.cache/
+eval/runs/
+
+# --- Testing ----------------------------------------------------------
+.pytest_cache/
+.hypothesis/
+.coverage
+htmlcov/
+playwright-report/
+test-results/
+
+# --- Python -----------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+build/
+dist/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+
+# --- Secrets / environment -------------------------------------------
+.env
+.env.*
+
+# --- OS / editors -----------------------------------------------------
+.DS_Store
+.idea/
+.vscode/
