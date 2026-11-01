@@ -91,17 +91,17 @@ def distance_precision(q: ParsedQuantity) -> tuple[float, str]:
     The uncertainty is half the precision.
     """
     if q.fraction_denominator is not None:
-        return 1.0 / q.fraction_denominator, f"written fraction: 1/{q.fraction_denominator}"
+        return 1.0 / q.fraction_denominator, f"fraction 1/{q.fraction_denominator}"
     if q.decimal_places > 0:
         frac = q.value - math.floor(q.value)
         for den in (2, 4, 8):
             numerator = frac * den
             if math.isclose(numerator, round(numerator), abs_tol=1e-9) and round(numerator):
-                return 1.0 / den, f"decimal is an exact 1/{den}"
-        return 10.0**-q.decimal_places, f"{q.decimal_places} decimal place(s)"
+                return 1.0 / den, f"decimal = exact 1/{den}"
+        return 10.0**-q.decimal_places, f"{q.decimal_places}-decimal number"
     digits = len(str(round(q.value)))
     precision = 10.0 ** max(0, digits - 2)
-    return precision, f"integer with {digits} digit(s)"
+    return precision, f"{digits}-digit integer"
 
 
 def distance_precision_uncertainty(q: ParsedQuantity) -> float:

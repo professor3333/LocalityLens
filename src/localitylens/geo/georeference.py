@@ -164,13 +164,13 @@ def propose(
         UncertaintyComponent(
             name=ComponentName.DATUM,
             metres=0.0,
-            rule=f"source datum recorded ({datum.value}); output kept in the same datum",
+            rule=f"recorded ({datum.value}), not transformed",
             citation=policy.CITE_DATUM,
         ),
         UncertaintyComponent(
             name=ComponentName.COORDINATE_SOURCE,
             metres=0.0,
-            rule="gazetteer coordinate (no map measurement made)",
+            rule="gazetteer coordinate, no map measurement",
             citation=policy.CITE_COORDINATE_SOURCE,
         ),
     ]
@@ -203,7 +203,7 @@ def propose(
             UncertaintyComponent(
                 name=ComponentName.DISTANCE_PRECISION,
                 metres=dp_m,
-                rule=f"{rule}; precision {precision:g} {distance.unit.value}, uncertainty = half",
+                rule=f"{rule}: precision {precision:g} {distance.unit.value}, half of it",
                 citation=policy.CITE_DISTANCE_PRECISION,
             )
         )
@@ -246,7 +246,7 @@ def propose(
         UncertaintyComponent(
             name=ComponentName.COORDINATE_PRECISION,
             metres=coord_m,
-            rule="GNIS coordinates recorded to the nearest second",
+            rule="GNIS coordinates to the nearest second",
             citation=policy.CITE_COORDINATE_PRECISION,
         )
     )
@@ -263,7 +263,7 @@ def propose(
             UncertaintyComponent(
                 name=ComponentName.HEADING,
                 metres=policy.heading_distance_error(offset_m, 0.0, alpha),
-                rule=f"±{alpha:g}° at {offset_m:,.0f} m (shown alone; combined geometrically)",
+                rule=f"±{alpha:g}° at {offset_m:,.0f} m (alone; combined geometrically)",
                 citation=policy.CITE_HEADING,
             )
         )

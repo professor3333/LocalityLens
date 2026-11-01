@@ -105,13 +105,13 @@ proposal    needs_information  [point-radius, policy gbif-bp-2020/1]
   point     40.27536, -105.58948 (NAD83)   feature 204979
   radius    unknown   (at least 1,657 m without extent)
     extent                   unknown  unknown
-    datum                        0 m  source datum recorded (NAD83); output kept in the same datum
-    coordinate_source            0 m  gazetteer coordinate (no map measurement made)
-    distance_precision         805 m  integer with 1 digit(s); precision 1 mile, uncertainty = half
-    coordinate_precision        39 m  GNIS coordinates recorded to the nearest second
-    heading                  1,256 m  ±22.5° at 3,219 m (shown alone; combined geometrically)
+    datum                        0 m  recorded (NAD83), not transformed
+    coordinate_source            0 m  gazetteer coordinate, no map measurement
+    distance_precision         805 m  1-digit integer: precision 1 mile, half of it
+    coordinate_precision        39 m  GNIS coordinates to the nearest second
+    heading                  1,256 m  ±22.5° at 3,219 m (alone; combined geometrically)
   assume    'NE' read as bearing 45° ± 22.5° from true north (BP §3.4.5 Table 4; …)
-  ask       What is the extent of Longs Peak (Summit)? GNIS gives only a representative point, …
+  ask       What is the extent of Longs Peak (Summit)? GNIS gives only a representative …
 ```
 
 With a reviewed extent (`--extent-m 500 --extent-note "…"`) the same record becomes
