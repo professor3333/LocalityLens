@@ -130,7 +130,8 @@ def validate_extraction(output: ExtractionOutput, text: NormalizedText) -> Valid
         if span is None:
             err(IssueCode.QUOTE_NOT_FOUND, path, f"quote {quote!r} does not occur in the text")
             return None
-        if loc.relation_range is not None and path != "relation_quote":
+        is_component = path.startswith(("reference_feature", "distance", "direction"))
+        if loc.relation_range is not None and is_component:
             rng = loc.normalized_range(quote)
             lo, hi = loc.relation_range
             if rng is not None and not (lo <= rng[0] and rng[1] <= hi):

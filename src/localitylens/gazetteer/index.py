@@ -196,6 +196,16 @@ class Gazetteer:
     def snapshot_id(self) -> str:
         return self.meta["snapshot_id"]
 
+    def name_keys(self) -> frozenset[str]:
+        """Every indexed name key (official and variant)."""
+        return frozenset(self._by_key)
+
+    def county_names(self, state: str = "Colorado") -> frozenset[str]:
+        rows = self._con.execute(
+            "SELECT DISTINCT county_name FROM feature WHERE state_name = ?", (state,)
+        )
+        return frozenset(r["county_name"] for r in rows)
+
     def search(
         self,
         name: str,

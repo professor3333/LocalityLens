@@ -57,6 +57,10 @@ The split between the stages is the core idea:
 | Separate what the label **says** from what is **missing** | Compute coordinates and geodesic offsets on the source datum |
 | Say which ambiguity a curator needs to resolve | Validate, track provenance, enforce statuses, export |
 
+A **rules baseline** (regular expressions plus gazetteer name matching) fills the same contract.
+It is the comparison system the LLM has to beat, and it runs through the identical validator
+and retrieval, so any measured difference comes from language interpretation alone.
+
 **The model never produces a coordinate, an ID, or a character offset.** It returns exact quotes.
 Code locates those quotes in the original text, so every highlighted phrase in the review UI is
 correct by construction, and an invented quote fails validation.
@@ -69,6 +73,49 @@ uv sync
 uv run localitylens data fetch-gnis                        # ~23 MB from USGS, checksummed
 uv run localitylens gazetteer build --snapshot data/raw/gnis/2026-09-29
 ```
+
+**Interpret a whole label** with the rules baseline: extraction, validation and retrieval in one
+command. Every value carries its `[start, end)` span in the original text:
+
+```console
+$ uv run localitylens baseline run "Larimer Co., Colo., 2 mi NE of Longs Peak summit." --limit 2
+extractor   rules-1
+relation    distance_and_direction
+quote       "2 mi NE of Longs Peak summit" [20:48]
+feature     Longs Peak [31:41] type=summit
+distance    2 mile [20:21]
+direction   NE [25:27]
+admin       county "Larimer Co." · state "Colo."
+missing     none
+retrieval   candidates_found (county context: Larimer Co., from text)
+  1.  204979  Longs Peak         Summit   Boulder   exact_official  type=y county=n
+  2.  186722  Youngs Peak        Summit   Delta     fuzzy_official  type=y county=n
+```
+
+**When the label is ambiguous, it asks instead of guessing.** A bare `m` might be miles or metres:
+
+```console
+$ uv run localitylens baseline run "3 m E of Estes Park" --limit 2
+relation    distance_and_direction
+distance    3 (unit missing) [0:1]
+direction   E [4:5]
+missing     distance_unit
+question    Does 'm' mean miles or metres?
+retrieval   candidates_found
+  1.  177636  Estes Park         Flat              Larimer   exact_official
+  2.  204674  Estes Park         Populated Place   Larimer   exact_official
+```
+
+**Route descriptions are flagged, not flattened** into a straight-line offset:
+
+```console
+$ uv run localitylens baseline run "5 mi up Big Thompson Canyon from Loveland"
+relation    route_relative
+quote       "5 mi up Big Thompson Canyon from Loveland" [0:41]
+missing     route_geometry
+```
+
+### Gazetteer search
 
 **Abbreviated name, county from the label.** The right peak is found. GNIS files Longs Peak
 under *Boulder* County, so the county disagreement is **shown as evidence, not used to discard
@@ -97,7 +144,7 @@ $ uv run localitylens gazetteer search "Gold Hill Mine"
 feature_absent_from_index
 ```
 
-<sub>Output trimmed for width. The full output also shows state/type flags and the GNIS representative point (NAD83), which is evidence, not a georeference.</sub>
+<sub>Some outputs are trimmed in width and length. The full output also shows state/type flags and the GNIS representative point (NAD83), which is evidence, not a georeference.</sub>
 
 ## 🛡️ Design guarantees
 
@@ -108,6 +155,7 @@ feature_absent_from_index
 | **Swapped or invented details are caught** | Code re-parses quoted directions and units and rejects mismatches. A bare `m` (miles or metres?) cannot be asserted | ✅ |
 | **Missing ≠ zero** | Each relation's parts must be present or explicitly declared missing. GNIS `0.0` coordinates are stored as null | ✅ |
 | **Context ranks, never filters** | County, state and feature type order the candidates, and each candidate carries its evidence | ✅ |
+| **Abstain rather than guess** | A bare `m` becomes "unit missing" plus a question. "Hwy 34" is not a distance. Route descriptions are labelled, not flattened. A name the gazetteer lacks is reported absent, not trimmed to a lookalike | ✅ |
 | **Humans approve before export** | A single checked status machine. Only `approved` records are exportable | ✅ |
 | **A point is not a place** | Feature extent and uncertainty components must be explicit, never assumed from a representative point | 🔜 |
 | **Reproducible provenance** | Checksummed, immutable source snapshots. The index records which snapshot built it | ✅ |
@@ -116,7 +164,7 @@ feature_absent_from_index
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | Core contract & validation · GNIS gazetteer · rules baseline · specimen snapshot · 50-record audit | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · specimen snapshot · 50-record audit | 🚧 in progress |
 | **2 · MVP** | LLM extraction (llama.cpp, Qwen3.5) · candidate disambiguation · footprints · map review · CSV export | 🔜 |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · uncertainty policy · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
@@ -135,7 +183,10 @@ feature_absent_from_index
 | `domain/status.py` | Record lifecycle with a single checked transition function |
 | `data/` | Snapshot manifests and the GNIS fetcher (immutable, checksummed) |
 | `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence |
-| `cli.py` | `localitylens data fetch-gnis` · `gazetteer build` · `gazetteer search` |
+| `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
+| `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
+| `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
+| `cli.py` | `data fetch-gnis` · `gazetteer build` · `gazetteer search` · `baseline run` |
 
 </details>
 
@@ -187,6 +238,9 @@ src/localitylens/
 ├── geo/          units, compass directions, geodesy
 ├── data/         snapshot manifests, GNIS fetcher
 ├── gazetteer/    GNIS parser, name keys, SQLite index + search
+├── baseline/     rules extractor (the comparison system the LLM must beat)
+├── resolve/      candidate retrieval with admin context
+├── pipeline/     per-record orchestration
 └── cli.py        command-line entry point
 tests/
 ├── unit/         behaviour tests (synthetic GNIS fixtures, no network)
