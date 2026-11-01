@@ -74,6 +74,11 @@ def test_release_manifest_matches_the_code() -> None:
     assert RELEASE.uncertainty_policy == POLICY_ID
     assert RELEASE.prompt.version == PROMPT_VERSION
     assert RELEASE.prompt.sha256 == load_prompt().sha256, "prompt edited without a new version"
+    from localitylens.extract.validate import VALIDATION_VERSION
+    from localitylens.gazetteer.keys import CORE_KEY_VERSION
+
+    assert RELEASE.validation_version == VALIDATION_VERSION
+    assert RELEASE.core_key_version == CORE_KEY_VERSION
     for snapshot in (RELEASE.gazetteer_snapshot, RELEASE.specimen_snapshot):
         assert Path(f"data/manifests/{snapshot}.json").is_file()
 

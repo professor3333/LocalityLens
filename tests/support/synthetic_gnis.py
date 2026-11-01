@@ -32,6 +32,8 @@ SYNTH_FEATURES = [
     (5, "Border Wash", "Stream", "Utah", "Zeta", "38.5", "-109.1", "38.7", "-109.3"),
     (6, "Newname Mountain", "Summit", "Colorado", "Gamma", "39.5", "-105.6", "0.0", "0.0"),
     (7, "Oldname Peak", "Summit", "Colorado", "Delta", "39.3", "-106.0", "0.0", "0.0"),
+    (8, "Upper Vela Lake", "Lake", "Colorado", "Alpha", "40.3", "-105.3", "0.0", "0.0"),
+    (9, "Vela Lake", "Lake", "Colorado", "Alpha", "40.31", "-105.31", "0.0", "0.0"),
 ]
 
 # (id, name, official/variant, publicationdate, citation)

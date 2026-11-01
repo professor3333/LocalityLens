@@ -29,7 +29,13 @@ from localitylens.gazetteer.gnis import (
     read_domestic,
     read_variants,
 )
-from localitylens.gazetteer.keys import NAME_KEY_VERSION, county_key, name_key
+from localitylens.gazetteer.keys import (
+    NAME_KEY_VERSION,
+    core_compatible,
+    core_key,
+    county_key,
+    name_key,
+)
 from localitylens.geo.geodesy import Coordinate, Datum
 
 INDEX_SCHEMA_VERSION: Final = "2"
@@ -70,6 +76,8 @@ CREATE INDEX name_key_idx ON name(name_key);
 class MatchKind(StrEnum):
     EXACT_OFFICIAL = "exact_official"
     EXACT_VARIANT = "exact_variant"
+    CORE_OFFICIAL = "core_official"  # same name once generic words are set aside (keys.core_key)
+    CORE_VARIANT = "core_variant"
     FUZZY_OFFICIAL = "fuzzy_official"
     FUZZY_VARIANT = "fuzzy_variant"
 
@@ -78,11 +86,16 @@ class MatchKind(StrEnum):
 # label ("Mt. Evans" for today's Mount Blue Sky) is as valid as a current one. Context then
 # decides, and "official" is only the last tie-breaker.
 _TIER: Final[dict[MatchKind, int]] = {
-    MatchKind.EXACT_OFFICIAL: 2,
-    MatchKind.EXACT_VARIANT: 2,
+    MatchKind.EXACT_OFFICIAL: 3,
+    MatchKind.EXACT_VARIANT: 3,
+    MatchKind.CORE_OFFICIAL: 2,
+    MatchKind.CORE_VARIANT: 2,
     MatchKind.FUZZY_OFFICIAL: 1,
     MatchKind.FUZZY_VARIANT: 1,
 }
+_OFFICIAL: Final = frozenset(
+    {MatchKind.EXACT_OFFICIAL, MatchKind.CORE_OFFICIAL, MatchKind.FUZZY_OFFICIAL}
+)
 
 
 class Candidate(BaseModel):
@@ -183,6 +196,11 @@ class Gazetteer:
             by_key[r["name_key"]].append((r["id"], r["feature_id"], r["name"], r["kind"]))
         self._by_key = dict(by_key)
         self._keys = sorted(self._by_key)
+        by_core: defaultdict[str, list[tuple[int, int, str, str]]] = defaultdict(list)
+        for key, rows in self._by_key.items():
+            if (core := core_key(key)) is not None:
+                by_core[core].extend(rows)
+        self._by_core = dict(by_core)
 
     def close(self) -> None:
         self._con.close()
@@ -237,17 +255,25 @@ class Gazetteer:
 
         def offer(fid: int, kind: MatchKind, name_id: int, sim: float) -> None:
             current = hits.get(fid)
-            official = kind in (MatchKind.EXACT_OFFICIAL, MatchKind.FUZZY_OFFICIAL)
+            official = kind in _OFFICIAL
             if current is None:
                 hits[fid] = (kind, name_id, sim)
                 return
-            cur_official = current[0] in (MatchKind.EXACT_OFFICIAL, MatchKind.FUZZY_OFFICIAL)
+            cur_official = current[0] in _OFFICIAL
             if (_TIER[kind], sim, official) > (_TIER[current[0]], current[2], cur_official):
                 hits[fid] = (kind, name_id, sim)
 
         for name_id, fid, _matched, kind in self._by_key.get(query, []):
             exact = MatchKind.EXACT_OFFICIAL if kind == "official" else MatchKind.EXACT_VARIANT
             offer(fid, exact, name_id, 100.0)
+
+        if (core := core_key(query)) is not None:
+            for name_id, fid, matched, kind in self._by_core.get(core, []):
+                matched_key = name_key(matched)
+                if not core_compatible(query, matched_key):
+                    continue
+                tier = MatchKind.CORE_OFFICIAL if kind == "official" else MatchKind.CORE_VARIANT
+                offer(fid, tier, name_id, float(fuzz.ratio(query, matched_key)))
 
         if len(hits) < limit:
             for key, score, _ in process.extract(
@@ -320,7 +346,7 @@ class Gazetteer:
 
 
 def _rank_key(c: Candidate) -> tuple[int, int, int, int, float, int, int]:
-    official = c.match_kind in (MatchKind.EXACT_OFFICIAL, MatchKind.FUZZY_OFFICIAL)
+    official = c.match_kind in _OFFICIAL
     return (
         -_TIER[c.match_kind],
         -int(c.type_match is True),

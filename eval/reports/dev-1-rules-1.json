@@ -6,6 +6,7 @@
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "uncertainty_policy": "gbif-bp-2020/1",
   "validation_version": "2",
+  "core_key_version": "1",
   "seed": "dev-1/1",
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and no extent was supplied.",
   "counts": {
@@ -172,9 +173,11 @@
       "reference": "Boulder",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 3,
       "candidate_ids": [
-        178680
+        178680,
+        181189,
+        189305
       ],
       "interpretation": {
         "relation": "direction_only",
@@ -396,9 +399,10 @@
       "reference": "Aspen",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 2,
       "candidate_ids": [
-        204686
+        204686,
+        180059
       ],
       "interpretation": {
         "relation": "distance_and_direction",
@@ -591,9 +595,11 @@
       "reference": "Boulder",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 3,
       "candidate_ids": [
-        178680
+        178680,
+        181189,
+        189305
       ],
       "interpretation": {
         "relation": "named_feature",
@@ -1397,7 +1403,7 @@
         "name": "North Cheyenne Canyon",
         "class": "Valley",
         "county": "El Paso",
-        "match": "fuzzy_official"
+        "match": "core_official"
       },
       "proposal": "needs_information",
       "radius_lower_bound_m": 39,

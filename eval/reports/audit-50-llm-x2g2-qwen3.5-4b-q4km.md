@@ -6,7 +6,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **relation**: `named_feature` 23 · `distance_and_direction` 14 · `route_relative` 5 · `other` 3 · `itinerary` 2 · `orthogonal_offsets` 1 · `no_locality` 1 · `direction_only` 1
 
-**retrieval**: `candidates_found` 24 · `feature_absent_from_index` 20 · `no_reference_feature` 4 · `None` 2
+**retrieval**: `candidates_found` 25 · `feature_absent_from_index` 19 · `no_reference_feature` 4 · `None` 2
 
 **proposal**: `needs_information` 36 · `unsupported` 12 · `invalid_extraction` 2
 
@@ -37,7 +37,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | distance_and_direction |  |  |  | invalid_extraction |
 | A24 | Tolland. James Peak. | named_feature | James Peak | candidates_found | James Peak (Summit, Gilpin, exact_official) | needs_information |
 | A25 | Nine miles north of Hotchkiss on Oak Mesa. | distance_and_direction |  |  |  | invalid_extraction |
-| A26 | S slope of Mt. Zenobia. | named_feature | Mt. Zenobia | feature_absent_from_index |  | needs_information |
+| A26 | S slope of Mt. Zenobia. | named_feature | Mt. Zenobia | candidates_found | Zenobia Peak (Summit, Moffat, core_official) | needs_information |
 | A27 | Gunnison Canon. | named_feature | Gunnison Canon | feature_absent_from_index |  | needs_information |
 | A28 | 2 mi. W of Hesperus. | distance_and_direction | Hesperus | candidates_found | Hesperus (Populated Place, La Plata, exact_official) | needs_information |
 | A29 | Wet Mountain Range. Roadside along State Hwy. 96, approx. 5 miles SW of Wetmore. | distance_and_direction | Wetmore | candidates_found | Wetmore (Populated Place, Custer, exact_official) | needs_information |
@@ -46,7 +46,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A32 | Baca National Wildlife Refuge, San Luis Valley. Ca. 2 air miles WSW of Crestone. Ca. ½ mile S of County Rd. T; ¼ mile E of Ranch HQ. Near jct. of N. Crestone and S. Crestone creeks. | distance_and_direction | Crestone | candidates_found | Crestone (Populated Place, Saguache, exact_official) | needs_information |
 | A33 | Gravelly bench along highway below Fremont Pass. | named_feature | Fremont Pass | candidates_found | Fremont Pass (Gap, Lake, exact_official) | needs_information |
 | A34 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: San Isabel National Forest: ca 3.4 road mi on Forest 101 from U.S. Hwy 50. | route_relative | U.S. Hwy 50 | feature_absent_from_index |  | unsupported |
-| A35 | Gore Range, Eagles Nest Wilderness Area, central Colorado. 1km west of Lower Piney Lake. | distance_and_direction | Lower Piney Lake | candidates_found | Lone Pine Lake (Reservoir, Larimer, fuzzy_official) | needs_information |
+| A35 | Gore Range, Eagles Nest Wilderness Area, central Colorado. 1km west of Lower Piney Lake. | distance_and_direction | Lower Piney Lake | candidates_found | Piney Lake (Lake, Eagle, core_official) | needs_information |
 | A36 | Chico Basin Ranch, ca. 28 miles SE of Colorado Springs. Dry uplands above Black Squirrel Creek. | named_feature | Chico Basin Ranch | feature_absent_from_index |  | needs_information |
 | A37 | Rocky Mountain National Park. Neversummer Range. About halfway up south slope of Thunder Mt., 16 miles N of Grand Lake. | distance_and_direction | Grand Lake | candidates_found | Grand Lake (Reservoir, Grand, exact_official) | needs_information |
 | A38 | Rocky Mountain National Park, along Old Fall River Rd., ca. 6 mi. from Fall River entrance to Park. | route_relative | Fall River entrance to Park | feature_absent_from_index |  | unsupported |

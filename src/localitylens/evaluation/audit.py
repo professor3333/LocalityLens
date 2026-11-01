@@ -138,6 +138,7 @@ def run_system(
     """
     from localitylens.extract.llm_client import ModelCallError
     from localitylens.extract.validate import VALIDATION_VERSION, Severity
+    from localitylens.gazetteer.keys import CORE_KEY_VERSION
     from localitylens.geo import uncertainty as policy
     from localitylens.geo.georeference import propose
     from localitylens.pipeline.interpret import interpret
@@ -216,6 +217,7 @@ def run_system(
         "specimen_snapshot": sample.snapshot_id,
         "uncertainty_policy": policy.POLICY_ID,
         "validation_version": VALIDATION_VERSION,
+        "core_key_version": CORE_KEY_VERSION,
         "seed": sample.seed,
         **(meta or {}),
         "note": note,

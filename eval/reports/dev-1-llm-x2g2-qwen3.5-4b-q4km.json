@@ -6,6 +6,7 @@
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "uncertainty_policy": "gbif-bp-2020/1",
   "validation_version": "2",
+  "core_key_version": "1",
   "seed": "dev-1/1",
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
   "gguf": "Qwen3.5-4B-Q4_K_M.gguf sha256=00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
@@ -71,8 +72,8 @@
         "completion_tokens": 143,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 28.61,
-        "record_seconds": 28.8
+        "model_seconds": 22.47,
+        "record_seconds": 22.52
       }
     },
     {
@@ -98,8 +99,8 @@
         "completion_tokens": 71,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.6,
-        "record_seconds": 7.74
+        "model_seconds": 7.5,
+        "record_seconds": 7.58
       }
     },
     {
@@ -137,8 +138,8 @@
         "completion_tokens": 81,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.99,
-        "record_seconds": 8.14
+        "model_seconds": 7.46,
+        "record_seconds": 7.57
       }
     },
     {
@@ -168,8 +169,8 @@
         "completion_tokens": 86,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.45,
-        "record_seconds": 8.51
+        "model_seconds": 8.03,
+        "record_seconds": 8.09
       }
     },
     {
@@ -201,8 +202,8 @@
         "completion_tokens": 153,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.27,
-        "record_seconds": 13.33
+        "model_seconds": 11.76,
+        "record_seconds": 11.84
       }
     },
     {
@@ -228,8 +229,8 @@
         "completion_tokens": 101,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.66,
-        "record_seconds": 10.71
+        "model_seconds": 8.96,
+        "record_seconds": 9.01
       }
     },
     {
@@ -271,8 +272,8 @@
         "completion_tokens": 105,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.99,
-        "record_seconds": 11.31
+        "model_seconds": 9.19,
+        "record_seconds": 9.28
       }
     },
     {
@@ -302,8 +303,8 @@
         "completion_tokens": 152,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.42,
-        "record_seconds": 17.13
+        "model_seconds": 12.09,
+        "record_seconds": 12.16
       }
     },
     {
@@ -333,8 +334,8 @@
         "completion_tokens": 107,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.39,
-        "record_seconds": 11.6
+        "model_seconds": 9.49,
+        "record_seconds": 9.57
       }
     },
     {
@@ -364,8 +365,8 @@
         "completion_tokens": 113,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.91,
-        "record_seconds": 11.99
+        "model_seconds": 9.85,
+        "record_seconds": 9.91
       }
     },
     {
@@ -403,8 +404,8 @@
         "completion_tokens": 75,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.51,
-        "record_seconds": 8.58
+        "model_seconds": 7.16,
+        "record_seconds": 7.22
       }
     },
     {
@@ -436,8 +437,8 @@
         "completion_tokens": 144,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.08,
-        "record_seconds": 14.14
+        "model_seconds": 11.26,
+        "record_seconds": 11.31
       }
     },
     {
@@ -475,8 +476,8 @@
         "completion_tokens": 117,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.28,
-        "record_seconds": 12.35
+        "model_seconds": 9.64,
+        "record_seconds": 9.69
       }
     },
     {
@@ -487,9 +488,10 @@
       "reference": "Aspen",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 2,
       "candidate_ids": [
-        204686
+        204686,
+        180059
       ],
       "interpretation": {
         "relation": "distance_and_direction",
@@ -514,8 +516,8 @@
         "completion_tokens": 94,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.56,
-        "record_seconds": 10.61
+        "model_seconds": 8.39,
+        "record_seconds": 8.44
       }
     },
     {
@@ -556,8 +558,8 @@
         "completion_tokens": 127,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.0,
-        "record_seconds": 13.06
+        "model_seconds": 10.83,
+        "record_seconds": 10.9
       }
     },
     {
@@ -587,8 +589,8 @@
         "completion_tokens": 81,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.51,
-        "record_seconds": 9.66
+        "model_seconds": 7.78,
+        "record_seconds": 7.84
       }
     },
     {
@@ -618,8 +620,8 @@
         "completion_tokens": 74,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.1,
-        "record_seconds": 11.49
+        "model_seconds": 7.42,
+        "record_seconds": 7.46
       }
     },
     {
@@ -630,9 +632,12 @@
       "reference": "San Luis",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 4,
       "candidate_ids": [
-        204787
+        204787,
+        190463,
+        193592,
+        1989390
       ],
       "interpretation": {
         "relation": "itinerary",
@@ -659,8 +664,8 @@
         "completion_tokens": 204,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 21.16,
-        "record_seconds": 21.43
+        "model_seconds": 15.34,
+        "record_seconds": 15.42
       }
     },
     {
@@ -699,8 +704,8 @@
         "completion_tokens": 91,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.72,
-        "record_seconds": 12.0
+        "model_seconds": 8.32,
+        "record_seconds": 8.38
       }
     },
     {
@@ -738,8 +743,8 @@
         "completion_tokens": 90,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.41,
-        "record_seconds": 11.66
+        "model_seconds": 8.3,
+        "record_seconds": 8.35
       }
     },
     {
@@ -783,8 +788,8 @@
         "completion_tokens": 85,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.33,
-        "record_seconds": 9.44
+        "model_seconds": 7.88,
+        "record_seconds": 7.93
       }
     },
     {
@@ -824,8 +829,8 @@
         "completion_tokens": 58,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.54,
-        "record_seconds": 7.62
+        "model_seconds": 6.35,
+        "record_seconds": 6.41
       }
     },
     {
@@ -869,8 +874,8 @@
         "completion_tokens": 102,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.79,
-        "record_seconds": 11.86
+        "model_seconds": 9.04,
+        "record_seconds": 9.1
       }
     },
     {
@@ -902,8 +907,8 @@
         "completion_tokens": 130,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.96,
-        "record_seconds": 13.07
+        "model_seconds": 10.92,
+        "record_seconds": 10.97
       }
     },
     {
@@ -933,8 +938,8 @@
         "completion_tokens": 79,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.97,
-        "record_seconds": 9.03
+        "model_seconds": 7.76,
+        "record_seconds": 7.81
       }
     },
     {
@@ -972,8 +977,8 @@
         "completion_tokens": 93,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.0,
-        "record_seconds": 10.07
+        "model_seconds": 8.51,
+        "record_seconds": 8.56
       }
     },
     {
@@ -1014,8 +1019,8 @@
         "completion_tokens": 108,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.37,
-        "record_seconds": 11.44
+        "model_seconds": 9.43,
+        "record_seconds": 9.49
       }
     },
     {
@@ -1053,8 +1058,8 @@
         "completion_tokens": 90,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.82,
-        "record_seconds": 9.87
+        "model_seconds": 8.48,
+        "record_seconds": 8.53
       }
     },
     {
@@ -1084,8 +1089,8 @@
         "completion_tokens": 96,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.55,
-        "record_seconds": 10.61
+        "model_seconds": 8.85,
+        "record_seconds": 8.9
       }
     },
     {
@@ -1115,8 +1120,8 @@
         "completion_tokens": 64,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.17,
-        "record_seconds": 8.23
+        "model_seconds": 6.85,
+        "record_seconds": 6.93
       }
     },
     {
@@ -1146,8 +1151,8 @@
         "completion_tokens": 62,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.38,
-        "record_seconds": 7.43
+        "model_seconds": 6.73,
+        "record_seconds": 6.79
       }
     },
     {
@@ -1177,8 +1182,8 @@
         "completion_tokens": 74,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.57,
-        "record_seconds": 8.64
+        "model_seconds": 7.56,
+        "record_seconds": 7.63
       }
     },
     {
@@ -1216,8 +1221,8 @@
         "completion_tokens": 62,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.83,
-        "record_seconds": 7.9
+        "model_seconds": 6.67,
+        "record_seconds": 6.72
       }
     },
     {
@@ -1246,8 +1251,8 @@
         "completion_tokens": 129,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.74,
-        "record_seconds": 12.79
+        "model_seconds": 11.17,
+        "record_seconds": 11.21
       }
     },
     {
@@ -1277,8 +1282,8 @@
         "completion_tokens": 95,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.4,
-        "record_seconds": 10.49
+        "model_seconds": 8.81,
+        "record_seconds": 8.87
       }
     },
     {
@@ -1308,8 +1313,8 @@
         "completion_tokens": 81,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.05,
-        "record_seconds": 9.1
+        "model_seconds": 8.08,
+        "record_seconds": 8.14
       }
     },
     {
@@ -1339,8 +1344,8 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.42,
-        "record_seconds": 7.46
+        "model_seconds": 6.65,
+        "record_seconds": 6.71
       }
     },
     {
@@ -1378,8 +1383,8 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.37,
-        "record_seconds": 7.43
+        "model_seconds": 6.7,
+        "record_seconds": 6.77
       }
     },
     {
@@ -1421,8 +1426,8 @@
         "completion_tokens": 76,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.54,
-        "record_seconds": 8.6
+        "model_seconds": 7.66,
+        "record_seconds": 7.74
       }
     },
     {
@@ -1462,8 +1467,8 @@
         "completion_tokens": 62,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.8,
-        "record_seconds": 7.86
+        "model_seconds": 6.76,
+        "record_seconds": 6.82
       }
     },
     {
@@ -1505,8 +1510,8 @@
         "completion_tokens": 77,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.45,
-        "record_seconds": 8.5
+        "model_seconds": 7.95,
+        "record_seconds": 8.07
       }
     },
     {
@@ -1544,8 +1549,8 @@
         "completion_tokens": 58,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.45,
-        "record_seconds": 7.5
+        "model_seconds": 6.51,
+        "record_seconds": 6.61
       }
     },
     {
@@ -1587,8 +1592,8 @@
         "completion_tokens": 77,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.24,
-        "record_seconds": 8.31
+        "model_seconds": 7.72,
+        "record_seconds": 7.8
       }
     },
     {
@@ -1618,8 +1623,8 @@
         "completion_tokens": 77,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.4,
-        "record_seconds": 8.45
+        "model_seconds": 7.7,
+        "record_seconds": 7.76
       }
     },
     {
@@ -1657,8 +1662,8 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.35,
-        "record_seconds": 7.41
+        "model_seconds": 6.57,
+        "record_seconds": 6.64
       }
     },
     {
@@ -1696,8 +1701,8 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.33,
-        "record_seconds": 7.38
+        "model_seconds": 6.63,
+        "record_seconds": 6.7
       }
     },
     {
@@ -1736,8 +1741,8 @@
         "completion_tokens": 62,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.14,
-        "record_seconds": 7.18
+        "model_seconds": 6.62,
+        "record_seconds": 6.67
       }
     },
     {
@@ -1775,8 +1780,8 @@
         "completion_tokens": 79,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.58,
-        "record_seconds": 8.63
+        "model_seconds": 7.68,
+        "record_seconds": 7.74
       }
     },
     {
@@ -1804,7 +1809,7 @@
         "name": "North Cheyenne Canyon",
         "class": "Valley",
         "county": "El Paso",
-        "match": "fuzzy_official"
+        "match": "core_official"
       },
       "proposal": "needs_information",
       "radius_lower_bound_m": 39,
@@ -1815,8 +1820,8 @@
         "completion_tokens": 80,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.74,
-        "record_seconds": 8.81
+        "model_seconds": 7.68,
+        "record_seconds": 7.73
       }
     },
     {
@@ -1856,8 +1861,8 @@
         "completion_tokens": 70,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.1,
-        "record_seconds": 8.16
+        "model_seconds": 7.11,
+        "record_seconds": 7.17
       }
     }
   ]

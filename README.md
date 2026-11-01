@@ -158,10 +158,9 @@ uv run localitylens model check                            # server matches the 
 
 The same label, read by Qwen3.5-4B (prompt v2) instead of the rules. The output is checked the
 same way: every quote is located in the text, every number is parsed by code, and there is no
-field in which a coordinate could be returned. This example also shows a **known v2
-regression**: v2 keeps "summit" in the name, and retrieval then finds no match. v1 quoted
-"Longs Peak" and retrieved it. Generic-word-aware retrieval is the planned fix
-([findings](eval/reports/prompt-v2-findings.md)):
+field in which a coordinate could be returned. v2 keeps "summit" in the name. The gazetteer's
+**core match** sets generic words aside, so "Longs Peak summit" still finds Longs Peak, one tier
+below an exact match ([findings](eval/reports/retrieval-core-findings.md)):
 
 ```console
 $ uv run localitylens interpret "Larimer Co., Colo., 2 mi NE of Longs Peak summit." --limit 2
@@ -173,7 +172,8 @@ distance    2 mile [20:21]
 direction   NE [25:27]
 admin       county "Larimer Co." · state "Colo."
 missing     none
-retrieval   feature_absent_from_index (county context: Larimer Co., from text)
+retrieval   candidates_found (county context: Larimer Co., from text)
+  1.  204979  Longs Peak       Summit   Boulder   core_official    type=y county=n
 ```
 
 <sub>Measured on an Apple M1 with 8 GB: llama-server's own footprint is 629 MB on top of the 2.74 GB
@@ -267,15 +267,15 @@ and Qwen3.5-4B ([report](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.md),
 against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv),
 [scores](eval/reports/audit-50-score.md)).
 
-> **Answer so far: not yet.** On these 50 labels the rules give **13 of 31** correct proposal
-> candidates. Qwen3.5-4B gives **9** with prompt v1 and **10** with prompt v2. v2 was developed
-> on a separate [dev sample](eval/dev/), where it reached 18 of 29 against the rules' 16, but
-> that gain did not transfer ([findings](eval/reports/prompt-v2-findings.md)). The project's
-> target is +10 points. Most remaining misses are retrieval failures that both systems share.
+> **Answer so far: not yet.** With today's retrieval, the rules give **14 of 31** correct proposal
+> candidates on these 50 labels, and Qwen3.5-4B with prompt v2 gives **12**. v2 was developed on
+> a separate [dev sample](eval/dev/), where it leads 18 to 16, but that gain did not transfer
+> ([findings](eval/reports/prompt-v2-findings.md)). The project's target is +10 points.
 
 | Scored against annotations | Rules | LLM v1 | LLM v2 |
 |---|---|---|---|
-| **Correct proposal candidates** (critical interpretation and top reference right, of 31 answerable) | **13 (42%)** | **9 (29%)** | **10 (32%)** |
+| **Correct proposal candidates, with core retrieval** (of 31 answerable) | **14 (45%)** | – | **12 (39%)** |
+| Correct proposal candidates, before core retrieval | 13 (42%) | 9 (29%) | 10 (32%) |
 | Relation read correctly (of 50) | 26 (52%) | 30 (60%) | 30 (60%) |
 | Critical interpretation exact (of 50) | 24 (48%) | 20 (40%) | 22 (44%) |
 | Acceptable reference ranked first (of 31) | 16 (52%) | 11 (36%) | 12 (39%) |
@@ -286,8 +286,9 @@ against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv
 | Mean fields a curator must correct per record | 1.88 | 2.08 | 1.82 |
 
 <sub>A correct proposal candidate becomes a correct proposal once the feature extent is supplied.
-Excluding the 10 rows the annotator marked unsure gives rules 11/24, v1 9/24, v2 9/24. v2 against
-the rules: −10 points (95% CI −29 to +10, p = 0.51). The audit records are
+Rows other than the first two are before core retrieval. Excluding the 10 rows the annotator
+marked unsure, with core retrieval: rules 12/24, v2 10/24. v2 against the rules: −7 points
+(95% CI −26 to +13, p = 0.75). The audit records are
 dev data and too few for the final comparison, which uses the locked benchmark.</sub>
 
 <details>
@@ -323,9 +324,10 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
   over-represents the failing label shapes, so the audit stays a check. Every group read in
   development is recorded in [`eval/viewed-groups.json`](eval/viewed-groups.json) and excluded
   from any held-out split. v2 fixed the "no locality" error but barely moved the audit score.
-- **Retrieval is now the bottleneck.** Both systems miss 15 of the 31 answerable audit records.
-  Typical misses are generic-word swaps ("Mt. Zenobia" against GNIS "Zenobia Peak") and
-  positional prefixes ("Lower Piney Lake").
+- **Retrieval was the bottleneck.** A core-match tier now sets generic words aside ("Mt.
+  Zenobia" finds GNIS "Zenobia Peak"; "Lower Piney Lake" finds "Piney Lake" but never "Upper
+  Piney Lake"). It fixed the 2 audit records it was designed from, for both systems, and changed
+  nothing on dev-1: no regressions, but no out-of-sample evidence yet.
 - **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
   `Unknown-E` or two counties (`Gunnison/Pitkin`).
 
@@ -335,7 +337,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · next: generic-word-aware retrieval | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
@@ -364,7 +366,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `geo/georeference.py` | Point-radius proposals: offset point, combined radius, lower bound, assumptions, blocking questions |
 | `domain/status.py` | Record lifecycle with a single checked transition function |
 | `data/` | Snapshot manifests, the GNIS fetcher and the GBIF download client (DOI, immutable, checksummed) |
-| `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence |
+| `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence: exact, then core (generic words set aside), then fuzzy |
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |

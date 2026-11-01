@@ -59,19 +59,19 @@
           }
         },
         "reference_top1": {
-          "hits": 16,
+          "hits": 18,
           "n": 31,
-          "rate": 0.516
+          "rate": 0.581
         },
         "reference_recall5": {
-          "hits": 16,
+          "hits": 18,
           "n": 31,
-          "rate": 0.516
+          "rate": 0.581
         },
         "correct_proposal_candidates": {
-          "hits": 13,
+          "hits": 14,
           "n": 31,
-          "rate": 0.419
+          "rate": 0.452
         },
         "computed_proposals_correct": {
           "hits": 1,
@@ -89,7 +89,7 @@
           "rate": 0.4
         },
         "false_no_locality": 0,
-        "mean_corrections": 1.88
+        "mean_corrections": 1.84
       },
       "llm": {
         "relation_accuracy": {
@@ -130,19 +130,19 @@
           }
         },
         "reference_top1": {
-          "hits": 12,
+          "hits": 14,
           "n": 31,
-          "rate": 0.387
+          "rate": 0.452
         },
         "reference_recall5": {
+          "hits": 14,
+          "n": 31,
+          "rate": 0.452
+        },
+        "correct_proposal_candidates": {
           "hits": 12,
           "n": 31,
           "rate": 0.387
-        },
-        "correct_proposal_candidates": {
-          "hits": 10,
-          "n": 31,
-          "rate": 0.323
         },
         "computed_proposals_correct": {
           "hits": 0,
@@ -160,7 +160,7 @@
           "rate": 0.733
         },
         "false_no_locality": 1,
-        "mean_corrections": 1.82
+        "mean_corrections": 1.78
       }
     },
     "by_type": {
@@ -181,9 +181,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 7,
+          "hits": 8,
           "n": 20,
-          "rate": 0.35
+          "rate": 0.4
         },
         "route_relative": {
           "hits": 0,
@@ -198,9 +198,9 @@
           "rate": 0.0
         },
         "distance_and_direction": {
-          "hits": 6,
+          "hits": 7,
           "n": 9,
-          "rate": 0.667
+          "rate": 0.778
         },
         "itinerary": {
           "hits": 0,
@@ -208,9 +208,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 4,
+          "hits": 5,
           "n": 20,
-          "rate": 0.2
+          "rate": 0.25
         },
         "route_relative": {
           "hits": 0,
@@ -681,13 +681,13 @@
           "direction_ok": true,
           "qualifiers_ok": true,
           "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A27",
@@ -843,13 +843,13 @@
           "direction_ok": true,
           "qualifiers_ok": true,
           "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
+          "top1_ok": true,
+          "recall5_ok": true,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 4
+          "corrections": 3
         },
         {
           "audit_id": "A36",
@@ -1583,13 +1583,13 @@
           "direction_ok": true,
           "qualifiers_ok": true,
           "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A27",
@@ -1745,13 +1745,13 @@
           "direction_ok": true,
           "qualifiers_ok": true,
           "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A36",
@@ -2027,16 +2027,16 @@
     },
     "paired_correct_proposal_candidates": {
       "n": 31,
-      "rules": 13,
-      "llm": 10,
-      "difference": -0.097,
+      "rules": 14,
+      "llm": 12,
+      "difference": -0.065,
       "ci95": [
-        -0.29,
-        0.097
+        -0.258,
+        0.129
       ],
-      "llm_only": 3,
+      "llm_only": 4,
       "rules_only": 6,
-      "sign_test_p": 0.5078
+      "sign_test_p": 0.7539
     },
     "paired_critical_exact_match": {
       "n": 50,
@@ -2107,19 +2107,19 @@
           }
         },
         "reference_top1": {
-          "hits": 14,
+          "hits": 15,
           "n": 24,
-          "rate": 0.583
+          "rate": 0.625
         },
         "reference_recall5": {
-          "hits": 14,
+          "hits": 15,
           "n": 24,
-          "rate": 0.583
+          "rate": 0.625
         },
         "correct_proposal_candidates": {
-          "hits": 11,
+          "hits": 12,
           "n": 24,
-          "rate": 0.458
+          "rate": 0.5
         },
         "computed_proposals_correct": {
           "hits": 1,
@@ -2137,7 +2137,7 @@
           "rate": 0.462
         },
         "false_no_locality": 0,
-        "mean_corrections": 1.73
+        "mean_corrections": 1.7
       },
       "llm": {
         "relation_accuracy": {
@@ -2178,19 +2178,19 @@
           }
         },
         "reference_top1": {
-          "hits": 11,
+          "hits": 12,
           "n": 24,
-          "rate": 0.458
+          "rate": 0.5
         },
         "reference_recall5": {
-          "hits": 11,
+          "hits": 12,
           "n": 24,
-          "rate": 0.458
+          "rate": 0.5
         },
         "correct_proposal_candidates": {
-          "hits": 9,
+          "hits": 10,
           "n": 24,
-          "rate": 0.375
+          "rate": 0.417
         },
         "computed_proposals_correct": {
           "hits": 0,
@@ -2208,7 +2208,7 @@
           "rate": 0.692
         },
         "false_no_locality": 1,
-        "mean_corrections": 1.75
+        "mean_corrections": 1.73
       }
     },
     "by_type": {
@@ -2229,9 +2229,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 5,
+          "hits": 6,
           "n": 14,
-          "rate": 0.357
+          "rate": 0.429
         },
         "route_relative": {
           "hits": 0,
@@ -2256,9 +2256,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 3,
+          "hits": 4,
           "n": 14,
-          "rate": 0.214
+          "rate": 0.286
         },
         "route_relative": {
           "hits": 0,
@@ -2693,13 +2693,13 @@
           "direction_ok": true,
           "qualifiers_ok": true,
           "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A28",
@@ -3415,13 +3415,13 @@
           "direction_ok": true,
           "qualifiers_ok": true,
           "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A28",
@@ -3715,8 +3715,8 @@
     },
     "paired_correct_proposal_candidates": {
       "n": 24,
-      "rules": 11,
-      "llm": 9,
+      "rules": 12,
+      "llm": 10,
       "difference": -0.083,
       "ci95": [
         -0.292,

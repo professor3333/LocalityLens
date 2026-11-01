@@ -6,6 +6,7 @@
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "uncertainty_policy": "gbif-bp-2020/1",
   "validation_version": "2",
+  "core_key_version": "1",
   "seed": "audit-50/1",
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
   "gguf": "Qwen3.5-4B-Q4_K_M.gguf sha256=00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
@@ -35,8 +36,8 @@
       "direction_only": 1
     },
     "retrieval": {
-      "candidates_found": 24,
-      "feature_absent_from_index": 20,
+      "candidates_found": 25,
+      "feature_absent_from_index": 19,
       "no_reference_feature": 4,
       "None": 2
     },
@@ -74,8 +75,8 @@
         "completion_tokens": 112,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.13,
-        "record_seconds": 12.26
+        "model_seconds": 10.14,
+        "record_seconds": 10.2
       }
     },
     {
@@ -114,8 +115,8 @@
         "completion_tokens": 96,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.23,
-        "record_seconds": 9.34
+        "model_seconds": 8.8,
+        "record_seconds": 8.86
       }
     },
     {
@@ -157,8 +158,8 @@
         "completion_tokens": 122,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.02,
-        "record_seconds": 12.13
+        "model_seconds": 10.62,
+        "record_seconds": 10.69
       }
     },
     {
@@ -198,8 +199,8 @@
         "completion_tokens": 104,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.96,
-        "record_seconds": 10.03
+        "model_seconds": 9.62,
+        "record_seconds": 9.69
       }
     },
     {
@@ -239,8 +240,8 @@
         "completion_tokens": 158,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.21,
-        "record_seconds": 13.28
+        "model_seconds": 12.77,
+        "record_seconds": 12.84
       }
     },
     {
@@ -270,8 +271,8 @@
         "completion_tokens": 77,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.12,
-        "record_seconds": 8.16
+        "model_seconds": 7.94,
+        "record_seconds": 8.0
       }
     },
     {
@@ -310,8 +311,8 @@
         "completion_tokens": 106,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.05,
-        "record_seconds": 10.09
+        "model_seconds": 9.73,
+        "record_seconds": 9.8
       }
     },
     {
@@ -349,8 +350,8 @@
         "completion_tokens": 93,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.12,
-        "record_seconds": 9.19
+        "model_seconds": 8.65,
+        "record_seconds": 8.71
       }
     },
     {
@@ -361,9 +362,10 @@
       "reference": "Mancos River",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 2,
+      "candidates": 3,
       "candidate_ids": [
         902295,
+        178876,
         78956
       ],
       "interpretation": {
@@ -389,8 +391,8 @@
         "completion_tokens": 102,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.82,
-        "record_seconds": 10.88
+        "model_seconds": 9.51,
+        "record_seconds": 9.57
       }
     },
     {
@@ -434,8 +436,8 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.14,
-        "record_seconds": 10.23
+        "model_seconds": 8.11,
+        "record_seconds": 8.17
       }
     },
     {
@@ -474,8 +476,8 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.58,
-        "record_seconds": 7.64
+        "model_seconds": 6.63,
+        "record_seconds": 6.67
       }
     },
     {
@@ -507,8 +509,8 @@
         "completion_tokens": 92,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.35,
-        "record_seconds": 10.41
+        "model_seconds": 8.6,
+        "record_seconds": 8.65
       }
     },
     {
@@ -548,8 +550,8 @@
         "completion_tokens": 125,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.44,
-        "record_seconds": 13.5
+        "model_seconds": 11.53,
+        "record_seconds": 11.59
       }
     },
     {
@@ -587,8 +589,8 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.91,
-        "record_seconds": 10.01
+        "model_seconds": 8.76,
+        "record_seconds": 8.82
       }
     },
     {
@@ -618,8 +620,8 @@
         "completion_tokens": 64,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.82,
-        "record_seconds": 10.2
+        "model_seconds": 7.96,
+        "record_seconds": 8.03
       }
     },
     {
@@ -649,8 +651,8 @@
         "completion_tokens": 52,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.79,
-        "record_seconds": 10.54
+        "model_seconds": 6.78,
+        "record_seconds": 6.83
       }
     },
     {
@@ -680,8 +682,8 @@
         "completion_tokens": 89,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.22,
-        "record_seconds": 15.55
+        "model_seconds": 9.42,
+        "record_seconds": 9.47
       }
     },
     {
@@ -711,8 +713,8 @@
         "completion_tokens": 79,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.8,
-        "record_seconds": 11.99
+        "model_seconds": 8.91,
+        "record_seconds": 8.96
       }
     },
     {
@@ -752,8 +754,8 @@
         "completion_tokens": 138,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.0,
-        "record_seconds": 14.63
+        "model_seconds": 13.72,
+        "record_seconds": 13.78
       }
     },
     {
@@ -795,8 +797,8 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.65,
-        "record_seconds": 12.93
+        "model_seconds": 9.21,
+        "record_seconds": 9.26
       }
     },
     {
@@ -840,8 +842,8 @@
         "completion_tokens": 88,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.73,
-        "record_seconds": 10.98
+        "model_seconds": 10.16,
+        "record_seconds": 10.24
       }
     },
     {
@@ -871,8 +873,8 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.75,
-        "record_seconds": 9.06
+        "model_seconds": 8.8,
+        "record_seconds": 8.86
       }
     },
     {
@@ -898,8 +900,8 @@
         "completion_tokens": 141,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.14,
-        "record_seconds": 13.36
+        "model_seconds": 14.14,
+        "record_seconds": 14.19
       }
     },
     {
@@ -938,8 +940,8 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.5,
-        "record_seconds": 9.76
+        "model_seconds": 9.31,
+        "record_seconds": 9.37
       }
     },
     {
@@ -965,8 +967,8 @@
         "completion_tokens": 94,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.63,
-        "record_seconds": 9.81
+        "model_seconds": 10.22,
+        "record_seconds": 10.26
       }
     },
     {
@@ -976,9 +978,11 @@
       "relation": "named_feature",
       "reference": "Mt. Zenobia",
       "validation_errors": [],
-      "retrieval": "feature_absent_from_index",
-      "candidates": 0,
-      "candidate_ids": [],
+      "retrieval": "candidates_found",
+      "candidates": 1,
+      "candidate_ids": [
+        170653
+      ],
       "interpretation": {
         "relation": "named_feature",
         "distance": null,
@@ -986,9 +990,15 @@
         "direction": null,
         "qualifiers": []
       },
-      "top_candidate": null,
+      "top_candidate": {
+        "feature_id": 170653,
+        "name": "Zenobia Peak",
+        "class": "Summit",
+        "county": "Moffat",
+        "match": "core_official"
+      },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 39,
       "radius_m": null,
       "trace": {
         "prompt_sha256": "c00a61c9b9d91a178058b198a96fdd3f1358948a10f4cc016fd7d7aba5cc0187",
@@ -996,8 +1006,8 @@
         "completion_tokens": 82,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.59,
-        "record_seconds": 8.72
+        "model_seconds": 8.95,
+        "record_seconds": 9.02
       }
     },
     {
@@ -1027,8 +1037,8 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.15,
-        "record_seconds": 8.21
+        "model_seconds": 8.84,
+        "record_seconds": 8.9
       }
     },
     {
@@ -1039,9 +1049,10 @@
       "reference": "Hesperus",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 2,
       "candidate_ids": [
-        179135
+        179135,
+        178988
       ],
       "interpretation": {
         "relation": "distance_and_direction",
@@ -1066,8 +1077,8 @@
         "completion_tokens": 95,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.15,
-        "record_seconds": 9.25
+        "model_seconds": 10.1,
+        "record_seconds": 10.15
       }
     },
     {
@@ -1107,8 +1118,8 @@
         "completion_tokens": 126,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.11,
-        "record_seconds": 13.23
+        "model_seconds": 12.31,
+        "record_seconds": 12.36
       }
     },
     {
@@ -1138,8 +1149,8 @@
         "completion_tokens": 65,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.92,
-        "record_seconds": 8.07
+        "model_seconds": 7.7,
+        "record_seconds": 7.73
       }
     },
     {
@@ -1169,8 +1180,8 @@
         "completion_tokens": 102,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.5,
-        "record_seconds": 10.58
+        "model_seconds": 10.56,
+        "record_seconds": 10.61
       }
     },
     {
@@ -1181,9 +1192,11 @@
       "reference": "Crestone",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 2,
+      "candidates": 4,
       "candidate_ids": [
         192409,
+        192423,
+        203952,
         175203
       ],
       "interpretation": {
@@ -1211,8 +1224,8 @@
         "completion_tokens": 156,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.16,
-        "record_seconds": 15.25
+        "model_seconds": 20.22,
+        "record_seconds": 20.69
       }
     },
     {
@@ -1251,8 +1264,8 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.88,
-        "record_seconds": 8.94
+        "model_seconds": 11.51,
+        "record_seconds": 12.18
       }
     },
     {
@@ -1284,8 +1297,8 @@
         "completion_tokens": 147,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.13,
-        "record_seconds": 14.2
+        "model_seconds": 18.13,
+        "record_seconds": 18.67
       }
     },
     {
@@ -1296,8 +1309,9 @@
       "reference": "Lower Piney Lake",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 2,
+      "candidates": 3,
       "candidate_ids": [
+        175921,
         170233,
         178165
       ],
@@ -1309,11 +1323,11 @@
         "qualifiers": []
       },
       "top_candidate": {
-        "feature_id": 170233,
-        "name": "Lone Pine Lake",
-        "class": "Reservoir",
-        "county": "Larimer",
-        "match": "fuzzy_official"
+        "feature_id": 175921,
+        "name": "Piney Lake",
+        "class": "Lake",
+        "county": "Eagle",
+        "match": "core_official"
       },
       "proposal": "needs_information",
       "radius_lower_bound_m": 1101,
@@ -1324,8 +1338,8 @@
         "completion_tokens": 155,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.54,
-        "record_seconds": 15.63
+        "model_seconds": 18.77,
+        "record_seconds": 19.49
       }
     },
     {
@@ -1357,8 +1371,8 @@
         "completion_tokens": 93,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.84,
-        "record_seconds": 9.9
+        "model_seconds": 11.54,
+        "record_seconds": 12.05
       }
     },
     {
@@ -1401,8 +1415,8 @@
         "completion_tokens": 153,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.97,
-        "record_seconds": 14.05
+        "model_seconds": 15.3,
+        "record_seconds": 15.59
       }
     },
     {
@@ -1434,8 +1448,8 @@
         "completion_tokens": 125,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.71,
-        "record_seconds": 11.76
+        "model_seconds": 12.19,
+        "record_seconds": 12.23
       }
     },
     {
@@ -1465,8 +1479,8 @@
         "completion_tokens": 52,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.42,
-        "record_seconds": 7.46
+        "model_seconds": 7.44,
+        "record_seconds": 7.49
       }
     },
     {
@@ -1498,8 +1512,8 @@
         "completion_tokens": 203,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 18.43,
-        "record_seconds": 18.54
+        "model_seconds": 19.27,
+        "record_seconds": 19.35
       }
     },
     {
@@ -1531,8 +1545,8 @@
         "completion_tokens": 109,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.27,
-        "record_seconds": 11.36
+        "model_seconds": 11.23,
+        "record_seconds": 11.29
       }
     },
     {
@@ -1564,8 +1578,8 @@
         "completion_tokens": 75,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.21,
-        "record_seconds": 8.28
+        "model_seconds": 8.61,
+        "record_seconds": 8.67
       }
     },
     {
@@ -1605,8 +1619,8 @@
         "completion_tokens": 107,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.38,
-        "record_seconds": 11.45
+        "model_seconds": 11.45,
+        "record_seconds": 11.99
       }
     },
     {
@@ -1617,9 +1631,10 @@
       "reference": "Hesperus",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 2,
       "candidate_ids": [
-        179135
+        179135,
+        178988
       ],
       "interpretation": {
         "relation": "direction_only",
@@ -1644,8 +1659,8 @@
         "completion_tokens": 82,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.57,
-        "record_seconds": 9.63
+        "model_seconds": 11.69,
+        "record_seconds": 11.93
       }
     },
     {
@@ -1675,8 +1690,8 @@
         "completion_tokens": 80,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.09,
-        "record_seconds": 9.15
+        "model_seconds": 9.44,
+        "record_seconds": 9.52
       }
     },
     {
@@ -1708,8 +1723,8 @@
         "completion_tokens": 162,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.05,
-        "record_seconds": 15.15
+        "model_seconds": 16.81,
+        "record_seconds": 16.91
       }
     },
     {
@@ -1739,8 +1754,8 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.1,
-        "record_seconds": 8.18
+        "model_seconds": 7.84,
+        "record_seconds": 7.93
       }
     },
     {
@@ -1779,8 +1794,8 @@
         "completion_tokens": 79,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.28,
-        "record_seconds": 8.34
+        "model_seconds": 9.04,
+        "record_seconds": 9.1
       }
     },
     {
@@ -1810,8 +1825,8 @@
         "completion_tokens": 97,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.69,
-        "record_seconds": 9.74
+        "model_seconds": 10.19,
+        "record_seconds": 10.25
       }
     },
     {
@@ -1841,8 +1856,8 @@
         "completion_tokens": 84,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.91,
-        "record_seconds": 8.95
+        "model_seconds": 9.5,
+        "record_seconds": 9.55
       }
     }
   ]

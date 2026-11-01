@@ -68,6 +68,8 @@ class ReleaseManifest(BaseModel):
     prompt: PromptPin
     schema_version: str
     grammar_version: str  # how the schema is turned into a decoding grammar (extract/llm.py)
+    validation_version: str  # extract/validate.py VALIDATION_VERSION
+    core_key_version: str  # gazetteer/keys.py CORE_KEY_VERSION (core match tier)
     context_budget_tokens: int = Field(gt=0)
     rules_version: str
     uncertainty_policy: str

@@ -40,6 +40,8 @@
   },
   "schema_version": "extraction-1",
   "grammar_version": "2",
+  "validation_version": "2",
+  "core_key_version": "1",
   "context_budget_tokens": 4096,
   "rules_version": "rules-1",
   "uncertainty_policy": "gbif-bp-2020/1",

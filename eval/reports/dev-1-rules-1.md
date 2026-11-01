@@ -60,5 +60,5 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | D46 | Rifle Gap. | named_feature | Rifle Gap | candidates_found | Rifle Gap (Gap, Garfield, exact_official) | needs_information |
 | D47 | Arapaho Pass. | named_feature | Arapaho Pass | candidates_found | Arapaho Pass (Gap, Boulder, exact_official) | needs_information |
 | D48 | North of Eads. | direction_only | Eads | candidates_found | Eads (Populated Place, Kiowa, exact_official) | needs_information |
-| D49 | North Cheyenne Canon. | named_feature | North Cheyenne Canon | candidates_found | North Cheyenne Canyon (Valley, El Paso, fuzzy_official) | needs_information |
+| D49 | North Cheyenne Canon. | named_feature | North Cheyenne Canon | candidates_found | North Cheyenne Canyon (Valley, El Paso, core_official) | needs_information |
 | D50 | Roadside near Florissant. | named_feature | Florissant | candidates_found | Florissant (Populated Place, Teller, exact_official) | needs_information |

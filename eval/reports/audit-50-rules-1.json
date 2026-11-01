@@ -6,6 +6,7 @@
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "uncertainty_policy": "gbif-bp-2020/1",
   "validation_version": "2",
+  "core_key_version": "1",
   "seed": "audit-50/1",
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and no extent was supplied.",
   "counts": {
@@ -18,8 +19,8 @@
       "route_relative": 1
     },
     "retrieval": {
-      "candidates_found": 33,
-      "feature_absent_from_index": 14,
+      "candidates_found": 34,
+      "feature_absent_from_index": 13,
       "no_reference_feature": 3
     },
     "proposal": {
@@ -283,9 +284,10 @@
       "reference": "Mancos River",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 2,
+      "candidates": 3,
       "candidate_ids": [
         902295,
+        178876,
         78956
       ],
       "interpretation": {
@@ -441,9 +443,11 @@
       "reference": "Boulder",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 3,
       "candidate_ids": [
-        178680
+        178680,
+        181189,
+        189305
       ],
       "interpretation": {
         "relation": "distance_and_direction",
@@ -471,10 +475,11 @@
       "reference": "South Park",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 4,
+      "candidates": 5,
       "candidate_ids": [
         187543,
         190192,
+        190191,
         2354575,
         180446
       ],
@@ -624,9 +629,10 @@
       "reference": "Aspen",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 2,
       "candidate_ids": [
-        204686
+        204686,
+        180059
       ],
       "interpretation": {
         "relation": "direction_only",
@@ -654,9 +660,12 @@
       "reference": "Craig",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 4,
       "candidate_ids": [
-        171304
+        171304,
+        179450,
+        178192,
+        204989
       ],
       "interpretation": {
         "relation": "direction_only",
@@ -744,9 +753,11 @@
       "relation": "named_feature",
       "reference": "Mt. Zenobia",
       "validation_errors": [],
-      "retrieval": "feature_absent_from_index",
-      "candidates": 0,
-      "candidate_ids": [],
+      "retrieval": "candidates_found",
+      "candidates": 1,
+      "candidate_ids": [
+        170653
+      ],
       "interpretation": {
         "relation": "named_feature",
         "distance": null,
@@ -754,9 +765,15 @@
         "direction": null,
         "qualifiers": []
       },
-      "top_candidate": null,
+      "top_candidate": {
+        "feature_id": 170653,
+        "name": "Zenobia Peak",
+        "class": "Summit",
+        "county": "Moffat",
+        "match": "core_official"
+      },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 39,
       "radius_m": null
     },
     {
@@ -789,9 +806,10 @@
       "reference": "Hesperus",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 2,
       "candidate_ids": [
-        179135
+        179135,
+        178988
       ],
       "interpretation": {
         "relation": "distance_and_direction",
@@ -992,8 +1010,9 @@
       "reference": "Lower Piney Lake",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 2,
+      "candidates": 3,
       "candidate_ids": [
+        175921,
         170233,
         178165
       ],
@@ -1005,11 +1024,11 @@
         "qualifiers": []
       },
       "top_candidate": {
-        "feature_id": 170233,
-        "name": "Lone Pine Lake",
-        "class": "Reservoir",
-        "county": "Larimer",
-        "match": "fuzzy_official"
+        "feature_id": 175921,
+        "name": "Piney Lake",
+        "class": "Lake",
+        "county": "Eagle",
+        "match": "core_official"
       },
       "proposal": "needs_information",
       "radius_lower_bound_m": null,
@@ -1263,9 +1282,10 @@
       "reference": "Hesperus",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 1,
+      "candidates": 2,
       "candidate_ids": [
-        179135
+        179135,
+        178988
       ],
       "interpretation": {
         "relation": "direction_only",
