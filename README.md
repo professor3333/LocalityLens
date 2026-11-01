@@ -38,12 +38,30 @@ measured workflow for difficult relative descriptions and will be benchmarked ag
 
 ## What exists today
 
-- Project scaffold, packaging (`uv`), linting, type checking, tests, and CI.
+- **Extraction contract** (`localitylens.extract.schema`): the typed output an extractor (LLM
+  or rules) must produce. All evidence is given as *exact quotes* from the locality text.
+  Extractors cannot supply character offsets, parsed numbers, or coordinates (unknown fields
+  are rejected).
+- **Deterministic validation** (`localitylens.extract.validate`): finds every quote in the text
+  and maps it to a half-open `[start, end)` span of the *original* string. Code parses distance
+  numbers (`2`, `2.5`, `1 1/2`, `½`). It also checks that quoted units and directions agree with
+  the extractor's choices, refuses ambiguous units such as a bare `m`, and requires each relation's
+  components to be present or explicitly declared missing.
+- **Text normalization with offset map** (`localitylens.ingest.normalize`): NFC and whitespace
+  collapsing. Every normalized character maps back to its exact original range.
+- **Geography primitives** (`localitylens.geo`): exact unit conversion (2 mi = 3,218.688 m),
+  16-point compass parsing, and geodesic forward/inverse calculations on the ellipsoid of each
+  coordinate's datum (no silent WGS84 assumption).
+- **Record lifecycle** (`localitylens.domain.status`): explicit statuses and a single
+  transition function. A record can only reach `approved` through a pipeline outcome followed by
+  curator review.
+- Tests: unit tests plus Hypothesis property tests for span mapping, normalization, and geodesic
+  round trips. CI runs lint, format, strict mypy, and tests on every push.
 
 ## Planned (not yet built)
 
 Data snapshots and manifests, GNIS gazetteer index, rules baseline, LLM extraction via llama.cpp,
-geometry and uncertainty engine, review UI, Darwin Core export, evaluation suite.
+uncertainty policy and footprints, review UI, Darwin Core export, evaluation suite.
 
 ## Development
 
@@ -54,7 +72,10 @@ uv sync
 uv run pytest
 uv run ruff check . && uv run ruff format --check .
 uv run mypy src/
+HYPOTHESIS_PROFILE=thorough uv run pytest tests/property   # 5,000 examples per property
 ```
+
+No network access is needed to run the tests.
 
 ## Licence
 
