@@ -70,3 +70,19 @@ def test_baseline_cli(index_path: Path, capsys: pytest.CaptureFixture[str]) -> N
     assert payload["extractor"] == "rules-1"
     assert "distance_unit" in payload["interpretation"]["missing"]
     assert payload["retrieval"]["outcome"] == "candidates_found"
+
+
+def test_baseline_cli_proposal(index_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    base = ["baseline", "run", "2 mi NE of Testa Peak", "--index", str(index_path), "--propose"]
+    assert main(base) == 0
+    out = capsys.readouterr().out
+    assert "proposal    needs_information" in out
+    assert "extent of Testa Peak" in out
+
+    assert main([*base, "--extent-m", "500", "--extent-note", "test", "--json"]) == 0
+    proposal = json.loads(capsys.readouterr().out)["proposal"]
+    assert proposal["outcome"] == "computed"
+    assert proposal["radius_m"] > proposal["radius_lower_bound_m"] > 0
+    assert proposal["policy_id"].startswith("gbif-bp-2020/")
+
+    assert main([*base, "--feature-id", "999"]) == 2

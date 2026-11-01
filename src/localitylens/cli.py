@@ -5,8 +5,12 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from localitylens.extract.schema import FeatureType
+
+if TYPE_CHECKING:
+    from localitylens.geo.georeference import GeoreferenceProposal
 
 
 def _fetch_gnis(args: argparse.Namespace) -> int:
@@ -71,6 +75,31 @@ def _baseline_run(args: argparse.Namespace) -> int:
 
     interp = result.validation.interpretation
     retrieval = result.retrieval
+    proposal = None
+    if args.propose and interp is not None:
+        from localitylens.geo.georeference import ExtentEstimate, ExtentSource, propose
+
+        chosen = None
+        if retrieval is not None and retrieval.candidates:
+            if args.feature_id is None:
+                chosen = retrieval.candidates[0]
+            else:
+                chosen = next(
+                    (c for c in retrieval.candidates if c.feature_id == args.feature_id), None
+                )
+                if chosen is None:
+                    print(f"feature {args.feature_id} is not among the candidates", file=sys.stderr)
+                    return 2
+        extent = (
+            ExtentEstimate(
+                radius_m=args.extent_m,
+                source=ExtentSource.REVIEWED,
+                rationale=args.extent_note or "supplied on the command line",
+            )
+            if args.extent_m is not None
+            else None
+        )
+        proposal = propose(interp, chosen, extent)
     if args.json:
         payload = {
             "extractor": result.extractor_version,
@@ -90,6 +119,7 @@ def _baseline_run(args: argparse.Namespace) -> int:
                 "county_source": retrieval.county_source,
                 "candidates": [c.model_dump(mode="json") for c in retrieval.candidates],
             },
+            "proposal": proposal.model_dump(mode="json") if proposal else None,
         }
         print(json.dumps(payload, indent=2, ensure_ascii=False))
         return 0
@@ -141,7 +171,32 @@ def _baseline_run(args: argparse.Namespace) -> int:
                 f"  {n}. {c.feature_id:>7}  {c.official_name:<26} {c.feature_class:<15} "
                 f"{c.county_name:<12} {c.match_kind.value:<15} {flags}"
             )
+    if proposal is not None:
+        _print_proposal(proposal)
     return 0
+
+
+def _print_proposal(p: GeoreferenceProposal) -> None:
+    def m(value: float | None) -> str:
+        return "unknown" if value is None else f"{value:,.0f} m"
+
+    print(f"proposal    {p.outcome.value}  [{p.method}, policy {p.policy_id}]")
+    if p.point is not None:
+        print(
+            f"  point     {p.point.latitude:.5f}, {p.point.longitude:.5f} ({p.point.datum.value})"
+            f"   feature {p.feature_id}"
+        )
+    if p.point is not None or p.radius_lower_bound_m is not None:
+        bound = f"   (at least {m(p.radius_lower_bound_m)} without extent)"
+        print(f"  radius    {m(p.radius_m)}{bound if p.radius_m is None else ''}")
+    for c in p.components:
+        print(f"    {c.name.value:<21} {m(c.metres):>10}  {c.rule}")
+    for a in p.assumptions:
+        print(f"  assume    {a}")
+    for q in p.questions:
+        print(f"  ask       {q}")
+    for r in p.reasons:
+        print(f"  reason    {r}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -182,6 +237,10 @@ def main(argv: list[str] | None = None) -> int:
     br.add_argument("--index", default="data/derived/gazetteer.sqlite")
     br.add_argument("--limit", type=int, default=5)
     br.add_argument("--json", action="store_true", help="machine-readable output")
+    br.add_argument("--propose", action="store_true", help="add a point-radius proposal")
+    br.add_argument("--feature-id", type=int, help="candidate to propose from (default: top)")
+    br.add_argument("--extent-m", type=float, help="reviewed extent (geographic radial), metres")
+    br.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
     br.set_defaults(func=_baseline_run)
 
     args = parser.parse_args(argv)

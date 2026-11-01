@@ -13,11 +13,11 @@ sans = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-se
 # (title, line1, line2, status, actor)  status: built|partial|planned ; actor: code|llm
 STAGES = [
     ("Locality text", "verbatim label,", "kept immutable", "built", "code"),
-    ("Extraction", "LLM or rules", "→ exact quotes", "planned", "llm"),
+    ("Extraction", "LLM or rules", "→ exact quotes", "partial", "llm"),
     ("Validation", "quotes → spans in", "the original text", "built", "code"),
     ("Retrieval", "GNIS candidates", "with evidence", "built", "code"),
     ("Disambiguation", "optional second", "LLM call", "planned", "llm"),
-    ("Geometry", "geodesic offset", "+ uncertainty", "partial", "code"),
+    ("Geometry", "point-radius +", "cited uncertainty", "built", "code"),
     ("Review & export", "curator decision", "→ Darwin Core", "planned", "code"),
 ]
 if len(sys.argv) > 2:

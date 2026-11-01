@@ -93,6 +93,30 @@ retrieval   candidates_found (county context: Larimer Co., from text)
   2.  186722  Youngs Peak        Summit   Delta     fuzzy_official  type=y county=n
 ```
 
+**Add a point-radius proposal** with `--propose`. Every uncertainty component is listed with
+its rule. GNIS gives only a representative point for Longs Peak, so the extent is **unknown**,
+not zero. The tool reports a lower bound and asks for the extent instead of drawing a falsely
+small circle:
+
+```console
+$ uv run localitylens baseline run --limit 1 --propose \
+      "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
+proposal    needs_information  [point-radius, policy gbif-bp-2020/1]
+  point     40.27536, -105.58948 (NAD83)   feature 204979
+  radius    unknown   (at least 1,657 m without extent)
+    extent                   unknown  unknown
+    datum                        0 m  source datum recorded (NAD83); output kept in the same datum
+    coordinate_source            0 m  gazetteer coordinate (no map measurement made)
+    distance_precision         805 m  integer with 1 digit(s); precision 1 mile, uncertainty = half
+    coordinate_precision        39 m  GNIS coordinates recorded to the nearest second
+    heading                  1,256 m  ±22.5° at 3,219 m (shown alone; combined geometrically)
+  assume    'NE' read as bearing 45° ± 22.5° from true north (BP §3.4.5 Table 4; …)
+  ask       What is the extent of Longs Peak (Summit)? GNIS gives only a representative point, …
+```
+
+With a reviewed extent (`--extent-m 500 --extent-note "…"`) the same record becomes
+`computed` with a 2,018 m radius, and the extent's source and rationale are recorded.
+
 **When the label is ambiguous, it asks instead of guessing.** A bare `m` might be miles or metres:
 
 ```console
@@ -158,16 +182,38 @@ feature_absent_from_index
 | **Context ranks, never filters** | County, state and feature type order the candidates, and each candidate carries its evidence | ✅ |
 | **Abstain rather than guess** | A bare `m` becomes "unit missing" plus a question. "Hwy 34" is not a distance. Route descriptions are labelled, not flattened. A name the gazetteer lacks is reported absent, not trimmed to a lookalike | ✅ |
 | **Humans approve before export** | A single checked status machine. Only `approved` records are exportable | ✅ |
-| **A point is not a place** | Feature extent and uncertainty components must be explicit, never assumed from a representative point | 🔜 |
+| **A point is not a place** | Without a reviewed extent (or a published default such as a spring's 3 m), the radius stays unknown. The proposal reports a lower bound and asks for the extent | ✅ |
+| **Every uncertainty number is cited** | Each component carries its rule and its source: GBIF Best Practices, the Quick Reference Guide, or the Georeferencing Calculator's reference code | ✅ |
 | **Reproducible provenance** | Checksummed, immutable source snapshots. The index records which snapshot built it | ✅ |
+
+<details>
+<summary><b>Uncertainty policy <code>gbif-bp-2020/1</code>: rules and sources</b></summary>
+
+| Component | Rule | Source |
+|---|---|---|
+| Heading | N/E/S/W ±45° · NE/SE/SW/NW ±22.5° · NNE-type ±11.25°, true north | Best Practices §3.4.5 Table 4 |
+| Distance precision | Fractions: half of 1/denominator. Decimals: exact halves, quarters or eighths, else tenths or hundredths. Integers: half of 10^max(0, digits−2) | Best Practices §3.4.6; every row of Table 5 is a test |
+| Distance + heading | `√((d+dp−d·cos α)² + (d·sin α)²) + coordinate precision`, where `dp` sums datum, extent and distance precision | Georeferencing Calculator `calculateMaxErrorDistance` |
+| Named place, distance only | Linear sum of components (plus the offset, for distance only) | Georeferencing Calculator |
+| Coordinate precision | GNIS is recorded to the nearest second: precision × √(lat m/° ² + lon m/° ²) | Georeferencing Calculator `getCoordPrecisionError` |
+| Datum | Recorded (NAD83) and not transformed → 0. Unknown → 5,359 m | Best Practices §3.4.4 |
+| Extent | Reviewed value, or a published default (spring 3 m). Otherwise **unknown** | Best Practices §3.4.1 · Quick Reference Guide Table 1 |
+| "about", "ca." | No effect on coordinates or uncertainty | Best Practices §2.2 |
+| "near", "vicinity" | No defensible default, so the record needs information | Quick Reference Guide §2.1.3.8 |
+| Heading without distance | Unbounded, so the record needs information | Quick Reference Guide §2.2.2 |
+
+Tests reproduce the published examples exactly: 10 km NE → 3.90 km (§3.4.5), a ¼° grid cell at
+the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Table 5.
+
+</details>
 
 ## 🗺️ Roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · specimen snapshot · 50-record audit | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · specimen snapshot · 50-record audit | 🚧 in progress |
 | **2 · MVP** | LLM extraction (llama.cpp, Qwen3.5) · candidate disambiguation · footprints · map review · CSV export | 🔜 |
-| **3 · Production engineering** | Persistent jobs, leases & recovery · uncertainty policy · telemetry | 🔜 |
+| **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
@@ -181,6 +227,8 @@ feature_absent_from_index
 | `extract/quantities.py` | Label numbers: `2`, `2.5`, `.5`, `1 1/2`, `1-1/2`, `½`, `1½`, keeping their written precision |
 | `ingest/normalize.py` | NFC and whitespace normalization with an exact offset map back to the original |
 | `geo/` | Exact unit conversion, 16-point compass parsing, datum-aware geodesic forward/inverse |
+| `geo/uncertainty.py` | Uncertainty policy `gbif-bp-2020/1`: heading, distance precision, coordinate precision, datum, extent defaults, each cited |
+| `geo/georeference.py` | Point-radius proposals: offset point, combined radius, lower bound, assumptions, blocking questions |
 | `domain/status.py` | Record lifecycle with a single checked transition function |
 | `data/` | Snapshot manifests and the GNIS fetcher (immutable, checksummed) |
 | `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence |
@@ -236,7 +284,7 @@ src/localitylens/
 ├── domain/       record lifecycle (status machine)
 ├── extract/      extraction contract, validation, quantity parsing
 ├── ingest/       normalization with offset maps
-├── geo/          units, compass directions, geodesy
+├── geo/          units, directions, geodesy, uncertainty policy, point-radius proposals
 ├── data/         snapshot manifests, GNIS fetcher
 ├── gazetteer/    GNIS parser, name keys, SQLite index + search
 ├── baseline/     rules extractor (the comparison system the LLM must beat)
