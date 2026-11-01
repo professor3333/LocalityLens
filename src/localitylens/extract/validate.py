@@ -12,6 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+from localitylens.extract.feature_words import type_for_word
 from localitylens.extract.quantities import parse_quantity
 from localitylens.extract.schema import (
     ExtractionOutput,
@@ -46,6 +47,7 @@ class IssueCode(StrEnum):
     DIRECTION_UNPARSED = "direction_unparsed"
     REQUIRED_COMPONENT_UNDECLARED = "required_component_undeclared"
     CONTRADICTORY_MISSING = "contradictory_missing"
+    FEATURE_TYPE_UNSUPPORTED = "feature_type_unsupported"
 
 
 @dataclass(frozen=True, slots=True)
@@ -154,11 +156,21 @@ def validate_extraction(output: ExtractionOutput, text: NormalizedText) -> Valid
             if f.feature_type_quote is not None
             else None
         )
+        feature_type = f.feature_type
+        if feature_type is not None and (
+            f.feature_type_quote is None or type_for_word(f.feature_type_quote) is not feature_type
+        ):
+            warn(
+                IssueCode.FEATURE_TYPE_UNSUPPORTED,
+                "reference_feature.feature_type",
+                f"{feature_type.value!r} is not stated by {f.feature_type_quote!r}; type dropped",
+            )
+            feature_type, type_span = None, None
         if name_span is not None:
             feature = ResolvedFeature(
                 name=name_span.text,
                 span=name_span,
-                feature_type=f.feature_type,
+                feature_type=feature_type,
                 feature_type_span=type_span,
             )
 

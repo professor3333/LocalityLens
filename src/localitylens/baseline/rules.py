@@ -21,11 +21,11 @@ from collections.abc import Iterable
 from dataclasses import dataclass, field
 from typing import Any, Final
 
+from localitylens.extract.feature_words import TYPE_WORDS
 from localitylens.extract.quantities import parse_quantity
 from localitylens.extract.schema import (
     AdminLevel,
     ExtractionOutput,
-    FeatureType,
     MissingKind,
     QualifierKind,
     RelationType,
@@ -127,23 +127,6 @@ _NOT_PLACE_WORDS: Final = frozenset(
      "colo.", "colo", "co.", "county", "near", "nr.", "at", "vicinity", "vic.", "about",
      "along", "in", "on", "the", "of", "and", "n", "s", "e", "w", "ne", "nw", "se", "sw"}
 )  # fmt: skip
-
-# Generic words that state a feature type. Only unambiguous ones: "Springs" and "Park" are
-# left out because they are usually town names in Colorado (Colorado Springs, Estes Park).
-_TYPE_WORDS: Final[dict[str, FeatureType]] = {
-    "summit": FeatureType.SUMMIT, "peak": FeatureType.SUMMIT, "pk.": FeatureType.SUMMIT,
-    "pk": FeatureType.SUMMIT, "mountain": FeatureType.SUMMIT, "mtn.": FeatureType.SUMMIT,
-    "mtn": FeatureType.SUMMIT, "mt.": FeatureType.SUMMIT, "mount": FeatureType.SUMMIT,
-    "hill": FeatureType.SUMMIT, "butte": FeatureType.SUMMIT,
-    "lake": FeatureType.LAKE, "reservoir": FeatureType.RESERVOIR, "res.": FeatureType.RESERVOIR,
-    "creek": FeatureType.STREAM, "cr.": FeatureType.STREAM, "ck.": FeatureType.STREAM,
-    "river": FeatureType.STREAM, "fork": FeatureType.STREAM,
-    "gulch": FeatureType.VALLEY, "canyon": FeatureType.VALLEY, "cyn.": FeatureType.VALLEY,
-    "valley": FeatureType.VALLEY, "draw": FeatureType.VALLEY,
-    "spring": FeatureType.SPRING, "pass": FeatureType.GAP, "ridge": FeatureType.RIDGE,
-    "basin": FeatureType.BASIN, "flat": FeatureType.FLAT, "flats": FeatureType.FLAT,
-}  # fmt: skip
-
 
 _HEAD_INITIAL_TYPES: Final = frozenset({"mt.", "mt", "mount", "lake"})
 
@@ -461,19 +444,19 @@ class RulesExtractor:
             return None
         feature: dict[str, Any] = {"name_quote": name}
         type_word = None
-        if stated_type is not None and stated_type.lower() in _TYPE_WORDS:
+        if stated_type is not None and stated_type.lower() in TYPE_WORDS:
             type_word = stated_type
         else:
             # Only the head word states a type: the last word ("Bear Creek") or a leading
             # "Mt."/"Mount"/"Lake" ("Mt. Evans", "Lake Granby"). "Gold Hill Mine" has no type.
             tokens = name.split()
-            if tokens[-1].lower() in _TYPE_WORDS:
+            if tokens[-1].lower() in TYPE_WORDS:
                 type_word = tokens[-1]
             elif len(tokens) > 1 and tokens[0].lower() in _HEAD_INITIAL_TYPES:
                 type_word = tokens[0]
         if type_word is not None:
             feature |= {
-                "feature_type": _TYPE_WORDS[type_word.lower()],
+                "feature_type": TYPE_WORDS[type_word.lower()],
                 "feature_type_quote": type_word,
             }
         return feature

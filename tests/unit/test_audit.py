@@ -111,3 +111,21 @@ def test_audit_cli_end_to_end(
     assert main(["audit", "rules", "--sample", str(audit_dir / "audit-50.json"),
                  "--index", str(index_path), "--out", str(reports)]) == 0  # fmt: skip
     assert (reports / "audit-50-rules-1.json").is_file()
+
+
+def test_llm_audit_records_failures_and_continues(index_path: Path) -> None:
+    from tests.unit.test_llm_extraction import RELEASE, FakeClient
+
+    from localitylens.evaluation.audit import run_llm
+
+    sample = _sample(2)
+    good = json.dumps({"relation": "no_locality"})
+    client = FakeClient("{bad", "{bad", good)  # record 1 fails twice; record 2 succeeds
+    report = run_llm(sample, index_path, client, RELEASE)
+    first, second = report["records"]
+    assert first["proposal"] == "failed:malformed_model_output"
+    assert first["trace"]["attempts"] == 2
+    assert second["relation"] == "no_locality"
+    assert report["system"] == "llm"
+    assert report["prompt"].startswith("extraction-v1 sha256=")
+    assert "locality" not in json.dumps(first["trace"])  # traces hold hashes and counts only

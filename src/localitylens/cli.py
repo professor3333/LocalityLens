@@ -98,6 +98,59 @@ def _audit_rules(args: argparse.Namespace) -> int:
     return 0
 
 
+def _model_fetch(args: argparse.Namespace) -> int:
+    from localitylens.data.model_fetch import copy_progress, fetch_model
+    from localitylens.release import load_release
+
+    pin = load_release(Path(args.release)).model
+    print(f"{pin.id} @ {pin.upstream_revision[:12]}  {pin.gguf_repo}/{pin.gguf_file}")
+    path = fetch_model(Path(args.models_dir), pin, progress=copy_progress(pin.gguf_size_bytes))
+    print(f"verified {path}  sha256={pin.gguf_sha256}")
+    return 0
+
+
+def _model_check(args: argparse.Namespace) -> int:
+    from localitylens.extract.llm_client import LlamaServerClient
+    from localitylens.release import load_release
+
+    release = load_release(Path(args.release))
+    props = LlamaServerClient(args.url).props()
+    model_path = str(props.get("model_path", ""))
+    build = str(props.get("build_info", ""))
+    n_ctx = (props.get("default_generation_settings") or {}).get("n_ctx")
+    checks = {
+        "model file": (Path(model_path).name == release.model.gguf_file, model_path),
+        "llama.cpp build": (build == release.server.llama_cpp_build, build),
+        "context": (n_ctx == release.context_budget_tokens, n_ctx),
+    }
+    for name, (ok, value) in checks.items():
+        print(f"  {'ok ' if ok else 'BAD'}  {name:<16} {value}")
+    return 0 if all(ok for ok, _ in checks.values()) else 1
+
+
+def _audit_llm(args: argparse.Namespace) -> int:
+    from localitylens.evaluation.audit import load_sample, run_llm, write_report
+    from localitylens.extract.llm_client import LlamaServerClient
+    from localitylens.release import load_release
+
+    client = LlamaServerClient(args.url)
+    props = client.props()
+    server = {
+        "build_info": props.get("build_info"),
+        "model_file": Path(str(props.get("model_path", ""))).name,
+        "n_ctx": (props.get("default_generation_settings") or {}).get("n_ctx"),
+    }
+    release = load_release(Path(args.release))
+    report = run_llm(
+        load_sample(Path(args.sample)), Path(args.index), client, release, server=server
+    )
+    json_path, md_path = write_report(report, Path(args.out))
+    for name, counts in report["counts"].items():
+        print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
+    print(f"  report  {md_path}\n  data    {json_path}")
+    return 0
+
+
 def _build(args: argparse.Namespace) -> int:
     from localitylens.data.manifest import load_manifest
     from localitylens.gazetteer.index import build_index
@@ -140,13 +193,28 @@ def _baseline_run(args: argparse.Namespace) -> int:
     import json
 
     from localitylens.baseline.rules import Lexicon, RulesExtractor
+    from localitylens.extract.llm_client import ModelCallError
     from localitylens.extract.validate import Severity
     from localitylens.gazetteer.index import Gazetteer
-    from localitylens.pipeline.interpret import interpret
+    from localitylens.pipeline.interpret import Extractor, interpret
 
     with Gazetteer(Path(args.index)) as gaz:
-        extractor = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
-        result = interpret(args.text, extractor, gaz, supplied_county=args.county, limit=args.limit)
+        extractor: Extractor
+        if getattr(args, "system", "rules") == "llm":
+            from localitylens.extract.llm import LLMExtractor
+            from localitylens.extract.llm_client import LlamaServerClient
+            from localitylens.release import load_release
+
+            extractor = LLMExtractor(LlamaServerClient(args.url), load_release(Path(args.release)))
+        else:
+            extractor = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
+        try:
+            result = interpret(
+                args.text, extractor, gaz, supplied_county=args.county, limit=args.limit
+            )
+        except ModelCallError as exc:
+            print(f"failed     {exc.category.value}: {exc.detail}", file=sys.stderr)
+            return 3
 
     interp = result.validation.interpretation
     retrieval = result.retrieval
@@ -316,6 +384,25 @@ def main(argv: list[str] | None = None) -> int:
     aru.add_argument("--index", default="data/derived/gazetteer.sqlite")
     aru.add_argument("--out", default="eval/reports")
     aru.set_defaults(func=_audit_rules)
+    alm = aud.add_parser("llm", help="run LLM extraction on the audit sample (llama-server)")
+    alm.add_argument("--sample", default="eval/audit/audit-50.json")
+    alm.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    alm.add_argument("--out", default="eval/reports")
+    alm.add_argument("--url", default="http://127.0.0.1:8080")
+    alm.add_argument("--release", default="release/manifest.json")
+    alm.set_defaults(func=_audit_llm)
+
+    mod = sub.add_parser("model", help="pinned local LLM").add_subparsers(
+        dest="model_command", required=True
+    )
+    mf = mod.add_parser("fetch", help="download the pinned GGUF and verify its sha256")
+    mf.add_argument("--release", default="release/manifest.json")
+    mf.add_argument("--models-dir", default="models")
+    mf.set_defaults(func=_model_fetch)
+    mc = mod.add_parser("check", help="check the running llama-server against the manifest")
+    mc.add_argument("--release", default="release/manifest.json")
+    mc.add_argument("--url", default="http://127.0.0.1:8080")
+    mc.set_defaults(func=_model_check)
 
     gaz = sub.add_parser("gazetteer", help="GNIS name index").add_subparsers(
         dest="gaz_command", required=True
@@ -348,6 +435,21 @@ def main(argv: list[str] | None = None) -> int:
     br.add_argument("--extent-m", type=float, help="reviewed extent (geographic radial), metres")
     br.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
     br.set_defaults(func=_baseline_run)
+
+    it = sub.add_parser("interpret", help="interpret one locality with the rules or the LLM")
+    it.add_argument("text")
+    it.add_argument("--system", choices=["rules", "llm"], default="llm")
+    it.add_argument("--url", default="http://127.0.0.1:8080", help="local llama-server")
+    it.add_argument("--release", default="release/manifest.json")
+    it.add_argument("--county", help="county from the record's structured fields")
+    it.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    it.add_argument("--limit", type=int, default=5)
+    it.add_argument("--json", action="store_true", help="machine-readable output")
+    it.add_argument("--propose", action="store_true", help="add a point-radius proposal")
+    it.add_argument("--feature-id", type=int, help="candidate to propose from (default: top)")
+    it.add_argument("--extent-m", type=float, help="reviewed extent (geographic radial), metres")
+    it.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
+    it.set_defaults(func=_baseline_run)
 
     args = parser.parse_args(argv)
     result: int = args.func(args)

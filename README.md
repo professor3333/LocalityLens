@@ -142,6 +142,42 @@ quote       "5 mi up Big Thompson Canyon from Loveland" [0:41]
 missing     route_geometry
 ```
 
+### Run the local LLM
+
+The model runs on your machine through llama.cpp. No API, no network at inference time. The
+model, its quantisation, the prompt and the generation settings are pinned with checksums in
+[`release/manifest.json`](release/manifest.json):
+
+```bash
+brew install llama.cpp                                     # or build llama.cpp from source
+uv run localitylens model fetch                            # 2.74 GB GGUF, sha256-verified
+llama-server -m models/Qwen3.5-4B-Q4_K_M.gguf \
+  --host 127.0.0.1 --port 8080 -c 4096 -np 1 --no-context-shift
+uv run localitylens model check                            # server matches the manifest
+```
+
+The same label, read by Qwen3.5-4B instead of the rules. The output is checked the same way:
+every quote is located in the text, every number is parsed by code, and there is no field in
+which a coordinate could be returned:
+
+```console
+$ uv run localitylens interpret "Larimer Co., Colo., 2 mi NE of Longs Peak summit." --limit 2
+extractor   llm-x1-qwen3.5-4b-q4km
+relation    distance_and_direction
+quote       "2 mi NE of Longs Peak summit" [20:48]
+feature     Longs Peak [31:41] type=summit
+distance    2 mile [20:21]
+direction   NE [25:27]
+admin       county "Larimer Co." · state "Colo."
+missing     none
+retrieval   candidates_found (county context: Larimer Co., from text)
+  1.  204979  Longs Peak       Summit   Boulder   exact_official   type=y county=n
+  2.  186722  Youngs Peak      Summit   Delta     fuzzy_official   type=y county=n
+```
+
+<sub>Measured on an Apple M1 with 8 GB: llama-server's own footprint is 629 MB on top of the 2.74 GB
+memory-mapped model file. The prompt is 1,500 tokens of the 4,096-token budget.</sub>
+
 ### Gazetteer search
 
 **Abbreviated name, county from the label.** The right peak is found. GNIS files Longs Peak
@@ -177,7 +213,7 @@ feature_absent_from_index
 
 | Guarantee | How it is enforced today | |
 |---|---|:-:|
-| **The LLM never produces coordinates** | The extraction schema rejects unknown fields. Coordinates come only from `localitylens.geo` | ✅ |
+| **The LLM never produces coordinates** | The output schema has no coordinate field and rejects unknown ones, free-text questions are scanned for coordinates, and the model server is loopback-only with no tools. Coordinates come only from `localitylens.geo` | ✅ |
 | **Every claim cites the label** | Quotes must be found in the text and are mapped to half-open `[start, end)` spans of the *original* string | ✅ |
 | **Swapped or invented details are caught** | Code re-parses quoted directions and units and rejects mismatches. A bare `m` (miles or metres?) cannot be asserted | ✅ |
 | **Missing ≠ zero** | Each relation's parts must be present or explicitly declared missing. GNIS `0.0` coordinates are stored as null | ✅ |
@@ -223,15 +259,20 @@ is accounted for:
      50  audit sample: seeded, one record per group → eval/audit/
 ```
 
-The rules baseline has run on the sample ([report](eval/reports/audit-50-rules-1.md),
-[findings](eval/reports/audit-50-rules-1-findings.md)). These are **system outcomes, not
-accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit/worksheet.csv).
+Both systems have run on the sample: the rules baseline
+([report](eval/reports/audit-50-rules-1.md), [findings](eval/reports/audit-50-rules-1-findings.md))
+and Qwen3.5-4B ([report](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.md),
+[findings](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km-findings.md)). These are **system
+outcomes, not accuracy**: correctness waits for blind annotation of the
+[worksheet](eval/audit/worksheet.csv).
 
-| Stage | Rules baseline on 50 real labels (counts) |
-|---|---|
-| Relation read | named feature 22 · distance + direction 14 · direction only 10 · other 2 · distance only 1 · route 1 |
-| Retrieval | candidates found 33 · feature absent from GNIS 14 · no reference feature 3 |
-| Proposal | needs information 46 · unsupported 3 · computed 1 |
+| On 50 real labels | Rules `rules-1` | LLM `llm-x1g2` (Qwen3.5-4B Q4_K_M) |
+|---|---|---|
+| Relation read | named feature 22 · distance + direction 14 · direction only 10 · other 2 · distance only 1 · route 1 | distance + direction 24 · named feature 13 · no locality 7 · route 5 · itinerary 1 |
+| Rejected by validation | 0 | 9 (inexact quotes, contradictions, unparseable numbers) |
+| Retrieval | candidates found 33 · absent from GNIS 14 · no reference 3 | candidates found 22 · absent from GNIS 12 · no reference 7 |
+| Proposal | needs information 46 · unsupported 3 · computed 1 | needs information 27 · unsupported 13 · computed 1 |
+| Time per record | milliseconds | p50 10.2 s · p95 14.7 s (Apple M1, 8 GB) |
 
 <details>
 <summary><b>What the audit already shows</b></summary>
@@ -243,6 +284,12 @@ accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit
   critical path.
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
   places, and leading words ("Above", "Near") absorbed into names.
+- **The LLM reads what the rules miss, and makes its own errors:** it handles "air mi",
+  separates "Above"/"Near" from names and flags more route descriptions. It also called 7 labels
+  that name a place "no locality", and 9 of its outputs were rejected by validation (as designed).
+- **A grammar lesson:** the first LLM run failed 5 times because the decoding grammar allowed
+  combinations that validation rejects, and greedy retries repeat themselves. The grammar now
+  admits only valid combinations. The failed run is [kept](eval/reports/audit-50-llm-x1-qwen3.5-4b-q4km.md).
 - **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
   `Unknown-E` or two counties (`Gunnison/Pitkin`).
 
@@ -252,8 +299,8 @@ accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · 🚧 50-record audit (sampled, rules run; annotation and LLM side pending) | 🚧 in progress |
-| **2 · MVP** | LLM extraction (llama.cpp, Qwen3.5) · candidate disambiguation · footprints · map review · CSV export | 🔜 |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · 🚧 50-record audit (rules and LLM run; scoring waits for annotation) | 🚧 in progress |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
@@ -265,6 +312,10 @@ accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit
 |---|---|
 | `extract/schema.py` | Typed extractor output (quotes only) and the validated `Interpretation` |
 | `extract/validate.py` | Locates quotes, maps spans, cross-checks units and directions, enforces present-or-missing |
+| `extract/prompt.py` · `extract/prompts/` | Versioned prompt files, label text fenced as data, SHA-256 pinned in the release manifest |
+| `extract/llm_client.py` | The single model interface: llama-server on loopback, exact token count before each call, JSON-schema output |
+| `extract/llm.py` | LLM extractor: one bounded retry, categorized failures (`malformed_model_output`, `model_supplied_coordinates`, `context_budget_exceeded` …) |
+| `release.py` | Release manifest: model and GGUF checksums, llama.cpp build, generation settings, prompt, schema, policy and snapshot versions |
 | `extract/quantities.py` | Label numbers: `2`, `2.5`, `.5`, `1 1/2`, `1-1/2`, `½`, `1½`, keeping their written precision |
 | `ingest/normalize.py` | NFC and whitespace normalization with an exact offset map back to the original |
 | `ingest/dwca.py` | Darwin Core Archive reader that streams from the zip, driven by `meta.xml`, with strict header and field counts |
@@ -279,7 +330,7 @@ accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `ingest scan` · `audit sample` · `audit rules` · `gazetteer build` · `gazetteer search` · `baseline run` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -289,6 +340,7 @@ accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit
 |---|---|---|
 | **USGS GNIS**: Domestic Names (CO) + All Names (National) | [`gnis-co-2026-09-29`](data/manifests/gnis-co-2026-09-29.json): 26,429 features · 4,190 variant names | U.S. public domain. *"Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data."* |
 | **University of Colorado Herbarium** vascular plants via GBIF | [`gbif-cu-2026-11-01`](data/manifests/gbif-cu-2026-11-01.json): 311,988 records, the whole dataset as a Darwin Core Archive · DOI [10.15468/dl.hqxjjf](https://doi.org/10.15468/dl.hqxjjf) · 105,544 eligible after screening | CC BY 4.0. Cite as *GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf* |
+| **Qwen3.5-4B** (Qwen), GGUF by unsloth | [`release/manifest.json`](release/manifest.json): `Qwen3.5-4B-Q4_K_M.gguf` at revision `e87f1764`, sha256 `00fe7986…` | Apache-2.0. Weights are downloaded, never committed |
 
 Raw files are not committed. Each manifest records URLs, SHA-256 hashes, sizes and
 publication dates, so a snapshot can be re-downloaded and verified byte for byte. The GBIF
@@ -329,10 +381,10 @@ CI runs lint, format, strict mypy and the full test suite on every push and pull
 ```text
 src/localitylens/
 ├── domain/       record lifecycle (status machine)
-├── extract/      extraction contract, validation, quantity parsing
+├── extract/      extraction contract, validation, quantities, LLM client, prompts/
 ├── ingest/       normalization, Darwin Core Archive reader, specimen screening
 ├── geo/          units, directions, geodesy, uncertainty policy, point-radius proposals
-├── data/         snapshot manifests, GNIS fetcher, GBIF download client
+├── data/         snapshot manifests, GNIS + GBIF fetchers, model download
 ├── gazetteer/    GNIS parser, name keys, SQLite index + search
 ├── baseline/     rules extractor (the comparison system the LLM must beat)
 ├── resolve/      candidate retrieval with admin context
@@ -344,6 +396,7 @@ tests/
 ├── property/     Hypothesis invariants
 └── support/      shared fixture builders
 data/manifests/   committed snapshot manifests (raw data is gitignored)
+release/          release manifest: model, prompt, settings and versions, all pinned
 eval/audit/       50-record audit sample + annotation worksheet (CC BY 4.0 records)
 eval/reports/     system reports, kept even when results are poor
 scripts/          generators for the README banner and pipeline diagram

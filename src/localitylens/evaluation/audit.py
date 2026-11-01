@@ -13,14 +13,21 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import time
 from collections import Counter
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from pathlib import Path
-from typing import Any, Final
+from typing import TYPE_CHECKING, Any, Final
 
 from pydantic import BaseModel, ConfigDict
 
+from localitylens.gazetteer.index import Gazetteer
 from localitylens.ingest.specimens import SpecimenRecord
+
+if TYPE_CHECKING:
+    from localitylens.extract.llm_client import ModelClient
+    from localitylens.pipeline.interpret import Extractor
+    from localitylens.release import ReleaseManifest
 
 AUDIT_VERSION: Final = "1"
 WORKSHEET_COLUMNS: Final = (
@@ -93,89 +100,171 @@ def load_sample(path: Path) -> AuditSample:
     return AuditSample.model_validate_json(path.read_text(encoding="utf-8"))
 
 
-def run_rules(sample: AuditSample, index: Path, limit: int = 5) -> dict[str, Any]:
-    """Run the rules baseline + uncertainty policy on every audited record (model input only)."""
-    from localitylens.baseline.rules import Lexicon, RulesExtractor
+def run_system(
+    sample: AuditSample,
+    index: Path,
+    system: str,
+    make_extractor: Callable[[Gazetteer], Extractor],
+    note: str,
+    limit: int = 5,
+    meta: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Run one extractor + retrieval + uncertainty policy on every audited record.
+
+    Only the model-input allowlist reaches the extractor. A categorized extraction failure is
+    recorded for that record and the run continues.
+    """
+    from localitylens.extract.llm_client import ModelCallError
     from localitylens.extract.validate import Severity
-    from localitylens.gazetteer.index import Gazetteer
     from localitylens.geo import uncertainty as policy
     from localitylens.geo.georeference import propose
     from localitylens.pipeline.interpret import interpret
 
     rows: list[dict[str, Any]] = []
     with Gazetteer(index) as gaz:
-        extractor = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
+        extractor = make_extractor(gaz)
         gazetteer_snapshot = gaz.snapshot_id
         for item in sample.items:
             model_input = item.record.model_input()  # the allowlist is the only door in
-            result = interpret(
-                model_input.locality,
-                extractor,
-                gaz,
-                supplied_county=model_input.county or None,
-                limit=limit,
-            )
+            row: dict[str, Any] = {
+                "audit_id": item.audit_id,
+                "locality": model_input.locality,
+                "county": model_input.county,
+            }
+            started = time.perf_counter()
+            try:
+                result = interpret(
+                    model_input.locality,
+                    extractor,
+                    gaz,
+                    supplied_county=model_input.county or None,
+                    limit=limit,
+                )
+            except ModelCallError as exc:
+                row |= {"relation": None, "reference": None, "validation_errors": [],
+                        "retrieval": None, "candidates": 0, "top_candidate": None,
+                        "proposal": f"failed:{exc.category.value}",
+                        "radius_lower_bound_m": None, "radius_m": None}  # fmt: skip
+                _add_trace(row, extractor, started)
+                rows.append(row)
+                continue
             interp = result.validation.interpretation
             retrieval = result.retrieval
             top = retrieval.candidates[0] if retrieval and retrieval.candidates else None
             proposal = propose(interp, top) if interp is not None else None
-            rows.append(
-                {
-                    "audit_id": item.audit_id,
-                    "locality": model_input.locality,
-                    "county": model_input.county,
-                    "relation": result.extraction.relation.value,
-                    "reference": (
-                        interp.reference_feature.name
-                        if interp is not None and interp.reference_feature is not None
-                        else None
-                    ),
-                    "validation_errors": [
-                        i.code.value
-                        for i in result.validation.issues
-                        if i.severity is Severity.ERROR
-                    ],
-                    "retrieval": retrieval.outcome.value if retrieval else None,
-                    "candidates": len(retrieval.candidates) if retrieval else 0,
-                    "top_candidate": None
-                    if top is None
-                    else {
-                        "feature_id": top.feature_id,
-                        "name": top.official_name,
-                        "class": top.feature_class,
-                        "county": top.county_name,
-                        "match": top.match_kind.value,
-                    },
-                    "proposal": proposal.outcome.value if proposal else None,
-                    "radius_lower_bound_m": (
-                        round(proposal.radius_lower_bound_m)
-                        if proposal and proposal.radius_lower_bound_m is not None
-                        else None
-                    ),
-                    "radius_m": (
-                        round(proposal.radius_m) if proposal and proposal.radius_m else None
-                    ),
-                }
-            )
+            row |= {
+                "relation": result.extraction.relation.value,
+                "reference": (
+                    interp.reference_feature.name
+                    if interp is not None and interp.reference_feature is not None
+                    else None
+                ),
+                "validation_errors": [
+                    i.code.value for i in result.validation.issues if i.severity is Severity.ERROR
+                ],
+                "retrieval": retrieval.outcome.value if retrieval else None,
+                "candidates": len(retrieval.candidates) if retrieval else 0,
+                "top_candidate": None
+                if top is None
+                else {
+                    "feature_id": top.feature_id,
+                    "name": top.official_name,
+                    "class": top.feature_class,
+                    "county": top.county_name,
+                    "match": top.match_kind.value,
+                },
+                "proposal": proposal.outcome.value if proposal else "invalid_extraction",
+                "radius_lower_bound_m": (
+                    round(proposal.radius_lower_bound_m)
+                    if proposal and proposal.radius_lower_bound_m is not None
+                    else None
+                ),
+                "radius_m": round(proposal.radius_m) if proposal and proposal.radius_m else None,
+            }
+            _add_trace(row, extractor, started)
+            rows.append(row)
     return {
         "audit_version": sample.audit_version,
-        "system": "rules",
+        "system": system,
         "extractor_version": extractor.version,
         "gazetteer_snapshot": gazetteer_snapshot,
         "specimen_snapshot": sample.snapshot_id,
         "uncertainty_policy": policy.POLICY_ID,
         "seed": sample.seed,
-        "note": (
-            "System output only. Correctness needs the owner's annotations; the top candidate is "
-            "the rules ranking, not a reviewed choice, and no extent was supplied."
-        ),
+        **(meta or {}),
+        "note": note,
         "counts": {
-            "relation": dict(Counter(r["relation"] for r in rows).most_common()),
+            "relation": dict(Counter(str(r["relation"]) for r in rows).most_common()),
             "retrieval": dict(Counter(str(r["retrieval"]) for r in rows).most_common()),
             "proposal": dict(Counter(str(r["proposal"]) for r in rows).most_common()),
         },
         "records": rows,
     }
+
+
+def _add_trace(row: dict[str, Any], extractor: Extractor, started: float) -> None:
+    trace = getattr(extractor, "last_trace", None)
+    if trace is None:
+        return  # deterministic rules: no model call to describe
+    row["trace"] = {
+        "prompt_sha256": trace.prompt_sha256,
+        "prompt_tokens": trace.prompt_tokens,
+        "completion_tokens": trace.completion_tokens,
+        "attempts": trace.attempts,
+        "errors": trace.errors,
+        "model_seconds": round(trace.seconds, 2),
+        "record_seconds": round(time.perf_counter() - started, 2),
+    }
+
+
+_NOTE_TAIL: Final = (
+    "the top candidate is the system's ranking, not a reviewed choice, and no extent was supplied."
+)
+
+
+def run_rules(sample: AuditSample, index: Path, limit: int = 5) -> dict[str, Any]:
+    from localitylens.baseline.rules import Lexicon, RulesExtractor
+
+    return run_system(
+        sample,
+        index,
+        "rules",
+        lambda gaz: RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys())),
+        "System output only. Correctness needs the owner's annotations; the top candidate is "
+        "the rules ranking, not a reviewed choice, and no extent was supplied.",
+        limit,
+    )
+
+
+def run_llm(
+    sample: AuditSample,
+    index: Path,
+    client: ModelClient,
+    release: ReleaseManifest,
+    limit: int = 5,
+    server: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    from localitylens.extract.llm import LLMExtractor
+
+    meta = {
+        "model": f"{release.model.id}@{release.model.upstream_revision[:12]}",
+        "gguf": f"{release.model.gguf_file} sha256={release.model.gguf_sha256}",
+        "prompt": f"{release.prompt.version} sha256={release.prompt.sha256}",
+        "generation": release.generation.model_dump(),
+        "server": server or {},
+    }
+    return run_system(
+        sample,
+        index,
+        "llm",
+        lambda _gaz: LLMExtractor(client, release),
+        "System output only. Correctness needs the owner's annotations; " + _NOTE_TAIL,
+        limit,
+        meta,
+    )
+
+
+_TITLES: Final = {"rules": "rules baseline", "llm": "LLM extraction"}
 
 
 def write_report(report: dict[str, Any], directory: Path) -> tuple[Path, Path]:
@@ -184,7 +273,8 @@ def write_report(report: dict[str, Any], directory: Path) -> tuple[Path, Path]:
     json_path = directory / f"{stem}.json"
     json_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", "utf-8")
     md = [
-        f"# 50-record audit: {report['system']} baseline (`{report['extractor_version']}`)",
+        f"# 50-record audit: {_TITLES.get(report['system'], report['system'])} "
+        f"(`{report['extractor_version']}`)",
         "",
         f"Specimens `{report['specimen_snapshot']}` · gazetteer `{report['gazetteer_snapshot']}` "
         f"· policy `{report['uncertainty_policy']}` · seed `{report['seed']}`",

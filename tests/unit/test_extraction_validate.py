@@ -182,3 +182,35 @@ def test_quote_outside_relation_is_a_warning() -> None:
     result = validate_extraction(out, normalize(EXAMPLE))
     assert result.ok
     assert any(i.code is IssueCode.QUOTE_OUTSIDE_RELATION for i in result.issues)
+
+
+def test_asserted_feature_type_needs_a_type_word() -> None:
+    from localitylens.extract.validate import IssueCode, Severity
+
+    text = normalize("5 mi SSW of Paonia")
+    out = ExtractionOutput.model_validate(
+        {"relation": "named_feature",
+         "reference_feature": {"name_quote": "Paonia", "feature_type": "trail",
+                               "feature_type_quote": "Paonia"}}
+    )  # fmt: skip
+    result = validate_extraction(out, text)
+    assert result.interpretation is not None  # the record survives
+    assert result.interpretation.reference_feature is not None
+    assert result.interpretation.reference_feature.feature_type is None  # the claim is dropped
+    issue = next(i for i in result.issues if i.code is IssueCode.FEATURE_TYPE_UNSUPPORTED)
+    assert issue.severity is Severity.WARNING
+
+
+def test_a_stated_type_word_is_kept() -> None:
+    text = normalize("Testa Cr.")
+    out = ExtractionOutput.model_validate(
+        {"relation": "named_feature",
+         "reference_feature": {"name_quote": "Testa Cr.", "feature_type": "stream",
+                               "feature_type_quote": "Cr."}}
+    )  # fmt: skip
+    result = validate_extraction(out, text)
+    assert result.interpretation is not None
+    feature = result.interpretation.reference_feature
+    assert feature is not None
+    assert feature.feature_type is not None
+    assert feature.feature_type.value == "stream"
