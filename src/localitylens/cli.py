@@ -43,6 +43,61 @@ def _fetch_gbif(args: argparse.Namespace) -> int:
     return 0
 
 
+def _ingest_scan(args: argparse.Namespace) -> int:
+    from localitylens.ingest.specimens import ExclusionReason, ScreenSummary, iter_snapshot
+
+    summary = ScreenSummary(snapshot_id="")
+    for _ in iter_snapshot(Path(args.snapshot), summary):
+        pass
+    print(f"{summary.snapshot_id}: {summary.total:,} records")
+    print(
+        f"  eligible            {summary.eligible:>8,}  in {len(summary.groups):,} locality groups"
+    )
+    for reason in ExclusionReason:
+        print(f"  {reason.value:<22}{summary.excluded[reason]:>8,}")
+    return 0
+
+
+def _audit_sample(args: argparse.Namespace) -> int:
+    from localitylens.evaluation.audit import AuditSample, sample_groups, write_sample
+    from localitylens.ingest.specimens import (
+        GROUPING_VERSION,
+        SCREEN_VERSION,
+        ScreenSummary,
+        iter_snapshot,
+    )
+
+    summary = ScreenSummary(snapshot_id="")
+    items, records, groups = sample_groups(
+        iter_snapshot(Path(args.snapshot), summary), args.n, args.seed
+    )
+    sample = AuditSample(
+        snapshot_id=summary.snapshot_id,
+        screen_version=SCREEN_VERSION,
+        grouping_version=GROUPING_VERSION,
+        seed=args.seed,
+        eligible_records=records,
+        eligible_groups=groups,
+        items=tuple(items),
+    )
+    sample_path, worksheet = write_sample(sample, Path(args.out))
+    print(f"{len(items)} of {groups:,} locality groups ({records:,} eligible records)")
+    print(f"  sample     {sample_path}")
+    print(f"  worksheet  {worksheet}  (annotate before opening any system report)")
+    return 0
+
+
+def _audit_rules(args: argparse.Namespace) -> int:
+    from localitylens.evaluation.audit import load_sample, run_rules, write_report
+
+    report = run_rules(load_sample(Path(args.sample)), Path(args.index))
+    json_path, md_path = write_report(report, Path(args.out))
+    for name, counts in report["counts"].items():
+        print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
+    print(f"  report  {md_path}\n  data    {json_path}")
+    return 0
+
+
 def _build(args: argparse.Namespace) -> int:
     from localitylens.data.manifest import load_manifest
     from localitylens.gazetteer.index import build_index
@@ -239,6 +294,28 @@ def main(argv: list[str] | None = None) -> int:
     fb.add_argument("--manifest-dir", default="data/manifests")
     fb.add_argument("--poll-seconds", type=float, default=60.0)
     fb.set_defaults(func=_fetch_gbif)
+
+    ing = sub.add_parser("ingest", help="specimen records").add_subparsers(
+        dest="ingest_command", required=True
+    )
+    sc = ing.add_parser("scan", help="screen a GBIF snapshot and count exclusions by reason")
+    sc.add_argument("--snapshot", default="data/raw/gbif/2026-11-01")
+    sc.set_defaults(func=_ingest_scan)
+
+    aud = sub.add_parser("audit", help="50-record feasibility audit").add_subparsers(
+        dest="audit_command", required=True
+    )
+    asm = aud.add_parser("sample", help="seeded sample of locality groups + worksheet")
+    asm.add_argument("--snapshot", default="data/raw/gbif/2026-11-01")
+    asm.add_argument("--n", type=int, default=50)
+    asm.add_argument("--seed", default="audit-50/1")
+    asm.add_argument("--out", default="eval/audit")
+    asm.set_defaults(func=_audit_sample)
+    aru = aud.add_parser("rules", help="run the rules baseline on the audit sample")
+    aru.add_argument("--sample", default="eval/audit/audit-50.json")
+    aru.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    aru.add_argument("--out", default="eval/reports")
+    aru.set_defaults(func=_audit_rules)
 
     gaz = sub.add_parser("gazetteer", help="GNIS name index").add_subparsers(
         dest="gaz_command", required=True

@@ -187,6 +187,7 @@ feature_absent_from_index
 | **A point is not a place** | Without a reviewed extent (or a published default such as a spring's 3 m), the radius stays unknown. The proposal reports a lower bound and asks for the extent | ✅ |
 | **Every uncertainty number is cited** | Each component carries its rule and its source: GBIF Best Practices, the Quick Reference Guide, or the Georeferencing Calculator's reference code | ✅ |
 | **Reproducible provenance** | Checksummed, immutable source snapshots. The index records which snapshot built it | ✅ |
+| **No answer leakage** | Coordinate and georeference columns are never read from the archive. A model sees only an allowlist: label text, state, county, country | ✅ |
 
 <details>
 <summary><b>Uncertainty policy <code>gbif-bp-2020/1</code>: rules and sources</b></summary>
@@ -209,11 +210,49 @@ the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Tab
 
 </details>
 
+## 🔬 Feasibility audit
+
+The first milestone is decided on real labels, not synthetic ones. Every record in the snapshot
+is accounted for:
+
+```text
+311,988  GBIF records (CU Herbarium, DOI 10.15468/dl.hqxjjf)
+206,444    excluded, each with a reason (other state, no state, withheld, ...)
+105,544  eligible: Colorado, not withheld, real locality text
+ 40,444  distinct locality groups (same wording, same county)
+     50  audit sample: seeded, one record per group → eval/audit/
+```
+
+The rules baseline has run on the sample ([report](eval/reports/audit-50-rules-1.md),
+[findings](eval/reports/audit-50-rules-1-findings.md)). These are **system outcomes, not
+accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit/worksheet.csv).
+
+| Rules baseline on 50 real labels | |
+|---|---|
+| Relation read | named feature 22 · distance + direction 14 · direction only 10 · other 2 · distance only 1 · route 1 |
+| Retrieval | candidates found 33 · feature absent from GNIS 14 · no reference feature 3 |
+| Proposal | needs information 46 · unsupported 3 · computed 1 |
+
+<details>
+<summary><b>What the audit already shows</b></summary>
+
+- **Real labels are multi-clause.** Many chain a forest, a range, a road and an offset in one
+  string. The rules read one clause, and not always the most specific one.
+- **Unknown extent is the main blocker.** Most references are towns, summits and streams with a
+  single GNIS point, so honest proposals ask for an extent. A reviewed-extent store is on the
+  critical path.
+- **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
+  places, and leading words ("Above", "Near") absorbed into names.
+- **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
+  `Unknown-E` or two counties (`Gunnison/Pitkin`).
+
+</details>
+
 ## 🗺️ Roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · 50-record audit | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · 🚧 50-record audit (sampled, rules run; annotation and LLM side pending) | 🚧 in progress |
 | **2 · MVP** | LLM extraction (llama.cpp, Qwen3.5) · candidate disambiguation · footprints · map review · CSV export | 🔜 |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
@@ -228,6 +267,9 @@ the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Tab
 | `extract/validate.py` | Locates quotes, maps spans, cross-checks units and directions, enforces present-or-missing |
 | `extract/quantities.py` | Label numbers: `2`, `2.5`, `.5`, `1 1/2`, `1-1/2`, `½`, `1½`, keeping their written precision |
 | `ingest/normalize.py` | NFC and whitespace normalization with an exact offset map back to the original |
+| `ingest/dwca.py` | Darwin Core Archive reader that streams from the zip, driven by `meta.xml`, with strict header and field counts |
+| `ingest/specimens.py` | Screening with exclusion reasons, model-input allowlist, duplicate-locality groups |
+| `evaluation/audit.py` | Seeded per-group audit sample, blind annotation worksheet, rules-baseline report |
 | `geo/` | Exact unit conversion, 16-point compass parsing, datum-aware geodesic forward/inverse |
 | `geo/uncertainty.py` | Uncertainty policy `gbif-bp-2020/1`: heading, distance precision, coordinate precision, datum, extent defaults, each cited |
 | `geo/georeference.py` | Point-radius proposals: offset point, combined radius, lower bound, assumptions, blocking questions |
@@ -237,7 +279,7 @@ the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Tab
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `gazetteer build` · `gazetteer search` · `baseline run` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `ingest scan` · `audit sample` · `audit rules` · `gazetteer build` · `gazetteer search` · `baseline run` |
 
 </details>
 
@@ -246,13 +288,13 @@ the equator → 39,226 m (Quick Reference Guide Table 1), and all 14 rows of Tab
 | Source | Snapshot | Terms |
 |---|---|---|
 | **USGS GNIS**: Domestic Names (CO) + All Names (National) | [`gnis-co-2026-09-29`](data/manifests/gnis-co-2026-09-29.json): 26,429 features · 4,190 variant names | U.S. public domain. *"Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data."* |
-| **University of Colorado Herbarium** vascular plants via GBIF | [`gbif-cu-2026-11-01`](data/manifests/gbif-cu-2026-11-01.json): 311,988 records, the whole dataset as a Darwin Core Archive · DOI [10.15468/dl.hqxjjf](https://doi.org/10.15468/dl.hqxjjf) | CC BY 4.0. Cite as *GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf* |
+| **University of Colorado Herbarium** vascular plants via GBIF | [`gbif-cu-2026-11-01`](data/manifests/gbif-cu-2026-11-01.json): 311,988 records, the whole dataset as a Darwin Core Archive · DOI [10.15468/dl.hqxjjf](https://doi.org/10.15468/dl.hqxjjf) · 105,544 eligible after screening | CC BY 4.0. Cite as *GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf* |
 
 Raw files are not committed. Each manifest records URLs, SHA-256 hashes, sizes and
 publication dates, so a snapshot can be re-downloaded and verified byte for byte. The GBIF
 manifest also stores the DOI and the exact download query. The whole dataset is requested on
-purpose: filtering to Colorado and to usable locality text will run locally (next step), so that
-every excluded record keeps a stated reason instead of vanishing inside a server-side filter.
+purpose: filtering to Colorado and to usable locality text runs locally (`ingest scan`), so every
+excluded record keeps a stated reason instead of vanishing inside a server-side filter.
 
 <details>
 <summary><b>Known gazetteer limitations</b></summary>
@@ -288,19 +330,22 @@ CI runs lint, format, strict mypy and the full test suite on every push and pull
 src/localitylens/
 ├── domain/       record lifecycle (status machine)
 ├── extract/      extraction contract, validation, quantity parsing
-├── ingest/       normalization with offset maps
+├── ingest/       normalization, Darwin Core Archive reader, specimen screening
 ├── geo/          units, directions, geodesy, uncertainty policy, point-radius proposals
-├── data/         snapshot manifests, GNIS fetcher
+├── data/         snapshot manifests, GNIS fetcher, GBIF download client
 ├── gazetteer/    GNIS parser, name keys, SQLite index + search
 ├── baseline/     rules extractor (the comparison system the LLM must beat)
 ├── resolve/      candidate retrieval with admin context
 ├── pipeline/     per-record orchestration
+├── evaluation/   feasibility audit: sampling, worksheet, reports
 └── cli.py        command-line entry point
 tests/
-├── unit/         behaviour tests (synthetic GNIS fixtures, no network)
+├── unit/         behaviour tests (synthetic GNIS + DwC-A fixtures, no network)
 ├── property/     Hypothesis invariants
 └── support/      shared fixture builders
 data/manifests/   committed snapshot manifests (raw data is gitignored)
+eval/audit/       50-record audit sample + annotation worksheet (CC BY 4.0 records)
+eval/reports/     system reports, kept even when results are poor
 scripts/          generators for the README banner and pipeline diagram
 ```
 
