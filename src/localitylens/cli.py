@@ -80,10 +80,13 @@ def _audit_sample(args: argparse.Namespace) -> int:
         eligible_groups=groups,
         items=tuple(items),
     )
-    sample_path, worksheet = write_sample(sample, Path(args.out))
+    sample_path, worksheet, written = write_sample(sample, Path(args.out))
     print(f"{len(items)} of {groups:,} locality groups ({records:,} eligible records)")
     print(f"  sample     {sample_path}")
-    print(f"  worksheet  {worksheet}  (annotate before opening any system report)")
+    if written:
+        print(f"  worksheet  {worksheet}  (annotate before opening any system report)")
+    else:
+        print(f"  worksheet  {worksheet}  exists; left untouched")
     return 0
 
 
@@ -190,6 +193,64 @@ def _audit_score(args: argparse.Namespace) -> int:
         )
         print(f"{key:<28} {cells}")
     print(f"  report  {md_path}\n  data    {json_path}")
+    return 0
+
+
+def _dev_register(args: argparse.Namespace) -> int:
+    from localitylens.evaluation.audit import load_sample
+    from localitylens.evaluation.dev_sample import register
+
+    sample = load_sample(Path(args.sample))
+    groups = register(Path(args.registry), args.name, (i.record.group_key for i in sample.items))
+    print(f"registered {len(sample.items)} groups as {args.name!r}; {len(groups)} viewed in total")
+    return 0
+
+
+def _dev_sample(args: argparse.Namespace) -> int:
+    from localitylens.evaluation.audit import AuditSample, write_sample
+    from localitylens.evaluation.dev_sample import (
+        SHAPE_VERSION,
+        load_registry,
+        register,
+        sample_strata,
+    )
+    from localitylens.ingest.specimens import (
+        GROUPING_VERSION,
+        SCREEN_VERSION,
+        ScreenSummary,
+        iter_snapshot,
+    )
+
+    quotas = {}
+    for q in args.quota:
+        shape, _, count = q.partition("=")
+        quotas[shape] = int(count)
+    registry = Path(args.registry)
+    viewed = {k for k, name in load_registry(registry).items() if name != args.name}
+    summary = ScreenSummary(snapshot_id="")
+    items, records, groups, skipped = sample_strata(
+        iter_snapshot(Path(args.snapshot), summary), quotas, args.seed, viewed, args.prefix
+    )
+    sample = AuditSample(
+        snapshot_id=summary.snapshot_id,
+        screen_version=SCREEN_VERSION,
+        grouping_version=GROUPING_VERSION,
+        seed=args.seed,
+        eligible_records=records,
+        eligible_groups=groups,
+        items=tuple(items),
+        name=args.name,
+        shape_version=SHAPE_VERSION,
+        strata=quotas,
+        excluded_viewed_groups=skipped,
+    )
+    sample_path, worksheet, written = write_sample(sample, Path(args.out), args.name)
+    total = register(registry, args.name, (i.record.group_key for i in items))
+    print(f"{args.name}: {len(items)} groups ({', '.join(f'{k} {v}' for k, v in quotas.items())})")
+    print(f"  excluded {skipped} already-viewed groups; {len(total)} groups now registered")
+    print(f"  sample     {sample_path}")
+    state = "(annotate before any system runs on it)" if written else "exists; left untouched"
+    print(f"  worksheet  {worksheet}  {state}")
     return 0
 
 
@@ -453,6 +514,24 @@ def main(argv: list[str] | None = None) -> int:
     mc.add_argument("--release", default="release/manifest.json")
     mc.add_argument("--url", default="http://127.0.0.1:8080")
     mc.set_defaults(func=_model_check)
+
+    dev = sub.add_parser("dev", help="development samples").add_subparsers(
+        dest="dev_command", required=True
+    )
+    drg = dev.add_parser("register", help="record a sample's groups as viewed (dev forever)")
+    drg.add_argument("--sample", required=True)
+    drg.add_argument("--name", required=True)
+    drg.add_argument("--registry", default="eval/viewed-groups.json")
+    drg.set_defaults(func=_dev_register)
+    dsm = dev.add_parser("sample", help="stratified sample of unviewed locality groups")
+    dsm.add_argument("--name", required=True, help="e.g. dev-1")
+    dsm.add_argument("--seed", required=True)
+    dsm.add_argument("--quota", action="append", required=True, help="shape=count, repeatable")
+    dsm.add_argument("--prefix", default="D", help="row id prefix")
+    dsm.add_argument("--snapshot", default="data/raw/gbif/2026-11-01")
+    dsm.add_argument("--registry", default="eval/viewed-groups.json")
+    dsm.add_argument("--out", required=True)
+    dsm.set_defaults(func=_dev_sample)
 
     gaz = sub.add_parser("gazetteer", help="GNIS name index").add_subparsers(
         dest="gaz_command", required=True

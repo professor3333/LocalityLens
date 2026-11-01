@@ -60,7 +60,8 @@ def _sample(n: int = 10) -> AuditSample:
 
 
 def test_worksheet_has_text_but_no_system_output(tmp_path: Path) -> None:
-    sample_path, worksheet = write_sample(_sample(), tmp_path)
+    sample_path, worksheet, written = write_sample(_sample(), tmp_path)
+    assert written
     assert load_sample(sample_path) == _sample()
     with worksheet.open(encoding="utf-8", newline="") as fh:
         rows = list(csv.reader(fh))
@@ -129,3 +130,19 @@ def test_llm_audit_records_failures_and_continues(index_path: Path) -> None:
     assert report["system"] == "llm"
     assert report["prompt"].startswith("extraction-v1 sha256=")
     assert "locality" not in json.dumps(first["trace"])  # traces hold hashes and counts only
+
+
+def test_an_existing_worksheet_is_never_overwritten(tmp_path: Path) -> None:
+    _, worksheet, _ = write_sample(_sample(), tmp_path)
+    worksheet.write_text("annotated by hand\n", encoding="utf-8")
+    _, _, written = write_sample(_sample(), tmp_path)  # identical sample: allowed
+    assert not written
+    assert worksheet.read_text(encoding="utf-8") == "annotated by hand\n"
+
+
+def test_a_different_sample_never_replaces_an_existing_one(tmp_path: Path) -> None:
+    from localitylens.evaluation.audit import SampleExistsError
+
+    write_sample(_sample(), tmp_path)
+    with pytest.raises(SampleExistsError):
+        write_sample(_sample(2), tmp_path)

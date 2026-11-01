@@ -1,0 +1,51 @@
+audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
+D01,2573341808,Montezuma,"12 mi S and 2 mi W of Rico, San Juan Mts., NE edge of Grindstone Lake."
+D02,2573452630,Boulder,Swales along R.R. between Boulder and Marshall.
+D03,2573381438,Summit,"North slope of Hoosier Ridge, east of Hoosier Pass."
+D04,2573447036,Montrose,Black Canyon of the Gunnison National Monument. South rim at the south entrance to the park.
+D05,2573481548,Larimer,"Rocky Mountain National Park, Front Range, +/- ½ mi. S of Gem L."
+D06,2573484073,Boulder,Eldorado Springs/Rocky Flats juction S of Boulder.
+D07,2573325781,Chaffee,"Mineral Basin, ca. 7 miles west of Cottonwood Lake, San Isabel National Forest. Disturbed area on mining road."
+D08,2573438897,Larimer,12 miles south of Hwy. 14 on Long Draw Rd. ½ mile up Neota Creek Valley on glacial moraine.
+D09,2573341821,Larimer,"Rocky Mountain National Park, Trail Ridge, on N. side of Toll Pass."
+D10,2573479377,Moffat,"¼ mi. N of Spitzie house site, Brown's Park."
+D11,2573481659,Summit,"Ten Mile Range, east slope, southern part; lower slopes of Quandary Peak."
+D12,2573536328,Montrose,"Roadside, approximately 2 miles south of the junction of Co. hwys 80 and 145, which is 4 miles east of Naturita."
+D13,2573526371,Boulder,"Seasonal pool 1 mi. s. of Baseline Lake, s.e. of Boulder."
+D14,2573469353,Pitkin,"Along the highway east from Aspen toward Independence Pass, 11 mi. E of Aspen."
+D15,2573343020,Grand,"Rocky Mountain National Park, Baker Gulch, 8 mi. NNW of Grand Lake."
+D16,2573449830,Denver,"Dartmouth Ave at Sheridan Blvd., Denver."
+D17,2573530071,Unknown-E,Denver. Platte River.
+D18,2573408640,Costilla,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: San Luis Valley: by radio tower, ca 2 mi on Colo Hwy 159, S of San Luis."
+D19,2573447208,Jackson,Routt National Forest. Big Creek Lake; trail from the lake to Big Creek Falls.
+D20,2573369760,Park,"Mosquito Range. Pike National Forest, near SE part of the peak NE of E Buffalo Peak."
+D21,2573332415,Boulder,"Silver Lake, near Boulder."
+D22,2573536540,Grand,"Middle Park. South side of Elk Creek, just west of railroad crossing."
+D23,2573399927,Archuleta,Near Devil Creek on road to Chimney Rock. Piedra.
+D24,2573445078,Las Animas,"Comanche National Grassland: junction of U.S. Hwy 160 and the Villegreen Road, ca 9.5 mi WSW of Kim; 6 mi S of Villegreen."
+D25,2573534907,Delta,Grand Mesa Nat. Forest. Oak brush belt east of intersection of old and new roads #65.
+D26,2573549292,Montrose,"North of highway, 7 mi. east of Montrose."
+D27,2573538392,Grand,"Pond, west side of Colorado R. near mouth of Red Creek, 9½ mi N of Grand Lake."
+D28,2573488370,Delta,12.7 road miles east of Delta on Smith Mountain road.
+D29,2573517289,Custer,"San Isabel National Forest, Sangre de Cristo Range, North Colony Creek drainage."
+D30,2573464144,Park,Along US 285 (South Platte Valley) just E of South Platte High School. Rotten granite cliffs along S side of road.
+D31,2573466295,Teller,"Route 24, Woodland Park."
+D32,2573476613,Mineral,Wasson. San Luis Valley; at stream at the edge of the Rio Grande.
+D33,2573516043,Gunnison,Sapinero. Along Black Canyon on R. R.
+D34,2573489333,Montrose,"Near Peach Valley Road in Adobes, E of Olathe."
+D35,2573341575,Boulder,"Canon in mesa fronting Flagstaff Hill, Boulder."
+D36,2573443611,Boulder,"Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. Growing along North Canyon Creek Trail by Red Garden Wall."
+D37,2573393238,Grand,Williams Peak Road.
+D38,2573529234,Park,Hartsel.
+D39,2573518434,Eagle,Dickson Creek.
+D40,2573327330,Costilla/Huerfano,La Veta Pass.
+D41,2573333572,Baca,Two Buttes.
+D42,2573402163,Boulder,Cardinal.
+D43,2573527628,Baca,Skull Canyon.
+D44,2573438732,Larimer,Poudre Canyon.
+D45,2573516611,Archuleta,At Arboles.
+D46,2573328829,Garfield,Rifle Gap.
+D47,2573492490,Boulder,Arapaho Pass.
+D48,2573448321,Kiowa,North of Eads.
+D49,2573340843,El Paso,North Cheyenne Canon.
+D50,2573335989,Teller,Roadside near Florissant.

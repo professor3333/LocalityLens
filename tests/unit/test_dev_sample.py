@@ -1,0 +1,60 @@
+"""Shape strata, the viewed-groups registry and stratified sampling (SYNTHETIC records)."""
+
+import json
+from pathlib import Path
+
+import pytest
+from tests.support.synthetic_dwca import row
+
+from localitylens.evaluation.dev_sample import load_registry, register, sample_strata, text_shape
+from localitylens.ingest.specimens import to_record
+
+
+@pytest.mark.parametrize(
+    ("text", "shape"),
+    [("Testa Peak.", "bare"), ("Pitkin.", "bare"), ("Gunnison Canon.", "bare"),
+     ("2 mi NE of Testa.", "offset"), ("ca 5 air mi SSW of Testa.", "offset"),
+     ("Nine miles north of Testa.", "offset"), ("½ mile S of Testa Rd.", "offset"),
+     ("20-21 air mi NE of Testa.", "offset"), ("3.4 road mi on Forest 101.", "offset"),
+     ("S slope of Mt. Testa, near the old road.", "other"), ("Hwy 34 at Testa Creek.", "other"),
+     ("Testa Peak, elev. 9800 ft.", "offset")],
+)  # fmt: skip
+def test_text_shape(text: str, shape: str) -> None:
+    assert text_shape(text) == shape
+
+
+def test_registry_keeps_the_first_sample_for_a_group(tmp_path: Path) -> None:
+    path = tmp_path / "viewed.json"
+    register(path, "audit-50", ["g1", "g2"])
+    register(path, "dev-1", ["g2", "g3"])
+    assert load_registry(path) == {"g1": "audit-50", "g2": "audit-50", "g3": "dev-1"}
+    assert json.loads(path.read_text())["counts"] == {"audit-50": 2, "dev-1": 1}
+
+
+TEXTS = [
+    "Alpha Peak.", "Beta Lake.", "Gamma Creek.", "Delta Hill.",
+    "2 mi N of Alpha.", "3 mi S of Beta.", "4 km E of Gamma.",
+    "N slope of Alpha Peak, by the old road.", "Along Beta Creek below the falls.",
+]  # fmt: skip
+RECORDS = [to_record(row(i, t)) for i, t in enumerate(TEXTS, start=1)]
+
+
+def test_quotas_exclusion_and_determinism() -> None:
+    viewed = {RECORDS[0].group_key, RECORDS[4].group_key}
+    quotas = {"bare": 2, "offset": 2, "other": 1}
+    items, total, groups, skipped = sample_strata(RECORDS, quotas, "s", viewed, "D")
+    assert (total, groups, skipped) == (9, 9, 2)
+    keys = {i.record.group_key for i in items}
+    assert not keys & viewed
+    shapes = [text_shape(i.record.locality) for i in items]
+    assert shapes.count("bare") == 2
+    assert shapes.count("offset") == 2
+    assert shapes.count("other") == 1
+    assert [i.audit_id for i in items] == ["D01", "D02", "D03", "D04", "D05"]
+    again = sample_strata(list(reversed(RECORDS)), quotas, "s", viewed, "D")[0]
+    assert [i.record.gbif_id for i in again] == [i.record.gbif_id for i in items]
+
+
+def test_a_quota_larger_than_the_pool_is_refused() -> None:
+    with pytest.raises(ValueError, match="offset"):
+        sample_strata(RECORDS, {"offset": 4}, "s", {RECORDS[4].group_key}, "D")

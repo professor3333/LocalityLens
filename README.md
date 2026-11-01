@@ -316,6 +316,10 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **A grammar lesson:** the first LLM run failed 5 times because the decoding grammar allowed
   combinations that validation rejects, and greedy retries repeat themselves. The grammar now
   admits only valid combinations. The failed run is [kept](eval/reports/audit-50-llm-x1-qwen3.5-4b-q4km.md).
+- **Next: prompt v2 on fresh records.** The audit's records cannot be used to tune the prompt
+  and then score it, so a new stratified dev sample, [`dev-1`](eval/dev/), over-represents the
+  failing label shapes. Every group read in development is recorded in
+  [`eval/viewed-groups.json`](eval/viewed-groups.json) and excluded from any held-out split.
 - **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
   `Unknown-E` or two counties (`Gunnison/Pitkin`).
 
@@ -325,7 +329,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · 🚧 prompt v2: `dev-1` sample drawn (50 groups), awaiting annotation | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
@@ -347,6 +351,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `ingest/dwca.py` | Darwin Core Archive reader that streams from the zip, driven by `meta.xml`, with strict header and field counts |
 | `ingest/specimens.py` | Screening with exclusion reasons, model-input allowlist, duplicate-locality groups |
 | `evaluation/audit.py` | Seeded per-group audit sample, blind annotation worksheet, reports for any extractor |
+| `evaluation/dev_sample.py` | Stratified dev samples by label shape, and the registry of viewed groups that every held-out split must exclude |
 | `evaluation/annotations.py` · `evaluation/score.py` | Worksheet checks (inventories, GNIS IDs, consistency) and paired scoring with bootstrap intervals and a sign test |
 | `geo/` | Exact unit conversion, 16-point compass parsing, datum-aware geodesic forward/inverse |
 | `geo/uncertainty.py` | Uncertainty policy `gbif-bp-2020/1`: heading, distance precision, coordinate precision, datum, extent defaults, each cited |
@@ -357,7 +362,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit score` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit score` · `dev register` · `dev sample` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -424,7 +429,9 @@ tests/
 └── support/      shared fixture builders
 data/manifests/   committed snapshot manifests (raw data is gitignored)
 release/          release manifest: model, prompt, settings and versions, all pinned
-eval/audit/       50-record audit sample + annotation worksheet (CC BY 4.0 records)
+eval/audit/       50-record audit sample + annotated worksheet (CC BY 4.0 records)
+eval/dev/         dev samples for prompt and rule development (dev-1)
+eval/viewed-groups.json   every group read in development; excluded from held-out splits
 eval/reports/     system reports, kept even when results are poor
 scripts/          generators for the README banner and pipeline diagram
 ```
