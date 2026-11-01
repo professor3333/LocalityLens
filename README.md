@@ -272,7 +272,7 @@ against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv
 > project's target was +10 points. The LLM is ahead on distance-and-direction labels and on
 > flagging unsupported ones, and behind on plain named places.
 
-| Scored against annotations | Rules `rules-1` | LLM `llm-x1g2` |
+| Scored against annotations | Rules | LLM |
 |---|---|---|
 | **Correct proposal candidates** (critical interpretation and top reference right, of 31 answerable) | **13 (42%)** | **9 (29%)** |
 | Relation read correctly (of 50) | 26 (52%) | 30 (60%) |
