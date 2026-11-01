@@ -328,6 +328,9 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
   Zenobia" finds GNIS "Zenobia Peak"; "Lower Piney Lake" finds "Piney Lake" but never "Upper
   Piney Lake"). It fixed the 2 audit records it was designed from, for both systems, and changed
   nothing on dev-1: no regressions, but no out-of-sample evidence yet.
+- **Next: a benchmark nobody has read.** Validation (60) and a locked test (120) are drawn from
+  groups untouched by development, grouped by collecting event so that no trip spans two
+  splits ([how](eval/benchmark/)). The comparison that answers the milestone runs there.
 - **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
   `Unknown-E` or two counties (`Gunnison/Pitkin`).
 
@@ -340,7 +343,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
-| **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
+| **4 · Evaluation** | 🚧 benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event, awaiting annotation · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
 <details>
@@ -359,6 +362,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `ingest/dwca.py` | Darwin Core Archive reader that streams from the zip, driven by `meta.xml`, with strict header and field counts |
 | `ingest/specimens.py` | Screening with exclusion reasons, model-input allowlist, duplicate-locality groups |
 | `evaluation/audit.py` | Seeded per-group audit sample, blind annotation worksheet, reports for any extractor |
+| `evaluation/benchmark.py` | Held-out splits: collecting-event leakage components, one group per component, viewed components excluded, write-once lock |
 | `evaluation/dev_sample.py` | Stratified dev samples by label shape, and the registry of viewed groups that every held-out split must exclude |
 | `evaluation/annotations.py` · `evaluation/score.py` | Worksheet checks (inventories, GNIS IDs, consistency) and paired scoring with bootstrap intervals and a sign test |
 | `geo/` | Exact unit conversion, 16-point compass parsing, datum-aware geodesic forward/inverse |
@@ -370,7 +374,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit score` · `dev register` · `dev sample` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit score` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -440,6 +444,8 @@ release/          release manifest: model, prompt, settings and versions, all pi
 eval/audit/       50-record audit sample + annotated worksheet (CC BY 4.0 records)
 eval/dev/         dev samples for prompt and rule development (dev-1)
 eval/viewed-groups.json   every group read in development; excluded from held-out splits
+eval/benchmark/   held-out validation (60) and locked test (120) worksheets
+eval/splits.lock.json     frozen split assignment (group keys + digest)
 eval/reports/     system reports, kept even when results are poor
 scripts/          generators for the README banner and pipeline diagram
 ```

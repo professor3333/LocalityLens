@@ -1,0 +1,61 @@
+audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
+V001,2573484913,Weld,13T 0520450/ 449820; T12N R64W SEC20 E. central part
+V002,2573341504,Jefferson,Genessee Mountain.
+V003,2573524976,Boulder,19th and Alpine Street.
+V004,2573342668,Boulder,"Half mile E of Hiway Nine, 3 mi. S of LaFayette."
+V005,2573541981,Weld,3 miles east of Roggen on the Painter Hereford Ranch.
+V006,2573469544,Montrose,"Vernal Mesa, 15 mi. east of Montrose."
+V007,4435941311,LAS ANIMAS,"Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa."
+V008,2573526802,Adams,"Lutz Reservoir, NW of Barr Lake."
+V009,3950494394,Fremont,"Wet Mountains; Grape Creek drainage, Bear Gulch tributary; ~1.5 miles NW of Yorkville, ~1.5 mile SW of Curley Peak"
+V010,2573528921,La Plata,"Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station."
+V011,2573470044,Montrose,"West Rim of Uncompahgre Plateau, near road between Columbine Pass and Uncompahgre Butte, along road to Love Mesa."
+V012,2573338536,Pueblo,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, drainage N of North Peak."
+V013,2573476365,Chaffee,"S. slope Mt. Shavano, 10 mi. n. w. Salida."
+V014,2573341380,Moffat,"Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone."
+V015,2573394857,Clear Creek,Moun tains about the head waters of Clear Creek. In the valley near Empire.
+V016,2573528622,Boulder,"Gravelly slope of Table Mesa, 3 mi. s. of Lyons."
+V017,2573329589,La Plata,Sandstone hill ¼ mile west of Gem Village on north side US 160.
+V018,2573560330,Archuleta,BLM. Samjbrito Wetalnds.State Hwy 140 to County Road 136. On 136 ca. 4 mi. to County Road 134
+V019,2573331455,Yuma,Along U.S. 36 near Idalia.
+V020,2573435343,Dolores,"Lone Mesa State Park, 7.5 miles north of southern entrance at FR 514."
+V021,2573339456,Park/Summit,Hoosier Pass.
+V022,2573332725,Otero,Edge of pond on the north side of the Arkansas River.
+V023,2573449357,Boulder,"Boulder Mt. Parks, NBS Mesa. Along the Enchanted Mesa cutoff trails just S of the gully."
+V024,2573326436,Larimer,"Roosevelt National Forest: Medicine Bow Mountains: Rawah Wilderness: Link Trail from Link/McIntyre Trailhead on Old Glendevey Road (County Road 80C), ca 46 air mi NW of Fort Collins."
+V025,2573325456,Lake/Park,Ca. 0.25 mi N of Weston Pass summit.
+V026,2573466495,Gunnison,"Castleton Ranch, along Carbon Creek, just east of County Road 730, near jct. with CR 737."
+V027,2573323962,Moffat,"Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table."
+V028,2573466253,Custer,Bull Domingo Hills at east edge of Wet Mountain Valley about 1 mile north of Westcliffe.
+V029,2573327103,Jefferson,Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Rock Creek.
+V030,2573469379,Boulder,Along the trail up Sawtooth Peak (Buchanan Pass). Just E of the summit of the pass.
+V031,2573534486,San Juan,San Juan National Forest: Tenmile Basin. Animas River drainage ca. 18 mi. S.E. of Silverton. Meadow NE and above Balsam Lake.
+V032,2573537722,Moffat,"Summit of Rountop Mountain, Fire Lookout. Dinosaur National Monument. East-facing slope between lookout and brink of Hell Canyon."
+V033,2573338177,Montezuma,"National Park Service. Yucca House National Monument, near spring."
+V034,2573335984,Baca,Slope along Sand Creek Canyon 25 mi. south of Pritchett.
+V035,2573448333,Larimer,Junction of Hagues Creek and Paudre [sic] River.
+V036,2573324715,Mesa,Hwy I-70 at Beavertail Bridge along Colorado River east of Grand Junction.
+V037,2573335806,Boulder,"Boulder, 28th Street north of Arapahoe St., along irrigation ditch."
+V038,2573341695,Larimer,"Skyland Ranch, 6 1/2 miles n. east of Estes Park."
+V039,2573433953,El Paso,Cultivated. S.E. Corner of Uinta and Hancock.
+V040,2573337547,Larimer,"Along County Road 27, ~2 mi. N of US 34."
+V041,2573494576,Montezuma,"Yucca House National Monument, west Ishmay property, ¼ mile south of gravel pit."
+V042,2573528603,Garfield,Ranch at the Roaring Fork. On the floodplain of the Roaring Fork River.
+V043,2573326186,Fremont,4 miles northwest of Canyon City.
+V044,2573472218,Mesa,Found 5 mi. up Jacob's Ladder Road.
+V045,2573337276,Grand,Cirque of the Peck Glacier and base of the west slopes of Lone Eagle Peak.
+V046,2573343264,Yuma,"Approx. 12 miles northwest of Idalia, along the Arikaree River."
+V047,2573334051,Boulder,"Eldorado Canyon State Park, Upper Big Bluestem Trail."
+V048,2573331131,Conejos,"Along Conejos River, Near Antonito."
+V049,2573471302,Pitkin,Along Maroon Creek near Aspen.
+V050,2573465664,Gunnison,5.5 mi. s.e. of Gothic.
+V051,2573349209,Grand,"Fraser Experimental Forest, near Fool Creek gaging station."
+V052,2573544050,Costilla,Intersect of dirt roads along Alimosita Creek.
+V053,2573539254,Larimer,One mile below summit Pennock Pass.
+V054,2573492269,Custer,13 mi SW of Westcliffe on Hermit road.
+V055,2573418149,Larimer,"Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins."
+V056,2573328429,Boulder,Allenspark.
+V057,2573527447,Yuma,Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird.
+V058,2573337040,Boulder,"Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel."
+V059,2573373642,Boulder,"Boulder Mountain Parks. West side of Bear Pk. & S. Boulder Pk, in rich ravine below the W. ridge of Bear Pk."
+V060,2573489391,Boulder,"Bluebell Canyon, south edge of Boulder."

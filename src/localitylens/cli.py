@@ -235,8 +235,11 @@ def _dev_sample(args: argparse.Namespace) -> int:
     for q in args.quota:
         shape, _, count = q.partition("=")
         quotas[shape] = int(count)
+    from localitylens.evaluation.benchmark import reserved_groups
+
     registry = Path(args.registry)
     viewed = {k for k, name in load_registry(registry).items() if name != args.name}
+    viewed |= reserved_groups(Path(args.lock))  # held-out components are never dev data
     summary = ScreenSummary(snapshot_id="")
     items, records, groups, skipped = sample_strata(
         iter_snapshot(Path(args.snapshot), summary), quotas, args.seed, viewed, args.prefix
@@ -261,6 +264,52 @@ def _dev_sample(args: argparse.Namespace) -> int:
     print(f"  sample     {sample_path}")
     state = "(annotate before any system runs on it)" if written else "exists; left untouched"
     print(f"  worksheet  {worksheet}  {state}")
+    return 0
+
+
+def _benchmark_draw(args: argparse.Namespace) -> int:
+    """Prints counts and paths only: the held-out worksheets are never shown."""
+    from localitylens.evaluation.audit import AuditSample, write_sample
+    from localitylens.evaluation.benchmark import draw_splits, write_lock
+    from localitylens.evaluation.dev_sample import load_registry
+    from localitylens.ingest.specimens import (
+        GROUPING_VERSION,
+        SCREEN_VERSION,
+        ScreenSummary,
+        iter_snapshot,
+    )
+
+    viewed = set(load_registry(Path(args.registry)))
+    summary = ScreenSummary(snapshot_id="")
+    quotas = {"test": args.test, "validation": args.validation}
+    splits, lock = draw_splits(
+        iter_snapshot(Path(args.snapshot), summary),
+        quotas,
+        args.seed,
+        viewed,
+        {"test": "T", "validation": "V"},
+    )
+    lock = {"snapshot_id": summary.snapshot_id, "screen_version": SCREEN_VERSION,
+            "grouping_version": GROUPING_VERSION, **lock}  # fmt: skip
+    write_lock(Path(args.lock), lock)
+    print(f"{summary.snapshot_id}: {lock['components']:,} leakage components; "
+          f"{lock['excluded_viewed_components']} touch viewed groups and are excluded "
+          f"({lock['excluded_viewed_groups']:,} groups)")  # fmt: skip
+    for name, items in splits.items():
+        sample = AuditSample(
+            snapshot_id=summary.snapshot_id,
+            screen_version=SCREEN_VERSION,
+            grouping_version=GROUPING_VERSION,
+            seed=args.seed,
+            eligible_records=summary.eligible,
+            eligible_groups=lock["eligible_groups"],
+            items=tuple(items),
+            name=name,
+        )
+        _, worksheet, written = write_sample(sample, Path(args.out) / name, name)
+        state = "written" if written else "exists; left untouched"
+        print(f"  {name:<10} {len(items):>4} groups  worksheet {worksheet} ({state})")
+    print(f"  lock       {args.lock}  ({len(lock['reserved_groups']):,} groups reserved)")
     return 0
 
 
@@ -542,7 +591,20 @@ def main(argv: list[str] | None = None) -> int:
     dsm.add_argument("--snapshot", default="data/raw/gbif/2026-11-01")
     dsm.add_argument("--registry", default="eval/viewed-groups.json")
     dsm.add_argument("--out", required=True)
+    dsm.add_argument("--lock", default="eval/splits.lock.json")
     dsm.set_defaults(func=_dev_sample)
+
+    bm = sub.add_parser("benchmark", help="held-out validation and locked test splits")
+    bm_sub = bm.add_subparsers(dest="benchmark_command", required=True)
+    bd = bm_sub.add_parser("draw", help="draw the held-out splits (write-once lock)")
+    bd.add_argument("--seed", required=True)
+    bd.add_argument("--test", type=int, default=120)
+    bd.add_argument("--validation", type=int, default=60)
+    bd.add_argument("--snapshot", default="data/raw/gbif/2026-11-01")
+    bd.add_argument("--registry", default="eval/viewed-groups.json")
+    bd.add_argument("--lock", default="eval/splits.lock.json")
+    bd.add_argument("--out", default="eval/benchmark")
+    bd.set_defaults(func=_benchmark_draw)
 
     gaz = sub.add_parser("gazetteer", help="GNIS name index").add_subparsers(
         dest="gaz_command", required=True

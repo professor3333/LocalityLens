@@ -3,6 +3,11 @@
 Records for developing prompts and rules. Everything here has been or will be read during
 development, so it is **dev data forever**.
 
+## Exclusions
+
+Every dev sample excludes the groups already viewed and, since the benchmark was drawn, every
+group reserved by [`../splits.lock.json`](../splits.lock.json) (the held-out components).
+
 ## The viewed-groups registry
 
 [`../viewed-groups.json`](../viewed-groups.json) lists every locality group sampled for viewing
@@ -16,7 +21,8 @@ Built to develop extraction prompt v2 after the [audit](../audit/) showed where 
 
 ```bash
 uv run localitylens dev sample --name dev-1 --seed dev-1/1 \
-  --quota bare=15 --quota offset=15 --quota other=20 --out eval/dev/dev-1
+  --quota bare=15 --quota offset=15 --quota other=20 --out eval/dev/dev-1 \
+  --lock /nonexistent   # dev-1 predates the split lock; later samples use the lock
 ```
 
 | Step | Rule | Groups |
