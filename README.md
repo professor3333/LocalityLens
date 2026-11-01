@@ -78,7 +78,8 @@ uv run localitylens gazetteer build --snapshot data/raw/gnis/2026-09-29
 command. Every value carries its `[start, end)` span in the original text:
 
 ```console
-$ uv run localitylens baseline run "Larimer Co., Colo., 2 mi NE of Longs Peak summit." --limit 2
+$ uv run localitylens baseline run --limit 2 \
+      "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
 extractor   rules-1
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
