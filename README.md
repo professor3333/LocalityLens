@@ -1,118 +1,219 @@
-# LocalityLens
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="LocalityLens: turn historical specimen descriptions into reviewable, uncertainty-aware geographic records" width="100%">
+</p>
 
-[![ci](https://github.com/professor3333/LocalityLens/actions/workflows/ci.yml/badge.svg)](https://github.com/professor3333/LocalityLens/actions/workflows/ci.yml)
+<p align="center">
+  <a href="https://github.com/professor3333/LocalityLens/actions/workflows/ci.yml"><img src="https://github.com/professor3333/LocalityLens/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.12%2B-3776AB?logo=python&logoColor=white" alt="Python 3.12+">
+  <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json" alt="uv"></a>
+  <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff"></a>
+  <img src="https://img.shields.io/badge/types-mypy%20strict-2A6DB2" alt="mypy strict">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3DA639" alt="MIT licence"></a>
+  <br>
+  <img src="https://img.shields.io/badge/status-phase%201%20%C2%B7%20data%20%26%20feasibility-F4B860" alt="Status: Phase 1">
+  <img src="https://img.shields.io/badge/gazetteer-USGS%20GNIS%202026--09--29-5FD3B5" alt="Gazetteer: USGS GNIS 2026-09-29">
+  <img src="https://img.shields.io/badge/inference-local%20only-103A34" alt="Local inference only">
+</p>
 
-> Turn historical specimen locality descriptions into reviewable geographic records.
+<p align="center">
+  <a href="#-how-it-works">How it works</a> ·
+  <a href="#-try-it">Try it</a> ·
+  <a href="#-design-guarantees">Design guarantees</a> ·
+  <a href="#-roadmap">Roadmap</a> ·
+  <a href="#-data--licences">Data</a> ·
+  <a href="#-development">Development</a>
+</p>
 
-**Status: early development (Phase 1: data and feasibility).** Nothing here is ready to use yet.
-This README describes only what exists; planned work is listed separately and labelled as such.
+---
+
+Natural history museums hold millions of specimens whose collecting locality exists only as prose
+written by the collector, often a century ago:
+
+> *Larimer Co., Colo., 2 mi NE of Longs Peak summit.*
+
+Before ecologists can use such a record, someone has to read the abbreviations, find the right
+reference place among many with similar names, apply the offset, and decide **how uncertain** the
+result is. **LocalityLens** is a review workbench for that job. A small, local language model
+*reads* the description. Ordinary, tested code finds the places and does the geometry. A
+curator approves, corrects, or defers every result before it is exported as Darwin Core.
+
+> [!NOTE]
+> **Early development: Phase 1 (data & feasibility).** This README separates what exists
+> (✅) from what is planned (🔜). Measured results will be published only once the evaluation
+> benchmark is frozen.
+
+## 🧭 How it works
 
 ```mermaid
 flowchart LR
-    T[Locality text] --> X[LLM extraction<br/>typed relations + source spans]
-    X --> V[Validation]
-    V --> R[Gazetteer retrieval<br/>GNIS candidates]
-    R --> G[Deterministic geometry<br/>+ explicit uncertainty]
-    G --> H[Curator review]
-    H --> E[Darwin Core export]
+    T["📜 Locality text<br/><i>verbatim label</i>"]:::built --> X["🧠 Extraction<br/><i>LLM or rules → quotes</i>"]:::planned
+    X --> V["✔️ Validation<br/><i>quotes → original-text spans</i>"]:::built
+    V --> R["🗺️ Retrieval<br/><i>GNIS candidates + evidence</i>"]:::built
+    R --> D["⚖️ Disambiguation<br/><i>optional 2nd LLM call</i>"]:::planned
+    D --> G["📐 Geometry<br/><i>geodesic offset + uncertainty</i>"]:::partial
+    G --> H["🧑‍🔬 Curator review<br/><i>approve · edit · defer</i>"]:::planned
+    H --> E["📦 Export<br/><i>Darwin Core CSV + GeoJSON</i>"]:::planned
+
+    classDef built fill:#103A34,stroke:#5FD3B5,stroke-width:2px,color:#E9F4F0
+    classDef partial fill:#103A34,stroke:#F4B860,stroke-width:2px,stroke-dasharray:6 3,color:#E9F4F0
+    classDef planned fill:transparent,stroke:#8A9A95,stroke-width:1.5px,stroke-dasharray:4 4
 ```
 
-## The problem
+<sub><b>Legend:</b> solid teal = built · dashed amber = partly built · dashed grey = planned</sub>
 
-Historical biodiversity specimens describe where they were collected in prose, for example
-*"Larimer Co., Colo., 2 mi NE of Longs Peak summit."* To make these records usable for ecological
-research, someone has to interpret abbreviations and relative descriptions, find the right
-reference place, and work out a geographic region with an honest uncertainty. This is slow manual work.
+The split between the stages is the core idea:
 
-LocalityLens is a review workbench for that task. A small local language model only *interprets
-the text* (place mentions, distances, directions, qualifiers, and what is missing). Place lookup,
-coordinates, and uncertainty are computed by ordinary, testable code from a pinned USGS GNIS
-snapshot. A curator approves, corrects, or defers every proposal before anything is exported.
-Ambiguous or unsupported descriptions get an explicit unresolved status, not a falsely
-precise map pin.
+| The language model does | Deterministic code does |
+|---|---|
+| Read abbreviations and varied phrasing (`Colo.`, `Pk.`, `nr.`) | Look up places in a pinned gazetteer snapshot |
+| Pull out relations: *what* is offset from *where*, by how much, in which direction | Parse every number and unit, and convert units exactly |
+| Separate what the label **says** from what is **missing** | Compute coordinates and geodesic offsets on the source datum |
+| Say which ambiguity a curator needs to resolve | Validate, track provenance, enforce statuses, export |
 
-The first release is scoped to English-language plant specimens collected in Colorado
-(University of Colorado Herbarium, via GBIF). Existing tools such as
-[GEOLocate](https://www.geo-locate.org/) already georeference records; LocalityLens is a
-measured workflow for difficult relative descriptions and will be benchmarked against it.
+**The model never produces a coordinate, an ID, or a character offset.** It returns exact quotes.
+Code locates those quotes in the original text, so every highlighted phrase in the review UI is
+correct by construction, and an invented quote fails validation.
 
-## What exists today
-
-- **Extraction contract** (`localitylens.extract.schema`): the typed output an extractor (LLM
-  or rules) must produce. All evidence is given as *exact quotes* from the locality text.
-  Extractors cannot supply character offsets, parsed numbers, or coordinates (unknown fields
-  are rejected).
-- **Deterministic validation** (`localitylens.extract.validate`): finds every quote in the text
-  and maps it to a half-open `[start, end)` span of the *original* string. Code parses distance
-  numbers (`2`, `2.5`, `1 1/2`, `½`). It also checks that quoted units and directions agree with
-  the extractor's choices, refuses ambiguous units such as a bare `m`, and requires each relation's
-  components to be present or explicitly declared missing.
-- **Text normalization with offset map** (`localitylens.ingest.normalize`): NFC and whitespace
-  collapsing. Every normalized character maps back to its exact original range.
-- **Geography primitives** (`localitylens.geo`): exact unit conversion (2 mi = 3,218.688 m),
-  16-point compass parsing, and geodesic forward/inverse calculations on the ellipsoid of each
-  coordinate's datum (no silent WGS84 assumption).
-- **Record lifecycle** (`localitylens.domain.status`): explicit statuses and a single
-  transition function. A record can only reach `approved` through a pipeline outcome followed by
-  curator review.
-- **GNIS snapshot + manifest** (`localitylens.data`): downloads the USGS Colorado Domestic
-  Names and national All Names files into an immutable, checksummed snapshot. A changed
-  upstream file can never overwrite an existing snapshot.
-- **Gazetteer index and search** (`localitylens.gazetteer`): a SQLite index of 26,429 features
-  with official and 4,190 variant names (from the 2026-09-29 snapshot). Search runs exact,
-  then variant, then fuzzy (RapidFuzz). County, state and feature type **rank** candidates but
-  never filter them, and each candidate carries the evidence for its rank. A former name (for
-  example "Mt. Evans", now Mount Blue Sky) competes equally with a current official name.
-- Tests: unit tests plus Hypothesis property tests for span mapping, normalization, and geodesic
-  round trips. Gazetteer tests use synthetic GNIS-format fixtures, so no network or real data is
-  needed. CI runs lint, format, strict mypy, and tests on every push.
-
-## Planned (not yet built)
-
-Specimen snapshot (GBIF), 50-record data audit, rules baseline, LLM extraction via llama.cpp,
-uncertainty policy and footprints, review UI, Darwin Core export, evaluation suite.
-
-## Data
-
-| Source | Snapshot | Licence / terms |
-|---|---|---|
-| USGS GNIS, Domestic Names (CO) + All Names (National) | `gnis-co-2026-09-29` (manifest: [`data/manifests/gnis-co-2026-09-29.json`](data/manifests/gnis-co-2026-09-29.json)) | U.S. public domain. *"Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data."* |
-
-Coordinates are NAD83 (GRS80). Raw files are not committed. The manifest records URLs,
-SHA-256 hashes, sizes and publication dates, so the snapshot can be re-downloaded and verified.
-
-Known GNIS limitations that affect georeferencing:
-- Each feature lists only its **primary county**. Longs Peak is listed under Boulder County,
-  though labels often say Larimer.
-- A feature's coordinate is a single **representative point**. For streams it is the mouth
-  (the Colorado River's is in Mexico), so it is not the collecting locality.
-- Missing source coordinates are written as `0.0` in GNIS and are stored as null.
-- Most cultural features (mines, ranches, post offices, other "locales") are **not** in
-  Domestic Names, so labels that cite them return `feature_absent_from_index`.
-
-## Development
-
-Requires [uv](https://docs.astral.sh/uv/).
+## ⚡ Try it
 
 ```bash
+git clone https://github.com/professor3333/LocalityLens.git && cd LocalityLens
 uv sync
-uv run pytest
-uv run ruff check . && uv run ruff format --check .
-uv run mypy src/
-HYPOTHESIS_PROFILE=thorough uv run pytest tests/property   # 5,000 examples per property
+uv run localitylens data fetch-gnis                        # ~23 MB from USGS, checksummed
+uv run localitylens gazetteer build --snapshot data/raw/gnis/2026-09-29
 ```
 
-No network access is needed to run the tests.
+**Abbreviated name, county from the label.** The right peak is found. GNIS files Longs Peak
+under *Boulder* County, so the county disagreement is **shown as evidence, not used to discard
+the match**:
 
-Build the gazetteer from a real snapshot (downloads about 23 MB from USGS):
+```console
+$ uv run localitylens gazetteer search "Long's Pk." --county "Larimer Co." --type summit --limit 2
+  204979  Longs Peak         Summit   Boulder      exact_official  sim=100.0 type=y county=n state=y  (40.25486, -105.61624)
+  186722  Youngs Peak        Summit   Delta        fuzzy_official  sim= 85.7 type=y county=n state=y  (38.71133, -107.60635)
+```
+
+**A former name on an old label.** Mount Evans was renamed Mount Blue Sky in 2023, and a
+*different* peak in Park County is still officially "Mount Evans". Former names compete
+equally with current ones, and context decides:
+
+```console
+$ uv run localitylens gazetteer search "Mt. Evans" --county "Clear Creek" --type summit --limit 2
+  204716  Mount Blue Sky     Summit   Clear Creek  exact_variant   sim=100.0 type=y county=y state=y  (39.58812, -105.64373)
+  179941  Mount Evans        Summit   Park         exact_official  sim=100.0 type=y county=n state=y  (39.25679, -106.18155)
+```
+
+**A place the gazetteer doesn't hold** is reported as absent. It is never guessed:
+
+```console
+$ uv run localitylens gazetteer search "Gold Hill Mine"
+feature_absent_from_index
+```
+
+<sub>Output columns trimmed for width. Coordinates are GNIS representative points (NAD83), not georeferences.</sub>
+
+## 🛡️ Design guarantees
+
+| Guarantee | How it is enforced today | |
+|---|---|:-:|
+| **The LLM never produces coordinates** | The extraction schema rejects unknown fields. Coordinates come only from `localitylens.geo` | ✅ |
+| **Every claim cites the label** | Quotes must be found in the text and are mapped to half-open `[start, end)` spans of the *original* string | ✅ |
+| **Swapped or invented details are caught** | Code re-parses quoted directions and units and rejects mismatches. A bare `m` (miles or metres?) cannot be asserted | ✅ |
+| **Missing ≠ zero** | Each relation's parts must be present or explicitly declared missing. GNIS `0.0` coordinates are stored as null | ✅ |
+| **Context ranks, never filters** | County, state and feature type order the candidates, and each candidate carries its evidence | ✅ |
+| **Humans approve before export** | A single checked status machine. Only `approved` records are exportable | ✅ |
+| **A point is not a place** | Feature extent and uncertainty components must be explicit, never assumed from a representative point | 🔜 |
+| **Reproducible provenance** | Checksummed, immutable source snapshots. The index records which snapshot built it | ✅ |
+
+## 🗺️ Roadmap
+
+| Phase | Scope | Status |
+|---|---|---|
+| **1 · Data & feasibility** | Core contract & validation · GNIS gazetteer · rules baseline · specimen snapshot · 50-record audit | 🚧 in progress |
+| **2 · MVP** | LLM extraction (llama.cpp, Qwen3.5) · candidate disambiguation · footprints · map review · CSV export | 🔜 |
+| **3 · Production engineering** | Persistent jobs, leases & recovery · uncertainty policy · telemetry | 🔜 |
+| **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |
+| **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
+
+<details>
+<summary><b>What exists today, module by module</b></summary>
+
+| Module | What it does |
+|---|---|
+| `extract/schema.py` | Typed extractor output (quotes only) and the validated `Interpretation` |
+| `extract/validate.py` | Locates quotes, maps spans, cross-checks units and directions, enforces present-or-missing |
+| `extract/quantities.py` | Label numbers: `2`, `2.5`, `.5`, `1 1/2`, `1-1/2`, `½`, `1½`, keeping their written precision |
+| `ingest/normalize.py` | NFC and whitespace normalization with an exact offset map back to the original |
+| `geo/` | Exact unit conversion, 16-point compass parsing, datum-aware geodesic forward/inverse |
+| `domain/status.py` | Record lifecycle with a single checked transition function |
+| `data/` | Snapshot manifests and the GNIS fetcher (immutable, checksummed) |
+| `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence |
+| `cli.py` | `localitylens data fetch-gnis` · `gazetteer build` · `gazetteer search` |
+
+</details>
+
+## 📚 Data & licences
+
+| Source | Snapshot | Terms |
+|---|---|---|
+| **USGS GNIS**: Domestic Names (CO) + All Names (National) | [`gnis-co-2026-09-29`](data/manifests/gnis-co-2026-09-29.json): 26,429 features · 4,190 variant names | U.S. public domain. *"Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data."* |
+| **University of Colorado Herbarium** via GBIF | 🔜 pinned download with DOI | CC BY 4.0 |
+
+Raw files are not committed. Each manifest records URLs, SHA-256 hashes, sizes and
+publication dates, so a snapshot can be re-downloaded and verified byte for byte.
+
+<details>
+<summary><b>Known gazetteer limitations</b></summary>
+
+- **Primary county only.** Each GNIS feature lists one county, so features on county lines (like
+  Longs Peak) disagree with many labels.
+- **Representative points.** A feature is one point. For streams it is the mouth: "Grand River"
+  resolves to the Colorado River, whose point is in Mexico. Such a point is never a collecting locality.
+- **Missing source coordinates** are written as `0.0` in GNIS and stored as null.
+- **Cultural features are largely absent.** Mines, ranches and post offices ("locales") are not
+  in Domestic Names, so labels that cite them return `feature_absent_from_index`.
+- **Current names and boundaries.** Historical names appear only where GNIS records a variant.
+
+</details>
+
+## 🛠️ Development
 
 ```bash
-uv run localitylens data fetch-gnis                     # -> data/raw/gnis/<date>/ + manifest
-uv run localitylens gazetteer build --snapshot data/raw/gnis/2026-09-29
-uv run localitylens gazetteer search "Long's Pk." --county "Larimer Co." --type summit
+uv sync                                                     # install (Python 3.12+)
+uv run pytest                                               # all tests, no network needed
+uv run ruff check . && uv run ruff format --check .         # lint + format
+uv run mypy src/                                            # strict type check
+HYPOTHESIS_PROFILE=thorough uv run pytest tests/property    # 5,000 examples per property
 ```
 
-## Licence
+CI runs lint, format, strict mypy and the full test suite on every push and pull request.
+`main` is protected and only accepts commits that passed CI.
 
-Code: MIT (see [LICENSE](LICENSE)). Data sources carry their own licences and attribution
-requirements, which will be documented with each snapshot manifest.
+<details>
+<summary><b>Project structure</b></summary>
+
+```text
+src/localitylens/
+├── domain/       record lifecycle (status machine)
+├── extract/      extraction contract, validation, quantity parsing
+├── ingest/       normalization with offset maps
+├── geo/          units, compass directions, geodesy
+├── data/         snapshot manifests, GNIS fetcher
+├── gazetteer/    GNIS parser, name keys, SQLite index + search
+└── cli.py        command-line entry point
+tests/
+├── unit/         behaviour tests (synthetic GNIS fixtures, no network)
+├── property/     Hypothesis invariants
+└── support/      shared fixture builders
+data/manifests/   committed snapshot manifests (raw data is gitignored)
+```
+
+</details>
+
+## 📄 Licence & acknowledgements
+
+Code is released under the [MIT licence](LICENSE). Geographic names are courtesy of the
+**U.S. Geological Survey** Geographic Names Information System. Methodology follows the
+[GBIF Georeferencing Best Practices](https://docs.gbif.org/georeferencing-best-practices/1.0/en/).
+[GEOLocate](https://www.geo-locate.org/) is the established tool in this space, and LocalityLens
+will be benchmarked against it.
