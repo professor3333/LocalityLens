@@ -162,7 +162,7 @@ which a coordinate could be returned:
 
 ```console
 $ uv run localitylens interpret "Larimer Co., Colo., 2 mi NE of Longs Peak summit." --limit 2
-extractor   llm-x1-qwen3.5-4b-q4km
+extractor   llm-x1g2-qwen3.5-4b-q4km
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit

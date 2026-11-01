@@ -110,11 +110,15 @@ def _model_fetch(args: argparse.Namespace) -> int:
 
 
 def _model_check(args: argparse.Namespace) -> int:
-    from localitylens.extract.llm_client import LlamaServerClient
+    from localitylens.extract.llm_client import LlamaServerClient, ModelCallError
     from localitylens.release import load_release
 
     release = load_release(Path(args.release))
-    props = LlamaServerClient(args.url).props()
+    try:
+        props = LlamaServerClient(args.url).props()
+    except ModelCallError as exc:
+        print(f"  BAD  server           {exc.category.value}: {exc.detail}", file=sys.stderr)
+        return 3
     model_path = str(props.get("model_path", ""))
     build = str(props.get("build_info", ""))
     n_ctx = (props.get("default_generation_settings") or {}).get("n_ctx")
@@ -130,11 +134,15 @@ def _model_check(args: argparse.Namespace) -> int:
 
 def _audit_llm(args: argparse.Namespace) -> int:
     from localitylens.evaluation.audit import load_sample, run_llm, write_report
-    from localitylens.extract.llm_client import LlamaServerClient
+    from localitylens.extract.llm_client import LlamaServerClient, ModelCallError
     from localitylens.release import load_release
 
     client = LlamaServerClient(args.url)
-    props = client.props()
+    try:
+        props = client.props()
+    except ModelCallError as exc:
+        print(f"failed     {exc.category.value}: {exc.detail}", file=sys.stderr)
+        return 3
     server = {
         "build_info": props.get("build_info"),
         "model_file": Path(str(props.get("model_path", ""))).name,

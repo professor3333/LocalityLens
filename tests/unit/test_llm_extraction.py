@@ -247,3 +247,12 @@ def test_grammar_admits_a_pair_together_or_not_at_all(
         assert field not in neither["properties"]
     assert both["additionalProperties"] is False
     assert neither["additionalProperties"] is False
+
+
+def test_model_check_reports_an_unreachable_server_cleanly(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    from localitylens.cli import main
+
+    assert main(["model", "check", "--url", "http://127.0.0.1:9"]) == 3  # nothing listens on 9
+    assert "model_server_unavailable" in capsys.readouterr().err
