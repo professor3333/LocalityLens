@@ -1,0 +1,35 @@
+{
+  "manifest_version": "1",
+  "snapshot_id": "gnis-co-2026-09-29",
+  "source": "USGS Geographic Names Information System (GNIS)",
+  "publisher": "U.S. Geological Survey, U.S. Board on Geographic Names",
+  "retrieved_at": "2026-11-01T04:58:16+00:00",
+  "licence": "U.S. Government work (USGS); public domain in the United States",
+  "usage_constraints": "None. Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data. (verbatim from the FGDC metadata <useconst>)",
+  "citation": "U.S. Geological Survey, Geographic Names Information System (GNIS) Domestic Names for CO (published 2026-09-29) and All Names (National). https://www.usgs.gov/us-board-on-geographic-names/download-gnis-data",
+  "horizontal_datum": "North American Datum of 1983",
+  "ellipsoid": "Geodetic Reference System 80",
+  "files": [
+    {
+      "name": "DomesticNames_CO_Text.zip",
+      "url": "https://prd-tnm.s3.amazonaws.com/StagedProducts/GeographicNames/DomesticNames/DomesticNames_CO_Text.zip",
+      "sha256": "728cfba74efb32c41df25535d1dac5772787273e3c30359ec336d30eba50a7ea",
+      "size_bytes": 1136591,
+      "publication_date": "2026-09-29",
+      "server_last_modified": "Tue, 29 Sep 2026 18:08:00 GMT"
+    },
+    {
+      "name": "AllNames_National_Text.zip",
+      "url": "https://prd-tnm.s3.amazonaws.com/StagedProducts/GeographicNames/Topical/AllNames_National_Text.zip",
+      "sha256": "a0daf05115eec3636353317fc4af81ce54f81b32eeda11cb5d9d6d2c5ef22c15",
+      "size_bytes": 21849105,
+      "publication_date": "2026-09-30",
+      "server_last_modified": "Wed, 30 Sep 2026 05:40:08 GMT"
+    }
+  ],
+  "notes": [
+    "DomesticNames_CO lists one row per feature with its primary county only.",
+    "Missing source coordinates are encoded as 0.0 and are parsed as null.",
+    "Most cultural feature classes (e.g. Locale, Mine) are not in Domestic Names."
+  ]
+}

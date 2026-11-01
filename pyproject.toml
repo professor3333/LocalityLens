@@ -9,8 +9,12 @@ requires-python = ">=3.12"
 dependencies = [
     "pydantic>=2.9",
     "pyproj>=3.7",
+    "rapidfuzz>=3.10",
     "shapely>=2.0",
 ]
+
+[project.scripts]
+localitylens = "localitylens.cli:main"
 
 [dependency-groups]
 dev = [
@@ -47,6 +51,7 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-ra --strict-markers"
 markers = [
     "slow: long-running tests excluded from the default CI run",

@@ -55,13 +55,40 @@ measured workflow for difficult relative descriptions and will be benchmarked ag
 - **Record lifecycle** (`localitylens.domain.status`): explicit statuses and a single
   transition function. A record can only reach `approved` through a pipeline outcome followed by
   curator review.
+- **GNIS snapshot + manifest** (`localitylens.data`): downloads the USGS Colorado Domestic
+  Names and national All Names files into an immutable, checksummed snapshot. A changed
+  upstream file can never overwrite an existing snapshot.
+- **Gazetteer index and search** (`localitylens.gazetteer`): a SQLite index of 26,429 features
+  with official and 4,190 variant names (from the 2026-09-29 snapshot). Search runs exact,
+  then variant, then fuzzy (RapidFuzz). County, state and feature type **rank** candidates but
+  never filter them, and each candidate carries the evidence for its rank. A former name (for
+  example "Mt. Evans", now Mount Blue Sky) competes equally with a current official name.
 - Tests: unit tests plus Hypothesis property tests for span mapping, normalization, and geodesic
-  round trips. CI runs lint, format, strict mypy, and tests on every push.
+  round trips. Gazetteer tests use synthetic GNIS-format fixtures, so no network or real data is
+  needed. CI runs lint, format, strict mypy, and tests on every push.
 
 ## Planned (not yet built)
 
-Data snapshots and manifests, GNIS gazetteer index, rules baseline, LLM extraction via llama.cpp,
+Specimen snapshot (GBIF), 50-record data audit, rules baseline, LLM extraction via llama.cpp,
 uncertainty policy and footprints, review UI, Darwin Core export, evaluation suite.
+
+## Data
+
+| Source | Snapshot | Licence / terms |
+|---|---|---|
+| USGS GNIS, Domestic Names (CO) + All Names (National) | `gnis-co-2026-09-29` (manifest: [`data/manifests/gnis-co-2026-09-29.json`](data/manifests/gnis-co-2026-09-29.json)) | U.S. public domain. *"Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data."* |
+
+Coordinates are NAD83 (GRS80). Raw files are not committed. The manifest records URLs,
+SHA-256 hashes, sizes and publication dates, so the snapshot can be re-downloaded and verified.
+
+Known GNIS limitations that affect georeferencing:
+- Each feature lists only its **primary county**. Longs Peak is listed under Boulder County,
+  though labels often say Larimer.
+- A feature's coordinate is a single **representative point**. For streams it is the mouth
+  (the Colorado River's is in Mexico), so it is not the collecting locality.
+- Missing source coordinates are written as `0.0` in GNIS and are stored as null.
+- Most cultural features (mines, ranches, post offices, other "locales") are **not** in
+  Domestic Names, so labels that cite them return `feature_absent_from_index`.
 
 ## Development
 
@@ -76,6 +103,14 @@ HYPOTHESIS_PROFILE=thorough uv run pytest tests/property   # 5,000 examples per 
 ```
 
 No network access is needed to run the tests.
+
+Build the gazetteer from a real snapshot (downloads about 23 MB from USGS):
+
+```bash
+uv run localitylens data fetch-gnis                     # -> data/raw/gnis/<date>/ + manifest
+uv run localitylens gazetteer build --snapshot data/raw/gnis/2026-09-29
+uv run localitylens gazetteer search "Long's Pk." --county "Larimer Co." --type summit
+```
 
 ## Licence
 
