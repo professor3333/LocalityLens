@@ -128,7 +128,7 @@ def test_llm_audit_records_failures_and_continues(index_path: Path) -> None:
     assert first["trace"]["attempts"] == 2
     assert second["relation"] == "no_locality"
     assert report["system"] == "llm"
-    assert report["prompt"].startswith("extraction-v1 sha256=")
+    assert report["prompt"].startswith(f"{RELEASE.prompt.version} sha256=")
     assert "locality" not in json.dumps(first["trace"])  # traces hold hashes and counts only
 
 

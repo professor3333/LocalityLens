@@ -91,10 +91,11 @@ def _audit_sample(args: argparse.Namespace) -> int:
 
 
 def _audit_rules(args: argparse.Namespace) -> int:
-    from localitylens.evaluation.audit import load_sample, run_rules, write_report
+    from localitylens.evaluation.audit import load_sample, run_rules, sample_label, write_report
 
-    report = run_rules(load_sample(Path(args.sample)), Path(args.index))
-    json_path, md_path = write_report(report, Path(args.out))
+    sample = load_sample(Path(args.sample))
+    report = run_rules(sample, Path(args.index))
+    json_path, md_path = write_report(report, Path(args.out), sample_label(sample))
     for name, counts in report["counts"].items():
         print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
     print(f"  report  {md_path}\n  data    {json_path}")
@@ -152,10 +153,11 @@ def _audit_llm(args: argparse.Namespace) -> int:
         "n_ctx": (props.get("default_generation_settings") or {}).get("n_ctx"),
     }
     release = load_release(Path(args.release))
-    report = run_llm(
-        load_sample(Path(args.sample)), Path(args.index), client, release, server=server
-    )
-    json_path, md_path = write_report(report, Path(args.out))
+    from localitylens.evaluation.audit import sample_label
+
+    sample = load_sample(Path(args.sample))
+    report = run_llm(sample, Path(args.index), client, release, server=server)
+    json_path, md_path = write_report(report, Path(args.out), sample_label(sample))
     for name, counts in report["counts"].items():
         print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
     print(f"  report  {md_path}\n  data    {json_path}")
@@ -178,15 +180,23 @@ def _audit_score(args: argparse.Namespace) -> int:
     if check.errors:
         print(f"{len(check.errors)} worksheet errors; fix them before scoring", file=sys.stderr)
         return 2
+    from localitylens.baseline.rules import RULES_VERSION
+    from localitylens.evaluation.audit import sample_label
+    from localitylens.release import load_release
+
+    label = sample_label(sample)
+    llm_id = load_release(Path(args.release)).extractor_id
+    rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}.json")
+    llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}.json")
     reports = {
-        "rules": json.loads(Path(args.rules).read_text(encoding="utf-8")),
-        "llm": json.loads(Path(args.llm).read_text(encoding="utf-8")),
+        "rules": json.loads(rules_path.read_text(encoding="utf-8")),
+        "llm": json.loads(llm_path.read_text(encoding="utf-8")),
     }
     meta = {name: rep["extractor_version"] for name, rep in reports.items()}
     meta["specimens"] = sample.snapshot_id
     full = score(check.annotations, reports)
     sure = score(check.annotations, reports, exclude_unsure=True)
-    json_path, md_path = write_score_report(full, sure, meta, Path(args.out))
+    json_path, md_path = write_score_report(full, sure, meta, Path(args.out), label)
     for key in ("critical_exact_match", "reference_top1", "correct_proposal_candidates"):
         cells = "  ".join(
             f"{n}={full['systems'][n][key]['hits']}/{full['systems'][n][key]['n']}" for n in reports
@@ -498,8 +508,9 @@ def main(argv: list[str] | None = None) -> int:
     asc.add_argument("--sample", default="eval/audit/audit-50.json")
     asc.add_argument("--worksheet", default="eval/audit/worksheet.csv")
     asc.add_argument("--index", default="data/derived/gazetteer.sqlite")
-    asc.add_argument("--rules", default="eval/reports/audit-50-rules-1.json")
-    asc.add_argument("--llm", default="eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.json")
+    asc.add_argument("--rules", help="default: <out>/<sample>-<rules version>.json")
+    asc.add_argument("--llm", help="default: <out>/<sample>-<release extractor id>.json")
+    asc.add_argument("--release", default="release/manifest.json")
     asc.add_argument("--out", default="eval/reports")
     asc.set_defaults(func=_audit_score)
 

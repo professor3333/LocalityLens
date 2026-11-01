@@ -1,7 +1,7 @@
 {
   "meta": {
     "rules": "rules-1",
-    "llm": "llm-x1g2-qwen3.5-4b-q4km",
+    "llm": "llm-x2g2-qwen3.5-4b-q4km",
     "specimens": "gbif-cu-2026-11-01"
   },
   "all": {
@@ -98,56 +98,56 @@
           "rate": 0.6
         },
         "valid_extraction": {
-          "hits": 41,
+          "hits": 48,
           "n": 50,
-          "rate": 0.82
+          "rate": 0.96
         },
         "critical_exact_match": {
-          "hits": 20,
+          "hits": 22,
           "n": 50,
-          "rate": 0.4
+          "rate": 0.44
         },
         "field_accuracy": {
           "distance": {
-            "hits": 35,
+            "hits": 38,
             "n": 50,
-            "rate": 0.7
+            "rate": 0.76
           },
           "unit": {
-            "hits": 36,
+            "hits": 39,
             "n": 50,
-            "rate": 0.72
+            "rate": 0.78
           },
           "direction": {
-            "hits": 32,
+            "hits": 34,
             "n": 50,
-            "rate": 0.64
+            "rate": 0.68
           },
           "qualifiers": {
-            "hits": 33,
+            "hits": 37,
             "n": 50,
-            "rate": 0.66
+            "rate": 0.74
           }
         },
         "reference_top1": {
-          "hits": 11,
+          "hits": 12,
           "n": 31,
-          "rate": 0.355
+          "rate": 0.387
         },
         "reference_recall5": {
-          "hits": 11,
+          "hits": 12,
           "n": 31,
-          "rate": 0.355
+          "rate": 0.387
         },
         "correct_proposal_candidates": {
-          "hits": 9,
+          "hits": 10,
           "n": 31,
-          "rate": 0.29
+          "rate": 0.323
         },
         "computed_proposals_correct": {
-          "hits": 1,
-          "n": 1,
-          "rate": 1.0
+          "hits": 0,
+          "n": 0,
+          "rate": null
         },
         "unsupported_flagged": {
           "hits": 4,
@@ -155,12 +155,12 @@
           "rate": 1.0
         },
         "absent_reported_absent": {
-          "hits": 7,
+          "hits": 11,
           "n": 15,
-          "rate": 0.467
+          "rate": 0.733
         },
-        "false_no_locality": 7,
-        "mean_corrections": 2.08
+        "false_no_locality": 1,
+        "mean_corrections": 1.82
       }
     },
     "by_type": {
@@ -198,9 +198,9 @@
           "rate": 0.0
         },
         "distance_and_direction": {
-          "hits": 7,
+          "hits": 6,
           "n": 9,
-          "rate": 0.778
+          "rate": 0.667
         },
         "itinerary": {
           "hits": 0,
@@ -208,9 +208,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 2,
+          "hits": 4,
           "n": 20,
-          "rate": 0.1
+          "rate": 0.2
         },
         "route_relative": {
           "hits": 0,
@@ -1127,19 +1127,19 @@
           "audit_id": "A01",
           "category": "reference_absent",
           "relation_ok": false,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": true,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
+          "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 5
+          "corrections": 1
         },
         {
           "audit_id": "A02",
@@ -1180,11 +1180,11 @@
         {
           "audit_id": "A04",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
@@ -1193,7 +1193,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 2
         },
         {
           "audit_id": "A05",
@@ -1217,11 +1217,11 @@
           "audit_id": "A06",
           "category": "answerable",
           "relation_ok": false,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
           "direction_ok": false,
-          "qualifiers_ok": false,
+          "qualifiers_ok": true,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
@@ -1229,7 +1229,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 3
         },
         {
           "audit_id": "A07",
@@ -1324,18 +1324,18 @@
         {
           "audit_id": "A12",
           "category": "reference_absent",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
           "direction_ok": true,
-          "qualifiers_ok": true,
+          "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": true,
+          "handled_ok": true,
+          "false_no_locality": false,
           "computed": false,
           "corrections": 1
         },
@@ -1360,24 +1360,6 @@
         {
           "audit_id": "A14",
           "category": "reference_absent",
-          "relation_ok": true,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": true,
-          "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": true,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 0
-        },
-        {
-          "audit_id": "A15",
-          "category": "reference_absent",
           "relation_ok": false,
           "valid": true,
           "distance_ok": false,
@@ -1394,6 +1376,24 @@
           "corrections": 4
         },
         {
+          "audit_id": "A15",
+          "category": "reference_absent",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": true,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 2
+        },
+        {
           "audit_id": "A16",
           "category": "answerable",
           "relation_ok": false,
@@ -1407,7 +1407,7 @@
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
-          "false_no_locality": true,
+          "false_no_locality": false,
           "computed": false,
           "corrections": 2
         },
@@ -1425,7 +1425,7 @@
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
-          "false_no_locality": true,
+          "false_no_locality": false,
           "computed": false,
           "corrections": 2
         },
@@ -1436,22 +1436,22 @@
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
-          "direction_ok": false,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 2
+          "corrections": 1
         },
         {
           "audit_id": "A19",
           "category": "answerable",
           "relation_ok": false,
-          "valid": false,
+          "valid": true,
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
@@ -1468,20 +1468,20 @@
         {
           "audit_id": "A20",
           "category": "reference_absent",
-          "relation_ok": true,
+          "relation_ok": false,
           "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
+          "distance_ok": false,
+          "unit_ok": false,
+          "direction_ok": false,
           "qualifiers_ok": true,
-          "critical_ok": true,
+          "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": true,
+          "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 0
+          "corrections": 4
         },
         {
           "audit_id": "A21",
@@ -1508,16 +1508,16 @@
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
-          "direction_ok": false,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
+          "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A23",
@@ -1594,20 +1594,20 @@
         {
           "audit_id": "A27",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
           "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
-          "false_no_locality": true,
+          "false_no_locality": false,
           "computed": false,
-          "corrections": 2
+          "corrections": 1
         },
         {
           "audit_id": "A28",
@@ -1707,15 +1707,15 @@
           "distance_ok": true,
           "unit_ok": true,
           "direction_ok": true,
-          "qualifiers_ok": false,
-          "critical_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": true,
           "top1_ok": true,
           "recall5_ok": true,
-          "correct_candidate": false,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A34",
@@ -1756,11 +1756,11 @@
         {
           "audit_id": "A36",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
@@ -1769,13 +1769,13 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 2
         },
         {
           "audit_id": "A37",
           "category": "answerable",
           "relation_ok": false,
-          "valid": false,
+          "valid": true,
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
@@ -1821,14 +1821,14 @@
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
-          "false_no_locality": true,
+          "false_no_locality": false,
           "computed": false,
           "corrections": 2
         },
         {
           "audit_id": "A40",
           "category": "unsupported",
-          "relation_ok": true,
+          "relation_ok": false,
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
@@ -1841,7 +1841,7 @@
           "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 2
         },
         {
           "audit_id": "A41",
@@ -1850,7 +1850,7 @@
           "valid": true,
           "distance_ok": false,
           "unit_ok": true,
-          "direction_ok": true,
+          "direction_ok": false,
           "qualifiers_ok": true,
           "critical_ok": false,
           "top1_ok": false,
@@ -1859,10 +1859,118 @@
           "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 2
+          "corrections": 3
         },
         {
           "audit_id": "A42",
+          "category": "answerable",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": false,
+          "unit_ok": false,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": false,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 5
+        },
+        {
+          "audit_id": "A43",
+          "category": "answerable",
+          "relation_ok": true,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": false,
+          "critical_ok": false,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": false,
+          "handled_ok": false,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 1
+        },
+        {
+          "audit_id": "A44",
+          "category": "answerable",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": false,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 3
+        },
+        {
+          "audit_id": "A45",
+          "category": "reference_absent",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": false,
+          "unit_ok": false,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": true,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 4
+        },
+        {
+          "audit_id": "A46",
+          "category": "reference_absent",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": false,
+          "unit_ok": false,
+          "direction_ok": true,
+          "qualifiers_ok": false,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": true,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 4
+        },
+        {
+          "audit_id": "A47",
+          "category": "reference_absent",
+          "relation_ok": true,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": true,
+          "critical_ok": true,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": true,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 0
+        },
+        {
+          "audit_id": "A48",
           "category": "answerable",
           "relation_ok": true,
           "valid": true,
@@ -1876,116 +1984,8 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": true,
-          "corrections": 0
-        },
-        {
-          "audit_id": "A43",
-          "category": "answerable",
-          "relation_ok": true,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 5
-        },
-        {
-          "audit_id": "A44",
-          "category": "answerable",
-          "relation_ok": false,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 6
-        },
-        {
-          "audit_id": "A45",
-          "category": "reference_absent",
-          "relation_ok": true,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": true,
-          "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": true,
-          "false_no_locality": false,
           "computed": false,
           "corrections": 0
-        },
-        {
-          "audit_id": "A46",
-          "category": "reference_absent",
-          "relation_ok": false,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 5
-        },
-        {
-          "audit_id": "A47",
-          "category": "reference_absent",
-          "relation_ok": true,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": true,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 1
-        },
-        {
-          "audit_id": "A48",
-          "category": "answerable",
-          "relation_ok": false,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": true,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": true,
-          "computed": false,
-          "corrections": 2
         },
         {
           "audit_id": "A49",
@@ -2018,7 +2018,7 @@
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
+          "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
           "corrections": 0
@@ -2028,28 +2028,28 @@
     "paired_correct_proposal_candidates": {
       "n": 31,
       "rules": 13,
-      "llm": 9,
-      "difference": -0.129,
+      "llm": 10,
+      "difference": -0.097,
       "ci95": [
-        -0.323,
-        0.065
+        -0.29,
+        0.097
       ],
       "llm_only": 3,
-      "rules_only": 7,
-      "sign_test_p": 0.3438
+      "rules_only": 6,
+      "sign_test_p": 0.5078
     },
     "paired_critical_exact_match": {
       "n": 50,
       "rules": 24,
-      "llm": 20,
-      "difference": -0.08,
+      "llm": 22,
+      "difference": -0.04,
       "ci95": [
-        -0.24,
-        0.1
+        -0.2,
+        0.14
       ],
-      "llm_only": 8,
-      "rules_only": 12,
-      "sign_test_p": 0.5034
+      "llm_only": 9,
+      "rules_only": 11,
+      "sign_test_p": 0.8238
     }
   },
   "excluding_unsure": {
@@ -2141,14 +2141,14 @@
       },
       "llm": {
         "relation_accuracy": {
-          "hits": 26,
+          "hits": 24,
           "n": 40,
-          "rate": 0.65
+          "rate": 0.6
         },
         "valid_extraction": {
-          "hits": 32,
+          "hits": 38,
           "n": 40,
-          "rate": 0.8
+          "rate": 0.95
         },
         "critical_exact_match": {
           "hits": 18,
@@ -2157,35 +2157,35 @@
         },
         "field_accuracy": {
           "distance": {
-            "hits": 29,
+            "hits": 31,
             "n": 40,
-            "rate": 0.725
+            "rate": 0.775
           },
           "unit": {
-            "hits": 29,
+            "hits": 31,
             "n": 40,
-            "rate": 0.725
+            "rate": 0.775
           },
           "direction": {
-            "hits": 25,
+            "hits": 26,
             "n": 40,
-            "rate": 0.625
+            "rate": 0.65
           },
           "qualifiers": {
-            "hits": 28,
+            "hits": 31,
             "n": 40,
-            "rate": 0.7
+            "rate": 0.775
           }
         },
         "reference_top1": {
-          "hits": 10,
+          "hits": 11,
           "n": 24,
-          "rate": 0.417
+          "rate": 0.458
         },
         "reference_recall5": {
-          "hits": 10,
+          "hits": 11,
           "n": 24,
-          "rate": 0.417
+          "rate": 0.458
         },
         "correct_proposal_candidates": {
           "hits": 9,
@@ -2193,9 +2193,9 @@
           "rate": 0.375
         },
         "computed_proposals_correct": {
-          "hits": 1,
-          "n": 1,
-          "rate": 1.0
+          "hits": 0,
+          "n": 0,
+          "rate": null
         },
         "unsupported_flagged": {
           "hits": 3,
@@ -2203,12 +2203,12 @@
           "rate": 1.0
         },
         "absent_reported_absent": {
-          "hits": 6,
+          "hits": 9,
           "n": 13,
-          "rate": 0.462
+          "rate": 0.692
         },
-        "false_no_locality": 5,
-        "mean_corrections": 1.93
+        "false_no_locality": 1,
+        "mean_corrections": 1.75
       }
     },
     "by_type": {
@@ -2246,9 +2246,9 @@
           "rate": 0.0
         },
         "distance_and_direction": {
-          "hits": 7,
+          "hits": 6,
           "n": 8,
-          "rate": 0.875
+          "rate": 0.75
         },
         "itinerary": {
           "hits": 0,
@@ -2256,9 +2256,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 2,
+          "hits": 3,
           "n": 14,
-          "rate": 0.143
+          "rate": 0.214
         },
         "route_relative": {
           "hits": 0,
@@ -2995,19 +2995,19 @@
           "audit_id": "A01",
           "category": "reference_absent",
           "relation_ok": false,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": true,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
+          "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 5
+          "corrections": 1
         },
         {
           "audit_id": "A02",
@@ -3048,11 +3048,11 @@
         {
           "audit_id": "A04",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
@@ -3061,7 +3061,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 2
         },
         {
           "audit_id": "A05",
@@ -3085,11 +3085,11 @@
           "audit_id": "A06",
           "category": "answerable",
           "relation_ok": false,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
           "direction_ok": false,
-          "qualifiers_ok": false,
+          "qualifiers_ok": true,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
@@ -3097,7 +3097,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 3
         },
         {
           "audit_id": "A07",
@@ -3174,18 +3174,18 @@
         {
           "audit_id": "A12",
           "category": "reference_absent",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
           "direction_ok": true,
-          "qualifiers_ok": true,
+          "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": true,
+          "handled_ok": true,
+          "false_no_locality": false,
           "computed": false,
           "corrections": 1
         },
@@ -3210,24 +3210,6 @@
         {
           "audit_id": "A14",
           "category": "reference_absent",
-          "relation_ok": true,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": true,
-          "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": true,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 0
-        },
-        {
-          "audit_id": "A15",
-          "category": "reference_absent",
           "relation_ok": false,
           "valid": true,
           "distance_ok": false,
@@ -3244,6 +3226,24 @@
           "corrections": 4
         },
         {
+          "audit_id": "A15",
+          "category": "reference_absent",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": true,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 2
+        },
+        {
           "audit_id": "A17",
           "category": "answerable",
           "relation_ok": false,
@@ -3257,7 +3257,7 @@
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
-          "false_no_locality": true,
+          "false_no_locality": false,
           "computed": false,
           "corrections": 2
         },
@@ -3268,22 +3268,22 @@
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
-          "direction_ok": false,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 2
+          "corrections": 1
         },
         {
           "audit_id": "A19",
           "category": "answerable",
           "relation_ok": false,
-          "valid": false,
+          "valid": true,
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
@@ -3300,20 +3300,20 @@
         {
           "audit_id": "A20",
           "category": "reference_absent",
-          "relation_ok": true,
+          "relation_ok": false,
           "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
+          "distance_ok": false,
+          "unit_ok": false,
+          "direction_ok": false,
           "qualifiers_ok": true,
-          "critical_ok": true,
+          "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": true,
+          "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 0
+          "corrections": 4
         },
         {
           "audit_id": "A21",
@@ -3340,16 +3340,16 @@
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
-          "direction_ok": false,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
+          "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 0
         },
         {
           "audit_id": "A23",
@@ -3517,7 +3517,7 @@
           "audit_id": "A37",
           "category": "answerable",
           "relation_ok": false,
-          "valid": false,
+          "valid": true,
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
@@ -3545,14 +3545,14 @@
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
-          "false_no_locality": true,
+          "false_no_locality": false,
           "computed": false,
           "corrections": 2
         },
         {
           "audit_id": "A40",
           "category": "unsupported",
-          "relation_ok": true,
+          "relation_ok": false,
           "valid": true,
           "distance_ok": true,
           "unit_ok": true,
@@ -3565,10 +3565,100 @@
           "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 2
         },
         {
           "audit_id": "A42",
+          "category": "answerable",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": false,
+          "unit_ok": false,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": false,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 5
+        },
+        {
+          "audit_id": "A43",
+          "category": "answerable",
+          "relation_ok": true,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": false,
+          "critical_ok": false,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": false,
+          "handled_ok": false,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 1
+        },
+        {
+          "audit_id": "A44",
+          "category": "answerable",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": false,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 3
+        },
+        {
+          "audit_id": "A45",
+          "category": "reference_absent",
+          "relation_ok": false,
+          "valid": true,
+          "distance_ok": false,
+          "unit_ok": false,
+          "direction_ok": false,
+          "qualifiers_ok": true,
+          "critical_ok": false,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": true,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 4
+        },
+        {
+          "audit_id": "A47",
+          "category": "reference_absent",
+          "relation_ok": true,
+          "valid": true,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": true,
+          "critical_ok": true,
+          "top1_ok": false,
+          "recall5_ok": false,
+          "correct_candidate": false,
+          "handled_ok": true,
+          "false_no_locality": false,
+          "computed": false,
+          "corrections": 0
+        },
+        {
+          "audit_id": "A48",
           "category": "answerable",
           "relation_ok": true,
           "valid": true,
@@ -3582,98 +3672,8 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": true,
-          "corrections": 0
-        },
-        {
-          "audit_id": "A43",
-          "category": "answerable",
-          "relation_ok": true,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 5
-        },
-        {
-          "audit_id": "A44",
-          "category": "answerable",
-          "relation_ok": false,
-          "valid": false,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 6
-        },
-        {
-          "audit_id": "A45",
-          "category": "reference_absent",
-          "relation_ok": true,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": true,
-          "critical_ok": true,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": true,
-          "false_no_locality": false,
           "computed": false,
           "corrections": 0
-        },
-        {
-          "audit_id": "A47",
-          "category": "reference_absent",
-          "relation_ok": true,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": true,
-          "false_no_locality": false,
-          "computed": false,
-          "corrections": 1
-        },
-        {
-          "audit_id": "A48",
-          "category": "answerable",
-          "relation_ok": false,
-          "valid": true,
-          "distance_ok": true,
-          "unit_ok": true,
-          "direction_ok": true,
-          "qualifiers_ok": true,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
-          "handled_ok": false,
-          "false_no_locality": true,
-          "computed": false,
-          "corrections": 2
         },
         {
           "audit_id": "A49",
@@ -3706,7 +3706,7 @@
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
-          "handled_ok": false,
+          "handled_ok": true,
           "false_no_locality": false,
           "computed": false,
           "corrections": 0
@@ -3720,7 +3720,7 @@
       "difference": -0.083,
       "ci95": [
         -0.292,
-        0.125
+        0.167
       ],
       "llm_only": 3,
       "rules_only": 5,
@@ -3732,12 +3732,12 @@
       "llm": 18,
       "difference": -0.05,
       "ci95": [
-        -0.225,
-        0.125
+        -0.25,
+        0.15
       ],
-      "llm_only": 6,
-      "rules_only": 8,
-      "sign_test_p": 0.7905
+      "llm_only": 7,
+      "rules_only": 9,
+      "sign_test_p": 0.8036
     }
   }
 }

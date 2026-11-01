@@ -239,14 +239,18 @@ def _cell(r: dict[str, Any]) -> str:
 
 
 def write_score_report(
-    full: dict[str, Any], sure: dict[str, Any], meta: dict[str, str], directory: Any
+    full: dict[str, Any],
+    sure: dict[str, Any],
+    meta: dict[str, str],
+    directory: Any,
+    label: str = "audit-50",
 ) -> tuple[Any, Any]:
     import json
     from pathlib import Path
 
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
-    stem = "audit-50-score"
+    stem = f"{label}-score"
     json_path = directory / f"{stem}.json"
     json_path.write_text(
         json.dumps({"meta": meta, "all": full, "excluding_unsure": sure}, indent=2) + "\n",
@@ -254,7 +258,8 @@ def write_score_report(
     )
     systems = list(full["systems"])
     md = [
-        "# 50-record audit: scores against the owner's annotations",
+        f"# {'50-record audit' if label == 'audit-50' else label}: scores against the "
+        "owner's annotations",
         "",
         " · ".join(f"{k} `{v}`" for k, v in meta.items()),
         "",

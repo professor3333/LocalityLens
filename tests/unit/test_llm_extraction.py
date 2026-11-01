@@ -108,18 +108,27 @@ def test_schema_has_nowhere_to_put_coordinates() -> None:
 # --- the prompt -------------------------------------------------------------------------------
 
 
-def test_few_shot_examples_are_valid_extractions() -> None:
-    for locality, answer in load_prompt().examples():
+PROMPT_FILES = sorted(
+    f.stem for f in Path("src/localitylens/extract/prompts").glob("extraction-v*.txt")
+)
+
+
+@pytest.mark.parametrize("version", PROMPT_FILES)
+def test_few_shot_examples_are_valid_extractions(version: str) -> None:
+    for locality, answer in load_prompt(version).examples():
         output = ExtractionOutput.model_validate_json(answer)
         result = validate_extraction(output, normalize(locality))
         errors = [i for i in result.issues if i.severity is Severity.ERROR]
         assert not errors, (locality, errors)
 
 
-def test_few_shot_examples_are_not_audit_records() -> None:
-    audit = json.loads(Path("eval/audit/audit-50.json").read_text())
-    audited = {i["record"]["locality"] for i in audit["items"]}
-    assert not audited & {loc for loc, _ in load_prompt().examples()}
+@pytest.mark.parametrize("version", PROMPT_FILES)
+def test_few_shot_examples_are_not_sampled_records(version: str) -> None:
+    sampled: set[str] = set()
+    for path in [Path("eval/audit/audit-50.json"), *Path("eval/dev").glob("*/*.json")]:
+        sampled |= {i["record"]["locality"] for i in json.loads(path.read_text())["items"]}
+    assert len(sampled) >= 100
+    assert not sampled & {loc for loc, _ in load_prompt(version).examples()}
 
 
 def test_label_text_is_fenced_data_and_never_rewritten() -> None:

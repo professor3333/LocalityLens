@@ -48,6 +48,7 @@ class IssueCode(StrEnum):
     REQUIRED_COMPONENT_UNDECLARED = "required_component_undeclared"
     CONTRADICTORY_MISSING = "contradictory_missing"
     FEATURE_TYPE_UNSUPPORTED = "feature_type_unsupported"
+    UNVERIFIED_MENTION_DROPPED = "unverified_mention_dropped"
 
 
 @dataclass(frozen=True, slots=True)
@@ -69,6 +70,12 @@ class ValidationResult:
 
 
 # Components each relation needs; each must be present or explicitly declared missing.
+# 1: every quote must be found. 2: unverifiable admin mentions and qualifiers are dropped.
+VALIDATION_VERSION = "2"
+
+# Evidence that is dropped, rather than failing the interpretation, when its quote is absent.
+_DROPPABLE: tuple[str, ...] = ("admin_mentions", "qualifiers")
+
 REQUIRED_COMPONENTS: dict[RelationType, frozenset[MissingKind]] = {
     RelationType.NAMED_FEATURE: frozenset({MissingKind.REFERENCE_FEATURE}),
     RelationType.DISTANCE_AND_DIRECTION: frozenset(
@@ -130,7 +137,12 @@ def validate_extraction(output: ExtractionOutput, text: NormalizedText) -> Valid
     def locate(quote: str, path: str) -> Span | None:
         span = loc.span(quote)
         if span is None:
-            err(IssueCode.QUOTE_NOT_FOUND, path, f"quote {quote!r} does not occur in the text")
+            if path.startswith(_DROPPABLE):
+                # Context, not a critical component: an unverifiable mention is discarded,
+                # never kept and never allowed to sink the whole interpretation.
+                warn(IssueCode.UNVERIFIED_MENTION_DROPPED, path, f"{quote!r} not in the text")
+            else:
+                err(IssueCode.QUOTE_NOT_FOUND, path, f"quote {quote!r} does not occur in the text")
             return None
         is_component = path.startswith(("reference_feature", "distance", "direction"))
         if loc.relation_range is not None and is_component:

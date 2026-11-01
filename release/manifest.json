@@ -1,6 +1,6 @@
 {
   "release": "0.1.0-dev",
-  "extractor_id": "llm-x1g2-qwen3.5-4b-q4km",
+  "extractor_id": "llm-x2g2-qwen3.5-4b-q4km",
   "model": {
     "id": "Qwen/Qwen3.5-4B",
     "upstream_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
@@ -15,7 +15,17 @@
   "server": {
     "llama_cpp_version": "0.8.0",
     "llama_cpp_build": "b11960-8642541b2",
-    "args": ["--host", "127.0.0.1", "--port", "8080", "-c", "4096", "-np", "1", "--no-context-shift"]
+    "args": [
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8080",
+      "-c",
+      "4096",
+      "-np",
+      "1",
+      "--no-context-shift"
+    ]
   },
   "generation": {
     "temperature": 0.0,
@@ -25,8 +35,8 @@
     "enable_thinking": false
   },
   "prompt": {
-    "version": "extraction-v1",
-    "sha256": "c599643c0f102563dfb15066111664ca5863bd492e778c72bb6fb3c2e6193c85"
+    "version": "extraction-v2",
+    "sha256": "8074f1f8aed024f6bbb3e308939bf19552e2273012ef73babaf3fa5fdc64eba3"
   },
   "schema_version": "extraction-1",
   "grammar_version": "2",

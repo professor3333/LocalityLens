@@ -5,6 +5,7 @@
   "gazetteer_snapshot": "gnis-co-2026-09-29",
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "uncertainty_policy": "gbif-bp-2020/1",
+  "validation_version": "2",
   "seed": "audit-50/1",
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and no extent was supplied.",
   "counts": {

@@ -156,27 +156,28 @@ llama-server -m models/Qwen3.5-4B-Q4_K_M.gguf \
 uv run localitylens model check                            # server matches the manifest
 ```
 
-The same label, read by Qwen3.5-4B instead of the rules. The output is checked the same way:
-every quote is located in the text, every number is parsed by code, and there is no field in
-which a coordinate could be returned:
+The same label, read by Qwen3.5-4B (prompt v2) instead of the rules. The output is checked the
+same way: every quote is located in the text, every number is parsed by code, and there is no
+field in which a coordinate could be returned. This example also shows a **known v2
+regression**: v2 keeps "summit" in the name, and retrieval then finds no match. v1 quoted
+"Longs Peak" and retrieved it. Generic-word-aware retrieval is the planned fix
+([findings](eval/reports/prompt-v2-findings.md)):
 
 ```console
 $ uv run localitylens interpret "Larimer Co., Colo., 2 mi NE of Longs Peak summit." --limit 2
-extractor   llm-x1g2-qwen3.5-4b-q4km
+extractor   llm-x2g2-qwen3.5-4b-q4km
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
-feature     Longs Peak [31:41] type=summit
+feature     Longs Peak summit [31:48] type=summit
 distance    2 mile [20:21]
 direction   NE [25:27]
 admin       county "Larimer Co." · state "Colo."
 missing     none
-retrieval   candidates_found (county context: Larimer Co., from text)
-  1.  204979  Longs Peak       Summit   Boulder   exact_official   type=y county=n
-  2.  186722  Youngs Peak      Summit   Delta     fuzzy_official   type=y county=n
+retrieval   feature_absent_from_index (county context: Larimer Co., from text)
 ```
 
 <sub>Measured on an Apple M1 with 8 GB: llama-server's own footprint is 629 MB on top of the 2.74 GB
-memory-mapped model file. The prompt is 1,500 tokens of the 4,096-token budget.</sub>
+memory-mapped model file. The v2 prompt is about 2,350 tokens of the 4,096-token budget.</sub>
 
 ### Gazetteer search
 
@@ -266,25 +267,27 @@ and Qwen3.5-4B ([report](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.md),
 against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv),
 [scores](eval/reports/audit-50-score.md)).
 
-> **First answer: not yet.** On these 50 labels, Qwen3.5-4B with prompt v1 gives **fewer** correct
-> proposal candidates than the rules: **9 of 31** answerable records against **13 of 31**
-> (paired difference −13 points, 95% CI −32 to +6, sign test p = 0.34; one annotator). The
-> project's target was +10 points. The LLM is ahead on distance-and-direction labels and on
-> flagging unsupported ones, and behind on plain named places.
+> **Answer so far: not yet.** On these 50 labels the rules give **13 of 31** correct proposal
+> candidates. Qwen3.5-4B gives **9** with prompt v1 and **10** with prompt v2. v2 was developed
+> on a separate [dev sample](eval/dev/), where it reached 18 of 29 against the rules' 16, but
+> that gain did not transfer ([findings](eval/reports/prompt-v2-findings.md)). The project's
+> target is +10 points. Most remaining misses are retrieval failures that both systems share.
 
-| Scored against annotations | Rules | LLM |
-|---|---|---|
-| **Correct proposal candidates** (critical interpretation and top reference right, of 31 answerable) | **13 (42%)** | **9 (29%)** |
-| Relation read correctly (of 50) | 26 (52%) | 30 (60%) |
-| Critical interpretation exact (of 50) | 24 (48%) | 20 (40%) |
-| Acceptable reference ranked first (of 31) | 16 (52%) | 11 (36%) |
-| Distance-and-direction labels right (of 9 answerable) | 5 | 7 |
-| Named-place labels right (of 20 answerable) | 7 | 2 |
-| Unsupported labels flagged unsupported (of 4) | 0 | 4 |
-| Mean fields a curator must correct per record | 1.88 | 2.08 |
+| Scored against annotations | Rules | LLM v1 | LLM v2 |
+|---|---|---|---|
+| **Correct proposal candidates** (critical interpretation and top reference right, of 31 answerable) | **13 (42%)** | **9 (29%)** | **10 (32%)** |
+| Relation read correctly (of 50) | 26 (52%) | 30 (60%) | 30 (60%) |
+| Critical interpretation exact (of 50) | 24 (48%) | 20 (40%) | 22 (44%) |
+| Acceptable reference ranked first (of 31) | 16 (52%) | 11 (36%) | 12 (39%) |
+| Distance-and-direction labels right (of 9 answerable) | 5 | 7 | 6 |
+| Named-place labels right (of 20 answerable) | 7 | 2 | 4 |
+| Place names read as "no locality" | 0 | 7 | 1 |
+| Unsupported labels flagged unsupported (of 4) | 0 | 4 | 4 |
+| Mean fields a curator must correct per record | 1.88 | 2.08 | 1.82 |
 
 <sub>A correct proposal candidate becomes a correct proposal once the feature extent is supplied.
-Excluding the 10 rows the annotator marked unsure gives 11/24 against 9/24. The audit records are
+Excluding the 10 rows the annotator marked unsure gives rules 11/24, v1 9/24, v2 9/24. v2 against
+the rules: −10 points (95% CI −29 to +10, p = 0.51). The audit records are
 dev data and too few for the final comparison, which uses the locked benchmark.</sub>
 
 <details>
@@ -316,10 +319,13 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **A grammar lesson:** the first LLM run failed 5 times because the decoding grammar allowed
   combinations that validation rejects, and greedy retries repeat themselves. The grammar now
   admits only valid combinations. The failed run is [kept](eval/reports/audit-50-llm-x1-qwen3.5-4b-q4km.md).
-- **Next: prompt v2 on fresh records.** The audit's records cannot be used to tune the prompt
-  and then score it, so a new stratified dev sample, [`dev-1`](eval/dev/), over-represents the
-  failing label shapes. Every group read in development is recorded in
-  [`eval/viewed-groups.json`](eval/viewed-groups.json) and excluded from any held-out split.
+- **Prompt v2 was built on fresh records.** A stratified dev sample, [`dev-1`](eval/dev/),
+  over-represents the failing label shapes, so the audit stays a check. Every group read in
+  development is recorded in [`eval/viewed-groups.json`](eval/viewed-groups.json) and excluded
+  from any held-out split. v2 fixed the "no locality" error but barely moved the audit score.
+- **Retrieval is now the bottleneck.** Both systems miss 15 of the 31 answerable audit records.
+  Typical misses are generic-word swaps ("Mt. Zenobia" against GNIS "Zenobia Peak") and
+  positional prefixes ("Lower Piney Lake").
 - **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
   `Unknown-E` or two counties (`Gunnison/Pitkin`).
 
@@ -329,7 +335,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 
 | Phase | Scope | Status |
 |---|---|---|
-| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · 🚧 prompt v2: `dev-1` sample drawn (50 groups), awaiting annotation | 🚧 in progress |
+| **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · next: generic-word-aware retrieval | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | 300-record reviewed benchmark · rules vs LLM vs GEOLocate · model-size & quantization study | 🔜 |

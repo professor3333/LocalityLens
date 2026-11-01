@@ -40,6 +40,7 @@ QUALIFIER_WORDS: Final[dict[str, str]] = {
     "about": "approximate", "ca.": "approximate", "ca": "approximate", "approx.": "approximate",
     "approx": "approximate", "approximately": "approximate", "near": "near", "nr.": "near",
     "vicinity": "vicinity", "vicinity of": "vicinity", "vic.": "vicinity", "?": "questioned",
+    "+/-": "approximate", "\u00b1": "approximate",
 }  # fmt: skip
 _NEEDS_REFERENCE: Final = frozenset(
     {"named_feature", "distance_and_direction", "distance_only", "direction_only"}

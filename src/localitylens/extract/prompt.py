@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from importlib import resources
 from typing import Final
 
-PROMPT_VERSION: Final = "extraction-v1"
+PROMPT_VERSION: Final = "extraction-v2"
 DELIMITERS: Final = ("<<<LOCALITY", "LOCALITY>>>")
 PLACEHOLDER: Final = "{locality}"
 _ROLE_LINE: Final = re.compile(r"^=== (system|user|assistant) ===$", re.MULTILINE)

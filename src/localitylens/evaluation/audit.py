@@ -137,7 +137,7 @@ def run_system(
     recorded for that record and the run continues.
     """
     from localitylens.extract.llm_client import ModelCallError
-    from localitylens.extract.validate import Severity
+    from localitylens.extract.validate import VALIDATION_VERSION, Severity
     from localitylens.geo import uncertainty as policy
     from localitylens.geo.georeference import propose
     from localitylens.pipeline.interpret import interpret
@@ -215,6 +215,7 @@ def run_system(
         "gazetteer_snapshot": gazetteer_snapshot,
         "specimen_snapshot": sample.snapshot_id,
         "uncertainty_policy": policy.POLICY_ID,
+        "validation_version": VALIDATION_VERSION,
         "seed": sample.seed,
         **(meta or {}),
         "note": note,
@@ -302,15 +303,23 @@ def run_llm(
 
 
 _TITLES: Final = {"rules": "rules baseline", "llm": "LLM extraction"}
+_HEADINGS: Final = {"audit-50": "50-record audit"}
 
 
-def write_report(report: dict[str, Any], directory: Path) -> tuple[Path, Path]:
+def sample_label(sample: AuditSample) -> str:
+    """File prefix and title for a sample's reports: ``audit-50`` or the dev sample's name."""
+    return sample.name or "audit-50"
+
+
+def write_report(
+    report: dict[str, Any], directory: Path, label: str = "audit-50"
+) -> tuple[Path, Path]:
     directory.mkdir(parents=True, exist_ok=True)
-    stem = f"audit-50-{report['extractor_version']}"
+    stem = f"{label}-{report['extractor_version']}"
     json_path = directory / f"{stem}.json"
     json_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", "utf-8")
     md = [
-        f"# 50-record audit: {_TITLES.get(report['system'], report['system'])} "
+        f"# {_HEADINGS.get(label, label)}: {_TITLES.get(report['system'], report['system'])} "
         f"(`{report['extractor_version']}`)",
         "",
         f"Specimens `{report['specimen_snapshot']}` · gazetteer `{report['gazetteer_snapshot']}` "

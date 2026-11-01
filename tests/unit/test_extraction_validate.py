@@ -214,3 +214,28 @@ def test_a_stated_type_word_is_kept() -> None:
     assert feature is not None
     assert feature.feature_type is not None
     assert feature.feature_type.value == "stream"
+
+
+@pytest.mark.parametrize(
+    "extra",
+    [{"admin_mentions": [{"level": "state", "quote": "Colo."}]},
+     {"qualifiers": [{"kind": "near", "quote": "near"}]}],
+)  # fmt: skip
+def test_an_invented_context_mention_is_dropped_not_fatal(extra: dict[str, Any]) -> None:
+    text = normalize("Testa Peak")
+    out = ExtractionOutput.model_validate(
+        {"relation": "named_feature", "reference_feature": {"name_quote": "Testa Peak"}} | extra
+    )
+    result = validate_extraction(out, text)
+    assert result.interpretation is not None
+    assert result.interpretation.admin_mentions == ()
+    assert result.interpretation.qualifiers == ()
+    assert any(i.code is IssueCode.UNVERIFIED_MENTION_DROPPED for i in result.issues)
+
+
+def test_an_invented_reference_still_fails() -> None:
+    text = normalize("Testa Peak")
+    out = ExtractionOutput.model_validate(
+        {"relation": "named_feature", "reference_feature": {"name_quote": "Other Peak"}}
+    )
+    assert validate_extraction(out, text).interpretation is None
