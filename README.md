@@ -227,7 +227,7 @@ The rules baseline has run on the sample ([report](eval/reports/audit-50-rules-1
 [findings](eval/reports/audit-50-rules-1-findings.md)). These are **system outcomes, not
 accuracy**: correctness waits for blind annotation of the [worksheet](eval/audit/worksheet.csv).
 
-| Rules baseline on 50 real labels | |
+| Stage | Rules baseline on 50 real labels (counts) |
 |---|---|
 | Relation read | named feature 22 · distance + direction 14 · direction only 10 · other 2 · distance only 1 · route 1 |
 | Retrieval | candidates found 33 · feature absent from GNIS 14 · no reference feature 3 |
