@@ -44,22 +44,9 @@ curator approves, corrects, or defers every result before it is exported as Darw
 
 ## 🧭 How it works
 
-```mermaid
-flowchart LR
-    T["📜 Locality text<br/><i>verbatim label</i>"]:::built --> X["🧠 Extraction<br/><i>LLM or rules → quotes</i>"]:::planned
-    X --> V["✔️ Validation<br/><i>quotes → original-text spans</i>"]:::built
-    V --> R["🗺️ Retrieval<br/><i>GNIS candidates + evidence</i>"]:::built
-    R --> D["⚖️ Disambiguation<br/><i>optional 2nd LLM call</i>"]:::planned
-    D --> G["📐 Geometry<br/><i>geodesic offset + uncertainty</i>"]:::partial
-    G --> H["🧑‍🔬 Curator review<br/><i>approve · edit · defer</i>"]:::planned
-    H --> E["📦 Export<br/><i>Darwin Core CSV + GeoJSON</i>"]:::planned
-
-    classDef built fill:#103A34,stroke:#5FD3B5,stroke-width:2px,color:#E9F4F0
-    classDef partial fill:#103A34,stroke:#F4B860,stroke-width:2px,stroke-dasharray:6 3,color:#E9F4F0
-    classDef planned fill:transparent,stroke:#8A9A95,stroke-width:1.5px,stroke-dasharray:4 4
-```
-
-<sub><b>Legend:</b> solid teal = built · dashed amber = partly built · dashed grey = planned</sub>
+<p align="center">
+  <img src="docs/assets/pipeline.svg" alt="Pipeline: locality text, extraction, validation, retrieval, disambiguation, geometry, review and export, each marked built, partly built or planned" width="100%">
+</p>
 
 The split between the stages is the core idea:
 
@@ -88,9 +75,9 @@ under *Boulder* County, so the county disagreement is **shown as evidence, not u
 the match**:
 
 ```console
-$ uv run localitylens gazetteer search "Long's Pk." --county "Larimer Co." --type summit --limit 2
-  204979  Longs Peak         Summit   Boulder      exact_official  sim=100.0 type=y county=n state=y  (40.25486, -105.61624)
-  186722  Youngs Peak        Summit   Delta        fuzzy_official  sim= 85.7 type=y county=n state=y  (38.71133, -107.60635)
+$ uv run localitylens gazetteer search "Long's Pk." --county "Larimer Co." --limit 2
+  204979  Longs Peak      Summit  Boulder      exact_official  sim=100.0  county=n
+  186722  Youngs Peak     Summit  Delta        fuzzy_official  sim= 85.7  county=n
 ```
 
 **A former name on an old label.** Mount Evans was renamed Mount Blue Sky in 2023, and a
@@ -98,9 +85,9 @@ $ uv run localitylens gazetteer search "Long's Pk." --county "Larimer Co." --typ
 equally with current ones, and context decides:
 
 ```console
-$ uv run localitylens gazetteer search "Mt. Evans" --county "Clear Creek" --type summit --limit 2
-  204716  Mount Blue Sky     Summit   Clear Creek  exact_variant   sim=100.0 type=y county=y state=y  (39.58812, -105.64373)
-  179941  Mount Evans        Summit   Park         exact_official  sim=100.0 type=y county=n state=y  (39.25679, -106.18155)
+$ uv run localitylens gazetteer search "Mt. Evans" --county "Clear Creek" --limit 2
+  204716  Mount Blue Sky  Summit  Clear Creek  exact_variant   sim=100.0  county=y
+  179941  Mount Evans     Summit  Park         exact_official  sim=100.0  county=n
 ```
 
 **A place the gazetteer doesn't hold** is reported as absent. It is never guessed:
@@ -110,7 +97,7 @@ $ uv run localitylens gazetteer search "Gold Hill Mine"
 feature_absent_from_index
 ```
 
-<sub>Output columns trimmed for width. Coordinates are GNIS representative points (NAD83), not georeferences.</sub>
+<sub>Output trimmed for width. The full output also shows state/type flags and the GNIS representative point (NAD83), which is evidence, not a georeference.</sub>
 
 ## 🛡️ Design guarantees
 
@@ -206,6 +193,7 @@ tests/
 ├── property/     Hypothesis invariants
 └── support/      shared fixture builders
 data/manifests/   committed snapshot manifests (raw data is gitignored)
+scripts/          generators for the README banner and pipeline diagram
 ```
 
 </details>
