@@ -31,7 +31,10 @@ uv run localitylens benchmark draw --seed benchmark/1    # --validation 60 --tes
 
 ## Order of work
 
-1. **Annotate `validation/worksheet.csv`** with the [annotation guide](../annotation_guide.md).
+1. ✅ **Annotate `validation/worksheet.csv`** with the [annotation guide](../annotation_guide.md).
+   Done and scored with the frozen systems: LLM v2 15/32, rules 13/32 correct proposal
+   candidates ([findings](../reports/validation-findings.md)). Validation has now been read, so
+   a change designed from its misses must be checked elsewhere.
 2. **Annotate `test/worksheet.csv`** the same way. The annotator reads it, but no development
    code and no assistant opens, prints or summarises it. CI never touches it.
 3. **Freeze the targets and the release** (prompt, grammar, validation, retrieval, model,

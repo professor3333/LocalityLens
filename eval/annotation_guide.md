@@ -23,7 +23,7 @@ as `multi: …`.
 | `distance` | As written: `2`, `1.5`, `1/2`, `20-21` (for a range, also note `range`) |
 | `unit` | `mile`, `kilometre`, `metre`, `foot`, `yard`. A bare "m" (miles or metres?): leave blank and add `unit` to missing |
 | `direction` | 16-point code `N` `NNE` … `NNW` ("S.E." is `SE`). Blank for "upstream", "above" and the like |
-| `qualifiers` | As written, `;`-separated: about, ca., approx., near, vicinity, `?` |
+| `qualifiers` | As written, `;`-separated: about, ca., approx., `~`, `±`, near, vicinity, `?` |
 | `missing_information` | From: `extent`, `which_feature`, `distance`, `unit`, `direction`, `route_geometry`, `feature_not_in_gnis`, `historical_name`, `other: …` |
 | `notes` | `multi: …`, `bracketed: …` (text in square brackets was added by someone other than the collector), positions on a feature, elevation, doubts |
 

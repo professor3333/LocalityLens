@@ -267,10 +267,21 @@ and Qwen3.5-4B ([report](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.md),
 against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv),
 [scores](eval/reports/audit-50-score.md)).
 
-> **Answer so far: not yet.** With today's retrieval, the rules give **14 of 31** correct proposal
-> candidates on these 50 labels, and Qwen3.5-4B with prompt v2 gives **12**. v2 was developed on
-> a separate [dev sample](eval/dev/), where it leads 18 to 16, but that gain did not transfer
-> ([findings](eval/reports/prompt-v2-findings.md)). The project's target is +10 points.
+> **Answer so far: not yet.** On the 60 held-out [validation](eval/benchmark/) records, which
+> nobody had read during development, Qwen3.5-4B with prompt v2 gives **15 of 32** correct
+> proposal candidates and the rules give **13**: **+6 points** (95% CI −9 to +22, p = 0.69).
+> The target is +10 points, and the interval is too wide to call either way
+> ([findings](eval/reports/validation-findings.md), [scores](eval/reports/validation-score.md)).
+> The locked test (120) gives the deciding answer.
+
+| Correct proposal candidates | Rules | LLM v2 | LLM − rules |
+|---|---|---|---|
+| **Validation** (held out, 32 answerable) | 13 (41%) | **15 (47%)** | **+6 pts** (CI −9 to +22) |
+| Audit (dev data, 31 answerable) | 14 (45%) | 12 (39%) | −7 pts (CI −26 to +13) |
+| dev-1 (v2 was written on it, 29 answerable) | 16 (55%) | 18 (62%) | in-sample |
+
+<details>
+<summary><b>The audit in detail</b> (dev data, prompt v1 and v2)</summary>
 
 | Scored against annotations | Rules | LLM v1 | LLM v2 |
 |---|---|---|---|
@@ -290,6 +301,8 @@ Rows other than the first two are before core retrieval. Excluding the 10 rows t
 marked unsure, with core retrieval: rules 12/24, v2 10/24. v2 against the rules: −7 points
 (95% CI −26 to +13, p = 0.75). The audit records are
 dev data and too few for the final comparison, which uses the locked benchmark.</sub>
+
+</details>
 
 <details>
 <summary><b>System outcomes before scoring</b></summary>
@@ -328,9 +341,13 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
   Zenobia" finds GNIS "Zenobia Peak"; "Lower Piney Lake" finds "Piney Lake" but never "Upper
   Piney Lake"). It fixed the 2 audit records it was designed from, for both systems, and changed
   nothing on dev-1: no regressions, but no out-of-sample evidence yet.
-- **Next: a benchmark nobody has read.** Validation (60) and a locked test (120) are drawn from
+- **A benchmark nobody had read.** Validation (60) and a locked test (120) are drawn from
   groups untouched by development, grouped by collecting event so that no trip spans two
-  splits ([how](eval/benchmark/)). The comparison that answers the milestone runs there.
+  splits ([how](eval/benchmark/)).
+- **On validation the LLM leads, narrowly.** It picks the right reference more often (top-1 18
+  vs 15 of 32) but reads relations no better (critical interpretation 23 vs 25 of 60). The most
+  common shared miss is the one prompt v2 targeted: "Vernal Mesa, 15 mi. east of Montrose" read
+  as an offset from Montrose instead of as Vernal Mesa (5 records).
 - **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
   `Unknown-E` or two counties (`Gunnison/Pitkin`).
 
@@ -343,7 +360,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
-| **4 · Evaluation** | 🚧 benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event, awaiting annotation · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
+| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts, CI −9 to +22) · 🔜 locked test annotation · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
 <details>

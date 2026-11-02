@@ -272,7 +272,8 @@ def write_score_report(
         "> A **correct proposal candidate** is an answerable record whose critical "
         "interpretation (relation, distance, unit, direction, qualifiers) matches the annotation "
         "and whose top-ranked reference is an acceptable GNIS ID. It becomes a correct proposal "
-        "once the feature extent is supplied. One annotator; 50 records; wide intervals.",
+        f"once the feature extent is supplied. One annotator; {full['records']} records; "
+        "wide intervals.",
         "",
         "| Metric | " + " | ".join(systems) + " |",
         "|---|" + "---|" * len(systems),

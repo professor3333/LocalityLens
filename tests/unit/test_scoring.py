@@ -174,6 +174,13 @@ def test_spelled_out_annotated_distance_compares_by_value() -> None:
     assert judge(annotation(distance="two"), report_row()).distance_ok
 
 
+def test_half_and_tilde_as_annotators_copy_them() -> None:
+    from localitylens.evaluation.annotations import QUALIFIER_WORDS, annotated_distance
+
+    assert annotated_distance("Half") == 0.5
+    assert QUALIFIER_WORDS["~"] == "approximate"
+
+
 def test_unsupported_and_absent_handling() -> None:
     unsupported = annotation(
         supported=False,
