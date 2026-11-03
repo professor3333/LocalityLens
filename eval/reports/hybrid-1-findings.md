@@ -70,3 +70,10 @@ two systems mostly fail on the *same* records, so no way of combining them can a
   at refusing what cannot be done). Any test score for hybrid-1 must state this.
 - **hybrid-1 is still the best system measured:** never worse than the rules, and cheaper than
   the LLM alone.
+
+## Locked test (release 2, scored after these findings)
+
+Declared in [`declaration-2.json`](../benchmark/declaration-2.json) and scored once: hybrid-1
+**25 of 56** against the rules' 19, **+10.7 points** (CI +3.6 to +19.6), 6 gained and none
+lost. That clears the +10 point target by one record, about twice the gain expected above
+([result](test-release-2.md)).

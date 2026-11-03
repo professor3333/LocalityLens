@@ -1,0 +1,7 @@
+source     rules=107  llm=13
+llm_call   made=47  skipped=73
+relation   named_feature=54  direction_only=35  distance_and_direction=15  other=6  route_relative=6  between_features=4
+retrieval  candidates_found=86  feature_absent_from_index=20  no_reference_feature=14
+proposal   needs_information=104  unsupported=16
+  report  eval/benchmark/test/reports/test-hybrid-1.md
+  data    eval/benchmark/test/reports/test-hybrid-1.json

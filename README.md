@@ -40,8 +40,9 @@ curator approves, corrects, or defers every result before it is exported as Darw
 > [!NOTE]
 > **Early development: Phase 1 (data & feasibility).** This README separates what exists
 > (✅) from what is planned (🔜). The first milestone has been measured on a locked test split
-> and the result is published below, even though it was negative
-> ([result](eval/reports/test-release-1.md)).
+> twice, and both results are published below: the LLM alone fell short
+> ([release 1](eval/reports/test-release-1.md)), and rules with an LLM fallback cleared the
+> target by a thin margin ([release 2](eval/reports/test-release-2.md)).
 
 ## 🧭 How it works
 
@@ -294,32 +295,39 @@ and Qwen3.5-4B ([report](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.md),
 against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv),
 [scores](eval/reports/audit-50-score.md)).
 
-> **Answer for release 1: no.** On the 120-record **locked test**, scored once under a
-> [declaration](eval/benchmark/declaration-1.json) pushed before the run, the rules give **19 of
-> 56** correct proposal candidates and Qwen3.5-4B with prompt v2 gives **15**: **−7 points**
-> (95% CI −23 to +7, p = 0.50). The pre-registered rule reads "no" because even the upper bound
-> falls short of the +10 point target. It does not show the rules are better, since the interval
-> includes zero ([result](eval/reports/test-release-1.md)).
+> **Answer: yes for rules with an LLM fallback, no for the LLM alone.** Both were scored on
+> the 120-record **locked test**, each under a declaration pushed before its run. The LLM
+> alone gives **15 of 56** correct proposal candidates against the rules' **19** (release 1,
+> −7 points). `hybrid-1` runs the rules and calls the LLM only where they reach no gazetteer
+> candidate. It gives **25 of 56: +10.7 points** (95% CI +3.6 to +19.6, p = 0.031), just over
+> the +10 point target ([release 2](eval/reports/test-release-2.md)).
 
-| Correct proposal candidates | Rules | LLM v2 | LLM − rules |
+| Correct proposal candidates | Rules | LLM v2 alone | **hybrid-1** |
 |---|---|---|---|
-| **Locked test** (scored once, 56 answerable) | **19 (34%)** | 15 (27%) | **−7 pts** (CI −23 to +7) |
-| Validation (held out, 32 answerable) | 13 (41%) | 15 (47%) | +6 pts (CI −9 to +22) |
-| Audit (dev data, 31 answerable) | 14 (45%) | 12 (39%) | −7 pts (CI −26 to +13) |
-| dev-1 (v2 was written on it, 29 answerable) | 16 (55%) | 18 (62%) | in-sample |
+| **Locked test** (56 answerable) | 19 (34%) | 15 (27%) | **25 (45%)** |
+| Validation (held out, now read; 32) | 13 (41%) | 15 (47%) | 16 (50%) |
+| Audit (dev data; 31) | 14 (45%) | 12 (39%) | 14 (45%) |
+| dev-1 (v2 was written on it; 29) | 16 (55%) | 18 (62%) | 18 (62%) |
 
-**Next step: rules first, LLM as fallback.** `hybrid-1` uses the LLM only where the rules
-reach no gazetteer candidate. Across the audit, dev-1 and validation it gets **48 of 92**
-against the rules' 43 and the LLM's 45. It **never loses a record the rules had right** and
-calls the model for 38% of records. The most any selection could gain on dev data is about
-+12 points, because the two systems mostly fail on the same labels
-([findings](eval/reports/hybrid-1-findings.md)). It has **not** been scored on the locked test.
+**How to read the "yes":**
+- **The margin is one record.** +10 points of 56 is 5.6 records, and the hybrid gains 6 while
+  losing none.
+- **The interval includes gains below 10 points.** It shows the hybrid beats the rules, not
+  that the true gain is at least 10.
+- **The test was scored twice.** The hybrid idea came partly from release 1's totals, though
+  its rule was chosen on dev data only ([findings](eval/reports/hybrid-1-findings.md)).
+- **The gain is retrieval.** The LLM reaches a gazetteer entry for names the rules can't
+  parse: top-1 acceptable 33 of 56 against 25. It calls the model on 39% of records.
+- **Proposals are not measured yet.** Feature extent is unknown, so no system computes a
+  region, and the target's "comparable precision" condition can't be checked.
 
-<sub>Retrieval is level on the test (an acceptable reference ranked first in 25 of 56 for both).
-The LLM loses on interpretation: direction-only labels (0 of 7 against 5), qualifiers (71%
+<sub>Release 1, LLM alone: retrieval is level on the test (an acceptable reference ranked first
+in 25 of 56 for both). The LLM loses on interpretation: direction-only labels (0 of 7 against 5), qualifiers (71%
 against 86% right) and 15 of 120 outputs rejected by validation. It flags more unsupported
 labels (9 against 7 of 16) and more references absent from GNIS (26 against 17 of 48). LLM
-latency p50 11.7 s, p95 20.9 s per record (Apple M1, 8 GB).</sub>
+latency p50 11.7 s, p95 20.9 s per record (Apple M1, 8 GB). Release 2, hybrid-1: it keeps the
+rules' direction-only, qualifier and validity results, but reports fewer references absent
+from GNIS (14 against 17 of 48), and model time is 39% of the LLM alone.</sub>
 
 <details>
 <summary><b>The audit in detail</b> (dev data, prompt v1 and v2)</summary>
@@ -404,7 +412,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
-| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ `hybrid-1` (rules first, LLM fallback): 48/92 vs rules 43 on dev + validation, never worse; not yet scored on test · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
+| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
 <details>

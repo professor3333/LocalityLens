@@ -1,0 +1,405 @@
+{
+  "declaration": "eval/benchmark/declaration-2.json",
+  "note": "Aggregates only. Per-record outputs are under eval/benchmark/test/reports/ and are never read during development. hybrid-1 was built from release 1's component reports (hashes pinned in the declaration); no system was rerun.",
+  "records": 120,
+  "categories": {
+    "answerable": 56,
+    "reference_absent": 48,
+    "unsupported": 16
+  },
+  "annotated_types": {
+    "named_feature": 70,
+    "distance_and_direction": 17,
+    "direction_only": 15,
+    "route_relative": 8,
+    "between_features": 6,
+    "distance_only": 2,
+    "itinerary": 1,
+    "admin_only": 1
+  },
+  "systems": {
+    "rules": {
+      "relation_accuracy": {
+        "hits": 69,
+        "n": 120,
+        "rate": 0.575
+      },
+      "valid_extraction": {
+        "hits": 120,
+        "n": 120,
+        "rate": 1.0
+      },
+      "critical_exact_match": {
+        "hits": 56,
+        "n": 120,
+        "rate": 0.467
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 88,
+          "n": 120,
+          "rate": 0.733
+        },
+        "unit": {
+          "hits": 92,
+          "n": 120,
+          "rate": 0.767
+        },
+        "direction": {
+          "hits": 83,
+          "n": 120,
+          "rate": 0.692
+        },
+        "qualifiers": {
+          "hits": 103,
+          "n": 120,
+          "rate": 0.858
+        }
+      },
+      "reference_top1": {
+        "hits": 25,
+        "n": 56,
+        "rate": 0.446
+      },
+      "reference_recall5": {
+        "hits": 26,
+        "n": 56,
+        "rate": 0.464
+      },
+      "correct_proposal_candidates": {
+        "hits": 19,
+        "n": 56,
+        "rate": 0.339
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 7,
+        "n": 16,
+        "rate": 0.438
+      },
+      "absent_reported_absent": {
+        "hits": 17,
+        "n": 48,
+        "rate": 0.354
+      },
+      "false_no_locality": 0,
+      "mean_corrections": 1.63
+    },
+    "llm": {
+      "relation_accuracy": {
+        "hits": 66,
+        "n": 120,
+        "rate": 0.55
+      },
+      "valid_extraction": {
+        "hits": 105,
+        "n": 120,
+        "rate": 0.875
+      },
+      "critical_exact_match": {
+        "hits": 47,
+        "n": 120,
+        "rate": 0.392
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 93,
+          "n": 120,
+          "rate": 0.775
+        },
+        "unit": {
+          "hits": 96,
+          "n": 120,
+          "rate": 0.8
+        },
+        "direction": {
+          "hits": 80,
+          "n": 120,
+          "rate": 0.667
+        },
+        "qualifiers": {
+          "hits": 85,
+          "n": 120,
+          "rate": 0.708
+        }
+      },
+      "reference_top1": {
+        "hits": 25,
+        "n": 56,
+        "rate": 0.446
+      },
+      "reference_recall5": {
+        "hits": 26,
+        "n": 56,
+        "rate": 0.464
+      },
+      "correct_proposal_candidates": {
+        "hits": 15,
+        "n": 56,
+        "rate": 0.268
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 9,
+        "n": 16,
+        "rate": 0.562
+      },
+      "absent_reported_absent": {
+        "hits": 26,
+        "n": 48,
+        "rate": 0.542
+      },
+      "false_no_locality": 2,
+      "mean_corrections": 1.76
+    },
+    "hybrid": {
+      "relation_accuracy": {
+        "hits": 70,
+        "n": 120,
+        "rate": 0.583
+      },
+      "valid_extraction": {
+        "hits": 120,
+        "n": 120,
+        "rate": 1.0
+      },
+      "critical_exact_match": {
+        "hits": 58,
+        "n": 120,
+        "rate": 0.483
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 89,
+          "n": 120,
+          "rate": 0.742
+        },
+        "unit": {
+          "hits": 93,
+          "n": 120,
+          "rate": 0.775
+        },
+        "direction": {
+          "hits": 82,
+          "n": 120,
+          "rate": 0.683
+        },
+        "qualifiers": {
+          "hits": 104,
+          "n": 120,
+          "rate": 0.867
+        }
+      },
+      "reference_top1": {
+        "hits": 33,
+        "n": 56,
+        "rate": 0.589
+      },
+      "reference_recall5": {
+        "hits": 35,
+        "n": 56,
+        "rate": 0.625
+      },
+      "correct_proposal_candidates": {
+        "hits": 25,
+        "n": 56,
+        "rate": 0.446
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 7,
+        "n": 16,
+        "rate": 0.438
+      },
+      "absent_reported_absent": {
+        "hits": 14,
+        "n": 48,
+        "rate": 0.292
+      },
+      "false_no_locality": 0,
+      "mean_corrections": 1.54
+    }
+  },
+  "by_type": {
+    "rules": {
+      "direction_only": [
+        5,
+        7
+      ],
+      "distance_and_direction": [
+        2,
+        9
+      ],
+      "distance_only": [
+        0,
+        2
+      ],
+      "named_feature": [
+        12,
+        38
+      ]
+    },
+    "llm": {
+      "direction_only": [
+        0,
+        7
+      ],
+      "distance_and_direction": [
+        4,
+        9
+      ],
+      "distance_only": [
+        0,
+        2
+      ],
+      "named_feature": [
+        11,
+        38
+      ]
+    },
+    "hybrid": {
+      "direction_only": [
+        5,
+        7
+      ],
+      "distance_and_direction": [
+        3,
+        9
+      ],
+      "distance_only": [
+        0,
+        2
+      ],
+      "named_feature": [
+        17,
+        38
+      ]
+    }
+  },
+  "paired_hybrid_vs_rules": {
+    "correct_proposal_candidates": {
+      "n": 56,
+      "rules": 19,
+      "llm": 25,
+      "difference": 0.107,
+      "ci95": [
+        0.036,
+        0.196
+      ],
+      "llm_only": 6,
+      "rules_only": 0,
+      "sign_test_p": 0.0312
+    },
+    "critical_exact_match": {
+      "n": 120,
+      "rules": 56,
+      "llm": 58,
+      "difference": 0.017,
+      "ci95": [
+        0.0,
+        0.042
+      ],
+      "llm_only": 2,
+      "rules_only": 0,
+      "sign_test_p": 0.5
+    }
+  },
+  "paired_llm_vs_rules": {
+    "correct_proposal_candidates": {
+      "n": 56,
+      "rules": 19,
+      "llm": 15,
+      "difference": -0.071,
+      "ci95": [
+        -0.232,
+        0.071
+      ],
+      "llm_only": 8,
+      "rules_only": 12,
+      "sign_test_p": 0.5034
+    }
+  },
+  "sensitivity_excluding_unsure": {
+    "excluded": 23,
+    "categories": {
+      "answerable": 50,
+      "reference_absent": 37,
+      "unsupported": 10
+    },
+    "paired_hybrid_vs_rules": {
+      "correct_proposal_candidates": {
+        "n": 50,
+        "rules": 17,
+        "llm": 23,
+        "difference": 0.12,
+        "ci95": [
+          0.04,
+          0.22
+        ],
+        "llm_only": 6,
+        "rules_only": 0,
+        "sign_test_p": 0.0312
+      },
+      "critical_exact_match": {
+        "n": 97,
+        "rules": 47,
+        "llm": 49,
+        "difference": 0.021,
+        "ci95": [
+          0.0,
+          0.052
+        ],
+        "llm_only": 2,
+        "rules_only": 0,
+        "sign_test_p": 0.5
+      }
+    }
+  },
+  "hybrid_counts": {
+    "source": {
+      "rules": 107,
+      "llm": 13
+    },
+    "llm_call": {
+      "made": 47,
+      "skipped": 73
+    },
+    "relation": {
+      "named_feature": 54,
+      "direction_only": 35,
+      "distance_and_direction": 15,
+      "other": 6,
+      "route_relative": 6,
+      "between_features": 4
+    },
+    "retrieval": {
+      "candidates_found": 86,
+      "feature_absent_from_index": 20,
+      "no_reference_feature": 14
+    },
+    "proposal": {
+      "needs_information": 104,
+      "unsupported": 16
+    }
+  },
+  "model_time_s": {
+    "hybrid_calls": 47,
+    "hybrid_total": 589.5,
+    "llm_only_total": 1494.7,
+    "share": 0.394,
+    "note": "Recorded per-record seconds from release 1's LLM run, summed over the records where hybrid-1 calls the model."
+  },
+  "decision": "yes"
+}
