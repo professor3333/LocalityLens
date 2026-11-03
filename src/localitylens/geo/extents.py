@@ -2,8 +2,11 @@
 
 GNIS gives a representative point, not a feature's shape, so a proposal's radius stays unknown
 until someone has measured how far the feature reaches (invariant 6). This store holds those
-measurements. Nothing in it is computed or guessed by code: every value is entered by a
-reviewer, with the method, source and date, and is checked against the pinned snapshot.
+measurements. Nothing in it is computed or guessed by LocalityLens: every value is a recorded
+map measurement, with its method, source, who measured it (``reviewer``: a person, or a named
+tool working through a map interface) and the date, and it is checked against the pinned
+snapshot. The rationale says "measured by", not "reviewed by", so a proposal never claims more
+review than the row records.
 
 **What is measured.** The *geographic radial* of BP §3.4.1 is the distance from the point used
 as the georeference's origin to the farthest point of the feature's boundary. BP measures it
@@ -86,7 +89,7 @@ class ReviewedExtent:
             source=ExtentSource.REVIEWED,
             rationale=(
                 f"radial of {self.official_name} from the {MEASURED_FROM} ({CITE_RADIAL}), "
-                f"{self.method}; source: {self.source}; reviewed by {self.reviewer} on "
+                f"{self.method}; source: {self.source}; measured by {self.reviewer} on "
                 f"{self.reviewed_on.isoformat()} ({STORE_VERSION}).{note}"
             ),
         )

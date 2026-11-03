@@ -198,7 +198,7 @@ def test_cli_check_and_propose_use_the_store(
     assert main([*run, "--extents", str(path)]) == 0
     out = capsys.readouterr().out
     assert '"outcome": "computed"' in out
-    assert "reviewed by tester" in out
+    assert "measured by tester" in out
     assert main(run) == 0
     assert '"outcome": "needs_information"' in capsys.readouterr().out
 

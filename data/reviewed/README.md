@@ -3,7 +3,8 @@
 GNIS gives each feature a single representative point. A town, summit, valley or stream is
 bigger than that, so a proposal's radius stays **unknown** until someone measures how far the
 feature reaches. [`extents.csv`](extents.csv) holds those measurements, one row per GNIS
-feature. Every value is entered by a person. No code computes or guesses one.
+feature. Every value is a recorded map measurement that says who made it: a person, or a
+named tool working through a map interface. LocalityLens code never computes or guesses one.
 
 `propose` uses an extent from this file in place of "unknown". A record whose reference has a
 reviewed extent (and no other blocking question) becomes `computed`, a full point-radius
@@ -37,7 +38,7 @@ row (`latitude`, `longitude`, `datum`) **to the farthest point of the feature's 
 | `extent_m` | The radial in metres, as a plain number (`2400`, not `2.4 km`) |
 | `method` | How you measured it (e.g. "measure tool on The National Map, to the far shoreline") |
 | `source` | The map or reference you used, with its edition or date if shown |
-| `reviewer` | Your name or handle |
+| `reviewer` | Who measured it: your name or handle, or the tool's name if a tool did |
 | `reviewed_on` | The date, as `YYYY-MM-DD` |
 | `note` | Optional: the boundary you chose, doubts, anything a later reviewer should know |
 
@@ -45,7 +46,7 @@ Then check the file:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 0 reviewed, 97 pending, 0 problems
+extents-1: 3 reviewed, 94 pending, 0 problems
 ```
 
 ## Rules
