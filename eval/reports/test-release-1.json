@@ -1,0 +1,281 @@
+{
+  "declaration": "eval/benchmark/declaration-1.json",
+  "note": "Aggregates only. Per-record outputs are under eval/benchmark/test/reports/ and are never read during development.",
+  "records": 120,
+  "categories": {
+    "answerable": 56,
+    "reference_absent": 48,
+    "unsupported": 16
+  },
+  "annotated_types": {
+    "named_feature": 70,
+    "distance_and_direction": 17,
+    "direction_only": 15,
+    "route_relative": 8,
+    "between_features": 6,
+    "distance_only": 2,
+    "itinerary": 1,
+    "admin_only": 1
+  },
+  "systems": {
+    "rules": {
+      "relation_accuracy": {
+        "hits": 69,
+        "n": 120
+      },
+      "valid_extraction": {
+        "hits": 120,
+        "n": 120
+      },
+      "critical_exact_match": {
+        "hits": 56,
+        "n": 120
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 88,
+          "n": 120,
+          "rate": 0.733
+        },
+        "unit": {
+          "hits": 92,
+          "n": 120,
+          "rate": 0.767
+        },
+        "direction": {
+          "hits": 83,
+          "n": 120,
+          "rate": 0.692
+        },
+        "qualifiers": {
+          "hits": 103,
+          "n": 120,
+          "rate": 0.858
+        }
+      },
+      "reference_top1": {
+        "hits": 25,
+        "n": 56
+      },
+      "reference_recall5": {
+        "hits": 26,
+        "n": 56
+      },
+      "correct_proposal_candidates": {
+        "hits": 19,
+        "n": 56
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0
+      },
+      "unsupported_flagged": {
+        "hits": 7,
+        "n": 16
+      },
+      "absent_reported_absent": {
+        "hits": 17,
+        "n": 48
+      },
+      "false_no_locality": 0,
+      "mean_corrections": 1.63
+    },
+    "llm": {
+      "relation_accuracy": {
+        "hits": 66,
+        "n": 120
+      },
+      "valid_extraction": {
+        "hits": 105,
+        "n": 120
+      },
+      "critical_exact_match": {
+        "hits": 47,
+        "n": 120
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 93,
+          "n": 120,
+          "rate": 0.775
+        },
+        "unit": {
+          "hits": 96,
+          "n": 120,
+          "rate": 0.8
+        },
+        "direction": {
+          "hits": 80,
+          "n": 120,
+          "rate": 0.667
+        },
+        "qualifiers": {
+          "hits": 85,
+          "n": 120,
+          "rate": 0.708
+        }
+      },
+      "reference_top1": {
+        "hits": 25,
+        "n": 56
+      },
+      "reference_recall5": {
+        "hits": 26,
+        "n": 56
+      },
+      "correct_proposal_candidates": {
+        "hits": 15,
+        "n": 56
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0
+      },
+      "unsupported_flagged": {
+        "hits": 9,
+        "n": 16
+      },
+      "absent_reported_absent": {
+        "hits": 26,
+        "n": 48
+      },
+      "false_no_locality": 2,
+      "mean_corrections": 1.76
+    }
+  },
+  "by_type": {
+    "rules": {
+      "direction_only": [
+        5,
+        7
+      ],
+      "distance_and_direction": [
+        2,
+        9
+      ],
+      "distance_only": [
+        0,
+        2
+      ],
+      "named_feature": [
+        12,
+        38
+      ]
+    },
+    "llm": {
+      "direction_only": [
+        0,
+        7
+      ],
+      "distance_and_direction": [
+        4,
+        9
+      ],
+      "distance_only": [
+        0,
+        2
+      ],
+      "named_feature": [
+        11,
+        38
+      ]
+    }
+  },
+  "paired_correct": {
+    "n": 56,
+    "rules": 19,
+    "llm": 15,
+    "difference": -0.071,
+    "ci95": [
+      -0.232,
+      0.071
+    ],
+    "llm_only": 8,
+    "rules_only": 12,
+    "sign_test_p": 0.5034
+  },
+  "paired_critical": {
+    "n": 120,
+    "rules": 56,
+    "llm": 47,
+    "difference": -0.075,
+    "ci95": [
+      -0.183,
+      0.033
+    ],
+    "llm_only": 18,
+    "rules_only": 27,
+    "sign_test_p": 0.2327
+  },
+  "sensitivity_excluding_unsure": {
+    "excluded": 23,
+    "categories": {
+      "answerable": 50,
+      "reference_absent": 37,
+      "unsupported": 10
+    },
+    "paired_correct": {
+      "n": 50,
+      "rules": 17,
+      "llm": 15,
+      "difference": -0.04,
+      "ci95": [
+        -0.2,
+        0.12
+      ],
+      "llm_only": 8,
+      "rules_only": 10,
+      "sign_test_p": 0.8145
+    }
+  },
+  "llm_latency_s": {
+    "n": 120,
+    "p50": 11.68,
+    "p95": 20.86,
+    "retried_records": 0
+  },
+  "llm_counts": {
+    "relation": {
+      "named_feature": 52,
+      "distance_and_direction": 25,
+      "route_relative": 13,
+      "between_features": 10,
+      "orthogonal_offsets": 8,
+      "other": 5,
+      "itinerary": 3,
+      "direction_only": 2,
+      "no_locality": 2
+    },
+    "retrieval": {
+      "candidates_found": 61,
+      "feature_absent_from_index": 37,
+      "None": 15,
+      "no_reference_feature": 7
+    },
+    "proposal": {
+      "needs_information": 72,
+      "unsupported": 33,
+      "invalid_extraction": 15
+    }
+  },
+  "rules_counts": {
+    "relation": {
+      "named_feature": 51,
+      "direction_only": 36,
+      "distance_and_direction": 15,
+      "other": 8,
+      "route_relative": 6,
+      "between_features": 4
+    },
+    "retrieval": {
+      "candidates_found": 73,
+      "feature_absent_from_index": 29,
+      "no_reference_feature": 18
+    },
+    "proposal": {
+      "needs_information": 102,
+      "unsupported": 18
+    }
+  },
+  "decision": "no"
+}

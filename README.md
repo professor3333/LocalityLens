@@ -39,8 +39,9 @@ curator approves, corrects, or defers every result before it is exported as Darw
 
 > [!NOTE]
 > **Early development: Phase 1 (data & feasibility).** This README separates what exists
-> (✅) from what is planned (🔜). Measured results will be published only once the evaluation
-> benchmark is frozen.
+> (✅) from what is planned (🔜). The first milestone has been measured on a locked test split
+> and the result is published below, even though it was negative
+> ([result](eval/reports/test-release-1.md)).
 
 ## 🧭 How it works
 
@@ -267,18 +268,25 @@ and Qwen3.5-4B ([report](eval/reports/audit-50-llm-x1g2-qwen3.5-4b-q4km.md),
 against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv),
 [scores](eval/reports/audit-50-score.md)).
 
-> **Answer so far: not yet.** On the 60 held-out [validation](eval/benchmark/) records, which
-> nobody had read during development, Qwen3.5-4B with prompt v2 gives **15 of 32** correct
-> proposal candidates and the rules give **13**: **+6 points** (95% CI −9 to +22, p = 0.69).
-> The target is +10 points, and the interval is too wide to call either way
-> ([findings](eval/reports/validation-findings.md), [scores](eval/reports/validation-score.md)).
-> The locked test (120) gives the deciding answer.
+> **Answer for release 1: no.** On the 120-record **locked test**, scored once under a
+> [declaration](eval/benchmark/declaration-1.json) pushed before the run, the rules give **19 of
+> 56** correct proposal candidates and Qwen3.5-4B with prompt v2 gives **15**: **−7 points**
+> (95% CI −23 to +7, p = 0.50). The pre-registered rule reads "no" because even the upper bound
+> falls short of the +10 point target. It does not show the rules are better, since the interval
+> includes zero ([result](eval/reports/test-release-1.md)).
 
 | Correct proposal candidates | Rules | LLM v2 | LLM − rules |
 |---|---|---|---|
-| **Validation** (held out, 32 answerable) | 13 (41%) | **15 (47%)** | **+6 pts** (CI −9 to +22) |
+| **Locked test** (scored once, 56 answerable) | **19 (34%)** | 15 (27%) | **−7 pts** (CI −23 to +7) |
+| Validation (held out, 32 answerable) | 13 (41%) | 15 (47%) | +6 pts (CI −9 to +22) |
 | Audit (dev data, 31 answerable) | 14 (45%) | 12 (39%) | −7 pts (CI −26 to +13) |
 | dev-1 (v2 was written on it, 29 answerable) | 16 (55%) | 18 (62%) | in-sample |
+
+<sub>Retrieval is level on the test (an acceptable reference ranked first in 25 of 56 for both).
+The LLM loses on interpretation: direction-only labels (0 of 7 against 5), qualifiers (71%
+against 86% right) and 15 of 120 outputs rejected by validation. It flags more unsupported
+labels (9 against 7 of 16) and more references absent from GNIS (26 against 17 of 48). LLM
+latency p50 11.7 s, p95 20.9 s per record (Apple M1, 8 GB).</sub>
 
 <details>
 <summary><b>The audit in detail</b> (dev data, prompt v1 and v2)</summary>
@@ -344,10 +352,13 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **A benchmark nobody had read.** Validation (60) and a locked test (120) are drawn from
   groups untouched by development, grouped by collecting event so that no trip spans two
   splits ([how](eval/benchmark/)).
-- **On validation the LLM leads, narrowly.** It picks the right reference more often (top-1 18
+- **On validation the LLM led, narrowly.** It picks the right reference more often (top-1 18
   vs 15 of 32) but reads relations no better (critical interpretation 23 vs 25 of 60). The most
   common shared miss is the one prompt v2 targeted: "Vernal Mesa, 15 mi. east of Montrose" read
   as an offset from Montrose instead of as Vernal Mesa (5 records).
+- **On the locked test it did not.** The lead seen on validation reversed to −7 points on 120
+  unseen records, which is why the milestone is decided on the locked split and not on
+  validation.
 - **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
   `Unknown-E` or two counties (`Gunnison/Pitkin`).
 
@@ -360,7 +371,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
-| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts, CI −9 to +22) · 🔜 locked test annotation · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
+| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
 <details>

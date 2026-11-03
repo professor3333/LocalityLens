@@ -35,12 +35,21 @@ uv run localitylens benchmark draw --seed benchmark/1    # --validation 60 --tes
    Done and scored with the frozen systems: LLM v2 15/32, rules 13/32 correct proposal
    candidates ([findings](../reports/validation-findings.md)). Validation has now been read, so
    a change designed from its misses must be checked elsewhere.
-2. **Annotate `test/worksheet.csv`** the same way. The annotator reads it, but no development
+2. ✅ **Annotate `test/worksheet.csv`** the same way. The annotator reads it, but no development
    code and no assistant opens, prints or summarises it. CI never touches it.
 3. **Freeze the targets and the release** (prompt, grammar, validation, retrieval, model,
    policy) before the test is scored.
 4. Score validation freely. Score test **once per declared release**, as an authorised final run,
    and publish the result whether it is good or bad.
+
+## Declared releases
+
+| Release | Declaration | Result (correct proposal candidates, of 56 answerable) |
+|---|---|---|
+| 1 | [`declaration-1.json`](declaration-1.json), pushed before the run | rules 19, LLM v2 15: −7 points (CI −23 to +7), milestone answer **no** ([result](../reports/test-release-1.md)) |
+
+Per-record outputs of each test run stay in `test/reports/`, inside the locked folder, and are
+not read during development. Only the totals are published in [`../reports/`](../reports/).
 
 ## Data licence
 
