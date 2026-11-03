@@ -180,6 +180,32 @@ retrieval   candidates_found (county context: Larimer Co., from text)
 <sub>Measured on an Apple M1 with 8 GB: llama-server's own footprint is 629 MB on top of the 2.74 GB
 memory-mapped model file. The v2 prompt is about 2,350 tokens of the 4,096-token budget.</sub>
 
+**Rules first, LLM as fallback** (`--system hybrid`). The rules answer whenever they reach the
+gazetteer, with no model call. The LLM is asked only when they do not, and its answer is used
+only if it reaches a candidate ([findings](eval/reports/hybrid-1-findings.md)):
+
+```console
+$ uv run localitylens interpret --system hybrid --limit 1 \
+      "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
+system      hybrid-1: rules result used; no LLM call
+extractor   rules-1
+relation    distance_and_direction
+quote       "2 mi NE of Longs Peak summit" [20:48]
+feature     Longs Peak [31:41] type=summit
+...
+$ uv run localitylens interpret --system hybrid --limit 2 "Cirque of the Andrews Glacier"
+system      hybrid-1: llm result used; LLM called
+extractor   llm-x2g2-qwen3.5-4b-q4km
+relation    named_feature
+quote       "Cirque of the Andrews Glacier" [0:29]
+feature     Andrews Glacier [14:29]
+missing     none
+retrieval   candidates_found
+  1.  177848  Andrews Glacier            Glacier         Larimer      exact_official
+```
+
+The rules alone keep "Cirque of the" in the name and find nothing in GNIS.
+
 ### Gazetteer search
 
 **Abbreviated name, county from the label.** The right peak is found. GNIS files Longs Peak
@@ -282,6 +308,13 @@ against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv
 | Audit (dev data, 31 answerable) | 14 (45%) | 12 (39%) | −7 pts (CI −26 to +13) |
 | dev-1 (v2 was written on it, 29 answerable) | 16 (55%) | 18 (62%) | in-sample |
 
+**Next step: rules first, LLM as fallback.** `hybrid-1` uses the LLM only where the rules
+reach no gazetteer candidate. Across the audit, dev-1 and validation it gets **48 of 92**
+against the rules' 43 and the LLM's 45. It **never loses a record the rules had right** and
+calls the model for 38% of records. The most any selection could gain on dev data is about
++12 points, because the two systems mostly fail on the same labels
+([findings](eval/reports/hybrid-1-findings.md)). It has **not** been scored on the locked test.
+
 <sub>Retrieval is level on the test (an acceptable reference ranked first in 25 of 56 for both).
 The LLM loses on interpretation: direction-only labels (0 of 7 against 5), qualifiers (71%
 against 86% right) and 15 of 120 outputs rejected by validation. It flags more unsupported
@@ -371,7 +404,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
-| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
+| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ `hybrid-1` (rules first, LLM fallback): 48/92 vs rules 43 on dev + validation, never worse; not yet scored on test · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
 <details>
@@ -401,8 +434,9 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence: exact, then core (generic words set aside), then fuzzy |
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
-| `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules now, LLM next) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit score` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules or LLM) |
+| `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 

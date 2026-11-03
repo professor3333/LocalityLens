@@ -192,16 +192,47 @@ def _audit_score(args: argparse.Namespace) -> int:
         "rules": json.loads(rules_path.read_text(encoding="utf-8")),
         "llm": json.loads(llm_path.read_text(encoding="utf-8")),
     }
+    suffix = ""
+    if args.hybrid:
+        reports["hybrid"] = json.loads(Path(args.hybrid).read_text(encoding="utf-8"))
+        suffix = f"-{reports['hybrid']['extractor_version']}"
     meta = {name: rep["extractor_version"] for name, rep in reports.items()}
     meta["specimens"] = sample.snapshot_id
     full = score(check.annotations, reports)
     sure = score(check.annotations, reports, exclude_unsure=True)
-    json_path, md_path = write_score_report(full, sure, meta, Path(args.out), label)
+    json_path, md_path = write_score_report(full, sure, meta, Path(args.out), label, suffix)
     for key in ("critical_exact_match", "reference_top1", "correct_proposal_candidates"):
         cells = "  ".join(
             f"{n}={full['systems'][n][key]['hits']}/{full['systems'][n][key]['n']}" for n in reports
         )
         print(f"{key:<28} {cells}")
+    print(f"  report  {md_path}\n  data    {json_path}")
+    return 0
+
+
+def _audit_hybrid(args: argparse.Namespace) -> int:
+    import json
+
+    from localitylens.baseline.rules import RULES_VERSION
+    from localitylens.evaluation.audit import load_sample, sample_label, write_report
+    from localitylens.evaluation.hybrid import ReportMismatchError, combine_reports
+    from localitylens.release import load_release
+
+    label = sample_label(load_sample(Path(args.sample)))
+    llm_id = load_release(Path(args.release)).extractor_id
+    rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}.json")
+    llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}.json")
+    try:
+        report = combine_reports(
+            json.loads(rules_path.read_text(encoding="utf-8")),
+            json.loads(llm_path.read_text(encoding="utf-8")),
+        )
+    except ReportMismatchError as exc:
+        print(f"cannot combine: {exc}", file=sys.stderr)
+        return 2
+    json_path, md_path = write_report(report, Path(args.out), label)
+    for name, counts in report["counts"].items():
+        print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
     print(f"  report  {md_path}\n  data    {json_path}")
     return 0
 
@@ -360,20 +391,37 @@ def _baseline_run(args: argparse.Namespace) -> int:
     from localitylens.gazetteer.index import Gazetteer
     from localitylens.pipeline.interpret import Extractor, interpret
 
+    system = getattr(args, "system", "rules")
+    hybrid_note: str | None = None
     with Gazetteer(Path(args.index)) as gaz:
-        extractor: Extractor
-        if getattr(args, "system", "rules") == "llm":
+        rules = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
+        extractor: Extractor = rules
+        if system in ("llm", "hybrid"):
             from localitylens.extract.llm import LLMExtractor
             from localitylens.extract.llm_client import LlamaServerClient
             from localitylens.release import load_release
 
             extractor = LLMExtractor(LlamaServerClient(args.url), load_release(Path(args.release)))
-        else:
-            extractor = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
         try:
-            result = interpret(
-                args.text, extractor, gaz, supplied_county=args.county, limit=args.limit
-            )
+            if system == "hybrid":
+                from localitylens.pipeline.hybrid import interpret_hybrid
+
+                hybrid = interpret_hybrid(
+                    args.text, rules, extractor, gaz, supplied_county=args.county, limit=args.limit
+                )
+                result = hybrid.result
+                call = (
+                    f"LLM failed ({hybrid.llm_error}), rules kept"
+                    if hybrid.llm_error
+                    else "LLM called"
+                    if hybrid.llm_called
+                    else "no LLM call"
+                )
+                hybrid_note = f"{hybrid.version}: {hybrid.source} result used; {call}"
+            else:
+                result = interpret(
+                    args.text, extractor, gaz, supplied_county=args.county, limit=args.limit
+                )
         except ModelCallError as exc:
             print(f"failed     {exc.category.value}: {exc.detail}", file=sys.stderr)
             return 3
@@ -407,6 +455,7 @@ def _baseline_run(args: argparse.Namespace) -> int:
         proposal = propose(interp, chosen, extent)
     if args.json:
         payload = {
+            **({"hybrid": hybrid_note} if hybrid_note else {}),
             "extractor": result.extractor_version,
             "normalized_text": result.text.text,
             "extraction": result.extraction.model_dump(mode="json"),
@@ -433,6 +482,8 @@ def _baseline_run(args: argparse.Namespace) -> int:
         return f"[{getattr(s, 'start', '?')}:{getattr(s, 'end', '?')}]"
 
     rows: list[tuple[str, str]] = [("extractor", result.extractor_version)]
+    if hybrid_note:
+        rows.insert(0, ("system", hybrid_note))
     errors = [i for i in result.validation.issues if i.severity is Severity.ERROR]
     if interp is None:
         rows.append(("validation", "FAILED: " + ", ".join(i.code.value for i in errors)))
@@ -560,8 +611,17 @@ def main(argv: list[str] | None = None) -> int:
     asc.add_argument("--rules", help="default: <out>/<sample>-<rules version>.json")
     asc.add_argument("--llm", help="default: <out>/<sample>-<release extractor id>.json")
     asc.add_argument("--release", default="release/manifest.json")
+    asc.add_argument("--hybrid", help="also score this hybrid report (written as -score-<id>)")
     asc.add_argument("--out", default="eval/reports")
     asc.set_defaults(func=_audit_score)
+
+    ahy = aud.add_parser("hybrid", help="combine the rules and LLM reports into a hybrid report")
+    ahy.add_argument("--sample", default="eval/audit/audit-50.json")
+    ahy.add_argument("--rules", help="default: <out>/<sample>-<rules version>.json")
+    ahy.add_argument("--llm", help="default: <out>/<sample>-<release extractor id>.json")
+    ahy.add_argument("--release", default="release/manifest.json")
+    ahy.add_argument("--out", default="eval/reports")
+    ahy.set_defaults(func=_audit_hybrid)
 
     mod = sub.add_parser("model", help="pinned local LLM").add_subparsers(
         dest="model_command", required=True
@@ -638,9 +698,11 @@ def main(argv: list[str] | None = None) -> int:
     br.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
     br.set_defaults(func=_baseline_run)
 
-    it = sub.add_parser("interpret", help="interpret one locality with the rules or the LLM")
+    it = sub.add_parser(
+        "interpret", help="interpret one locality with the rules, the LLM, or rules-first hybrid"
+    )
     it.add_argument("text")
-    it.add_argument("--system", choices=["rules", "llm"], default="llm")
+    it.add_argument("--system", choices=["rules", "llm", "hybrid"], default="llm")
     it.add_argument("--url", default="http://127.0.0.1:8080", help="local llama-server")
     it.add_argument("--release", default="release/manifest.json")
     it.add_argument("--county", help="county from the record's structured fields")

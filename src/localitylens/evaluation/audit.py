@@ -304,7 +304,11 @@ def run_llm(
     )
 
 
-_TITLES: Final = {"rules": "rules baseline", "llm": "LLM extraction"}
+_TITLES: Final = {
+    "rules": "rules baseline",
+    "llm": "LLM extraction",
+    "hybrid": "rules first, LLM fallback",
+}
 _HEADINGS: Final = {"audit-50": "50-record audit"}
 
 

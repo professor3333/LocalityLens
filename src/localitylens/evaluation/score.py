@@ -218,6 +218,22 @@ def score(
         out["paired_critical_exact_match"] = paired(
             [j.critical_ok for j in judged["rules"]], [j.critical_ok for j in judged["llm"]]
         )
+    others = [name for name in judged if name not in ("rules", "llm")]
+    if "rules" in judged and others:  # absent otherwise: rules-vs-LLM reports stay unchanged
+        ans = [i for i, a in enumerate(used) if _category(a) == "answerable"]
+        out["paired_vs_rules"] = {
+            name: {
+                "correct_proposal_candidates": paired(
+                    [judged["rules"][i].correct_candidate for i in ans],
+                    [js[i].correct_candidate for i in ans],
+                ),
+                "critical_exact_match": paired(
+                    [j.critical_ok for j in judged["rules"]], [j.critical_ok for j in js]
+                ),
+            }
+            for name, js in judged.items()
+            if name in others
+        }
     return out
 
 
@@ -244,13 +260,14 @@ def write_score_report(
     meta: dict[str, str],
     directory: Any,
     label: str = "audit-50",
+    suffix: str = "",
 ) -> tuple[Any, Any]:
     import json
     from pathlib import Path
 
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
-    stem = f"{label}-score"
+    stem = f"{label}-score{suffix}"
     json_path = directory / f"{stem}.json"
     json_path.write_text(
         json.dumps({"meta": meta, "all": full, "excluding_unsure": sure}, indent=2) + "\n",
@@ -293,6 +310,14 @@ def write_score_report(
                    f"(95% bootstrap CI {p['ci95'][0]:+.0%} to {p['ci95'][1]:+.0%}); "
                    f"LLM-only {p['llm_only']}, rules-only {p['rules_only']}, "
                    f"exact sign test p = {p['sign_test_p']}."]  # fmt: skip
+    for name, pairs in full.get("paired_vs_rules", {}).items():
+        for key, label in (("correct_proposal_candidates", "correct proposal candidates"),
+                           ("critical_exact_match", "critical exact match")):  # fmt: skip
+            p = pairs[key]
+            md += ["", f"**Paired, {label} ({name} \u2212 rules):** {p['difference']:+.0%} "
+                   f"(95% bootstrap CI {p['ci95'][0]:+.0%} to {p['ci95'][1]:+.0%}); "
+                   f"{name}-only {p['llm_only']}, rules-only {p['rules_only']}, "
+                   f"exact sign test p = {p['sign_test_p']}."]  # fmt: skip
     md += ["", f"<details><summary><b>Sensitivity: excluding {sure['excluded_unsure']} rows "
            "with an unsure (?) annotation</b></summary>", "",
            "| Metric | " + " | ".join(systems) + " |", "|---|" + "---|" * len(systems)]  # fmt: skip
@@ -304,6 +329,11 @@ def write_score_report(
         ci = f"{p['ci95'][0]:+.0%} to {p['ci95'][1]:+.0%}"
         md += ["", f"Paired correct proposal candidates: {p['difference']:+.0%} "
                f"(CI {ci}), p = {p['sign_test_p']}."]  # fmt: skip
+    for name, pairs in sure.get("paired_vs_rules", {}).items():
+        p = pairs["correct_proposal_candidates"]
+        ci = f"{p['ci95'][0]:+.0%} to {p['ci95'][1]:+.0%}"
+        md += ["", f"Paired correct proposal candidates ({name} \u2212 rules): "
+               f"{p['difference']:+.0%} (CI {ci}), p = {p['sign_test_p']}."]  # fmt: skip
     md += ["", "</details>", "", "<details><summary><b>Correct proposal candidates by annotated "
            "type</b></summary>", "", "| Type | " + " | ".join(systems) + " |",
            "|---|" + "---|" * len(systems)]  # fmt: skip
