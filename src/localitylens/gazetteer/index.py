@@ -98,6 +98,17 @@ _OFFICIAL: Final = frozenset(
 )
 
 
+class FeatureSummary(BaseModel):
+    """One feature's identity and representative point, as stored in the snapshot."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    feature_id: int
+    official_name: str
+    feature_class: str
+    county_name: str
+    primary_point: Coordinate
+
+
 class Candidate(BaseModel):
     """One retrieved feature plus the evidence for why it was retrieved and how it ranks."""
 
@@ -229,6 +240,25 @@ class Gazetteer:
             if row is not None:
                 out[fid] = f"{row['name']} ({row['feature_class']}, {row['county_name']})"
         return out
+
+    def feature(self, feature_id: int) -> FeatureSummary | None:
+        """The stored facts of one feature, or ``None`` when the ID is not in the snapshot."""
+        r = self._con.execute(
+            "SELECT name, feature_class, county_name, prim_lat, prim_lon FROM feature "
+            "WHERE feature_id = ?",
+            (feature_id,),
+        ).fetchone()
+        if r is None:
+            return None
+        return FeatureSummary(
+            feature_id=feature_id,
+            official_name=r["name"],
+            feature_class=r["feature_class"],
+            county_name=r["county_name"],
+            primary_point=Coordinate(
+                latitude=r["prim_lat"], longitude=r["prim_lon"], datum=Datum.NAD83
+            ),
+        )
 
     def county_names(self, state: str = "Colorado") -> frozenset[str]:
         rows = self._con.execute(

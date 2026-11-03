@@ -121,6 +121,17 @@ proposal    needs_information  [point-radius, policy gbif-bp-2020/1]
 With a reviewed extent (`--extent-m 500 --extent-note "…"`) the same record becomes
 `computed` with a 2,018 m radius, and the extent's source and rationale are recorded.
 
+**Reviewed extents live in a store**, [`data/reviewed/extents.csv`](data/reviewed/), one row
+per GNIS feature, each measured by a person with its method, source, reviewer and date. Pass
+`--extents data/reviewed/extents.csv` to `baseline run`, `interpret` or the audit runs. Every
+row is checked against the pinned snapshot first. Its 97 rows, the references of the dev and
+validation annotations, are waiting to be measured:
+
+```console
+$ uv run localitylens extents check
+extents-1: 0 reviewed, 97 pending, 0 problems
+```
+
 **When the label is ambiguous, it asks instead of guessing.** A bare `m` might be miles or metres:
 
 ```console
@@ -250,6 +261,7 @@ feature_absent_from_index
 | **Abstain rather than guess** | A bare `m` becomes "unit missing" plus a question. "Hwy 34" is not a distance. Route descriptions are labelled, not flattened. A name the gazetteer lacks is reported absent, not trimmed to a lookalike | ✅ |
 | **Humans approve before export** | A single checked status machine. Only `approved` records are exportable | ✅ |
 | **A point is not a place** | Without a reviewed extent (or a published default such as a spring's 3 m), the radius stays unknown. The proposal reports a lower bound and asks for the extent | ✅ |
+| **Extents are measured, never guessed** | Each reviewed extent records its method, source, reviewer and date, is checked against the snapshot's name and point, and is pinned by hash in every report that uses it | ✅ |
 | **Every uncertainty number is cited** | Each component carries its rule and its source: GBIF Best Practices, the Quick Reference Guide, or the Georeferencing Calculator's reference code | ✅ |
 | **Reproducible provenance** | Checksummed, immutable source snapshots. The index records which snapshot built it | ✅ |
 | **No answer leakage** | Coordinate and georeference columns are never read from the archive. A model sees only an allowlist: label text, state, county, country | ✅ |
@@ -319,7 +331,9 @@ against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv
 - **The gain is retrieval.** The LLM reaches a gazetteer entry for names the rules can't
   parse: top-1 acceptable 33 of 56 against 25. It calls the model on 39% of records.
 - **Proposals are not measured yet.** Feature extent is unknown, so no system computes a
-  region, and the target's "comparable precision" condition can't be checked.
+  region, and the target's "comparable precision" condition can't be checked. The
+  [reviewed-extent store](data/reviewed/) that unblocks this is built, and its rows are
+  waiting for measurements.
 
 <sub>Release 1, LLM alone: retrieval is level on the test (an acceptable reference ranked first
 in 25 of 56 for both). The LLM loses on interpretation: direction-only labels (0 of 7 against 5), qualifiers (71%
@@ -372,8 +386,8 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **Real labels are multi-clause.** Many chain a forest, a range, a road and an offset in one
   string. The rules read one clause, and not always the most specific one.
 - **Unknown extent is the main blocker.** Most references are towns, summits and streams with a
-  single GNIS point, so honest proposals ask for an extent. A reviewed-extent store is on the
-  critical path.
+  single GNIS point, so honest proposals ask for an extent. The reviewed-extent store now
+  exists, and its 97 rows are waiting to be measured.
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
   places, and leading words ("Above", "Near") absorbed into names.
 - **The LLM reads what the rules miss, and makes its own errors:** it handles "air mi",
@@ -410,7 +424,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | Phase | Scope | Status |
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
-| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (97 dev + validation features, awaiting measurement) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
@@ -437,6 +451,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `geo/` | Exact unit conversion, 16-point compass parsing, datum-aware geodesic forward/inverse |
 | `geo/uncertainty.py` | Uncertainty policy `gbif-bp-2020/1`: heading, distance precision, coordinate precision, datum, extent defaults, each cited |
 | `geo/georeference.py` | Point-radius proposals: offset point, combined radius, lower bound, assumptions, blocking questions |
+| `geo/extents.py` | Reviewed-extent store `extents-1`: curator-measured radials per GNIS feature, checked against the snapshot, never overwritten |
 | `domain/status.py` | Record lifecycle with a single checked transition function |
 | `data/` | Snapshot manifests, the GNIS fetcher and the GBIF download client (DOI, immutable, checksummed) |
 | `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence: exact, then core (generic words set aside), then fuzzy |
@@ -444,7 +459,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules or LLM) |
 | `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -510,6 +525,7 @@ tests/
 ├── property/     Hypothesis invariants
 └── support/      shared fixture builders
 data/manifests/   committed snapshot manifests (raw data is gitignored)
+data/reviewed/    reviewed feature extents: measured by a person, checked against GNIS
 release/          release manifest: model, prompt, settings and versions, all pinned
 eval/audit/       50-record audit sample + annotated worksheet (CC BY 4.0 records)
 eval/dev/         dev samples for prompt and rule development (dev-1)

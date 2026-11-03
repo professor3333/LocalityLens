@@ -226,3 +226,18 @@ def test_score_excludes_unsure_rows_on_request() -> None:
     trimmed = score([sure, unsure], reports, exclude_unsure=True)
     assert trimmed["records"] == 1
     assert trimmed["excluded_unsure"] == 1
+
+
+def test_proposal_metrics_appear_only_for_runs_with_an_extent_store() -> None:
+    anns = [annotation(), annotation(audit_id="A02"), annotation(audit_id="A03")]
+    rows = [report_row(proposal="computed"),  # correct and computed: useful
+            report_row(audit_id="A02", proposal="computed", candidate_ids=[2]),  # wrong reference
+            report_row(audit_id="A03")]  # correct, but blocked by a question  # fmt: skip
+    plain = {"rules": {"records": rows}, "llm": {"records": rows}}
+    assert "proposals" not in score(anns, plain)
+    store = {"version": "extents-1", "sha256": "0" * 64, "reviewed": 1, "pending": 0}
+    with_store = {name: rep | {"extent_store": store} for name, rep in plain.items()}
+    p = score(anns, with_store)["proposals"]["rules"]
+    assert (p["computed"]["hits"], p["computed"]["n"]) == (2, 3)
+    assert (p["precision"]["hits"], p["precision"]["n"]) == (1, 2)
+    assert (p["useful_coverage"]["hits"], p["useful_coverage"]["n"]) == (1, 3)

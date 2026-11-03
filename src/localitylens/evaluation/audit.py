@@ -27,6 +27,7 @@ from localitylens.ingest.specimens import SpecimenRecord
 if TYPE_CHECKING:
     from localitylens.extract.llm_client import ModelClient
     from localitylens.extract.schema import Interpretation
+    from localitylens.geo.extents import ExtentStore
     from localitylens.pipeline.interpret import Extractor
     from localitylens.release import ReleaseManifest
 
@@ -130,11 +131,13 @@ def run_system(
     note: str,
     limit: int = 5,
     meta: dict[str, Any] | None = None,
+    extents: ExtentStore | None = None,
 ) -> dict[str, Any]:
     """Run one extractor + retrieval + uncertainty policy on every audited record.
 
     Only the model-input allowlist reaches the extractor. A categorized extraction failure is
-    recorded for that record and the run continues.
+    recorded for that record and the run continues. With ``extents``, the top candidate's
+    reviewed extent (if any) goes into its proposal, and each row records the extent's source.
     """
     from localitylens.extract.llm_client import ModelCallError
     from localitylens.extract.validate import VALIDATION_VERSION, Severity
@@ -169,13 +172,16 @@ def run_system(
                         "interpretation": None, "top_candidate": None,
                         "proposal": f"failed:{exc.category.value}",
                         "radius_lower_bound_m": None, "radius_m": None}  # fmt: skip
+                if extents is not None:
+                    row["extent"] = None
                 _add_trace(row, extractor, started)
                 rows.append(row)
                 continue
             interp = result.validation.interpretation
             retrieval = result.retrieval
             top = retrieval.candidates[0] if retrieval and retrieval.candidates else None
-            proposal = propose(interp, top) if interp is not None else None
+            extent = extents.get(top.feature_id) if extents is not None and top else None
+            proposal = propose(interp, top, extent) if interp is not None else None
             row |= {
                 "relation": result.extraction.relation.value,
                 "reference": (
@@ -207,6 +213,8 @@ def run_system(
                 ),
                 "radius_m": round(proposal.radius_m) if proposal and proposal.radius_m else None,
             }
+            if extents is not None:
+                row["extent"] = _extent_source(proposal)
             _add_trace(row, extractor, started)
             rows.append(row)
     return {
@@ -220,7 +228,8 @@ def run_system(
         "core_key_version": CORE_KEY_VERSION,
         "seed": sample.seed,
         **(meta or {}),
-        "note": note,
+        **({"extent_store": extents.summary()} if extents is not None else {}),
+        "note": note if extents is None else note.replace("no extent was supplied", _EXTENTS_NOTE),
         "counts": {
             "relation": dict(Counter(str(r["relation"]) for r in rows).most_common()),
             "retrieval": dict(Counter(str(r["retrieval"]) for r in rows).most_common()),
@@ -228,6 +237,19 @@ def run_system(
         },
         "records": rows,
     }
+
+
+_EXTENTS_NOTE: Final = "extents come from the reviewed-extent store where it has one"
+
+
+def _extent_source(proposal: Any) -> str | None:
+    """``reviewed`` / ``class_default`` when the proposal used an extent, else ``None``."""
+    if proposal is None:
+        return None
+    for c in proposal.components:
+        if c.name.value == "extent" and c.metres is not None:
+            return str(c.rule.split(":", 1)[0])
+    return None
 
 
 def _summary(interp: Interpretation) -> dict[str, Any]:
@@ -262,7 +284,9 @@ _NOTE_TAIL: Final = (
 )
 
 
-def run_rules(sample: AuditSample, index: Path, limit: int = 5) -> dict[str, Any]:
+def run_rules(
+    sample: AuditSample, index: Path, limit: int = 5, extents: ExtentStore | None = None
+) -> dict[str, Any]:
     from localitylens.baseline.rules import Lexicon, RulesExtractor
 
     return run_system(
@@ -273,6 +297,7 @@ def run_rules(sample: AuditSample, index: Path, limit: int = 5) -> dict[str, Any
         "System output only. Correctness needs the owner's annotations; the top candidate is "
         "the rules ranking, not a reviewed choice, and no extent was supplied.",
         limit,
+        extents=extents,
     )
 
 
@@ -283,6 +308,7 @@ def run_llm(
     release: ReleaseManifest,
     limit: int = 5,
     server: dict[str, Any] | None = None,
+    extents: ExtentStore | None = None,
 ) -> dict[str, Any]:
     from localitylens.extract.llm import LLMExtractor
 
@@ -301,6 +327,7 @@ def run_llm(
         "System output only. Correctness needs the owner's annotations; " + _NOTE_TAIL,
         limit,
         meta,
+        extents,
     )
 
 
@@ -317,11 +344,17 @@ def sample_label(sample: AuditSample) -> str:
     return sample.name or "audit-50"
 
 
+def extents_suffix(report: dict[str, Any]) -> str:
+    """``-extents`` for a run that used the reviewed-extent store, so it never overwrites the
+    run without it."""
+    return "-extents" if "extent_store" in report else ""
+
+
 def write_report(
     report: dict[str, Any], directory: Path, label: str = "audit-50"
 ) -> tuple[Path, Path]:
     directory.mkdir(parents=True, exist_ok=True)
-    stem = f"{label}-{report['extractor_version']}"
+    stem = f"{label}-{report['extractor_version']}{extents_suffix(report)}"
     json_path = directory / f"{stem}.json"
     json_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", "utf-8")
     md = [

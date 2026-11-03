@@ -41,6 +41,8 @@ def combine_reports(rules: dict[str, Any], llm: dict[str, Any]) -> dict[str, Any
     for key in _SAME:
         if rules.get(key) != llm.get(key):
             raise ReportMismatchError(f"reports differ in {key!r}")
+    if rules.get("extent_store") != llm.get("extent_store"):
+        raise ReportMismatchError("reports differ in 'extent_store'")
     r_rows, l_rows = rules["records"], llm["records"]
     if [r["audit_id"] for r in r_rows] != [r["audit_id"] for r in l_rows]:
         raise ReportMismatchError("reports cover different records")
@@ -61,10 +63,15 @@ def combine_reports(rules: dict[str, Any], llm: dict[str, Any]) -> dict[str, Any
         "extractor_version": HYBRID_VERSION,
         "components": {"rules": rules["extractor_version"], "llm": llm["extractor_version"]},
         **{key: llm[key] for key in _LLM_META if key in llm},
+        **({"extent_store": rules["extent_store"]} if "extent_store" in rules else {}),
         "note": "Rules first; the LLM's result is used only where the rules reach no gazetteer "
         "candidate and the LLM does. Built from the two component reports (both deterministic). "
-        "The top candidate is the system's ranking, not a reviewed choice, and no extent was "
-        "supplied.",
+        "The top candidate is the system's ranking, not a reviewed choice, and "
+        + (
+            "extents come from the reviewed-extent store where it has one."
+            if "extent_store" in rules
+            else "no extent was supplied."
+        ),
         "counts": {
             "source": dict(Counter(r["source"] for r in rows).most_common()),
             "llm_call": {

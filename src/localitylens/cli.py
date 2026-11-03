@@ -5,12 +5,16 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Final
 
 from localitylens.extract.schema import FeatureType
 
 if TYPE_CHECKING:
+    from localitylens.geo.extents import ExtentStore
     from localitylens.geo.georeference import GeoreferenceProposal
+
+_EXTENTS_HELP: Final = "reviewed-extent store (CSV) to take feature extents from"
+_WITH_EXTENTS_HELP: Final = "use the -extents reports (runs made with --extents)"
 
 
 def _fetch_gnis(args: argparse.Namespace) -> int:
@@ -94,7 +98,7 @@ def _audit_rules(args: argparse.Namespace) -> int:
     from localitylens.evaluation.audit import load_sample, run_rules, sample_label, write_report
 
     sample = load_sample(Path(args.sample))
-    report = run_rules(sample, Path(args.index))
+    report = run_rules(sample, Path(args.index), extents=_load_extents(args))
     json_path, md_path = write_report(report, Path(args.out), sample_label(sample))
     for name, counts in report["counts"].items():
         print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
@@ -156,7 +160,9 @@ def _audit_llm(args: argparse.Namespace) -> int:
     from localitylens.evaluation.audit import sample_label
 
     sample = load_sample(Path(args.sample))
-    report = run_llm(sample, Path(args.index), client, release, server=server)
+    report = run_llm(
+        sample, Path(args.index), client, release, server=server, extents=_load_extents(args)
+    )
     json_path, md_path = write_report(report, Path(args.out), sample_label(sample))
     for name, counts in report["counts"].items():
         print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
@@ -186,8 +192,9 @@ def _audit_score(args: argparse.Namespace) -> int:
 
     label = sample_label(sample)
     llm_id = load_release(Path(args.release)).extractor_id
-    rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}.json")
-    llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}.json")
+    ext = "-extents" if args.with_extents else ""
+    rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
+    llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     reports = {
         "rules": json.loads(rules_path.read_text(encoding="utf-8")),
         "llm": json.loads(llm_path.read_text(encoding="utf-8")),
@@ -196,6 +203,7 @@ def _audit_score(args: argparse.Namespace) -> int:
     if args.hybrid:
         reports["hybrid"] = json.loads(Path(args.hybrid).read_text(encoding="utf-8"))
         suffix = f"-{reports['hybrid']['extractor_version']}"
+    suffix += ext
     meta = {name: rep["extractor_version"] for name, rep in reports.items()}
     meta["specimens"] = sample.snapshot_id
     full = score(check.annotations, reports)
@@ -220,8 +228,9 @@ def _audit_hybrid(args: argparse.Namespace) -> int:
 
     label = sample_label(load_sample(Path(args.sample)))
     llm_id = load_release(Path(args.release)).extractor_id
-    rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}.json")
-    llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}.json")
+    ext = "-extents" if args.with_extents else ""
+    rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
+    llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     try:
         report = combine_reports(
             json.loads(rules_path.read_text(encoding="utf-8")),
@@ -235,6 +244,75 @@ def _audit_hybrid(args: argparse.Namespace) -> int:
         print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
     print(f"  report  {md_path}\n  data    {json_path}")
     return 0
+
+
+def _load_extents(args: argparse.Namespace) -> ExtentStore | None:
+    """The reviewed-extent store named by ``--extents``, checked against the snapshot."""
+    if not getattr(args, "extents", None):
+        return None
+    from localitylens.gazetteer.index import Gazetteer
+    from localitylens.geo.extents import load_store
+
+    with Gazetteer(Path(args.index)) as gaz:
+        return load_store(Path(args.extents), gaz)
+
+
+_LOCKED: Final = Path("eval/benchmark/test")
+
+
+def _is_locked(path: Path) -> bool:
+    return path.resolve().is_relative_to(_LOCKED.resolve())
+
+
+def _extents_worksheet(args: argparse.Namespace) -> int:
+    from localitylens.evaluation.annotations import check_worksheet
+    from localitylens.evaluation.audit import load_sample
+    from localitylens.evaluation.score import _category
+    from localitylens.extract.schema import RelationType
+    from localitylens.gazetteer.index import Gazetteer
+    from localitylens.geo.extents import write_extent_worksheet
+
+    if len(args.sample) != len(args.worksheet):
+        print("give one --worksheet for each --sample, in the same order", file=sys.stderr)
+        return 2
+    if any(_is_locked(Path(p)) for p in [*args.sample, *args.worksheet]):
+        print("refused: the locked test split is never used to build a worksheet", file=sys.stderr)
+        return 2
+    proposable = {RelationType.NAMED_FEATURE, RelationType.DISTANCE_AND_DIRECTION,
+                  RelationType.DISTANCE_ONLY}  # fmt: skip
+    ids: set[int] = set()
+    with Gazetteer(Path(args.index)) as gaz:
+        for sample_path, sheet in zip(args.sample, args.worksheet, strict=True):
+            check = check_worksheet(Path(sheet), load_sample(Path(sample_path)), gaz)
+            if check.errors:
+                print(f"{sheet}: {len(check.errors)} errors; fix them first", file=sys.stderr)
+                return 2
+            for a in check.annotations:
+                if _category(a) == "answerable" and a.relation in proposable:
+                    ids |= a.acceptable_ids
+            print(f"{sheet}: {len(ids)} features so far")
+        try:
+            n = write_extent_worksheet(Path(args.out), ids, gaz)
+        except FileExistsError:
+            print(f"refused: {args.out} exists and is never overwritten", file=sys.stderr)
+            return 2
+    print(f"wrote {n} pending rows to {args.out}")
+    return 0
+
+
+def _extents_check(args: argparse.Namespace) -> int:
+    from localitylens.gazetteer.index import Gazetteer
+    from localitylens.geo.extents import STORE_VERSION, check_store
+
+    with Gazetteer(Path(args.index)) as gaz:
+        check = check_store(Path(args.store), gaz)
+    for p in check.problems:
+        print(f"  error   row {p.row:<4} {p.column:<18} {p.message}")
+    print(
+        f"{STORE_VERSION}: {len(check.entries)} reviewed, {check.pending} pending, "
+        f"{len(check.problems)} problems"
+    )
+    return 2 if check.problems else 0
 
 
 def _dev_register(args: argparse.Namespace) -> int:
@@ -452,6 +530,9 @@ def _baseline_run(args: argparse.Namespace) -> int:
             if args.extent_m is not None
             else None
         )
+        if extent is None and chosen is not None:
+            store = _load_extents(args)
+            extent = store.get(chosen.feature_id) if store is not None else None
         proposal = propose(interp, chosen, extent)
     if args.json:
         payload = {
@@ -596,6 +677,7 @@ def main(argv: list[str] | None = None) -> int:
     aru.add_argument("--sample", default="eval/audit/audit-50.json")
     aru.add_argument("--index", default="data/derived/gazetteer.sqlite")
     aru.add_argument("--out", default="eval/reports")
+    aru.add_argument("--extents", help=_EXTENTS_HELP)
     aru.set_defaults(func=_audit_rules)
     alm = aud.add_parser("llm", help="run LLM extraction on the audit sample (llama-server)")
     alm.add_argument("--sample", default="eval/audit/audit-50.json")
@@ -603,6 +685,7 @@ def main(argv: list[str] | None = None) -> int:
     alm.add_argument("--out", default="eval/reports")
     alm.add_argument("--url", default="http://127.0.0.1:8080")
     alm.add_argument("--release", default="release/manifest.json")
+    alm.add_argument("--extents", help=_EXTENTS_HELP)
     alm.set_defaults(func=_audit_llm)
     asc = aud.add_parser("score", help="check the worksheet and score both systems against it")
     asc.add_argument("--sample", default="eval/audit/audit-50.json")
@@ -613,6 +696,7 @@ def main(argv: list[str] | None = None) -> int:
     asc.add_argument("--release", default="release/manifest.json")
     asc.add_argument("--hybrid", help="also score this hybrid report (written as -score-<id>)")
     asc.add_argument("--out", default="eval/reports")
+    asc.add_argument("--with-extents", action="store_true", help=_WITH_EXTENTS_HELP)
     asc.set_defaults(func=_audit_score)
 
     ahy = aud.add_parser("hybrid", help="combine the rules and LLM reports into a hybrid report")
@@ -621,6 +705,7 @@ def main(argv: list[str] | None = None) -> int:
     ahy.add_argument("--llm", help="default: <out>/<sample>-<release extractor id>.json")
     ahy.add_argument("--release", default="release/manifest.json")
     ahy.add_argument("--out", default="eval/reports")
+    ahy.add_argument("--with-extents", action="store_true", help=_WITH_EXTENTS_HELP)
     ahy.set_defaults(func=_audit_hybrid)
 
     mod = sub.add_parser("model", help="pinned local LLM").add_subparsers(
@@ -696,6 +781,7 @@ def main(argv: list[str] | None = None) -> int:
     br.add_argument("--feature-id", type=int, help="candidate to propose from (default: top)")
     br.add_argument("--extent-m", type=float, help="reviewed extent (geographic radial), metres")
     br.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
+    br.add_argument("--extents", help=_EXTENTS_HELP)
     br.set_defaults(func=_baseline_run)
 
     it = sub.add_parser(
@@ -713,7 +799,23 @@ def main(argv: list[str] | None = None) -> int:
     it.add_argument("--feature-id", type=int, help="candidate to propose from (default: top)")
     it.add_argument("--extent-m", type=float, help="reviewed extent (geographic radial), metres")
     it.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
+    it.add_argument("--extents", help=_EXTENTS_HELP)
     it.set_defaults(func=_baseline_run)
+
+    ex = sub.add_parser("extents", help="the reviewed-extent store (curator-measured radials)")
+    ex_sub = ex.add_subparsers(dest="extents_command", required=True)
+    ew = ex_sub.add_parser(
+        "worksheet", help="write a new store with one pending row per annotated reference"
+    )
+    ew.add_argument("--sample", action="append", required=True, help="repeat per sample")
+    ew.add_argument("--worksheet", action="append", required=True, help="one per --sample")
+    ew.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    ew.add_argument("--out", default="data/reviewed/extents.csv")
+    ew.set_defaults(func=_extents_worksheet)
+    ec = ex_sub.add_parser("check", help="check every row of the store against the snapshot")
+    ec.add_argument("--store", default="data/reviewed/extents.csv")
+    ec.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    ec.set_defaults(func=_extents_check)
 
     args = parser.parse_args(argv)
     result: int = args.func(args)

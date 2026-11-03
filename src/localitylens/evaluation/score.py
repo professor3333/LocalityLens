@@ -142,6 +142,25 @@ def summarize(judgements: list[Judgement]) -> dict[str, Any]:
     }
 
 
+def proposal_metrics(judgements: list[Judgement]) -> dict[str, Any]:
+    """Section 7 proposal metrics, measurable once reviewed extents exist.
+
+    * ``computed``: records that reached a full point-radius proposal (no blocking question).
+    * ``precision``: computed proposals whose interpretation and reference are correct. A
+      computed proposal on an unsupported or absent-reference record counts as wrong.
+    * ``useful_coverage``: answerable records with a correct computed proposal.
+    """
+    answerable = [j for j in judgements if j.category == "answerable"]
+    computed = [j for j in judgements if j.computed]
+    return {
+        "computed": _rate(len(computed), len(judgements)),
+        "precision": _rate(sum(j.correct_candidate for j in computed), len(computed)),
+        "useful_coverage": _rate(
+            sum(j.computed and j.correct_candidate for j in answerable), len(answerable)
+        ),
+    }
+
+
 def sign_test_p(b: int, c: int) -> float:
     """Exact two-sided sign (McNemar) test on discordant pairs."""
     n = b + c
@@ -218,6 +237,8 @@ def score(
         out["paired_critical_exact_match"] = paired(
             [j.critical_ok for j in judged["rules"]], [j.critical_ok for j in judged["llm"]]
         )
+    if any("extent_store" in rep for rep in reports.values()):  # absent otherwise: old reports
+        out["proposals"] = {name: proposal_metrics(js) for name, js in judged.items()}
     others = [name for name in judged if name not in ("rules", "llm")]
     if "rules" in judged and others:  # absent otherwise: rules-vs-LLM reports stay unchanged
         ans = [i for i, a in enumerate(used) if _category(a) == "answerable"]
@@ -302,6 +323,15 @@ def write_score_report(
                        ("mean_corrections", "Mean fields to correct per record")):  # fmt: skip
         md.append(f"| {label} | " + " | ".join(str(full["systems"][s][key]) for s in systems)
                   + " |")  # fmt: skip
+    if "proposals" in full:
+        md += ["", "**Proposals with reviewed extents** (computed = full point-radius region, "
+               "no blocking question):", "", "| Metric | " + " | ".join(systems) + " |",
+               "|---|" + "---|" * len(systems)]  # fmt: skip
+        for key, name in (("computed", "Computed proposals (of all records)"),
+                          ("precision", "Computed proposals that are correct"),
+                          ("useful_coverage", "Useful coverage (of answerable)")):  # fmt: skip
+            row = " | ".join(_cell(full["proposals"][s][key]) for s in systems)
+            md.append(f"| {name} | {row} |")
     for key, label in (("paired_correct_proposal_candidates", "correct proposal candidates"),
                        ("paired_critical_exact_match", "critical exact match")):  # fmt: skip
         if key in full:
