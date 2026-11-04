@@ -151,6 +151,41 @@ proposal    computed  [point-radius, policy gbif-bp-2020/1]
     coordinate_precision        39 m  GNIS coordinates to the nearest second
 ```
 
+**Review and export.** Proposals go into a local review store (SQLite). Each record's original
+text, its proposals and the curator's decisions are kept in separate tables. A curator
+approves, edits then approves, rejects, or requests research. Only approved records are
+exported, as Darwin Core CSV, and everything else goes into an unresolved report that says
+what blocks it:
+
+```console
+$ uv run localitylens review import --sample eval/audit/audit-50.json --system rules \
+      --extents data/reviewed/extents.csv
+imported 50 records (rules)
+  needs_information  45
+  ready_for_review   2
+  unsupported        3
+$ uv run localitylens review queue --status ready_for_review
+gbif:2573416221 ready_for_review   feature 170650, radius 1,342 m
+gbif:2573488436 ready_for_review   feature 204950, radius 20,644 m
+$ uv run localitylens review decide gbif:2573488436 approve --reviewer <name> --rationale "…"
+$ uv run localitylens review export
+approved       1  -> data/review/export/occurrences.csv
+unresolved    48  -> data/review/export/unresolved.csv
+```
+
+- **Approval needs a full region.** A curator can choose another retrieved candidate or give
+  an extent (with a note on how it was measured). The proposal is then recomputed by the same
+  code, and approval is refused if any question is still open.
+- **Decisions are idempotent:** sending the same decision twice stores one.
+- **Each decision records** the reviewer, the time, the rationale and the edits as a diff.
+- **Edits are marked as human edits** in the export.
+- **Export conventions:**
+  - `geodeticDatum` is the source datum's EPSG code (`EPSG:4269`, NAD83), not transformed
+  - `coordinateUncertaintyInMeters` is rounded up and never 0
+  - `georeferenceVerificationStatus` is `verified by data custodian`
+- **Not built yet:** GeoJSON (RFC 7946 requires WGS84, so it needs a datum transformation)
+  and the map review screen.
+
 **When the label is ambiguous, it asks instead of guessing.** A bare `m` might be miles or metres:
 
 ```console
@@ -461,7 +496,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | Phase | Scope | Status |
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
-| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (3 of 97 dev + validation features measured) · candidate disambiguation · footprints · map review · CSV export | 🚧 started |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (3 of 97 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · candidate disambiguation · footprints · map review UI · GeoJSON | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · rules vs LLM vs GEOLocate · model-size & quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
@@ -498,7 +533,9 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `resolve/county.py` | Supplied county values (`COUNTY_CONTEXT_VERSION` 1): placeholders count as missing, two-county values match either county |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules or LLM) |
 | `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `review/store.py` · `review/importer.py` | Review store `review-1`: immutable originals, proposals and idempotent curator decisions in SQLite (WAL); every status change through `domain/status.py` |
+| `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review queue` · `review decide` · `review export` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 

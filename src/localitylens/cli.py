@@ -327,6 +327,95 @@ def _extents_check(args: argparse.Namespace) -> int:
     return 2 if check.problems else 0
 
 
+def _review_import(args: argparse.Namespace) -> int:
+    from localitylens.baseline.rules import Lexicon, RulesExtractor
+    from localitylens.evaluation.audit import load_sample
+    from localitylens.gazetteer.index import Gazetteer
+    from localitylens.pipeline.interpret import Extractor
+    from localitylens.review.importer import import_records
+    from localitylens.review.store import ReviewStore
+
+    if _is_locked(Path(args.sample)):
+        print("refused: the locked test split is never imported for review", file=sys.stderr)
+        return 2
+    sample = load_sample(Path(args.sample))
+    extents = _load_extents(args)
+    release_id = "rules-only"
+    with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
+        rules = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
+        llm: Extractor | None = None
+        if args.system != "rules":
+            from localitylens.extract.llm import LLMExtractor
+            from localitylens.extract.llm_client import LlamaServerClient
+            from localitylens.release import load_release
+
+            release = load_release(Path(args.release))
+            release_id = release.release
+            llm = LLMExtractor(LlamaServerClient(args.url), release)
+        counts = import_records(
+            store, [i.record for i in sample.items], sample.snapshot_id, gaz,
+            system=args.system, rules=rules, llm=llm, release=release_id, extents=extents,
+        )  # fmt: skip
+    print(f"imported {len(sample.items)} records ({args.system})")
+    for status, n in sorted(counts.items()):
+        print(f"  {status:<18} {n}")
+    return 0
+
+
+def _review_queue(args: argparse.Namespace) -> int:
+    from localitylens.domain.status import RecordStatus
+    from localitylens.review.store import ReviewStore
+
+    with ReviewStore(Path(args.db)) as store:
+        rows = store.records(RecordStatus(args.status) if args.status else None)
+        for rec in rows:
+            p = store.latest_pipeline_proposal(rec["record_id"])
+            g = p.proposal
+            if g is not None and g.radius_m is not None:
+                what = f"feature {g.feature_id}, radius {g.radius_m:,.0f} m"
+            elif g is not None and (g.questions or g.reasons):
+                what = (g.questions or g.reasons)[0]
+            else:
+                what = p.outcome
+            print(f"{rec['record_id']:<14} {rec['status']:<18} {what[:90]}")
+        print(f"{len(rows)} records")
+    return 0
+
+
+def _review_decide(args: argparse.Namespace) -> int:
+    from localitylens.review.store import Action, ReviewError, ReviewStore
+
+    store_extents = _load_extents(args)
+    with ReviewStore(Path(args.db)) as store:
+        try:
+            d = store.decide(
+                args.record, Action(args.action), reviewer=args.reviewer,
+                rationale=args.rationale, feature_id=args.feature_id, extent_m=args.extent_m,
+                extent_note=args.extent_note, key=args.key,
+                extent_lookup=store_extents.get if store_extents is not None else None,
+            )  # fmt: skip
+        except ReviewError as exc:
+            print(f"refused: {exc}", file=sys.stderr)
+            return 2
+        status = store.status(args.record)
+    note = "stored" if d.created else "already stored (same decision)"
+    edits = f"  edits {d.edits}" if d.edits else ""
+    print(f"{d.action.value} {args.record}: {status}, {note}{edits}")
+    return 0
+
+
+def _review_export(args: argparse.Namespace) -> int:
+    from localitylens.export.darwin_core import export_approved, export_unresolved
+    from localitylens.review.store import ReviewStore
+
+    with ReviewStore(Path(args.db)) as store:
+        n = export_approved(store, Path(args.out))
+        u = export_unresolved(store, Path(args.unresolved))
+    print(f"approved   {n:>5}  -> {args.out}")
+    print(f"unresolved {u:>5}  -> {args.unresolved}")
+    return 0
+
+
 def _dev_register(args: argparse.Namespace) -> int:
     from localitylens.evaluation.audit import load_sample
     from localitylens.evaluation.dev_sample import register
@@ -815,6 +904,41 @@ def main(argv: list[str] | None = None) -> int:
     it.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
     it.add_argument("--extents", help=_EXTENTS_HELP)
     it.set_defaults(func=_baseline_run)
+
+    rv = sub.add_parser("review", help="curator review store: import, decide, export")
+    rv_sub = rv.add_subparsers(dest="review_command", required=True)
+    db_help = "review database (SQLite)"
+    ri = rv_sub.add_parser("import", help="import a sample and run the pipeline on queued records")
+    ri.add_argument("--sample", required=True)
+    ri.add_argument("--system", choices=["rules", "llm", "hybrid"], default="hybrid")
+    ri.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    ri.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    ri.add_argument("--extents", help=_EXTENTS_HELP)
+    ri.add_argument("--url", default="http://127.0.0.1:8080")
+    ri.add_argument("--release", default="release/manifest.json")
+    ri.set_defaults(func=_review_import)
+    rq = rv_sub.add_parser("queue", help="list records with their status and what blocks them")
+    rq.add_argument("--status", help="only this status, e.g. ready_for_review")
+    rq.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rq.set_defaults(func=_review_queue)
+    rd = rv_sub.add_parser("decide", help="approve (optionally with edits), reject or defer")
+    rd.add_argument("record", help="record ID, e.g. gbif:1234")
+    rd.add_argument("action", choices=["approve", "reject", "request_research"])
+    rd.add_argument("--reviewer", required=True)
+    rd.add_argument("--rationale", required=True)
+    rd.add_argument("--feature-id", type=int, help="edit: choose another retrieved candidate")
+    rd.add_argument("--extent-m", type=float, help="edit: reviewed extent (radial), metres")
+    rd.add_argument("--extent-note", help="how the extent was determined (required with it)")
+    rd.add_argument("--key", help="idempotency key (default: hash of the decision)")
+    rd.add_argument("--extents", help=_EXTENTS_HELP)
+    rd.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    rd.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rd.set_defaults(func=_review_decide)
+    re_ = rv_sub.add_parser("export", help="Darwin Core CSV of approved records + unresolved")
+    re_.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    re_.add_argument("--out", default="data/review/export/occurrences.csv")
+    re_.add_argument("--unresolved", default="data/review/export/unresolved.csv")
+    re_.set_defaults(func=_review_export)
 
     ex = sub.add_parser("extents", help="the reviewed-extent store (curator-measured radials)")
     ex_sub = ex.add_subparsers(dest="extents_command", required=True)

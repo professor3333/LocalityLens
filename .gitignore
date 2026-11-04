@@ -4,6 +4,8 @@
 data/raw/
 data/quarantine/
 data/derived/
+# Curator review database and its exports: local state, never committed.
+data/review/
 # Data manifests ARE committed.
 !data/manifests/
 
