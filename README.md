@@ -441,8 +441,11 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **On the locked test it did not.** The lead seen on validation reversed to −7 points on 120
   unseen records, which is why the milestone is decided on the locked split and not on
   validation.
-- **Supplied counties are not always counties:** 2,710 eligible records carry `Unknown`,
-  `Unknown-E` or two counties (`Gunnison/Pitkin`).
+- **Supplied counties are not always counties.** 2,710 eligible records carry `Unknown`,
+  `Unknown-E` or two counties (`Gunnison/Pitkin`). Retrieval now treats placeholders as
+  missing, so the label's own county is used, and lets a two-county value match either county
+  ([findings](eval/reports/county-context-findings.md)). This changed no result on the dev or
+  validation samples.
 
 </details>
 
@@ -485,6 +488,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence: exact, then core (generic words set aside), then fuzzy |
 | `baseline/rules.py` | Rules extractor: offsets, route/between/orthogonal detection, admin areas, gazetteer phrase matching |
 | `resolve/retrieve.py` | Interpretation → ranked candidates, with county context from supplied fields or the label |
+| `resolve/county.py` | Supplied county values (`COUNTY_CONTEXT_VERSION` 1): placeholders count as missing, two-county values match either county |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules or LLM) |
 | `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
 | `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |

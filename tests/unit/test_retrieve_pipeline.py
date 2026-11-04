@@ -86,3 +86,32 @@ def test_baseline_cli_proposal(index_path: Path, capsys: pytest.CaptureFixture[s
     assert proposal["policy_id"].startswith("gbif-bp-2020/")
 
     assert main([*base, "--feature-id", "999"]) == 2
+
+
+@pytest.mark.parametrize("placeholder", ["Unknown", "Unknown-E", "unknown-w", "", "  "])
+def test_a_placeholder_county_gives_way_to_the_labels_county(
+    gaz: Gazetteer, rules: RulesExtractor, placeholder: str
+) -> None:
+    result = interpret("Beta Co., 2 mi NE of Testa Peak", rules, gaz, supplied_county=placeholder)
+    assert result.retrieval is not None
+    assert result.retrieval.county_source is ContextSource.TEXT
+    assert result.retrieval.candidates[0].feature_id == 2  # Beta, from the label
+
+
+@pytest.mark.parametrize("value", ["Beta/Gamma", "Gamma / Beta", "Gamma or Beta"])
+def test_a_two_county_value_matches_either_county(
+    gaz: Gazetteer, rules: RulesExtractor, value: str
+) -> None:
+    result = interpret("2 mi NE of Testa Peak", rules, gaz, supplied_county=value)
+    assert result.retrieval is not None
+    assert result.retrieval.county_source is ContextSource.SUPPLIED
+    top, other = result.retrieval.candidates[:2]
+    assert (top.feature_id, top.county_match) == (2, True)
+    assert (other.feature_id, other.county_match) == (1, False)  # ranked lower, never removed
+
+
+def test_an_unknown_county_name_counts_as_missing(gaz: Gazetteer, rules: RulesExtractor) -> None:
+    result = interpret("Beta Co., Testa Peak", rules, gaz, supplied_county="Giplin")
+    assert result.retrieval is not None
+    assert result.retrieval.county_source is ContextSource.TEXT
+    assert result.retrieval.county_context == "Beta Co."

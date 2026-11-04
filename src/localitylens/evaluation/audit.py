@@ -145,6 +145,7 @@ def run_system(
     from localitylens.geo import uncertainty as policy
     from localitylens.geo.georeference import propose
     from localitylens.pipeline.interpret import interpret
+    from localitylens.resolve.county import COUNTY_CONTEXT_VERSION
 
     rows: list[dict[str, Any]] = []
     with Gazetteer(index) as gaz:
@@ -226,6 +227,7 @@ def run_system(
         "uncertainty_policy": policy.POLICY_ID,
         "validation_version": VALIDATION_VERSION,
         "core_key_version": CORE_KEY_VERSION,
+        "county_context_version": COUNTY_CONTEXT_VERSION,
         "seed": sample.seed,
         **(meta or {}),
         **({"extent_store": extents.summary()} if extents is not None else {}),

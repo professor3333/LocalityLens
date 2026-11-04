@@ -5,7 +5,8 @@ language interpretation, not from retrieval.
 
 Admin context: a county supplied in the record's structured fields takes precedence over one
 mentioned in the text. Both only *rank* candidates. The source used is recorded so a reviewer
-can see why a candidate moved up.
+can see why a candidate moved up. Placeholders ("Unknown") count as missing, and two-county
+values ("Gunnison/Pitkin") match either county (``resolve/county.py``).
 """
 
 from __future__ import annotations
@@ -15,6 +16,7 @@ from enum import StrEnum
 
 from localitylens.extract.schema import AdminLevel, Interpretation
 from localitylens.gazetteer.index import Candidate, Gazetteer
+from localitylens.resolve.county import supplied_counties
 
 
 class RetrievalOutcome(StrEnum):
@@ -45,7 +47,8 @@ def retrieve(
     state: str | None = "Colorado",
     limit: int = 5,
 ) -> RetrievalResult:
-    county, source = _county_context(interpretation, supplied_county)
+    counties, source = _county_context(interpretation, supplied_county, gazetteer)
+    county = "/".join(counties) if counties else None
     feature = interpretation.reference_feature
     if feature is None:
         return RetrievalResult(
@@ -54,7 +57,7 @@ def retrieve(
     candidates = gazetteer.search(
         feature.name,
         state=state,
-        county=county,
+        county=counties or None,
         feature_type=feature.feature_type,
         limit=limit,
     )
@@ -67,11 +70,13 @@ def retrieve(
 
 
 def _county_context(
-    interpretation: Interpretation, supplied_county: str | None
-) -> tuple[str | None, ContextSource | None]:
-    if supplied_county and supplied_county.strip():
-        return supplied_county.strip(), ContextSource.SUPPLIED
+    interpretation: Interpretation, supplied_county: str | None, gazetteer: Gazetteer
+) -> tuple[tuple[str, ...], ContextSource | None]:
+    """Supplied counties first (``resolve/county.py``), then a county named in the label."""
+    supplied = supplied_counties(supplied_county, gazetteer.county_keys())
+    if supplied:
+        return supplied, ContextSource.SUPPLIED
     for admin in interpretation.admin_mentions:
         if admin.level is AdminLevel.COUNTY:
-            return admin.span.text, ContextSource.TEXT
-    return None, None
+            return (admin.span.text,), ContextSource.TEXT
+    return (), None

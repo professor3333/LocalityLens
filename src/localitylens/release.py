@@ -70,6 +70,7 @@ class ReleaseManifest(BaseModel):
     grammar_version: str  # how the schema is turned into a decoding grammar (extract/llm.py)
     validation_version: str  # extract/validate.py VALIDATION_VERSION
     core_key_version: str  # gazetteer/keys.py CORE_KEY_VERSION (core match tier)
+    county_context_version: str  # resolve/county.py COUNTY_CONTEXT_VERSION (supplied county)
     context_budget_tokens: int = Field(gt=0)
     rules_version: str
     uncertainty_policy: str

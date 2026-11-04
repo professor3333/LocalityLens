@@ -23,6 +23,8 @@ _SAME: Final = (
     "core_key_version",
     "seed",
 )
+# Added in later versions: must agree too, and are carried over when present.
+_SAME_IF_PRESENT: Final = ("county_context_version", "extent_store")
 _LLM_META: Final = ("model", "gguf", "prompt", "generation", "server")
 
 
@@ -41,8 +43,9 @@ def combine_reports(rules: dict[str, Any], llm: dict[str, Any]) -> dict[str, Any
     for key in _SAME:
         if rules.get(key) != llm.get(key):
             raise ReportMismatchError(f"reports differ in {key!r}")
-    if rules.get("extent_store") != llm.get("extent_store"):
-        raise ReportMismatchError("reports differ in 'extent_store'")
+    for key in _SAME_IF_PRESENT:
+        if rules.get(key) != llm.get(key):
+            raise ReportMismatchError(f"reports differ in {key!r}")
     r_rows, l_rows = rules["records"], llm["records"]
     if [r["audit_id"] for r in r_rows] != [r["audit_id"] for r in l_rows]:
         raise ReportMismatchError("reports cover different records")
@@ -59,6 +62,7 @@ def combine_reports(rules: dict[str, Any], llm: dict[str, Any]) -> dict[str, Any
             rows.append(kept)
     return {
         **{key: rules[key] for key in _SAME},
+        **{key: rules[key] for key in _SAME_IF_PRESENT[:1] if key in rules},
         "system": "hybrid",
         "extractor_version": HYBRID_VERSION,
         "components": {"rules": rules["extractor_version"], "llm": llm["extractor_version"]},

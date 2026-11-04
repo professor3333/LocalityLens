@@ -212,6 +212,7 @@ class Gazetteer:
             if (core := core_key(key)) is not None:
                 by_core[core].extend(rows)
         self._by_core = dict(by_core)
+        self._county_keys: dict[str, frozenset[str]] = {}
 
     def close(self) -> None:
         self._con.close()
@@ -260,6 +261,14 @@ class Gazetteer:
             ),
         )
 
+    def county_keys(self, state: str = "Colorado") -> frozenset[str]:
+        """The county keys of ``state``, computed once per index connection."""
+        cached = self._county_keys.get(state)
+        if cached is None:
+            cached = frozenset(county_key(c) for c in self.county_names(state))
+            self._county_keys[state] = cached
+        return cached
+
     def county_names(self, state: str = "Colorado") -> frozenset[str]:
         rows = self._con.execute(
             "SELECT DISTINCT county_name FROM feature WHERE state_name = ?", (state,)
@@ -271,7 +280,7 @@ class Gazetteer:
         name: str,
         *,
         state: str | None = "Colorado",
-        county: str | None = None,
+        county: str | tuple[str, ...] | None = None,
         feature_type: FeatureType | None = None,
         limit: int = 5,
         fuzzy_cutoff: float = DEFAULT_FUZZY_CUTOFF,
@@ -333,9 +342,11 @@ class Gazetteer:
         name_id: int,
         sim: float,
         state: str | None,
-        county: str | None,
+        county: str | tuple[str, ...] | None,
         feature_type: FeatureType | None,
     ) -> Candidate:
+        counties = (county,) if isinstance(county, str) else county
+        county_keys = {county_key(c) for c in counties} if counties else None
         r = self._con.execute("SELECT * FROM feature WHERE feature_id = ?", (fid,)).fetchone()
         n = self._con.execute(
             "SELECT name, kind, citation, source_date FROM name WHERE id = ?", (name_id,)
@@ -365,8 +376,8 @@ class Gazetteer:
             variant_source_date=(n["source_date"] or None) if is_variant else None,
             state_match=None if state is None else r["state_name"].casefold() == state.casefold(),
             county_match=None
-            if county is None
-            else county_key(r["county_name"]) == county_key(county),
+            if county_keys is None
+            else county_key(r["county_name"]) in county_keys,
             type_match=(
                 None
                 if feature_type is None
