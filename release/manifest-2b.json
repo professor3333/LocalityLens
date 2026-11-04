@@ -1,0 +1,51 @@
+{
+  "release": "0.1.0-dev-2b",
+  "extractor_id": "llm-x2g2-qwen3.5-2b-q4km",
+  "model": {
+    "id": "Qwen/Qwen3.5-2B",
+    "upstream_revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+    "licence": "Apache-2.0",
+    "gguf_repo": "unsloth/Qwen3.5-2B-GGUF",
+    "gguf_revision": "f6d5376be1edb4d416d56da11e5397a961aca8ae",
+    "gguf_file": "Qwen3.5-2B-Q4_K_M.gguf",
+    "quantization": "Q4_K_M",
+    "gguf_sha256": "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223",
+    "gguf_size_bytes": 1280835840
+  },
+  "server": {
+    "llama_cpp_version": "0.8.0",
+    "llama_cpp_build": "b11960-8642541b2",
+    "args": [
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8080",
+      "-c",
+      "4096",
+      "-np",
+      "1",
+      "--no-context-shift"
+    ]
+  },
+  "generation": {
+    "temperature": 0.0,
+    "top_k": 1,
+    "seed": 20261101,
+    "max_tokens": 512,
+    "enable_thinking": false
+  },
+  "prompt": {
+    "version": "extraction-v2",
+    "sha256": "8074f1f8aed024f6bbb3e308939bf19552e2273012ef73babaf3fa5fdc64eba3"
+  },
+  "schema_version": "extraction-1",
+  "grammar_version": "2",
+  "validation_version": "3",
+  "core_key_version": "1",
+  "county_context_version": "1",
+  "context_budget_tokens": 4096,
+  "rules_version": "rules-2",
+  "uncertainty_policy": "gbif-bp-2020/1",
+  "gazetteer_snapshot": "gnis-co-2026-09-29",
+  "specimen_snapshot": "gbif-cu-2026-11-01"
+}

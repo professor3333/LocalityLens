@@ -39,7 +39,12 @@ This card describes the model as used in release `0.1.0-dev`.
 
 All of the above is pinned in [`release/manifest.json`](../release/manifest.json). Tests
 compare it with the code's own constants, and changing any item is a version bump.
-Qwen3.5-2B is the planned lower-resource comparison and has not been run.
+**Qwen3.5-2B** (Q4_K_M, pinned in [`release/manifest-2b.json`](../release/manifest-2b.json))
+was compared on dev and validation data. On its own it gives 27 correct candidates of 92,
+against 46 for 4B, and 51 of its 160 extractions quote text that is not in the label. As
+hybrid-1's fallback it gives 49 against 51, at a quarter of the model time (p50 4.9 s against
+20.4 s in the same session) ([findings](../eval/reports/qwen3.5-2b-findings.md)). 4B stays the
+release model.
 
 **Resources measured** on an Apple M1 with 8 GB: llama-server's own footprint is 629 MB on top
 of the 2.74 GB memory-mapped model file. The prompt uses about 2,350 of the 4,096-token

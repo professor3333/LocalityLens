@@ -98,8 +98,9 @@ cache (`extract/cache.py`) record 0 model seconds and are never used for latency
 
 - **Proposal precision, useful coverage, containment with region size and reviewer time.**
   These need feature extents. The [extent store](../data/reviewed/) is being filled.
-- **GEOLocate comparison**, the second LLM call (candidate comparison), Qwen3.5-2B and other
-  quantizations, and the adversarial set.
+- **GEOLocate comparison**, the second LLM call (candidate comparison), other
+  quantizations, and the adversarial set. Qwen3.5-2B has been compared on dev and validation
+  data only ([findings](../eval/reports/qwen3.5-2b-findings.md)).
 - **Review policy thresholds** (`configs/review_policy.yaml`, planned): no selection-confidence
   thresholds are set yet, and nothing reaches `ready_for_review`.
 - **Annotation self-consistency** (a repeat pass on a subset by the same annotator).
