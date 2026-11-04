@@ -4,21 +4,21 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 > Rules first; the LLM's result is used only where the rules reach no gazetteer candidate and the LLM does. Built from the two component reports (both deterministic). The top candidate is the system's ranking, not a reviewed choice, and no extent was supplied.
 
-**source**: `rules` 44 · `llm` 6
+**source**: `rules` 46 · `llm` 4
 
-**llm_call**: `made` 16 · `skipped` 34
+**llm_call**: `made` 14 · `skipped` 36
 
-**relation**: `named_feature` 25 · `distance_and_direction` 12 · `direction_only` 9 · `orthogonal_offsets` 1 · `distance_only` 1 · `route_relative` 1 · `other` 1
+**relation**: `named_feature` 25 · `distance_and_direction` 17 · `direction_only` 5 · `distance_only` 1 · `route_relative` 1 · `other` 1
 
 **retrieval**: `candidates_found` 40 · `feature_absent_from_index` 8 · `no_reference_feature` 2
 
-**proposal**: `needs_information` 46 · `unsupported` 3 · `computed` 1
+**proposal**: `needs_information` 47 · `unsupported` 2 · `computed` 1
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
 | A01 | Colorado National Monument, S of E entrance. | named_feature | Colorado National Monument | feature_absent_from_index |  | needs_information |
 | A02 | 5 mi. E. of Eaton towards Cornish. | distance_and_direction | Eaton | candidates_found | Eaton (Populated Place, Weld, exact_official) | needs_information |
-| A03 | Northern Gunnison Basin: ca 6 air mi NE of Almont. | direction_only | Almont | candidates_found | Almont (Populated Place, Gunnison, exact_official) | needs_information |
+| A03 | Northern Gunnison Basin: ca 6 air mi NE of Almont. | distance_and_direction | Almont | candidates_found | Almont (Populated Place, Gunnison, exact_official) | needs_information |
 | A04 | San Juan Nat. Forest: Chicago Basin. Animas River drainage ca. 18 mi. S.E. of Silverton. Near the top of Eolus. | distance_and_direction | Silverton | candidates_found | Silverton (Populated Place, San Juan, exact_official) | needs_information |
 | A05 | Collegiate Peaks Overlook, Arkansas Headwaters State Recreation Area, approx. 1 mile east of Johnson Village on CR 34 off of Highway 285. | distance_and_direction | Johnson Village | candidates_found | Johnson Village (Populated Place, Chaffee, exact_official) | needs_information |
 | A06 | Grand Mesa National Forest. Old road on N slope of plateau E of Mesa Creek. | direction_only | Mesa Creek | candidates_found | Mesa Creek (Stream, Mesa, exact_official) | needs_information |
@@ -28,19 +28,19 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A10 | Above Rainbow Lake. | named_feature | Rainbow Lake | candidates_found | Rainbow Lake (Lake, Jackson, exact_official) | needs_information |
 | A11 | Lone Cone. | named_feature | Lone Cone | candidates_found | Lone Cone (Summit, Dolores, exact_official) | needs_information |
 | A12 | Silt Mesa (right-of-way). | named_feature | Silt Mesa | feature_absent_from_index |  | needs_information |
-| A13 | Northern Gunnison Basin: ca 5 air mi SSW of Paonia. | direction_only | Paonia | candidates_found | Paonia (Populated Place, Delta, exact_official) | needs_information |
+| A13 | Northern Gunnison Basin: ca 5 air mi SSW of Paonia. | distance_and_direction | Paonia | candidates_found | Paonia (Populated Place, Delta, exact_official) | needs_information |
 | A14 | White River Plateau. Coffee Pot Road, 8 mi W of Hwy 301. | named_feature | White River Plateau | candidates_found | White River Plateau (Summit, Garfield, exact_official) | needs_information |
 | A15 | Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Along a 2-track road next to Woman Creek bypass north of C-2 pond. | distance_and_direction | Boulder | candidates_found | Boulder (Populated Place, Boulder, exact_official) | needs_information |
 | A16 | South Park area. | named_feature | South Park | candidates_found | South Park (Flat, San Juan, exact_official) | needs_information |
 | A17 | Mesa de Maya Region of southeastern CO. Gotera Canyon. | named_feature | Mesa de Maya Region | feature_absent_from_index |  | needs_information |
 | A18 | Rico Mts.; northern ridge of Sockrider Mt. | named_feature | Rico Mts | feature_absent_from_index |  | needs_information |
-| A19 | Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake, ca 37 air mi W of Fort Collins. | orthogonal_offsets | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | unsupported |
+| A19 | Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake, ca 37 air mi W of Fort Collins. | distance_and_direction | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | needs_information |
 | A20 | Morrison Creek. Buffalo Creek Recreation Area, along Morrison Creek and former National Forest Road 547, 2.69 km. south of National Forest Road 550, 63.3 km. south of the GNIS location of Golden. | named_feature | Morrison Creek | candidates_found | Morrison Creek (Stream, Jefferson, exact_official) | needs_information |
 | A21 | Near Deer Creek, Chatfield Arboretum site, Denver Botanic Gardens, located at junction of Highway 75 and Deer Creek Rd. | named_feature | Near Deer Creek | candidates_found | East Deer Creek (Stream, La Plata, fuzzy_official) | needs_information |
 | A22 | Lost Man Campground, upper Roaring Fork Valley east of Aspen. | direction_only | Aspen | candidates_found | Aspen (Populated Place, Pitkin, exact_official) | needs_information |
-| A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | direction_only | Craig | candidates_found | Craig (Populated Place, Moffat, exact_official) | needs_information |
+| A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | distance_and_direction | Craig | candidates_found | Craig (Populated Place, Moffat, exact_official) | needs_information |
 | A24 | Tolland. James Peak. | named_feature | Tolland | candidates_found | Tolland (Populated Place, Gilpin, exact_official) | needs_information |
-| A25 | Nine miles north of Hotchkiss on Oak Mesa. | direction_only | Hotchkiss | candidates_found | Hotchkiss (Populated Place, Delta, exact_official) | needs_information |
+| A25 | Nine miles north of Hotchkiss on Oak Mesa. | distance_and_direction | Hotchkiss | candidates_found | Hotchkiss (Populated Place, Delta, exact_official) | needs_information |
 | A26 | S slope of Mt. Zenobia. | named_feature | Mt. Zenobia | candidates_found | Zenobia Peak (Summit, Moffat, core_official) | needs_information |
 | A27 | Gunnison Canon. | named_feature | Gunnison Canon | feature_absent_from_index |  | needs_information |
 | A28 | 2 mi. W of Hesperus. | distance_and_direction | Hesperus | candidates_found | Hesperus (Populated Place, La Plata, exact_official) | needs_information |

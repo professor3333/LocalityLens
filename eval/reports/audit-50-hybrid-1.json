@@ -3,13 +3,14 @@
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "gazetteer_snapshot": "gnis-co-2026-09-29",
   "uncertainty_policy": "gbif-bp-2020/1",
-  "validation_version": "2",
+  "validation_version": "3",
   "core_key_version": "1",
   "seed": "audit-50/1",
+  "county_context_version": "1",
   "system": "hybrid",
   "extractor_version": "hybrid-1",
   "components": {
-    "rules": "rules-1",
+    "rules": "rules-2",
     "llm": "llm-x2g2-qwen3.5-4b-q4km"
   },
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
@@ -30,18 +31,17 @@
   "note": "Rules first; the LLM's result is used only where the rules reach no gazetteer candidate and the LLM does. Built from the two component reports (both deterministic). The top candidate is the system's ranking, not a reviewed choice, and no extent was supplied.",
   "counts": {
     "source": {
-      "rules": 44,
-      "llm": 6
+      "rules": 46,
+      "llm": 4
     },
     "llm_call": {
-      "made": 16,
-      "skipped": 34
+      "made": 14,
+      "skipped": 36
     },
     "relation": {
       "named_feature": 25,
-      "distance_and_direction": 12,
-      "direction_only": 9,
-      "orthogonal_offsets": 1,
+      "distance_and_direction": 17,
+      "direction_only": 5,
       "distance_only": 1,
       "route_relative": 1,
       "other": 1
@@ -52,8 +52,8 @@
       "no_reference_feature": 2
     },
     "proposal": {
-      "needs_information": 46,
-      "unsupported": 3,
+      "needs_information": 47,
+      "unsupported": 2,
       "computed": 1
     }
   },
@@ -87,8 +87,9 @@
         "completion_tokens": 112,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.14,
-        "record_seconds": 10.2
+        "model_seconds": 0.0,
+        "record_seconds": 0.38,
+        "cache_hits": 1
       }
     },
     {
@@ -128,7 +129,7 @@
       "audit_id": "A03",
       "locality": "Northern Gunnison Basin: ca 6 air mi NE of Almont.",
       "county": "Gunnison",
-      "relation": "direction_only",
+      "relation": "distance_and_direction",
       "reference": "Almont",
       "validation_errors": [],
       "retrieval": "candidates_found",
@@ -139,11 +140,13 @@
         172604
       ],
       "interpretation": {
-        "relation": "direction_only",
-        "distance": null,
-        "unit": null,
+        "relation": "distance_and_direction",
+        "distance": 6.0,
+        "unit": "mile",
         "direction": "NE",
-        "qualifiers": []
+        "qualifiers": [
+          "approximate"
+        ]
       },
       "top_candidate": {
         "feature_id": 188934,
@@ -153,7 +156,7 @@
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 4042,
       "radius_m": null,
       "source": "rules",
       "llm_called": false
@@ -404,8 +407,9 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.11,
-        "record_seconds": 8.17
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -472,15 +476,16 @@
         "completion_tokens": 92,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.6,
-        "record_seconds": 8.65
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
       }
     },
     {
       "audit_id": "A13",
       "locality": "Northern Gunnison Basin: ca 5 air mi SSW of Paonia.",
       "county": "Delta",
-      "relation": "direction_only",
+      "relation": "distance_and_direction",
       "reference": "Paonia",
       "validation_errors": [],
       "retrieval": "candidates_found",
@@ -489,11 +494,13 @@
         186589
       ],
       "interpretation": {
-        "relation": "direction_only",
-        "distance": null,
-        "unit": null,
+        "relation": "distance_and_direction",
+        "distance": 5.0,
+        "unit": "mile",
         "direction": "SSW",
-        "qualifiers": []
+        "qualifiers": [
+          "approximate"
+        ]
       },
       "top_candidate": {
         "feature_id": 186589,
@@ -503,7 +510,7 @@
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 1879,
       "radius_m": null,
       "source": "rules",
       "llm_called": false
@@ -543,8 +550,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.76,
-        "record_seconds": 8.82
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -648,8 +656,9 @@
         "completion_tokens": 89,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.42,
-        "record_seconds": 9.47
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
       }
     },
     {
@@ -681,15 +690,16 @@
         "completion_tokens": 79,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.91,
-        "record_seconds": 8.96
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
       "audit_id": "A19",
       "locality": "Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake, ca 37 air mi W of Fort Collins.",
       "county": "Larimer",
-      "relation": "orthogonal_offsets",
+      "relation": "distance_and_direction",
       "reference": "Fort Collins",
       "validation_errors": [],
       "retrieval": "candidates_found",
@@ -698,7 +708,7 @@
         204673
       ],
       "interpretation": {
-        "relation": "orthogonal_offsets",
+        "relation": "distance_and_direction",
         "distance": 37.0,
         "unit": "mile",
         "direction": "W",
@@ -713,20 +723,11 @@
         "county": "Larimer",
         "match": "exact_official"
       },
-      "proposal": "unsupported",
-      "radius_lower_bound_m": null,
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 45927,
       "radius_m": null,
-      "trace": {
-        "prompt_sha256": "97bb4f978b76875c1f95cd9517a05e9b421cbb66f9ce73e2abe1800cceec0be4",
-        "prompt_tokens": 2383,
-        "completion_tokens": 138,
-        "attempts": 1,
-        "errors": [],
-        "model_seconds": 13.72,
-        "record_seconds": 13.78
-      },
-      "source": "llm",
-      "llm_called": true
+      "source": "rules",
+      "llm_called": false
     },
     {
       "audit_id": "A20",
@@ -767,8 +768,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.21,
-        "record_seconds": 9.26
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -844,7 +846,7 @@
       "audit_id": "A23",
       "locality": "North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig.",
       "county": "Moffat",
-      "relation": "direction_only",
+      "relation": "distance_and_direction",
       "reference": "Craig",
       "validation_errors": [],
       "retrieval": "candidates_found",
@@ -856,11 +858,13 @@
         204989
       ],
       "interpretation": {
-        "relation": "direction_only",
-        "distance": null,
-        "unit": null,
+        "relation": "distance_and_direction",
+        "distance": 21.0,
+        "unit": "mile",
         "direction": "NE",
-        "qualifiers": []
+        "qualifiers": [
+          "approximate"
+        ]
       },
       "top_candidate": {
         "feature_id": 171304,
@@ -870,7 +874,7 @@
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 13406,
       "radius_m": null,
       "source": "rules",
       "llm_called": false
@@ -911,7 +915,7 @@
       "audit_id": "A25",
       "locality": "Nine miles north of Hotchkiss on Oak Mesa.",
       "county": "Delta",
-      "relation": "direction_only",
+      "relation": "distance_and_direction",
       "reference": "Hotchkiss",
       "validation_errors": [],
       "retrieval": "candidates_found",
@@ -921,9 +925,9 @@
         204751
       ],
       "interpretation": {
-        "relation": "direction_only",
-        "distance": null,
-        "unit": null,
+        "relation": "distance_and_direction",
+        "distance": 9.0,
+        "unit": "mile",
         "direction": "N",
         "qualifiers": []
       },
@@ -935,7 +939,7 @@
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 11457,
       "radius_m": null,
       "source": "rules",
       "llm_called": false
@@ -1001,8 +1005,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 8.84,
-        "record_seconds": 8.9
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
       }
     },
     {
@@ -1133,8 +1138,9 @@
         "completion_tokens": 102,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.56,
-        "record_seconds": 10.61
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1158,7 +1164,8 @@
         "unit": "mile",
         "direction": "WSW",
         "qualifiers": [
-          "approximate"
+          "approximate",
+          "near"
         ]
       },
       "top_candidate": {
@@ -1171,17 +1178,8 @@
       "proposal": "needs_information",
       "radius_lower_bound_m": 1109,
       "radius_m": null,
-      "trace": {
-        "prompt_sha256": "e5c6374554d7e9bf35a5d3a36b1ed7bc66292bb5303f8920fecb29fa3a18cc78",
-        "prompt_tokens": 2400,
-        "completion_tokens": 156,
-        "attempts": 1,
-        "errors": [],
-        "model_seconds": 20.22,
-        "record_seconds": 20.69
-      },
-      "source": "llm",
-      "llm_called": true
+      "source": "rules",
+      "llm_called": false
     },
     {
       "audit_id": "A33",
@@ -1236,7 +1234,9 @@
         "distance": null,
         "unit": null,
         "direction": null,
-        "qualifiers": []
+        "qualifiers": [
+          "approximate"
+        ]
       },
       "top_candidate": {
         "feature_id": 204777,
@@ -1462,8 +1462,9 @@
         "completion_tokens": 203,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 19.27,
-        "record_seconds": 19.35
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1497,8 +1498,9 @@
         "completion_tokens": 109,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.23,
-        "record_seconds": 11.29
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1572,8 +1574,9 @@
         "completion_tokens": 107,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.45,
-        "record_seconds": 11.99
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -1640,8 +1643,9 @@
         "completion_tokens": 80,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 9.44,
-        "record_seconds": 9.52
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1661,7 +1665,9 @@
         "distance": null,
         "unit": null,
         "direction": null,
-        "qualifiers": []
+        "qualifiers": [
+          "approximate"
+        ]
       },
       "top_candidate": {
         "feature_id": 201785,
@@ -1705,8 +1711,9 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 7.84,
-        "record_seconds": 7.93
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {

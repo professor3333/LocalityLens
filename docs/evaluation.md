@@ -72,6 +72,10 @@ Correct proposal candidates, against the rules baseline `rules-1`:
 | Audit (31) | 14 | 12 | 14 | Dev data |
 | dev-1 (29) | 16 | 18 | 18 | Dev data; prompt v2 written on it |
 
+These rows are the release configuration (rules-1, validation 2). Since then, rules-2 and
+validation 3 give audit 17 / 13 / 17, dev-1 16 / 18 / 18 and validation 13 / 15 / 16. The
+audit gains are in-sample ([rules-2 findings](../eval/reports/rules-2-findings.md)).
+
 - **LLM v2:** Qwen3.5-4B Q4_K_M, prompt `extraction-v2`, greedy decoding.
 - **hybrid-1:** runs the rules first, and the LLM only where the rules reach no gazetteer
   candidate.

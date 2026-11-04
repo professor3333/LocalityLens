@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Final
 
 from localitylens.evaluation.audit import WORKSHEET_COLUMNS, AuditSample
+from localitylens.extract.quantities import NUMBER_WORDS as _NUMBER_WORDS
 from localitylens.extract.quantities import parse_quantity
 from localitylens.extract.schema import RelationType
 from localitylens.gazetteer.index import Gazetteer
@@ -50,34 +51,8 @@ _RANGE: Final = re.compile(r"^\s*\d+(?:\.\d+)?\s*-\s*\d+(?:\.\d+)?\s*$")
 
 # Spelled-out numbers as annotators copy them from labels ("Nine miles"). Annotation only:
 # the extraction parser deliberately does not read words yet (a recorded system limitation).
-NUMBER_WORDS: Final[dict[str, float]] = {
-    w: float(i)
-    for i, w in enumerate(
-        (
-            "zero",
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-            "six",
-            "seven",
-            "eight",
-            "nine",
-            "ten",
-            "eleven",
-            "twelve",
-            "thirteen",
-            "fourteen",
-            "fifteen",
-            "sixteen",
-            "seventeen",
-            "eighteen",
-            "nineteen",
-            "twenty",
-        )
-    )
-} | {"half": 0.5}
+# The number words annotators may write, shared with the parser (extract/quantities.py).
+NUMBER_WORDS: Final[dict[str, float]] = _NUMBER_WORDS
 
 
 def annotated_distance(text: str) -> float | None:

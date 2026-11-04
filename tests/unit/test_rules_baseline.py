@@ -161,3 +161,36 @@ def test_feature_type_comes_from_the_head_word(text: str, expected: str | None) 
     feature = run(text).reference_feature
     assert feature is not None
     assert (feature.feature_type.value if feature.feature_type else None) == expected
+
+
+# --- rules-2 ------------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(("text", "distance", "unit", "direction"), [
+    ("ca 6 air mi NE of Estes Park.", "6", "mi", "NE"),
+    ("Ca. 2 air miles WSW of Lyons.", "2", "miles", "WSW"),
+    ("Nine miles north of Loveland on the mesa.", "Nine", "miles", "north"),
+    ("Two mi S of Boulder", "Two", "mi", "S"),
+    ("half mile E of Gold Hill", "half", "mile", "E"),
+])  # fmt: skip
+def test_air_miles_and_spelled_numbers_are_offsets(
+    text: str, distance: str, unit: str, direction: str
+) -> None:
+    out = run(text)
+    assert out.relation is RelationType.DISTANCE_AND_DIRECTION
+    assert out.distance is not None
+    assert (out.distance.value_quote, out.distance.unit_quote) == (distance, unit)
+    assert out.direction is not None
+    assert out.direction.quote == direction
+
+
+def test_bare_ca_before_a_number_is_a_qualifier() -> None:
+    out = run("ca 6 air mi NE of Estes Park.")
+    assert [q.quote for q in out.qualifiers] == ["ca"]
+
+
+@pytest.mark.parametrize("text", ["Two Buttes.", "Ten Mile Range, east slope.",
+                                  "Seven Lakes N of Estes Park."])  # fmt: skip
+def test_a_number_word_inside_a_name_is_not_a_distance(text: str) -> None:
+    out = run(text)
+    assert out.distance is None

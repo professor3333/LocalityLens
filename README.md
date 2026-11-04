@@ -348,6 +348,12 @@ against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv
 | Audit (dev data; 31) | 14 (45%) | 12 (39%) | 14 (45%) |
 | dev-1 (v2 was written on it; 29) | 16 (55%) | 18 (62%) | 18 (62%) |
 
+**Since release 2: rules-2.** The rules now read "air mi", spelled-out numbers before a unit
+and a bare "ca" ([findings](eval/reports/rules-2-findings.md)). On the audit they gain 3
+records (14 → 17), and hybrid-1 also goes 14 → 17. These gains are in-sample, since the fixed
+labels came from the audit findings. dev-1 and validation are unchanged, and no record got
+worse. The locked test has not been scored with rules-2.
+
 **How to read the "yes":**
 - **The margin is one record.** +10 points of 56 is 5.6 records, and the hybrid gains 6 while
   losing none.
@@ -416,7 +422,8 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
   single GNIS point, so honest proposals ask for an extent. The reviewed-extent store now
   exists, and 3 of its 97 rows have been measured.
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
-  places, and leading words ("Above", "Near") absorbed into names.
+  places, and leading words ("Above", "Near") absorbed into names. rules-2 fixes "air mi" and
+  spelled-out numbers.
 - **The LLM reads what the rules miss, and makes its own errors:** it handles "air mi",
   separates "Above"/"Near" from names and flags more route descriptions. It also called 7 labels
   that name a place "no locality", and 9 of its outputs were rejected by validation (as designed).

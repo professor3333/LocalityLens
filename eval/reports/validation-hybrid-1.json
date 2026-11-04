@@ -3,13 +3,14 @@
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "gazetteer_snapshot": "gnis-co-2026-09-29",
   "uncertainty_policy": "gbif-bp-2020/1",
-  "validation_version": "2",
+  "validation_version": "3",
   "core_key_version": "1",
   "seed": "benchmark/1",
+  "county_context_version": "1",
   "system": "hybrid",
   "extractor_version": "hybrid-1",
   "components": {
-    "rules": "rules-1",
+    "rules": "rules-2",
     "llm": "llm-x2g2-qwen3.5-4b-q4km"
   },
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
@@ -34,19 +35,19 @@
       "llm": 8
     },
     "llm_call": {
-      "made": 26,
-      "skipped": 34
+      "made": 27,
+      "skipped": 33
     },
     "relation": {
       "named_feature": 23,
-      "distance_and_direction": 21,
-      "direction_only": 10,
+      "distance_and_direction": 23,
+      "direction_only": 8,
       "other": 4,
       "route_relative": 2
     },
     "retrieval": {
-      "candidates_found": 42,
-      "feature_absent_from_index": 13,
+      "candidates_found": 41,
+      "feature_absent_from_index": 14,
       "no_reference_feature": 5
     },
     "proposal": {
@@ -84,8 +85,9 @@
         "completion_tokens": 99,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 23.21,
-        "record_seconds": 30.8
+        "model_seconds": 0.0,
+        "record_seconds": 0.11,
+        "cache_hits": 1
       }
     },
     {
@@ -124,8 +126,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.02,
-        "record_seconds": 14.94
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -159,8 +162,9 @@
         "completion_tokens": 55,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.01,
-        "record_seconds": 17.44
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -168,33 +172,34 @@
       "locality": "Half mile E of Hiway Nine, 3 mi. S of LaFayette.",
       "county": "Boulder",
       "relation": "distance_and_direction",
-      "reference": "LaFayette",
+      "reference": "Hiway Nine",
       "validation_errors": [],
-      "retrieval": "candidates_found",
-      "candidates": 2,
-      "candidate_ids": [
-        202813,
-        195478
-      ],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
       "interpretation": {
         "relation": "distance_and_direction",
-        "distance": 3.0,
+        "distance": 0.5,
         "unit": "mile",
-        "direction": "S",
+        "direction": "E",
         "qualifiers": []
       },
-      "top_candidate": {
-        "feature_id": 202813,
-        "name": "Lafayette",
-        "class": "Populated Place",
-        "county": "Boulder",
-        "match": "exact_official"
-      },
+      "top_candidate": null,
       "proposal": "needs_information",
-      "radius_lower_bound_m": 4111,
+      "radius_lower_bound_m": null,
       "radius_m": null,
       "source": "rules",
-      "llm_called": false
+      "llm_called": true,
+      "trace": {
+        "prompt_sha256": "63d5668ea221e04fee7825b91d53617ef00a241670976677d97b8083d7ec0fb0",
+        "prompt_tokens": 2360,
+        "completion_tokens": 118,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
+      }
     },
     {
       "audit_id": "V005",
@@ -291,8 +296,9 @@
         "completion_tokens": 105,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.54,
-        "record_seconds": 16.69
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -392,8 +398,9 @@
         "completion_tokens": 134,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 25.0,
-        "record_seconds": 30.15
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -432,8 +439,9 @@
         "completion_tokens": 100,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.9,
-        "record_seconds": 17.8
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -668,8 +676,9 @@
         "completion_tokens": 237,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 33.44,
-        "record_seconds": 37.44
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -735,8 +744,9 @@
         "completion_tokens": 149,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 18.07,
-        "record_seconds": 19.92
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -833,15 +843,16 @@
         "completion_tokens": 58,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 17.35,
-        "record_seconds": 20.38
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
       "audit_id": "V024",
       "locality": "Roosevelt National Forest: Medicine Bow Mountains: Rawah Wilderness: Link Trail from Link/McIntyre Trailhead on Old Glendevey Road (County Road 80C), ca 46 air mi NW of Fort Collins.",
       "county": "Larimer",
-      "relation": "direction_only",
+      "relation": "distance_and_direction",
       "reference": "Fort Collins",
       "validation_errors": [],
       "retrieval": "candidates_found",
@@ -850,11 +861,13 @@
         204673
       ],
       "interpretation": {
-        "relation": "direction_only",
-        "distance": null,
-        "unit": null,
+        "relation": "distance_and_direction",
+        "distance": 46.0,
+        "unit": "mile",
         "direction": "NW",
-        "qualifiers": []
+        "qualifiers": [
+          "approximate"
+        ]
       },
       "top_candidate": {
         "feature_id": 204673,
@@ -864,7 +877,7 @@
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 29091,
       "radius_m": null,
       "source": "rules",
       "llm_called": false
@@ -935,8 +948,9 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.3,
-        "record_seconds": 17.76
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -968,8 +982,9 @@
         "completion_tokens": 95,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.0,
-        "record_seconds": 20.95
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1150,8 +1165,9 @@
         "completion_tokens": 97,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.09,
-        "record_seconds": 14.3
+        "model_seconds": 0.0,
+        "record_seconds": 0.07,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -1254,8 +1270,9 @@
         "completion_tokens": 79,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.5,
-        "record_seconds": 13.45
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -1319,8 +1336,9 @@
         "completion_tokens": 92,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.84,
-        "record_seconds": 16.96
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1359,8 +1377,9 @@
         "completion_tokens": 105,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.97,
-        "record_seconds": 17.13
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -1427,8 +1446,9 @@
         "completion_tokens": 148,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 17.18,
-        "record_seconds": 19.14
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1460,8 +1480,9 @@
         "completion_tokens": 109,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.26,
-        "record_seconds": 16.56
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -1561,8 +1582,9 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.31,
-        "record_seconds": 15.15
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1600,8 +1622,9 @@
         "completion_tokens": 91,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.63,
-        "record_seconds": 18.85
+        "model_seconds": 0.0,
+        "record_seconds": 0.08,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -1669,8 +1692,9 @@
         "completion_tokens": 81,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.51,
-        "record_seconds": 13.38
+        "model_seconds": 0.0,
+        "record_seconds": 0.06,
+        "cache_hits": 1
       }
     },
     {
@@ -1710,8 +1734,9 @@
         "completion_tokens": 89,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.18,
-        "record_seconds": 14.72
+        "model_seconds": 0.0,
+        "record_seconds": 0.06,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -1858,8 +1883,9 @@
         "completion_tokens": 84,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.38,
-        "record_seconds": 12.41
+        "model_seconds": 0.0,
+        "record_seconds": 0.23,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -1893,8 +1919,9 @@
         "completion_tokens": 110,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.56,
-        "record_seconds": 13.71
+        "model_seconds": 0.0,
+        "record_seconds": 0.08,
+        "cache_hits": 1
       }
     },
     {
@@ -1933,7 +1960,7 @@
       "audit_id": "V055",
       "locality": "Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins.",
       "county": "Larimer",
-      "relation": "direction_only",
+      "relation": "distance_and_direction",
       "reference": "Fort Collins",
       "validation_errors": [],
       "retrieval": "candidates_found",
@@ -1942,11 +1969,13 @@
         204673
       ],
       "interpretation": {
-        "relation": "direction_only",
-        "distance": null,
-        "unit": null,
+        "relation": "distance_and_direction",
+        "distance": 18.0,
+        "unit": "mile",
         "direction": "W",
-        "qualifiers": []
+        "qualifiers": [
+          "approximate"
+        ]
       },
       "top_candidate": {
         "feature_id": 204673,
@@ -1956,7 +1985,7 @@
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": null,
+      "radius_lower_bound_m": 22530,
       "radius_m": null,
       "source": "rules",
       "llm_called": false
@@ -2029,8 +2058,9 @@
         "completion_tokens": 93,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.35,
-        "record_seconds": 13.84
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       },
       "source": "llm",
       "llm_called": true
@@ -2064,8 +2094,9 @@
         "completion_tokens": 101,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.49,
-        "record_seconds": 16.66
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -2097,8 +2128,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.03,
-        "record_seconds": 15.94
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {

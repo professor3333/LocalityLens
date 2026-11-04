@@ -1,6 +1,6 @@
 # validation: scores against the owner's annotations
 
-rules `rules-1` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
+rules `rules-2` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
 
 Annotated records: 60. Categories: answerable 32 · reference_absent 24 · unsupported 4. Annotated types: named_feature 36 · distance_and_direction 13 · direction_only 5 · distance_only 2 · between_features 2 · admin_only 1 · route_relative 1.
 
@@ -9,20 +9,20 @@ Annotated records: 60. Categories: answerable 32 · reference_absent 24 · unsup
 | Metric | rules | llm |
 |---|---|---|
 | Relation read correctly | 32/60 (53%) | 30/60 (50%) |
-| Extraction passed validation | 60/60 (100%) | 57/60 (95%) |
-| Critical interpretation exact | 25/60 (42%) | 23/60 (38%) |
+| Extraction passed validation | 60/60 (100%) | 58/60 (97%) |
+| Critical interpretation exact | 26/60 (43%) | 23/60 (38%) |
 | Reference top-1 acceptable (answerable) | 15/32 (47%) | 18/32 (56%) |
 | Reference in top 5 (answerable) | 15/32 (47%) | 18/32 (56%) |
 | **Correct proposal candidates** (answerable) | 13/32 (41%) | 15/32 (47%) |
 | Computed proposals that are correct | 0/0 | 0/0 |
 | Unsupported records flagged unsupported | 3/4 (75%) | 3/4 (75%) |
-| References absent from GNIS reported absent | 12/24 (50%) | 12/24 (50%) |
+| References absent from GNIS reported absent | 13/24 (54%) | 13/24 (54%) |
 | Place names read as no locality | 0 | 1 |
-| Mean fields to correct per record | 1.78 | 1.75 |
+| Mean fields to correct per record | 1.85 | 1.7 |
 
 **Paired, correct proposal candidates (LLM − rules):** +6% (95% bootstrap CI -9% to +22%); LLM-only 4, rules-only 2, exact sign test p = 0.6875.
 
-**Paired, critical exact match (LLM − rules):** -3% (95% bootstrap CI -15% to +8%); LLM-only 6, rules-only 8, exact sign test p = 0.7905.
+**Paired, critical exact match (LLM − rules):** -5% (95% bootstrap CI -18% to +8%); LLM-only 6, rules-only 9, exact sign test p = 0.6072.
 
 <details><summary><b>Sensitivity: excluding 11 rows with an unsure (?) annotation</b></summary>
 
@@ -30,13 +30,13 @@ Annotated records: 60. Categories: answerable 32 · reference_absent 24 · unsup
 |---|---|---|
 | Relation read correctly | 30/49 (61%) | 28/49 (57%) |
 | Extraction passed validation | 49/49 (100%) | 47/49 (96%) |
-| Critical interpretation exact | 23/49 (47%) | 21/49 (43%) |
+| Critical interpretation exact | 24/49 (49%) | 21/49 (43%) |
 | Reference top-1 acceptable (answerable) | 15/32 (47%) | 18/32 (56%) |
 | Reference in top 5 (answerable) | 15/32 (47%) | 18/32 (56%) |
 | **Correct proposal candidates** (answerable) | 13/32 (41%) | 15/32 (47%) |
 | Computed proposals that are correct | 0/0 | 0/0 |
 | Unsupported records flagged unsupported | 2/2 (100%) | 2/2 (100%) |
-| References absent from GNIS reported absent | 8/15 (53%) | 8/15 (53%) |
+| References absent from GNIS reported absent | 9/15 (60%) | 8/15 (53%) |
 
 Paired correct proposal candidates: +6% (CI -9% to +22%), p = 0.6875.
 
@@ -63,7 +63,7 @@ Paired correct proposal candidates: +6% (CI -9% to +22%), p = 0.6875.
 | V001 | unsupported | C+ R−  | C− R−  |
 | V002 | answerable | C− R−  | C+ R+ ✓ |
 | V003 | reference_absent | C+ R−  | C− R−  |
-| V004 | reference_absent | C− R−  | C− R−  |
+| V004 | reference_absent | C+ R−  | C− R−  |
 | V005 | reference_absent | C− R−  | C− R−  |
 | V006 | answerable | C− R−  | C− R−  |
 | V007 | answerable | C− R−  | C− R−  |

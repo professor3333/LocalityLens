@@ -6,9 +6,9 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **relation**: `named_feature` 24 · `distance_and_direction` 20 · `route_relative` 6 · `other` 3 · `orthogonal_offsets` 2 · `itinerary` 2 · `between_features` 2 · `no_locality` 1
 
-**retrieval**: `candidates_found` 35 · `feature_absent_from_index` 18 · `no_reference_feature` 4 · `None` 3
+**retrieval**: `candidates_found` 35 · `feature_absent_from_index` 19 · `no_reference_feature` 4 · `None` 2
 
-**proposal**: `needs_information` 42 · `unsupported` 15 · `invalid_extraction` 3
+**proposal**: `needs_information` 43 · `unsupported` 15 · `invalid_extraction` 2
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -64,7 +64,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V050 | 5.5 mi. s.e. of Gothic. | distance_and_direction | Gothic | candidates_found | Gothic (Populated Place, Gunnison, exact_official) | needs_information |
 | V051 | Fraser Experimental Forest, near Fool Creek gaging station. | named_feature | Fool Creek gaging station | feature_absent_from_index |  | needs_information |
 | V052 | Intersect of dirt roads along Alimosita Creek. | named_feature | Alimosita Creek | candidates_found | Alamosito Creek (Stream, Costilla, fuzzy_official) | needs_information |
-| V053 | One mile below summit Pennock Pass. | distance_and_direction |  |  |  | invalid_extraction |
+| V053 | One mile below summit Pennock Pass. | distance_and_direction | Pennock Pass | feature_absent_from_index |  | needs_information |
 | V054 | 13 mi SW of Westcliffe on Hermit road. | distance_and_direction | Westcliffe | candidates_found | Westcliffe (Populated Place, Custer, exact_official) | needs_information |
 | V055 | Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins. | distance_and_direction | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | needs_information |
 | V056 | Allenspark. | named_feature | Allenspark | candidates_found | Allenspark (Populated Place, Boulder, exact_official) | needs_information |

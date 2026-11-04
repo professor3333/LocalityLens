@@ -71,7 +71,8 @@ class ValidationResult:
 
 # Components each relation needs; each must be present or explicitly declared missing.
 # 1: every quote must be found. 2: unverifiable admin mentions and qualifiers are dropped.
-VALIDATION_VERSION = "2"
+# 3: spelled-out whole numbers and "half" parse as distances (extract/quantities.py).
+VALIDATION_VERSION = "3"
 
 # Evidence that is dropped, rather than failing the interpretation, when its quote is absent.
 _DROPPABLE: tuple[str, ...] = ("admin_mentions", "qualifiers")

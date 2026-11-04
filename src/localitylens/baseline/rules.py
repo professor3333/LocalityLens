@@ -34,7 +34,8 @@ from localitylens.gazetteer.keys import county_key, name_key
 from localitylens.geo.directions import parse_direction
 from localitylens.geo.units import AMBIGUOUS_UNIT_FORMS, parse_unit
 
-RULES_VERSION: Final = "rules-1"
+# rules-2: "air mi" / "air miles", spelled-out numbers before a unit, "ca" without a dot.
+RULES_VERSION: Final = "rules-2"
 
 # ---------------------------------------------------------------------------------- patterns
 
@@ -47,11 +48,19 @@ _UNIT = (
     r"(?i:miles?\b|mi\b\.?|kilomet(?:er|re)s?\b|km\b\.?|met(?:er|re)s?\b|feet\b|ft\b\.?"
     r"|yards?\b|yds?\b\.?|m\b\.?)"
 )
+# A spelled-out number counts only directly before a unit ("Nine miles"), never in a name
+# ("Two Buttes", "Ten Mile Range").
+_NUM_WORD = (
+    r"(?i:\b(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen"
+    r"|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|half)\b)"
+)
+_AIR = r"(?:(?i:air)\s+)?"  # "air mi": a straight-line distance, which is the default reading
+_QTY = rf"(?:{_NUM}|{_NUM_WORD}(?=\s*{_AIR}(?:{_UNIT})))"
 _DIR_WORD = r"(?:north|south)[\s\-]?(?:east|west)\b|north\b|south\b|east\b|west\b"
 _DIR_ABBR = r"[NSEW]\.(?:\s?[NSEW]\.){0,2}|[NSEW]{1,3}\b"
 _DIR = rf"(?:(?i:{_DIR_WORD})|(?i:{_DIR_ABBR}))"  # after a number: lower case is fine
 _DIR_STRICT = rf"(?:(?i:{_DIR_WORD})|{_DIR_ABBR})"  # standalone: upper-case letters only
-_QUAL = r"(?i:(?:about|approx\.?|approximately|ca\.|circa|c\.)\s*)"
+_QUAL = r"(?i:(?:about|approx\.?|approximately|ca\.|ca(?=\s)|circa|c\.)\s*)"
 _OF = r"(?i:of|from|fr\.)"
 _FWORD = r"[A-Z][A-Za-z'\u2019\-]*\.?"
 _FEATURE = rf"{_FWORD}(?:\s+(?:(?:of the|of|de|del|la|los|las|el)\s+)?{_FWORD}){{0,5}}"
@@ -71,15 +80,15 @@ _RE_ORTHOGONAL = re.compile(
 )
 _RE_BETWEEN = re.compile(rf"(?i:between)\s+(?P<f1>{_FEATURE})\s+(?i:and|&)\s+(?P<f2>{_FEATURE})")
 _RE_OFFSET_A = re.compile(
-    rf"(?P<qual>{_QUAL})?(?P<num>{_NUM})\s*(?P<unit>{_UNIT})?\s*(?P<dir>{_DIR})\s+{_OF}\s+"
+    rf"(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*(?:{_AIR}(?P<unit>{_UNIT}))?\s*(?P<dir>{_DIR})\s+{_OF}\s+"
     rf"(?:the\s+)?(?P<feat>{_FEATURE})"
 )
 _RE_OFFSET_B = re.compile(
-    rf"(?P<feat>{_FEATURE})\s*,?\s+(?P<qual>{_QUAL})?(?P<num>{_NUM})\s*(?P<unit>{_UNIT})?\s*"
+    rf"(?P<feat>{_FEATURE})\s*,?\s+(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*(?:{_AIR}(?P<unit>{_UNIT}))?\s*"
     rf"(?P<dir>{_DIR})(?=\s*(?:[,.;:)]|$))"
 )
 _RE_DISTANCE_ONLY = re.compile(
-    rf"(?P<qual>{_QUAL})?(?P<num>{_NUM})\s*(?P<unit>{_UNIT})\s+{_OF}\s+(?:the\s+)?"
+    rf"(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*{_AIR}(?P<unit>{_UNIT})\s+{_OF}\s+(?:the\s+)?"
     rf"(?P<feat>{_FEATURE})"
 )
 _RE_DIRECTION_ONLY = re.compile(
@@ -87,7 +96,8 @@ _RE_DIRECTION_ONLY = re.compile(
 )
 _RE_STATE = re.compile(r"\b(?:Colorado|COLORADO|Colo\b\.?|COLO\b\.?)(?=\s*(?:[,.;:)]|$))")
 _RE_QUALIFIERS: Final[tuple[tuple[re.Pattern[str], QualifierKind], ...]] = (
-    (re.compile(r"(?i:\b(?:about|approx\.|approximately|approx|circa|ca\.)(?=\s|$))"),
+    (re.compile(r"(?i:\b(?:about|approx\.|approximately|approx|circa|ca\.)(?=\s|$)"
+                r"|\bca(?=\s+(?:\d|[½¼¾])))"),
      QualifierKind.APPROXIMATE),
     (re.compile(r"(?i:\bvicinity of\b|\bvic\.)"), QualifierKind.VICINITY),
     (re.compile(r"(?i:\bnear\b|\bnr\.)"), QualifierKind.NEAR),

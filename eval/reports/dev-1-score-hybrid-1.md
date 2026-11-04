@@ -1,6 +1,6 @@
 # dev-1: scores against the owner's annotations
 
-rules `rules-1` · llm `llm-x2g2-qwen3.5-4b-q4km` · hybrid `hybrid-1` · specimens `gbif-cu-2026-11-01`
+rules `rules-2` · llm `llm-x2g2-qwen3.5-4b-q4km` · hybrid `hybrid-1` · specimens `gbif-cu-2026-11-01`
 
 Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsupported 4. Annotated types: named_feature 34 · distance_and_direction 7 · direction_only 5 · route_relative 2 · between_features 1 · itinerary 1.
 
@@ -18,7 +18,7 @@ Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsup
 | Unsupported records flagged unsupported | 3/4 (75%) | 2/4 (50%) | 3/4 (75%) |
 | References absent from GNIS reported absent | 9/17 (53%) | 13/17 (76%) | 9/17 (53%) |
 | Place names read as no locality | 0 | 1 | 0 |
-| Mean fields to correct per record | 0.96 | 1.16 | 0.96 |
+| Mean fields to correct per record | 1.0 | 1.16 | 0.98 |
 
 **Paired, correct proposal candidates (LLM − rules):** +7% (95% bootstrap CI -7% to +21%); LLM-only 3, rules-only 1, exact sign test p = 0.625.
 

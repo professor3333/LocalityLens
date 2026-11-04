@@ -34,7 +34,7 @@ This card describes the model as used in release `0.1.0-dev`.
 | Generation | temperature 0, top-k 1, seed 20261101, at most 512 tokens, thinking off |
 | Prompt | `extraction-v2`, SHA-256 `8074f1f8…`: label text fenced as data, 11 few-shot examples with invented place names |
 | Output contract | schema `extraction-1`, grammar 2 (JSON schema enforced by llama-server), quotes only, never offsets |
-| Downstream | validation 2, core key 1, rules `rules-1`, uncertainty policy `gbif-bp-2020/1` |
+| Downstream | validation 3, core key 1, county context 1, rules `rules-2`, uncertainty policy `gbif-bp-2020/1`. Test releases 1 and 2 used validation 2 and `rules-1` |
 | Data | gazetteer `gnis-co-2026-09-29`, specimens `gbif-cu-2026-11-01`; see the [dataset card](dataset_card.md) |
 
 All of the above is pinned in [`release/manifest.json`](../release/manifest.json). Tests

@@ -6,11 +6,11 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **source**: `rules` 52 · `llm` 8
 
-**llm_call**: `made` 26 · `skipped` 34
+**llm_call**: `made` 27 · `skipped` 33
 
-**relation**: `named_feature` 23 · `distance_and_direction` 21 · `direction_only` 10 · `other` 4 · `route_relative` 2
+**relation**: `named_feature` 23 · `distance_and_direction` 23 · `direction_only` 8 · `other` 4 · `route_relative` 2
 
-**retrieval**: `candidates_found` 42 · `feature_absent_from_index` 13 · `no_reference_feature` 5
+**retrieval**: `candidates_found` 41 · `feature_absent_from_index` 14 · `no_reference_feature` 5
 
 **proposal**: `needs_information` 54 · `unsupported` 6
 
@@ -19,7 +19,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V001 | 13T 0520450/ 449820; T12N R64W SEC20 E. central part | other |  | no_reference_feature |  | unsupported |
 | V002 | Genessee Mountain. | named_feature | Genessee Mountain | candidates_found | Genesee Mountain (Summit, Jefferson, fuzzy_official) | needs_information |
 | V003 | 19th and Alpine Street. | named_feature | Alpine Street | feature_absent_from_index |  | needs_information |
-| V004 | Half mile E of Hiway Nine, 3 mi. S of LaFayette. | distance_and_direction | LaFayette | candidates_found | Lafayette (Populated Place, Boulder, exact_official) | needs_information |
+| V004 | Half mile E of Hiway Nine, 3 mi. S of LaFayette. | distance_and_direction | Hiway Nine | feature_absent_from_index |  | needs_information |
 | V005 | 3 miles east of Roggen on the Painter Hereford Ranch. | distance_and_direction | Roggen | candidates_found | Roggen (Populated Place, Weld, exact_official) | needs_information |
 | V006 | Vernal Mesa, 15 mi. east of Montrose. | distance_and_direction | Montrose | candidates_found | Montrose (Populated Place, Montrose, exact_official) | needs_information |
 | V007 | Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa. | direction_only | New Mexico | feature_absent_from_index |  | needs_information |
@@ -39,7 +39,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V021 | Hoosier Pass. | named_feature | Hoosier Pass | candidates_found | Hoosier Pass (Gap, Summit, exact_official) | needs_information |
 | V022 | Edge of pond on the north side of the Arkansas River. | named_feature | Arkansas River | candidates_found | Arkansas River (Stream, Desha, exact_official) | needs_information |
 | V023 | Boulder Mt. Parks, NBS Mesa. Along the Enchanted Mesa cutoff trails just S of the gully. | named_feature | Boulder Mt. Parks | feature_absent_from_index |  | needs_information |
-| V024 | Roosevelt National Forest: Medicine Bow Mountains: Rawah Wilderness: Link Trail from Link/McIntyre Trailhead on Old Glendevey Road (County Road 80C), ca 46 air mi NW of Fort Collins. | direction_only | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | needs_information |
+| V024 | Roosevelt National Forest: Medicine Bow Mountains: Rawah Wilderness: Link Trail from Link/McIntyre Trailhead on Old Glendevey Road (County Road 80C), ca 46 air mi NW of Fort Collins. | distance_and_direction | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | needs_information |
 | V025 | Ca. 0.25 mi N of Weston Pass summit. | distance_and_direction | Weston Pass | candidates_found | Weston Pass (Gap, Lake, exact_official) | needs_information |
 | V026 | Castleton Ranch, along Carbon Creek, just east of County Road 730, near jct. with CR 737. | direction_only | County Road | feature_absent_from_index |  | needs_information |
 | V027 | Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table. | direction_only | Billiard Table | feature_absent_from_index |  | needs_information |
@@ -70,7 +70,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V052 | Intersect of dirt roads along Alimosita Creek. | named_feature | Alimosita Creek | candidates_found | Alamosito Creek (Stream, Costilla, fuzzy_official) | needs_information |
 | V053 | One mile below summit Pennock Pass. | other |  | no_reference_feature |  | unsupported |
 | V054 | 13 mi SW of Westcliffe on Hermit road. | distance_and_direction | Westcliffe | candidates_found | Westcliffe (Populated Place, Custer, exact_official) | needs_information |
-| V055 | Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins. | direction_only | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | needs_information |
+| V055 | Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins. | distance_and_direction | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | needs_information |
 | V056 | Allenspark. | named_feature | Allenspark | candidates_found | Allenspark (Populated Place, Boulder, exact_official) | needs_information |
 | V057 | Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird. | distance_and_direction | Wray | candidates_found | Wray (Populated Place, Yuma, exact_official) | needs_information |
 | V058 | Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel. | distance_and_direction | Needle Eye Tunnel | feature_absent_from_index |  | needs_information |

@@ -5,8 +5,9 @@
   "gazetteer_snapshot": "gnis-co-2026-09-29",
   "specimen_snapshot": "gbif-cu-2026-11-01",
   "uncertainty_policy": "gbif-bp-2020/1",
-  "validation_version": "2",
+  "validation_version": "3",
   "core_key_version": "1",
+  "county_context_version": "1",
   "seed": "benchmark/1",
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
   "gguf": "Qwen3.5-4B-Q4_K_M.gguf sha256=00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
@@ -37,14 +38,14 @@
     },
     "retrieval": {
       "candidates_found": 35,
-      "feature_absent_from_index": 18,
+      "feature_absent_from_index": 19,
       "no_reference_feature": 4,
-      "None": 3
+      "None": 2
     },
     "proposal": {
-      "needs_information": 42,
+      "needs_information": 43,
       "unsupported": 15,
-      "invalid_extraction": 3
+      "invalid_extraction": 2
     }
   },
   "records": [
@@ -75,8 +76,9 @@
         "completion_tokens": 99,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 23.21,
-        "record_seconds": 30.8
+        "model_seconds": 0.0,
+        "record_seconds": 0.11,
+        "cache_hits": 1
       }
     },
     {
@@ -115,8 +117,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.02,
-        "record_seconds": 14.94
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -146,8 +149,9 @@
         "completion_tokens": 55,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.01,
-        "record_seconds": 17.44
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -157,7 +161,6 @@
       "relation": "orthogonal_offsets",
       "reference": null,
       "validation_errors": [
-        "unparseable_distance",
         "contradictory_missing"
       ],
       "retrieval": null,
@@ -174,8 +177,9 @@
         "completion_tokens": 118,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 20.33,
-        "record_seconds": 23.53
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -213,8 +217,9 @@
         "completion_tokens": 107,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.48,
-        "record_seconds": 19.83
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -252,8 +257,9 @@
         "completion_tokens": 95,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.6,
-        "record_seconds": 19.8
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -285,8 +291,9 @@
         "completion_tokens": 105,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.54,
-        "record_seconds": 16.69
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -312,8 +319,9 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 20.09,
-        "record_seconds": 23.1
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
       }
     },
     {
@@ -353,8 +361,9 @@
         "completion_tokens": 108,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.47,
-        "record_seconds": 21.55
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -384,8 +393,9 @@
         "completion_tokens": 134,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 25.0,
-        "record_seconds": 30.15
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -424,8 +434,9 @@
         "completion_tokens": 100,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.9,
-        "record_seconds": 17.8
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -466,8 +477,9 @@
         "completion_tokens": 122,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.97,
-        "record_seconds": 20.33
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -506,8 +518,9 @@
         "completion_tokens": 82,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.67,
-        "record_seconds": 18.85
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -545,8 +558,9 @@
         "completion_tokens": 114,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 20.32,
-        "record_seconds": 23.66
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -590,8 +604,9 @@
         "completion_tokens": 96,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 19.49,
-        "record_seconds": 22.65
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
       }
     },
     {
@@ -629,8 +644,9 @@
         "completion_tokens": 94,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 20.1,
-        "record_seconds": 22.47
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -668,8 +684,9 @@
         "completion_tokens": 91,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.45,
-        "record_seconds": 18.31
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -701,8 +718,9 @@
         "completion_tokens": 237,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 33.44,
-        "record_seconds": 37.44
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -742,8 +760,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.4,
-        "record_seconds": 15.71
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -773,8 +792,9 @@
         "completion_tokens": 149,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 18.07,
-        "record_seconds": 19.92
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -813,8 +833,9 @@
         "completion_tokens": 62,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.6,
-        "record_seconds": 12.34
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -852,8 +873,9 @@
         "completion_tokens": 83,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.6,
-        "record_seconds": 17.93
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -883,8 +905,9 @@
         "completion_tokens": 58,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 17.35,
-        "record_seconds": 20.38
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -924,8 +947,9 @@
         "completion_tokens": 171,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 20.71,
-        "record_seconds": 25.42
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -965,8 +989,9 @@
         "completion_tokens": 133,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 17.01,
-        "record_seconds": 22.69
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -996,8 +1021,9 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.3,
-        "record_seconds": 17.76
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1027,8 +1053,9 @@
         "completion_tokens": 95,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.0,
-        "record_seconds": 20.95
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1068,8 +1095,9 @@
         "completion_tokens": 106,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.55,
-        "record_seconds": 17.8
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1099,8 +1127,9 @@
         "completion_tokens": 64,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.82,
-        "record_seconds": 15.94
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1142,8 +1171,9 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.7,
-        "record_seconds": 13.01
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1175,8 +1205,9 @@
         "completion_tokens": 105,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.14,
-        "record_seconds": 16.75
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1218,8 +1249,9 @@
         "completion_tokens": 97,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.09,
-        "record_seconds": 14.3
+        "model_seconds": 0.0,
+        "record_seconds": 0.07,
+        "cache_hits": 1
       }
     },
     {
@@ -1251,8 +1283,9 @@
         "completion_tokens": 108,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.92,
-        "record_seconds": 18.16
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1291,8 +1324,9 @@
         "completion_tokens": 97,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.0,
-        "record_seconds": 13.19
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1322,8 +1356,9 @@
         "completion_tokens": 79,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.5,
-        "record_seconds": 13.45
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -1361,8 +1396,9 @@
         "completion_tokens": 98,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 22.34,
-        "record_seconds": 23.81
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1392,8 +1428,9 @@
         "completion_tokens": 92,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.84,
-        "record_seconds": 16.96
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -1432,8 +1469,9 @@
         "completion_tokens": 105,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.97,
-        "record_seconds": 17.13
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1463,8 +1501,9 @@
         "completion_tokens": 115,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 19.31,
-        "record_seconds": 22.1
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -1496,8 +1535,9 @@
         "completion_tokens": 148,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 17.18,
-        "record_seconds": 19.14
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1527,8 +1567,9 @@
         "completion_tokens": 109,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.26,
-        "record_seconds": 16.56
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -1570,8 +1611,9 @@
         "completion_tokens": 80,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.93,
-        "record_seconds": 14.64
+        "model_seconds": 0.0,
+        "record_seconds": 0.14,
+        "cache_hits": 1
       }
     },
     {
@@ -1609,8 +1651,9 @@
         "completion_tokens": 94,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.61,
-        "record_seconds": 19.61
+        "model_seconds": 0.0,
+        "record_seconds": 0.13,
+        "cache_hits": 1
       }
     },
     {
@@ -1640,8 +1683,9 @@
         "completion_tokens": 87,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.31,
-        "record_seconds": 15.15
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -1679,8 +1723,9 @@
         "completion_tokens": 91,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 16.63,
-        "record_seconds": 18.85
+        "model_seconds": 0.0,
+        "record_seconds": 0.08,
+        "cache_hits": 1
       }
     },
     {
@@ -1720,8 +1765,9 @@
         "completion_tokens": 111,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 18.24,
-        "record_seconds": 21.7
+        "model_seconds": 0.0,
+        "record_seconds": 0.07,
+        "cache_hits": 1
       }
     },
     {
@@ -1751,8 +1797,9 @@
         "completion_tokens": 81,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.51,
-        "record_seconds": 13.38
+        "model_seconds": 0.0,
+        "record_seconds": 0.06,
+        "cache_hits": 1
       }
     },
     {
@@ -1792,8 +1839,9 @@
         "completion_tokens": 89,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 13.18,
-        "record_seconds": 14.72
+        "model_seconds": 0.0,
+        "record_seconds": 0.06,
+        "cache_hits": 1
       }
     },
     {
@@ -1837,8 +1885,9 @@
         "completion_tokens": 89,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.6,
-        "record_seconds": 14.08
+        "model_seconds": 0.0,
+        "record_seconds": 0.09,
+        "cache_hits": 1
       }
     },
     {
@@ -1877,8 +1926,9 @@
         "completion_tokens": 101,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.29,
-        "record_seconds": 17.33
+        "model_seconds": 0.0,
+        "record_seconds": 0.15,
+        "cache_hits": 1
       }
     },
     {
@@ -1910,8 +1960,9 @@
         "completion_tokens": 94,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.49,
-        "record_seconds": 13.67
+        "model_seconds": 0.0,
+        "record_seconds": 0.1,
+        "cache_hits": 1
       }
     },
     {
@@ -1950,8 +2001,9 @@
         "completion_tokens": 84,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 11.38,
-        "record_seconds": 12.41
+        "model_seconds": 0.0,
+        "record_seconds": 0.23,
+        "cache_hits": 1
       }
     },
     {
@@ -1959,16 +2011,20 @@
       "locality": "One mile below summit Pennock Pass.",
       "county": "Larimer",
       "relation": "distance_and_direction",
-      "reference": null,
-      "validation_errors": [
-        "unparseable_distance"
-      ],
-      "retrieval": null,
+      "reference": "Pennock Pass",
+      "validation_errors": [],
+      "retrieval": "feature_absent_from_index",
       "candidates": 0,
       "candidate_ids": [],
-      "interpretation": null,
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 1.0,
+        "unit": "mile",
+        "direction": "S",
+        "qualifiers": []
+      },
       "top_candidate": null,
-      "proposal": "invalid_extraction",
+      "proposal": "needs_information",
       "radius_lower_bound_m": null,
       "radius_m": null,
       "trace": {
@@ -1977,8 +2033,9 @@
         "completion_tokens": 110,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.56,
-        "record_seconds": 13.71
+        "model_seconds": 0.0,
+        "record_seconds": 0.08,
+        "cache_hits": 1
       }
     },
     {
@@ -2016,8 +2073,9 @@
         "completion_tokens": 93,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 10.88,
-        "record_seconds": 12.28
+        "model_seconds": 0.0,
+        "record_seconds": 0.07,
+        "cache_hits": 1
       }
     },
     {
@@ -2057,8 +2115,9 @@
         "completion_tokens": 132,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 17.42,
-        "record_seconds": 20.17
+        "model_seconds": 0.0,
+        "record_seconds": 0.05,
+        "cache_hits": 1
       }
     },
     {
@@ -2097,8 +2156,9 @@
         "completion_tokens": 60,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.32,
-        "record_seconds": 17.8
+        "model_seconds": 0.0,
+        "record_seconds": 0.05,
+        "cache_hits": 1
       }
     },
     {
@@ -2136,8 +2196,9 @@
         "completion_tokens": 93,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.35,
-        "record_seconds": 13.84
+        "model_seconds": 0.0,
+        "record_seconds": 0.04,
+        "cache_hits": 1
       }
     },
     {
@@ -2167,8 +2228,9 @@
         "completion_tokens": 101,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 15.49,
-        "record_seconds": 16.66
+        "model_seconds": 0.0,
+        "record_seconds": 0.02,
+        "cache_hits": 1
       }
     },
     {
@@ -2198,8 +2260,9 @@
         "completion_tokens": 78,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 14.03,
-        "record_seconds": 15.94
+        "model_seconds": 0.0,
+        "record_seconds": 0.03,
+        "cache_hits": 1
       }
     },
     {
@@ -2239,9 +2302,15 @@
         "completion_tokens": 86,
         "attempts": 1,
         "errors": [],
-        "model_seconds": 12.97,
-        "record_seconds": 14.86
+        "model_seconds": 0.0,
+        "record_seconds": 0.05,
+        "cache_hits": 1
       }
     }
-  ]
+  ],
+  "cache": {
+    "version": "llm-cache-1",
+    "hits": 60,
+    "misses": 0
+  }
 }

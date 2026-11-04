@@ -1,6 +1,6 @@
 {
   "meta": {
-    "rules": "rules-1",
+    "rules": "rules-2",
     "llm": "llm-x2g2-qwen3.5-4b-q4km",
     "hybrid": "hybrid-1",
     "specimens": "gbif-cu-2026-11-01"
@@ -55,9 +55,9 @@
             "rate": 0.8
           },
           "qualifiers": {
-            "hits": 47,
+            "hits": 45,
             "n": 50,
-            "rate": 0.94
+            "rate": 0.9
           }
         },
         "reference_top1": {
@@ -91,7 +91,7 @@
           "rate": 0.529
         },
         "false_no_locality": 0,
-        "mean_corrections": 0.96
+        "mean_corrections": 1.0
       },
       "llm": {
         "relation_accuracy": {
@@ -197,9 +197,9 @@
             "rate": 0.78
           },
           "qualifiers": {
-            "hits": 46,
+            "hits": 45,
             "n": 50,
-            "rate": 0.92
+            "rate": 0.9
           }
         },
         "reference_top1": {
@@ -233,7 +233,7 @@
           "rate": 0.529
         },
         "false_no_locality": 0,
-        "mean_corrections": 0.96
+        "mean_corrections": 0.98
       }
     },
     "by_type": {
@@ -650,7 +650,7 @@
           "distance_ok": true,
           "unit_ok": true,
           "direction_ok": true,
-          "qualifiers_ok": true,
+          "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
@@ -658,7 +658,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 1
+          "corrections": 2
         },
         {
           "audit_id": "D19",
@@ -758,7 +758,7 @@
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
-          "qualifiers_ok": true,
+          "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
@@ -766,7 +766,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 4
+          "corrections": 5
         },
         {
           "audit_id": "D25",
@@ -2562,7 +2562,7 @@
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
-          "qualifiers_ok": true,
+          "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
@@ -2570,7 +2570,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 4
+          "corrections": 5
         },
         {
           "audit_id": "D25",
@@ -3148,9 +3148,9 @@
             "rate": 0.805
           },
           "qualifiers": {
-            "hits": 39,
+            "hits": 38,
             "n": 41,
-            "rate": 0.951
+            "rate": 0.927
           }
         },
         "reference_top1": {
@@ -3184,7 +3184,7 @@
           "rate": 0.571
         },
         "false_no_locality": 0,
-        "mean_corrections": 0.85
+        "mean_corrections": 0.88
       },
       "llm": {
         "relation_accuracy": {
@@ -3290,9 +3290,9 @@
             "rate": 0.805
           },
           "qualifiers": {
-            "hits": 39,
+            "hits": 38,
             "n": 41,
-            "rate": 0.951
+            "rate": 0.927
           }
         },
         "reference_top1": {
@@ -3326,7 +3326,7 @@
           "rate": 0.571
         },
         "false_no_locality": 0,
-        "mean_corrections": 0.76
+        "mean_corrections": 0.78
       }
     },
     "by_type": {
@@ -3746,7 +3746,7 @@
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
-          "qualifiers_ok": true,
+          "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
@@ -3754,7 +3754,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 4
+          "corrections": 5
         },
         {
           "audit_id": "D25",
@@ -5226,7 +5226,7 @@
           "distance_ok": false,
           "unit_ok": false,
           "direction_ok": false,
-          "qualifiers_ok": true,
+          "qualifiers_ok": false,
           "critical_ok": false,
           "top1_ok": false,
           "recall5_ok": false,
@@ -5234,7 +5234,7 @@
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 4
+          "corrections": 5
         },
         {
           "audit_id": "D25",

@@ -6,9 +6,9 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **relation**: `named_feature` 23 · `distance_and_direction` 14 · `route_relative` 5 · `other` 3 · `itinerary` 2 · `orthogonal_offsets` 1 · `no_locality` 1 · `direction_only` 1
 
-**retrieval**: `candidates_found` 25 · `feature_absent_from_index` 19 · `no_reference_feature` 4 · `None` 2
+**retrieval**: `candidates_found` 26 · `feature_absent_from_index` 19 · `no_reference_feature` 4 · `None` 1
 
-**proposal**: `needs_information` 36 · `unsupported` 12 · `invalid_extraction` 2
+**proposal**: `needs_information` 37 · `unsupported` 12 · `invalid_extraction` 1
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -36,7 +36,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A22 | Lost Man Campground, upper Roaring Fork Valley east of Aspen. | named_feature | Lost Man Campground | feature_absent_from_index |  | needs_information |
 | A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | distance_and_direction |  |  |  | invalid_extraction |
 | A24 | Tolland. James Peak. | named_feature | James Peak | candidates_found | James Peak (Summit, Gilpin, exact_official) | needs_information |
-| A25 | Nine miles north of Hotchkiss on Oak Mesa. | distance_and_direction |  |  |  | invalid_extraction |
+| A25 | Nine miles north of Hotchkiss on Oak Mesa. | distance_and_direction | Hotchkiss | candidates_found | Hotchkiss (Populated Place, Delta, exact_official) | needs_information |
 | A26 | S slope of Mt. Zenobia. | named_feature | Mt. Zenobia | candidates_found | Zenobia Peak (Summit, Moffat, core_official) | needs_information |
 | A27 | Gunnison Canon. | named_feature | Gunnison Canon | feature_absent_from_index |  | needs_information |
 | A28 | 2 mi. W of Hesperus. | distance_and_direction | Hesperus | candidates_found | Hesperus (Populated Place, La Plata, exact_official) | needs_information |
