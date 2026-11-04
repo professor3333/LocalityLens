@@ -277,6 +277,8 @@ def _add_trace(row: dict[str, Any], extractor: Extractor, started: float) -> Non
         "model_seconds": round(trace.seconds, 2),
         "record_seconds": round(time.perf_counter() - started, 2),
     }
+    if trace.cache_hits:  # absent otherwise: reports without a cache stay unchanged
+        row["trace"]["cache_hits"] = trace.cache_hits
 
 
 _NOTE_TAIL: Final = (
@@ -309,8 +311,24 @@ def run_llm(
     limit: int = 5,
     server: dict[str, Any] | None = None,
     extents: ExtentStore | None = None,
+    cache_dir: Path | None = None,
 ) -> dict[str, Any]:
+    """Run the LLM extractor. With ``cache_dir``, completions come from the local cache where
+    the same request was made before (``extract/cache.py``); ``server`` must then describe the
+    running server, because it is part of the cache key."""
+    from localitylens.extract.cache import CachingClient
     from localitylens.extract.llm import LLMExtractor
+
+    caching: CachingClient | None = None
+    if cache_dir is not None:
+        info = server or {}
+        caching = CachingClient(client, cache_dir, {
+            "gguf_sha256": release.model.gguf_sha256,
+            "server_build": info.get("build_info"),
+            "model_file": info.get("model_file"),
+            "n_ctx": info.get("n_ctx"),
+        })  # fmt: skip
+        client = caching
 
     meta = {
         "model": f"{release.model.id}@{release.model.upstream_revision[:12]}",
@@ -319,7 +337,7 @@ def run_llm(
         "generation": release.generation.model_dump(),
         "server": server or {},
     }
-    return run_system(
+    report = run_system(
         sample,
         index,
         "llm",
@@ -329,6 +347,12 @@ def run_llm(
         meta,
         extents,
     )
+    if caching is not None:
+        from localitylens.extract.cache import CACHE_VERSION
+
+        report["cache"] = {"version": CACHE_VERSION, "hits": caching.hits,
+                           "misses": caching.misses}  # fmt: skip
+    return report
 
 
 _TITLES: Final = {

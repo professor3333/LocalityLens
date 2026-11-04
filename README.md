@@ -233,6 +233,14 @@ retrieval   candidates_found
 
 The rules alone keep "Cirque of the" in the name and find nothing in GNIS.
 
+**Batch runs are cached.** `audit llm` stores each completion under a key built from the exact
+request (rendered prompt, schema, settings), the GGUF checksum and the running server's build.
+A rerun with nothing changed makes no model calls: the audit, dev-1 and validation samples
+rerun in 5–15 s each instead of several minutes, with identical results. Only greedy settings
+are cached. A cached row reports 0 model seconds and is never counted as latency, and the
+locked test split is never cached. Validation, retrieval and the uncertainty policy always run
+again, so changing any of them needs no new model calls.
+
 ### Gazetteer search
 
 **Abbreviated name, county from the label.** The right peak is found. GNIS files Longs Peak
@@ -454,6 +462,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `extract/prompt.py` · `extract/prompts/` | Versioned prompt files, label text fenced as data, SHA-256 pinned in the release manifest |
 | `extract/llm_client.py` | The single model interface: llama-server on loopback, exact token count before each call, JSON-schema output |
 | `extract/llm.py` | LLM extractor: one bounded retry, categorized failures (`malformed_model_output`, `model_supplied_coordinates`, `context_budget_exceeded` …) |
+| `extract/cache.py` | Completion cache `llm-cache-1`: greedy requests keyed by prompt, schema, settings, GGUF checksum and server build |
 | `release.py` | Release manifest: model and GGUF checksums, llama.cpp build, generation settings, prompt, schema, policy and snapshot versions |
 | `extract/quantities.py` | Label numbers: `2`, `2.5`, `.5`, `1 1/2`, `1-1/2`, `½`, `1½`, keeping their written precision |
 | `ingest/normalize.py` | NFC and whitespace normalization with an exact offset map back to the original |

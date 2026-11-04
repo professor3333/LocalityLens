@@ -160,12 +160,24 @@ def _audit_llm(args: argparse.Namespace) -> int:
     from localitylens.evaluation.audit import sample_label
 
     sample = load_sample(Path(args.sample))
+    cache_dir = None if args.no_cache else Path(args.cache)
+    if cache_dir is not None and _is_locked(Path(args.sample)):
+        print("cache off: the locked test split runs once, with nothing stored outside it")
+        cache_dir = None
     report = run_llm(
-        sample, Path(args.index), client, release, server=server, extents=_load_extents(args)
+        sample,
+        Path(args.index),
+        client,
+        release,
+        server=server,
+        extents=_load_extents(args),
+        cache_dir=cache_dir,
     )
     json_path, md_path = write_report(report, Path(args.out), sample_label(sample))
     for name, counts in report["counts"].items():
         print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
+    if "cache" in report:
+        print(f"cache      hits={report['cache']['hits']}  misses={report['cache']['misses']}")
     print(f"  report  {md_path}\n  data    {json_path}")
     return 0
 
@@ -686,6 +698,8 @@ def main(argv: list[str] | None = None) -> int:
     alm.add_argument("--url", default="http://127.0.0.1:8080")
     alm.add_argument("--release", default="release/manifest.json")
     alm.add_argument("--extents", help=_EXTENTS_HELP)
+    alm.add_argument("--cache", default="eval/.cache/llm", help="completion cache directory")
+    alm.add_argument("--no-cache", action="store_true", help="call the model for every record")
     alm.set_defaults(func=_audit_llm)
     asc = aud.add_parser("score", help="check the worksheet and score both systems against it")
     asc.add_argument("--sample", default="eval/audit/audit-50.json")

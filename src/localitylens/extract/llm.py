@@ -87,6 +87,7 @@ class CallTrace:
     attempts: int = 0
     seconds: float = 0.0
     errors: list[str] = field(default_factory=list)
+    cache_hits: int = 0  # attempts answered from the completion cache (0 model seconds each)
 
 
 class LLMExtractor:
@@ -134,6 +135,7 @@ class LLMExtractor:
             trace.prompt_tokens = completion.prompt_tokens
             trace.completion_tokens += completion.completion_tokens
             trace.seconds += completion.seconds
+            trace.cache_hits += bool(getattr(self.client, "last_hit", False))
             try:
                 return self._check(
                     completion.text, completion.truncated, completion.stopped_by_limit
