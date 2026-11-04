@@ -46,7 +46,7 @@ Then check the file:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 3 reviewed, 94 pending, 0 problems
+extents-1: 38 reviewed, 59 pending, 0 problems
 ```
 
 ## Rules
@@ -66,3 +66,14 @@ extents-1: 3 reviewed, 94 pending, 0 problems
 an answerable record whose annotated type can become a proposal (named feature, distance and
 direction, distance only). It used the audit, dev-1 and validation worksheets, 97 features in
 all. It never overwrites an existing file.
+
+## How the measured rows were checked
+
+- **Towns** (incorporated or census-designated place limits on The National Map): the extent
+  must be at least the farthest vertex of the town's own polygon in the USGS `govunits`
+  service. Matching is by place name, because those polygons carry census-entity GNIS IDs,
+  not the populated-place IDs in this file.
+- **Streams and any row whose note gives an end point:** the GRS80 geodesic distance from
+  the row's point to that end point must not exceed the extent.
+- **Towns stay pending** when The National Map has no limit of their own (Hesperus, Gothic,
+  Climax, …). **Streams stay pending** when the far end of the named reach isn't clear.

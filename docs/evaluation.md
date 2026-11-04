@@ -15,10 +15,14 @@ with its size: a huge region is not a success. `needs_information` and `unsuppor
 proposable by this release", never "the locality is unusable". Output supports curator review
 and is not an authoritative georeference.
 
-Until extents are known, no record reaches a full region, so the main measure so far is the
-**correct proposal candidate**: an answerable record whose critical interpretation matches and
-whose **top-ranked** candidate is acceptable. It becomes a correct proposal once the feature's
-extent is supplied and no other question blocks it.
+A record reaches a full region only when its reference has a measured extent, so the main
+measure across all splits is the **correct proposal candidate**: an answerable record whose
+critical interpretation matches and whose **top-ranked** candidate is acceptable. It becomes a
+correct proposal once the feature's extent is supplied and no other question blocks it.
+With the [extent store](../data/reviewed/) (38 of 97 features measured), dev and validation
+runs also report regions computed, their precision and useful coverage
+([findings](../eval/reports/extents-findings.md)): hybrid-1 computes 25 regions on 160
+records, 23 correct (92%), a useful coverage of 23 of 92 answerable (25%).
 
 ## Metrics (`evaluation/score.py`)
 
@@ -96,8 +100,9 @@ cache (`extract/cache.py`) record 0 model seconds and are never used for latency
 
 ## Not measured yet
 
-- **Proposal precision, useful coverage, containment with region size and reviewer time.**
-  These need feature extents. The [extent store](../data/reviewed/) is being filled.
+- **Proposal precision and useful coverage on the locked test.** The test references have no
+  measured extents. On dev and validation they are measured with a partly filled store.
+- **Containment with region size, and reviewer time.**
 - **GEOLocate comparison**, the second LLM call (candidate comparison), other
   quantizations, and the adversarial set. Qwen3.5-2B has been compared on dev and validation
   data only ([findings](../eval/reports/qwen3.5-2b-findings.md)).
