@@ -67,6 +67,10 @@ and retrieval, so any measured difference comes from language interpretation alo
 Code locates those quotes in the original text, so every highlighted phrase in the review UI is
 correct by construction, and an invented quote fails validation.
 
+> 📘 **Cards:** [dataset card](docs/dataset_card.md) (sources, filtering, splits, annotation,
+> limits) · [model card](docs/model_card.md) (pinned model, intended use, observed failure
+> modes) · [evaluation](docs/evaluation.md) (correctness, metrics, protocol, results).
+
 ## ⚡ Try it
 
 ```bash
