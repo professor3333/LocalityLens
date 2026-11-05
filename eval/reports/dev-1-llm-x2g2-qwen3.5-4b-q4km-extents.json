@@ -26,9 +26,9 @@
   },
   "extent_store": {
     "version": "extents-1",
-    "sha256": "dea5872a838868da672fffa8254c7ffcc2ac099e0882aded751eafde7d81f33a",
-    "reviewed": 57,
-    "pending": 40
+    "sha256": "5a98f0c23253d864de1e5ec86c37e0baf40623095ae2fb2e01dda1a97355849d",
+    "reviewed": 56,
+    "pending": 41
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -82,7 +82,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.24,
+        "record_seconds": 0.03,
         "cache_hits": 1
       }
     },
@@ -111,7 +111,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -152,7 +152,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.05,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -185,7 +185,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -220,7 +220,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -249,7 +249,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -294,7 +294,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -327,7 +327,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -393,7 +393,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -434,7 +434,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -510,7 +510,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -629,7 +629,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -662,7 +662,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -708,7 +708,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -750,7 +750,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -791,7 +791,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -838,7 +838,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -928,7 +928,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1081,7 +1081,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1188,7 +1188,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1254,7 +1254,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1295,7 +1295,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1393,7 +1393,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1512,7 +1512,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1555,7 +1555,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1600,7 +1600,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1641,7 +1641,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1686,7 +1686,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1760,7 +1760,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1801,7 +1801,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1843,7 +1843,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1884,7 +1884,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1926,7 +1926,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1969,7 +1969,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.04,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     }

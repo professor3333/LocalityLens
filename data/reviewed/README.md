@@ -53,7 +53,7 @@ Then check the file:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 57 reviewed, 40 pending, 0 problems
+extents-1: 56 reviewed, 41 pending, 0 problems
 ```
 
 ## Rules
@@ -86,7 +86,13 @@ all. It never overwrites an existing file.
   arithmetic, not where the edge was drawn, so these rows are rougher than town limits. Four
   far points were also placed on the USGS National Map 3D Viewer to confirm they fall where
   their notes say.
+- **Summits and gaps, against elevation:** a USGS 3DEP profile (Elevation Point Query
+  Service) along each measured line. A summit's profile must fall to its far point without
+  crossing a separate summit (a rise of more than about 300 ft above a saddle), and a gap's
+  approach must end on a valley floor. This check corrected Thunder Mountain and Veta Pass.
+  Fremont Pass went back to pending, because its north side is mine-altered ground.
 - **Towns stay pending** when The National Map has no limit of their own (Hesperus, Gothic,
   Climax, …). **Streams stay pending** when the far end of the named reach isn't clear.
   **Summits stay pending** when a slope or mesa surface runs on with no edge, or when the map
-  can't settle what the name covers (Two Buttes).
+  can't settle what the name covers (Two Buttes). **Gaps stay pending** when an approach
+  has no natural valley floor (Fremont Pass).

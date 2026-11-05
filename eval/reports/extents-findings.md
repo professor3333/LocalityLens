@@ -7,7 +7,7 @@ measured extent can reach `computed`, a full point-radius region. The locked tes
 
 ## The store
 
-`extents-1`: 57 of 97 rows reviewed, 40 pending.
+`extents-1`: 56 of 97 rows reviewed, 41 pending.
 
 | Measured | Rows | Source |
 |---|---|---|
@@ -15,7 +15,7 @@ measured extent can reach `computed`, a full point-radius region. The locked tes
 | Populated places | 18 | USGS The National Map: incorporated and census-designated place limits |
 | Streams | 17 | USGS The National Map: the named reach on USGS hydrography |
 | Summits | 11 | USGS Topo basemap: 3DEP contours, GNIS names, NHD hydrography |
-| Gaps | 8 | USGS Topo basemap: 3DEP contours, GNIS names, NHD hydrography |
+| Gaps | 7 | USGS Topo basemap: 3DEP contours, GNIS names, NHD hydrography |
 
 Each row records who measured it, the method, the boundary used and the map readout.
 
@@ -26,10 +26,25 @@ Each row records who measured it, the method, the boundary used and the map read
 - **Streams and towns with a recorded end point:** the GRS80 geodesic distance from the GNIS
   point to that end point is at most the extent on all 22 rows.
 - **Summits and gaps:** the geodesic distance from the GNIS point to the recorded far point is
-  at most the extent on all 19 rows. This tests the arithmetic, not where the edge was drawn.
+  at most the extent on all 18 rows. This tests the arithmetic, not where the edge was drawn.
 - **Summits and gaps, against the National Map 3D Viewer (4 rows):** pins placed on the recorded
   far points of Flagstaff Mountain, Hoosier Pass, Arapaho Pass and Weston Pass fall where their
   notes say. The Distance tool reads 2,187.78 m for Hoosier Pass, against 2,194 m from the tiles.
+- **Summits and gaps, against USGS 3DEP elevation:** 12 to 16 elevations from the Elevation Point
+  Query Service along each measured line. A summit's profile should fall to its far point without
+  crossing a separate summit (taken as a rise of more than about 300 ft, 91 m, above a saddle). A
+  gap's approach should end on a valley floor. Three readings failed and were corrected:
+  - **Thunder Mountain:** the line to the Grand Ditch crossed a separate high point 170 m above
+    a saddle 0.8 km south. The extent now runs to Neota Creek, where the profile falls
+    steadily: 2,100 → 1,600 m.
+  - **Veta Pass:** the far point lay past the South Middle Creek valley floor, on the opposite
+    slope. It now stops where the floor begins: 2,000 → 1,300 m.
+  - **Fremont Pass:** north of the pass the ground rises onto the Climax mine and tailings, so
+    the north approach has no natural valley floor. Back to pending.
+
+  The smaller rises on Shavano (70 m), James (47 m) and Eolus (38 m) are below the threshold.
+  Midpoint far points sit on or off the ridge by construction, so their profiles say nothing
+  about the rule.
 
 ### How summits and gaps were bounded
 
@@ -42,7 +57,7 @@ These are terrain edges drawn by eye, not mapped limits, so they are rougher tha
   straight-line midpoint toward each flanking summit or neighbouring pass. That is adapted from
   the guide's midpoint fallback, which names neighbours of similar type, size or importance, so
   a summit is a looser neighbour than the guide describes.
-- **The midpoint sets 3 of the 8 gap values** (Arapaho, Hoosier, Weston). These points are not on
+- **The midpoint sets 3 of the 7 gap values** (Arapaho, Hoosier, Weston). These points are not on
   the crest: Hoosier's falls in the Bemrose Creek valley, more than 1 km north of the divide.
   Rifle Gap is a water gap, measured along the notch.
 - **A first attempt was rejected:** running the boundary all the way to the flanking summits put
@@ -59,6 +74,7 @@ These are terrain edges drawn by eye, not mapped limits, so they are rougher tha
   - Two Buttes has a clear main cone, but a lower hill with closed contours sits about 800 m SE.
     The name is plural, the map's label sits on the cone alone, and counting the hill would
     roughly double the radius. The choice isn't defensible from the map, so it stays pending
+- 1 gap: Fremont Pass, whose north side is the Climax mine and tailings
 - 22 rows not measured yet: valleys, reservoirs, lakes, flats, ranges, a spring, a glacier, a basin
   and a ridge
 
@@ -67,19 +83,20 @@ These are terrain edges drawn by eye, not mapped limits, so they are rougher tha
 | Pooled: audit + dev-1 + validation | rules-2 | LLM | hybrid-1 |
 |---|---|---|---|
 | Correct proposal candidates (of 92 answerable) | 46 | 46 | **51** |
-| Computed regions (of 160 records) | 33 | 34 | **36** |
-| … that are correct (precision) | 30 (91%) | 30 (88%) | **33 (92%)** |
-| Useful coverage: correct regions of 92 answerable | 30 (33%) | 30 (33%) | **33 (36%)** |
+| Computed regions (of 160 records) | 32 | 33 | **35** |
+| … that are correct (precision) | 29 (91%) | 29 (88%) | **32 (91%)** |
+| Useful coverage: correct regions of 92 answerable | 29 (32%) | 29 (32%) | **32 (35%)** |
 
 | Per sample: computed, correct, coverage | rules-2 | LLM | hybrid-1 |
 |---|---|---|---|
-| Audit (50 records, 31 answerable) | 11 · 10 · 10/31 | 10 · 8 · 8/31 | 11 · 10 · 10/31 |
+| Audit (50 records, 31 answerable) | 10 · 9 · 9/31 | 9 · 7 · 7/31 | 10 · 9 · 9/31 |
 | dev-1 (50, 29) | 11 · 11 · 11/29 | 11 · 10 · 10/29 | 12 · 12 · 12/29 |
 | Validation (60, 32) | 11 · 9 · 9/32 | 13 · 12 · 12/32 | 13 · 11 · 11/32 |
 
 With 38 measured extents, before summits and gaps, hybrid-1 computed 25 regions, 23 correct, a
-coverage of 23 of 92. Of the 11 new hybrid regions, 6 rest on gaps and 5 on summits. No system's
-region uses Two Buttes, so returning it to pending changed no count.
+coverage of 23 of 92. Of the 10 new hybrid regions, 5 rest on gaps and 5 on summits. No system's
+region uses Two Buttes, so returning it to pending changed no count. Returning Fremont Pass to
+pending removed one correct region (A33) from every system.
 
 Reports: `<sample>-{rules-2,llm-x2g2-qwen3.5-4b-q4km,hybrid-1}-extents` and
 `<sample>-score-hybrid-1-extents`. Correct candidates are identical to the runs without the
@@ -90,17 +107,17 @@ are right. Whether each radius is the right size is not measured by these number
 
 ## What blocks the rest
 
-hybrid-1 has 51 correct candidates but only 33 correct regions. The other 18 are blocked by:
+hybrid-1 has 51 correct candidates but only 32 correct regions. The other 19 are blocked by:
 
 | Blocking question | Records |
 |---|---|
 | Extent pending: town | 6 |
 | Extent pending: valley | 4 |
-| Extent pending: flat, stream, glacier, summit | 4 |
+| Extent pending: flat, stream, glacier, summit, gap | 5 |
 | Reference not in the store (direction-only or multi-place labels, which the worksheet didn't cover) | 3 |
 | Extent known, but "near" asks how near (by policy) | 1 |
 
-**14 of the 18 need only a measurement**, though the 6 towns have no defensible edge today.
+**15 of the 19 need only a measurement**, though the 6 towns have no defensible edge today.
 Measuring every one would put coverage at 47 of 92 at most, which is still below the 70% target.
 The rest of the gap is interpretation and retrieval, the 41 answerable records with no correct
 candidate.
@@ -125,9 +142,9 @@ These are why every region goes to a curator before export.
 
 ## What this means
 
-- **Precision is 92% for hybrid-1**, below the ≥95% target, on 36 computed regions. That is
+- **Precision is 91% for hybrid-1**, below the ≥95% target, on 35 computed regions. That is
   too few for a firm rate: one record is about 3 points.
-- **Coverage is 36%** against the ≥70% target. Measuring the pending extents could raise it
+- **Coverage is 35%** against the ≥70% target. Measuring the pending extents could raise it
   to about half. The rest needs better interpretation and retrieval.
 - **These are dev and validation numbers.** The locked test has no measured extents. A test
   claim needs extents for its references, which only the owner can measure because they come

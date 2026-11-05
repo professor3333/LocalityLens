@@ -11,9 +11,9 @@
   "seed": "audit-50/1",
   "extent_store": {
     "version": "extents-1",
-    "sha256": "dea5872a838868da672fffa8254c7ffcc2ac099e0882aded751eafde7d81f33a",
-    "reviewed": 57,
-    "pending": 40
+    "sha256": "5a98f0c23253d864de1e5ec86c37e0baf40623095ae2fb2e01dda1a97355849d",
+    "reviewed": 56,
+    "pending": 41
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -31,8 +31,8 @@
       "no_reference_feature": 3
     },
     "proposal": {
-      "needs_information": 36,
-      "computed": 11,
+      "needs_information": 37,
+      "computed": 10,
       "unsupported": 3
     }
   },
@@ -1031,10 +1031,10 @@
         "county": "Lake",
         "match": "exact_official"
       },
-      "proposal": "computed",
+      "proposal": "needs_information",
       "radius_lower_bound_m": 39,
-      "radius_m": 2639,
-      "extent": "reviewed"
+      "radius_m": null,
+      "extent": null
     },
     {
       "audit_id": "A34",

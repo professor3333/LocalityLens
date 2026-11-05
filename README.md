@@ -130,14 +130,15 @@ per GNIS feature, each a recorded map measurement with its method, source, who m
 and the date. Pass
 `--extents data/reviewed/extents.csv` to `baseline run`, `interpret` or the audit runs. Every
 row is checked against the pinned snapshot first. Its 97 rows are the references of the dev and
-validation annotations. 57 have been measured so far: 18 towns and 17 streams on USGS The
-National Map, 11 summits and 8 gaps on the USGS Topo basemap, and 3 lakes on Google Maps. Towns
+validation annotations. 56 have been measured so far: 18 towns and 17 streams on USGS The
+National Map, 11 summits and 7 gaps on the USGS Topo basemap, and 3 lakes on Google Maps. Towns
 and streams were cross-checked against the USGS boundary polygon or the recorded end point.
-Summit and gap edges are terrain judgments, and each row says what it took as the edge:
+Summit and gap edges are terrain judgments, checked against USGS 3DEP elevation profiles, and
+each row says what it took as the edge:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 57 reviewed, 40 pending, 0 problems
+extents-1: 56 reviewed, 41 pending, 0 problems
 ```
 
 A reference with a measured extent gets a full region. Grand Lake's radius is its 1,300 m
@@ -164,11 +165,10 @@ what blocks it:
 $ uv run localitylens review import --sample eval/audit/audit-50.json --system rules \
       --extents data/reviewed/extents.csv
 imported 50 records (rules)
-  needs_information  36
-  ready_for_review   11
+  needs_information  37
+  ready_for_review   10
   unsupported        3
 $ uv run localitylens review queue --status ready_for_review
-gbif:2573325284 ready_for_review   feature 179898, radius 2,639 m
 gbif:2573344610 ready_for_review   feature 178631, radius 2,039 m
 gbif:2573415079 ready_for_review   feature 202381, radius 4,139 m
 gbif:2573416221 ready_for_review   feature 170650, radius 1,342 m
@@ -179,11 +179,11 @@ gbif:2573528015 ready_for_review   feature 186534, radius 13,126 m
 gbif:2573543074 ready_for_review   feature 204755, radius 1,029 m
 gbif:2573548250 ready_for_review   feature 190391, radius 16,039 m
 gbif:4052836581 ready_for_review   feature 204691, radius 8,426 m
-11 records
+10 records
 $ uv run localitylens review decide gbif:2573441754 approve --reviewer <name> --rationale "…"
 $ uv run localitylens review export
 approved       1  -> data/review/export/occurrences.csv
-unresolved    39  -> data/review/export/unresolved.csv
+unresolved    40  -> data/review/export/unresolved.csv
 ```
 
 The approved row is "ca 5 air mi SSW of Paonia": a point 5 miles SSW of the GNIS point,
@@ -412,19 +412,19 @@ fail validation. On dev and validation data it gives 27 correct candidates of 92
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 ([findings](eval/reports/qwen3.5-2b-findings.md)).
 
-**Full regions, with 57 measured extents** (dev and validation data, 160 records, 92
+**Full regions, with 56 measured extents** (dev and validation data, 160 records, 92
 answerable; [findings](eval/reports/extents-findings.md)):
 
 | | Rules `rules-2` | LLM | **Hybrid `hybrid-1`** | Target |
 |---|---|---|---|---|
-| Regions computed | 33 | 34 | **36** | |
-| … correct (precision) | 30 (91%) | 30 (88%) | **33 (92%)** | ≥ 95% |
-| Useful coverage (of 92 answerable) | 30 (33%) | 30 (33%) | **33 (36%)** | ≥ 70% |
+| Regions computed | 32 | 33 | **35** | |
+| … correct (precision) | 29 (91%) | 29 (88%) | **32 (91%)** | ≥ 95% |
+| Useful coverage (of 92 answerable) | 29 (32%) | 29 (32%) | **32 (35%)** | ≥ 70% |
 
 All three incorrect hybrid regions measure from the offset's town when the label names a closer
 collecting place ("Vernal Mesa, 15 mi. east of Montrose") or read the offset from the wrong
-place ("S. slope Mt. Shavano, 10 mi. n. w. Salida"). Of the 18 correct candidates that get no
-region, 14 are waiting only for an extent: mostly towns with no mapped limit, and valleys.
+place ("S. slope Mt. Shavano, 10 mi. n. w. Salida"). Of the 19 correct candidates that get no
+region, 15 are waiting only for an extent: mostly towns with no mapped limit, and valleys.
 Measuring all of them would bring coverage to about half, still short of 70%. "Correct" tests
 the interpretation and the reference, not the size of the radius.
 
@@ -491,8 +491,8 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **Real labels are multi-clause.** Many chain a forest, a range, a road and an offset in one
   string. The rules read one clause, and not always the most specific one.
 - **Unknown extent is the main blocker.** Most references are towns, summits and streams with a
-  single GNIS point, so honest proposals ask for an extent. With 57 of the store's 97 rows
-  measured, 11 audit records get a full region under the rules (10 of them correct).
+  single GNIS point, so honest proposals ask for an extent. With 56 of the store's 97 rows
+  measured, 10 audit records get a full region under the rules (9 of them correct).
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
   places, and leading words ("Above", "Near") absorbed into names. rules-2 fixes "air mi" and
   spelled-out numbers.
@@ -533,7 +533,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | Phase | Scope | Status |
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
-| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (57 of 97 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · candidate disambiguation · footprints · map review UI · GeoJSON | 🚧 started |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (56 of 97 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · candidate disambiguation · footprints · map review UI · GeoJSON | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |

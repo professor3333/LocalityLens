@@ -14,7 +14,7 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 | Reference top-1 acceptable (answerable) | 18/31 (58%) | 15/31 (48%) | 19/31 (61%) |
 | Reference in top 5 (answerable) | 18/31 (58%) | 15/31 (48%) | 19/31 (61%) |
 | **Correct proposal candidates** (answerable) | 17/31 (55%) | 13/31 (42%) | 17/31 (55%) |
-| Computed proposals that are correct | 10/11 (91%) | 8/10 (80%) | 10/11 (91%) |
+| Computed proposals that are correct | 9/10 (90%) | 7/9 (78%) | 9/10 (90%) |
 | Unsupported records flagged unsupported | 0/4 (0%) | 4/4 (100%) | 0/4 (0%) |
 | References absent from GNIS reported absent | 6/15 (40%) | 11/15 (73%) | 4/15 (27%) |
 | Place names read as no locality | 0 | 1 | 0 |
@@ -24,9 +24,9 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 
 | Metric | rules | llm | hybrid |
 |---|---|---|---|
-| Computed proposals (of all records) | 11/50 (22%) | 10/50 (20%) | 11/50 (22%) |
-| Computed proposals that are correct | 10/11 (91%) | 8/10 (80%) | 10/11 (91%) |
-| Useful coverage (of answerable) | 10/31 (32%) | 8/31 (26%) | 10/31 (32%) |
+| Computed proposals (of all records) | 10/50 (20%) | 9/50 (18%) | 10/50 (20%) |
+| Computed proposals that are correct | 9/10 (90%) | 7/9 (78%) | 9/10 (90%) |
+| Useful coverage (of answerable) | 9/31 (29%) | 7/31 (23%) | 9/31 (29%) |
 
 **Paired, correct proposal candidates (LLM − rules):** -13% (95% bootstrap CI -29% to +3%); LLM-only 2, rules-only 6, exact sign test p = 0.2891.
 

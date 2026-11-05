@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 26 · `feature_absent_from_index` 19 · `no_reference_feature` 4 · `None` 1
 
-**proposal**: `needs_information` 27 · `unsupported` 12 · `computed` 10 · `invalid_extraction` 1
+**proposal**: `needs_information` 28 · `unsupported` 12 · `computed` 9 · `invalid_extraction` 1
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -44,7 +44,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A30 | Pitkin. | no_locality |  | no_reference_feature |  | unsupported |
 | A31 | Eastern San Miguel Mts. Seep 0.2 mi. southeast from Graysill Mine. By FR 578. | distance_and_direction | Graysill Mine | feature_absent_from_index |  | needs_information |
 | A32 | Baca National Wildlife Refuge, San Luis Valley. Ca. 2 air miles WSW of Crestone. Ca. ½ mile S of County Rd. T; ¼ mile E of Ranch HQ. Near jct. of N. Crestone and S. Crestone creeks. | distance_and_direction | Crestone | candidates_found | Crestone (Populated Place, Saguache, exact_official) | needs_information |
-| A33 | Gravelly bench along highway below Fremont Pass. | named_feature | Fremont Pass | candidates_found | Fremont Pass (Gap, Lake, exact_official) | computed |
+| A33 | Gravelly bench along highway below Fremont Pass. | named_feature | Fremont Pass | candidates_found | Fremont Pass (Gap, Lake, exact_official) | needs_information |
 | A34 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: San Isabel National Forest: ca 3.4 road mi on Forest 101 from U.S. Hwy 50. | route_relative | U.S. Hwy 50 | feature_absent_from_index |  | unsupported |
 | A35 | Gore Range, Eagles Nest Wilderness Area, central Colorado. 1km west of Lower Piney Lake. | distance_and_direction | Lower Piney Lake | candidates_found | Piney Lake (Lake, Eagle, core_official) | computed |
 | A36 | Chico Basin Ranch, ca. 28 miles SE of Colorado Springs. Dry uplands above Black Squirrel Creek. | named_feature | Chico Basin Ranch | feature_absent_from_index |  | needs_information |
