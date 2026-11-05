@@ -6,6 +6,9 @@ which have all been read, so **every gain below is in-sample**. dev-2 (drawn for
 not yet annotated) and a declared test release are the honest checks. The locked test was not
 run.
 
+**Superseded by [rules-4](rules-4-findings.md),** which stops broad features (rivers, ranges,
+parks) from replacing an offset. dev-2 now checks rules-4, not rules-3.
+
 ## The two errors
 
 1. **A spaced direction was cut short.** In "S. slope Mt. Shavano, 10 mi. n. w. Salida." the

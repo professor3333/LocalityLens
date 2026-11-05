@@ -88,7 +88,7 @@ command. Every value carries its `[start, end)` span in the original text:
 ```console
 $ uv run localitylens baseline run --limit 2 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
-extractor   rules-3
+extractor   rules-4
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -272,7 +272,7 @@ only if it reaches a candidate ([findings](eval/reports/hybrid-1-findings.md)):
 $ uv run localitylens interpret --system hybrid --limit 1 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
 system      hybrid-1: rules result used; no LLM call
-extractor   rules-3
+extractor   rules-4
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -417,24 +417,30 @@ worse. The locked test has not been scored with rules-2.
 
 On these samples, correct candidates rise from 46 to 50 for the rules and from 51 to 55 for
 hybrid-1, and no record gets worse. The gains are in-sample, because the rule was written
-knowing these labels. A fresh dev sample, dev-2, is waiting for annotation to check it.
+knowing these labels.
+
+**Then rules-4.** rules-3 also let a broad feature replace a precise offset: "Arkansas River,
+5 mi E of Salida" became a 1,500 km circle. Streams, ranges, parks and forests now keep the
+offset ([findings](eval/reports/rules-4-findings.md)). No score changes on these samples, because
+none of them has such a label, but 360 of the 1,323 unread groups where rules-3 replaced an offset
+go back to it. A fresh dev sample, dev-2, is waiting for annotation to check the rule.
 
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 ([findings](eval/reports/qwen3.5-2b-findings.md)).
 
-**Full regions, with 56 measured extents and rules-3** (dev and validation data, 160 records,
-92 answerable; findings for [extents](eval/reports/extents-findings.md) and
-[rules-3](eval/reports/rules-3-findings.md)):
+**Full regions, with 56 measured extents and rules-4** (dev and validation data, 160 records,
+92 answerable; findings for [extents](eval/reports/extents-findings.md),
+[rules-3](eval/reports/rules-3-findings.md) and [rules-4](eval/reports/rules-4-findings.md)):
 
-| | Rules `rules-3` | LLM | **Hybrid `hybrid-1`** | Target |
+| | Rules `rules-4` | LLM | **Hybrid `hybrid-1`** | Target |
 |---|---|---|---|---|
 | Regions computed | 31 | 33 | **34** | |
 | … correct (precision) | 30 (97%) | 29 (88%) | **33 (97%)** | ≥ 95% |
 | Useful coverage (of 92 answerable) | 30 (33%) | 29 (32%) | **33 (36%)** | ≥ 70% |
 
-- **The precision of 97% is in-sample.** rules-3 was written knowing these labels. With
+- **The precision of 97% is in-sample.** The rule was written knowing these labels. With
   rules-2, hybrid-1 had 32 correct regions of 35 (91%).
 - **One incorrect region is left:** A37 now reaches Thunder Mt., but the annotation's
   qualifier ("About halfway") isn't a known qualifier word, so the scorer counts none, while
@@ -512,7 +518,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
   places, and leading words ("Above", "Near") absorbed into names. rules-2 fixes "air mi" and
   spelled-out numbers. rules-3 fixes spaced directions ("n. w.") and prefers a named collecting
-  place written before an offset.
+  place written before an offset, and rules-4 keeps the offset when that place is broad.
 - **The LLM reads what the rules miss, and makes its own errors:** it handles "air mi",
   separates "Above"/"Near" from names and flags more route descriptions. It also called 7 labels
   that name a place "no locality", and 9 of its outputs were rejected by validation (as designed).

@@ -82,7 +82,7 @@ These are terrain edges drawn by eye, not mapped limits, so they are rougher tha
 
 **Since rules-3** ([findings](rules-3-findings.md)), hybrid-1 computes 34 regions, 33 correct
 (97%, in-sample), a useful coverage of 33 of 92. rules-3 computes 31, 30 correct. The LLM is
-unchanged. The tables below are the rules-2 runs, kept as `*-pre-rules-3` reports.
+unchanged. [rules-4](rules-4-findings.md) changes none of these counts. The tables below are the rules-2 runs, kept as `*-pre-rules-3` reports.
 
 | Pooled: audit + dev-1 + validation | rules-2 | LLM | hybrid-1 |
 |---|---|---|---|

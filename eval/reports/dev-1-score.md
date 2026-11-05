@@ -1,6 +1,6 @@
 # dev-1: scores against the owner's annotations
 
-rules `rules-3` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
+rules `rules-4` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
 
 Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsupported 4. Annotated types: named_feature 34 · distance_and_direction 7 · direction_only 5 · route_relative 2 · between_features 1 · itinerary 1.
 
@@ -8,9 +8,9 @@ Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsup
 
 | Metric | rules | llm |
 |---|---|---|
-| Relation read correctly | 41/50 (82%) | 37/50 (74%) |
+| Relation read correctly | 40/50 (80%) | 37/50 (74%) |
 | Extraction passed validation | 50/50 (100%) | 46/50 (92%) |
-| Critical interpretation exact | 36/50 (72%) | 30/50 (60%) |
+| Critical interpretation exact | 35/50 (70%) | 30/50 (60%) |
 | Reference top-1 acceptable (answerable) | 17/29 (59%) | 20/29 (69%) |
 | Reference in top 5 (answerable) | 18/29 (62%) | 20/29 (69%) |
 | **Correct proposal candidates** (answerable) | 17/29 (59%) | 18/29 (62%) |
@@ -18,19 +18,19 @@ Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsup
 | Unsupported records flagged unsupported | 3/4 (75%) | 2/4 (50%) |
 | References absent from GNIS reported absent | 9/17 (53%) | 13/17 (76%) |
 | Place names read as no locality | 0 | 1 |
-| Mean fields to correct per record | 0.8 | 1.16 |
+| Mean fields to correct per record | 0.88 | 1.16 |
 
 **Paired, correct proposal candidates (LLM − rules):** +3% (95% bootstrap CI -10% to +17%); LLM-only 3, rules-only 2, exact sign test p = 1.0.
 
-**Paired, critical exact match (LLM − rules):** -12% (95% bootstrap CI -24% to +0%); LLM-only 2, rules-only 8, exact sign test p = 0.1094.
+**Paired, critical exact match (LLM − rules):** -10% (95% bootstrap CI -22% to +2%); LLM-only 2, rules-only 7, exact sign test p = 0.1797.
 
 <details><summary><b>Sensitivity: excluding 9 rows with an unsure (?) annotation</b></summary>
 
 | Metric | rules | llm |
 |---|---|---|
-| Relation read correctly | 35/41 (85%) | 32/41 (78%) |
+| Relation read correctly | 34/41 (83%) | 32/41 (78%) |
 | Extraction passed validation | 41/41 (100%) | 37/41 (90%) |
-| Critical interpretation exact | 31/41 (76%) | 26/41 (63%) |
+| Critical interpretation exact | 30/41 (73%) | 26/41 (63%) |
 | Reference top-1 acceptable (answerable) | 14/25 (56%) | 17/25 (68%) |
 | Reference in top 5 (answerable) | 15/25 (60%) | 17/25 (68%) |
 | **Correct proposal candidates** (answerable) | 14/25 (56%) | 16/25 (64%) |
@@ -85,7 +85,7 @@ Paired correct proposal candidates: +8% (CI -8% to +24%), p = 0.625.
 | D24 | reference_absent | C− R−  | C− R−  |
 | D25 | reference_absent | C− R−  | C− R−  |
 | D26 | answerable | C+ R+ ✓ | C+ R+ ✓ |
-| D27 | answerable | C+ R−  | C− R−  |
+| D27 | answerable | C− R−  | C− R−  |
 | D28 | unsupported | C− R−  | C− R+  |
 | D29 | answerable | C+ R−  | C− R−  |
 | D30 | reference_absent | C+ R−  | C− R−  |

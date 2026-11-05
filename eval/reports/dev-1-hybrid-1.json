@@ -10,7 +10,7 @@
   "system": "hybrid",
   "extractor_version": "hybrid-1",
   "components": {
-    "rules": "rules-3",
+    "rules": "rules-4",
     "llm": "llm-x2g2-qwen3.5-4b-q4km"
   },
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
@@ -39,8 +39,8 @@
       "skipped": 32
     },
     "relation": {
-      "named_feature": 31,
-      "distance_and_direction": 8,
+      "named_feature": 30,
+      "distance_and_direction": 9,
       "direction_only": 6,
       "route_relative": 2,
       "orthogonal_offsets": 1,
@@ -976,36 +976,35 @@
       "audit_id": "D27",
       "locality": "Pond, west side of Colorado R. near mouth of Red Creek, 9½ mi N of Grand Lake.",
       "county": "Grand",
-      "relation": "named_feature",
-      "reference": "Red Creek",
+      "relation": "distance_and_direction",
+      "reference": "Grand Lake",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 5,
+      "candidates": 4,
       "candidate_ids": [
-        170440,
-        179419,
-        183970,
-        184007,
-        184046
+        204950,
+        202505,
+        202532,
+        203936
       ],
       "interpretation": {
-        "relation": "named_feature",
-        "distance": null,
-        "unit": null,
-        "direction": null,
+        "relation": "distance_and_direction",
+        "distance": 9.5,
+        "unit": "mile",
+        "direction": "N",
         "qualifiers": [
           "near"
         ]
       },
       "top_candidate": {
-        "feature_id": 170440,
-        "name": "Red Creek",
-        "class": "Stream",
-        "county": "Routt",
+        "feature_id": 204950,
+        "name": "Grand Lake",
+        "class": "Reservoir",
+        "county": "Grand",
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": 39,
+      "radius_lower_bound_m": 11900,
       "radius_m": null,
       "source": "rules",
       "llm_called": false

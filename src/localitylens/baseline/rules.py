@@ -29,6 +29,7 @@ from localitylens.extract.quantities import parse_quantity
 from localitylens.extract.schema import (
     AdminLevel,
     ExtractionOutput,
+    FeatureType,
     MissingKind,
     QualifierKind,
     RelationType,
@@ -40,7 +41,9 @@ from localitylens.geo.units import AMBIGUOUS_UNIT_FORMS, parse_unit, to_metres
 # rules-2: "air mi" / "air miles", spelled-out numbers before a unit, "ca" without a dot.
 # rules-3: an abbreviated direction is never cut short ("10 mi. n. w." is not "10 mi. n");
 # a named collecting place before an offset wins over the offset (see _collecting_place).
-RULES_VERSION: Final = "rules-3"
+# rules-4: a broad feature (stream, range, park, forest) or the offset's own base never replaces
+# a precise offset; a dotless "Mt" no longer crashes (KeyError in _feature since rules-1).
+RULES_VERSION: Final = "rules-4"
 
 # ---------------------------------------------------------------------------------- patterns
 
@@ -143,7 +146,9 @@ _NOT_PLACE_WORDS: Final = frozenset(
      "along", "in", "on", "the", "of", "and", "n", "s", "e", "w", "ne", "nw", "se", "sw"}
 )  # fmt: skip
 
-_HEAD_INITIAL_TYPES: Final = frozenset({"mt.", "mt", "mount", "lake"})
+# Each must be in TYPE_WORDS. A dotless "Mt" is not, so it states no type (the shared table also
+# checks LLM output, whose frozen runs would change).
+_HEAD_INITIAL_TYPES: Final = frozenset({"mt.", "mount", "lake"})
 
 # Collecting place before an offset (rules-3). A position word puts the specimen on the place
 # ("S slope of Thunder Mt., 16 miles N of Grand Lake"): the offset only locates it.
@@ -160,6 +165,25 @@ _ROUTE_NAME_WORDS: Final = frozenset(
 # Below this, an offset region is about as small as most named places, so the offset is the
 # more specific clause ("Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel").
 _OPENING_PLACE_MIN_OFFSET_M: Final = 1609.344
+# Features too broad to replace a precise offset (rules-4). The offset is the more specific
+# clause: a stream's region is its whole length ("Arkansas River, 5 mi E of Salida" is not a
+# 1,500 km circle). Streams come from TYPE_WORDS. "Park" alone stays out: it is usually a town.
+_BROAD_LAST_WORDS: Final = frozenset(
+    {"r.", "mountains", "mtns", "mtns.", "mts", "mts.", "range", "hills", "wilderness"}
+)
+_BROAD_LAST_TWO_WORDS: Final = frozenset(
+    {"national park", "state park", "national forest", "state forest", "national monument"}
+)
+
+
+def _is_broad_place(name: str) -> bool:
+    """True when the name's last words state a stream, a range, a park or a forest."""
+    words = name.lower().split()
+    return (
+        TYPE_WORDS.get(words[-1]) is FeatureType.STREAM
+        or words[-1] in _BROAD_LAST_WORDS
+        or " ".join(words[-2:]) in _BROAD_LAST_TWO_WORDS
+    )
 
 
 # ----------------------------------------------------------------------------------- lexicon
@@ -384,7 +408,9 @@ class RulesExtractor:
           15 mi. east of Montrose". A shorter offset is the more specific clause.
 
         The place must end right before the offset's comma or semicolon, and it is never a road
-        or a name inside a route ("toward Independence Pass, 11 mi. E of Aspen").
+        or a name inside a route ("toward Independence Pass, 11 mi. E of Aspen"). It is also
+        never a broad feature ("Arkansas River, 5 mi E of Salida") or the offset's own base
+        ("Boulder, 2 mi W of Boulder"): the offset is then the more specific clause.
         """
         text = m.string
         before = text[: m.start()].rstrip()
@@ -398,6 +424,8 @@ class RulesExtractor:
             return None  # something else sits between the place and the offset
         name = text[start:end]
         if name.split()[-1].lower() in _ROUTE_NAME_WORDS or _RE_ROUTE_BEFORE.search(text[:start]):
+            return None
+        if _is_broad_place(name) or name_key(name) == name_key(m.group("feat")):
             return None
         if _RE_ON_PLACE.search(text[:start]):
             return start, end

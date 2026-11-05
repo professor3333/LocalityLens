@@ -1,6 +1,6 @@
 # validation: scores against the owner's annotations
 
-rules `rules-3` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
+rules `rules-4` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
 
 Annotated records: 60. Categories: answerable 32 · reference_absent 24 · unsupported 4. Annotated types: named_feature 36 · distance_and_direction 13 · direction_only 5 · distance_only 2 · between_features 2 · admin_only 1 · route_relative 1.
 

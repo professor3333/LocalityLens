@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **llm_call**: `made` 18 · `skipped` 32
 
-**relation**: `named_feature` 31 · `distance_and_direction` 8 · `direction_only` 6 · `route_relative` 2 · `orthogonal_offsets` 1 · `between_features` 1 · `itinerary` 1
+**relation**: `named_feature` 30 · `distance_and_direction` 9 · `direction_only` 6 · `route_relative` 2 · `orthogonal_offsets` 1 · `between_features` 1 · `itinerary` 1
 
 **retrieval**: `candidates_found` 37 · `feature_absent_from_index` 11 · `no_reference_feature` 2
 
@@ -42,7 +42,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | D24 | Comanche National Grassland: junction of U.S. Hwy 160 and the Villegreen Road, ca 9.5 mi WSW of Kim; 6 mi S of Villegreen. | distance_and_direction | Kim | candidates_found | Kim (Populated Place, Las Animas, exact_official) | needs_information |
 | D25 | Grand Mesa Nat. Forest. Oak brush belt east of intersection of old and new roads #65. | named_feature | Grand Mesa Nat | feature_absent_from_index |  | needs_information |
 | D26 | North of highway, 7 mi. east of Montrose. | distance_and_direction | Montrose | candidates_found | Montrose (Populated Place, Montrose, exact_official) | needs_information |
-| D27 | Pond, west side of Colorado R. near mouth of Red Creek, 9½ mi N of Grand Lake. | named_feature | Red Creek | candidates_found | Red Creek (Stream, Routt, exact_official) | needs_information |
+| D27 | Pond, west side of Colorado R. near mouth of Red Creek, 9½ mi N of Grand Lake. | distance_and_direction | Grand Lake | candidates_found | Grand Lake (Reservoir, Grand, exact_official) | needs_information |
 | D28 | 12.7 road miles east of Delta on Smith Mountain road. | route_relative | Delta | candidates_found | Delta (Populated Place, Delta, exact_official) | unsupported |
 | D29 | San Isabel National Forest, Sangre de Cristo Range, North Colony Creek drainage. | named_feature | San Isabel National Forest | feature_absent_from_index |  | needs_information |
 | D30 | Along US 285 (South Platte Valley) just E of South Platte High School. Rotten granite cliffs along S side of road. | direction_only | South Platte High School | feature_absent_from_index |  | needs_information |

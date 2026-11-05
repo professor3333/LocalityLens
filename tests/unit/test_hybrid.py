@@ -41,7 +41,7 @@ def test_rules_result_is_used_without_a_model_call(index_path: Path) -> None:
     client = FakeClient()  # no responses: any call would fail the test
     h = hybrid(index_path, "Testa Peak.", client)
     assert (h.source, h.llm_called, client.calls) == ("rules", False, 0)
-    assert h.result.extractor_version == "rules-3"
+    assert h.result.extractor_version == "rules-4"
     assert h.version == HYBRID_VERSION
 
 
@@ -62,7 +62,7 @@ def test_llm_is_used_where_the_rules_reach_no_candidate(
 def test_rules_are_kept_when_the_llm_does_not_help(index_path: Path) -> None:
     h = hybrid(index_path, "Nowhere Hill.", FakeClient(named("Nowhere Hill")))
     assert (h.source, h.llm_called, h.llm_error) == ("rules", True, None)
-    assert h.result.extractor_version == "rules-3"
+    assert h.result.extractor_version == "rules-4"
 
 
 def test_a_failed_model_call_never_makes_a_record_worse(index_path: Path) -> None:
@@ -95,7 +95,7 @@ def test_combined_reports_choose_exactly_as_the_live_hybrid(index_path: Path) ->
     assert [r["source"] for r in combined["records"]] == ["rules", "llm", "rules", "llm"]
     assert [r["llm_called"] for r in combined["records"]] == [h.llm_called for h in live]
     assert combined["extractor_version"] == HYBRID_VERSION
-    assert combined["components"] == {"rules": "rules-3", "llm": RELEASE.extractor_id}
+    assert combined["components"] == {"rules": "rules-4", "llm": RELEASE.extractor_id}
     assert combined["counts"]["llm_call"] == {"made": 3, "skipped": 1}
     assert "trace" in combined["records"][2]  # the unhelpful call's cost is still recorded
 

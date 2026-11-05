@@ -4,8 +4,9 @@ from dataclasses import dataclass, field
 
 import pytest
 
-from localitylens.baseline.rules import Lexicon, RulesExtractor
-from localitylens.extract.schema import ExtractionOutput, MissingKind, RelationType
+from localitylens.baseline.rules import _HEAD_INITIAL_TYPES, Lexicon, RulesExtractor
+from localitylens.extract.feature_words import TYPE_WORDS
+from localitylens.extract.schema import ExtractionOutput, FeatureType, MissingKind, RelationType
 from localitylens.extract.validate import Severity, validate_extraction
 from localitylens.ingest.normalize import normalize
 
@@ -14,7 +15,8 @@ LEXICON = Lexicon.from_names(
     place_names=[
         "Longs Peak", "Estes Park", "Boulder", "Lyons", "St. Vrain Creek", "Mount Evans",
         "Loveland", "Fort Collins", "Bear Lake", "Gold Hill", "Colorado Springs", "Pikes Peak",
-        "Rocky Mountain",
+        "Rocky Mountain", "Arkansas River", "Wet Mountains", "Rocky Mountain National Park",
+        "Roosevelt National Forest", "Comanche Wilderness",
     ],
 )  # fmt: skip
 RULES = RulesExtractor(LEXICON)
@@ -224,6 +226,54 @@ def test_offset_kept_when_the_place_is_not_the_collecting_place(text: str, refer
     assert out.relation is RelationType.DISTANCE_AND_DIRECTION
     assert out.reference_feature is not None
     assert out.reference_feature.name_quote == reference
+
+
+def test_a_dotless_mt_names_a_place_without_stating_a_type() -> None:
+    out = run("Mt Evans.")  # raised KeyError before rules-4
+    assert out.reference_feature is not None
+    assert out.reference_feature.name_quote == "Mt Evans"
+    assert out.reference_feature.feature_type is None
+    assert run("Mt. Evans.").reference_feature.feature_type is FeatureType.SUMMIT  # type: ignore[union-attr]
+    offset = run("Mt Evans, 5 mi W of Boulder.")
+    assert offset.reference_feature is not None
+    assert offset.reference_feature.name_quote == "Mt Evans"
+
+
+def test_every_head_initial_type_word_is_in_the_shared_table() -> None:
+    assert _HEAD_INITIAL_TYPES <= TYPE_WORDS.keys()
+
+
+# rules-4: a broad feature, or the offset's own base, never replaces a precise offset.
+@pytest.mark.parametrize(("text", "reference"), [
+    ("Arkansas River, 5 mi E of Boulder.", "Boulder"),  # stream: a 1,500 km region otherwise
+    ("St. Vrain Creek, 4 mi. W of Lyons.", "Lyons"),
+    ("Wet Mountains, 6 mi S of Lyons.", "Lyons"),  # range
+    ("Rocky Mountain National Park, 3 mi W of Estes Park.", "Estes Park"),  # park
+    ("Roosevelt National Forest, 3 mi W of Lyons.", "Lyons"),
+    ("Comanche Wilderness, 9 mi W of Loveland.", "Loveland"),
+    ("West side of Arkansas River, 5 mi E of Boulder.", "Boulder"),  # position word: same rule
+    ("Foot of Wet Mountains, 6 mi S of Lyons.", "Lyons"),
+    ("Arkansas River, 12 miles from Boulder.", "Boulder"),  # distance only
+    ("Boulder, 2 mi W of Boulder.", "Boulder"),  # the offset's own base
+])  # fmt: skip
+def test_a_broad_feature_never_replaces_a_precise_offset(text: str, reference: str) -> None:
+    out = run(text)
+    assert out.relation in {RelationType.DISTANCE_AND_DIRECTION, RelationType.DISTANCE_ONLY}
+    assert out.reference_feature is not None
+    assert out.reference_feature.name_quote == reference
+    assert out.distance is not None
+
+
+@pytest.mark.parametrize(("text", "place"), [
+    ("Estes Park, 5 mi W of Lyons.", "Estes Park"),  # "Park" alone is usually a town
+    ("Lyons, 3 mi N of Boulder.", "Lyons"),  # a town that opens the label still wins
+    ("Longs Peak, 6 mi. SW of Estes Park.", "Longs Peak"),  # one summit is not a range
+])  # fmt: skip
+def test_a_specific_place_still_wins_over_the_offset(text: str, place: str) -> None:
+    out = run(text)
+    assert out.relation is RelationType.NAMED_FEATURE
+    assert out.reference_feature is not None
+    assert out.reference_feature.name_quote == place
 
 
 def test_a_spaced_direction_abbreviation_is_never_cut_short() -> None:
