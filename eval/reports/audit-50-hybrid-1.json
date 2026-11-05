@@ -10,7 +10,7 @@
   "system": "hybrid",
   "extractor_version": "hybrid-1",
   "components": {
-    "rules": "rules-4",
+    "rules": "rules-5",
     "llm": "llm-x2g2-qwen3.5-4b-q4km"
   },
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
@@ -39,8 +39,8 @@
       "skipped": 35
     },
     "relation": {
-      "named_feature": 27,
-      "distance_and_direction": 15,
+      "named_feature": 28,
+      "distance_and_direction": 14,
       "direction_only": 5,
       "distance_only": 1,
       "route_relative": 1,
@@ -846,35 +846,34 @@
       "audit_id": "A23",
       "locality": "North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig.",
       "county": "Moffat",
-      "relation": "distance_and_direction",
-      "reference": "Craig",
+      "relation": "named_feature",
+      "reference": "Black Mountain",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 4,
+      "candidates": 5,
       "candidate_ids": [
-        171304,
-        179450,
-        178192,
-        204989
+        201862,
+        169926,
+        170242,
+        173256,
+        174445
       ],
       "interpretation": {
-        "relation": "distance_and_direction",
-        "distance": 21.0,
-        "unit": "mile",
-        "direction": "NE",
-        "qualifiers": [
-          "approximate"
-        ]
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
       },
       "top_candidate": {
-        "feature_id": 171304,
-        "name": "Craig",
-        "class": "Populated Place",
+        "feature_id": 201862,
+        "name": "Black Mountain",
+        "class": "Summit",
         "county": "Moffat",
         "match": "exact_official"
       },
       "proposal": "needs_information",
-      "radius_lower_bound_m": 13406,
+      "radius_lower_bound_m": 39,
       "radius_m": null,
       "source": "rules",
       "llm_called": false

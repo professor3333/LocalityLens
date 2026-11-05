@@ -109,7 +109,9 @@ Every new incorrect region was already a wrong reading. The extent only lets it 
   distance. The [rules-2 findings](rules-2-findings.md) say ranges "give a validation issue
   instead of a guessed value". That holds for the LLM's quotes, not for the rules, which drop
   the lower bound without a warning. It is false precision, and fixing it is a rules change
-  (a new rules version), not made here.
+  (a new rules version), not made here. *Update: fixed in [rules-5](rules-5-findings.md); A23
+  now reads Black Mountain and its wrong region is gone (read samples: hybrid-1 36 regions, 33
+  correct, 92%).*
 - **E13's region would contain the campus.** The scorer counts it as incorrect because the
   annotated reference is absent from GNIS. Region containment would judge it differently.
 

@@ -288,3 +288,59 @@ def test_a_dropped_offsets_qualifier_does_not_qualify_the_place() -> None:
     assert out.qualifiers == []
     kept = run("About halfway up the S. slope of Longs Peak, 6 mi. SW of Estes Park.")
     assert [q.quote for q in kept.qualifiers] == ["About"]  # outside the offset: kept
+
+
+# --- rules-5 ------------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(("text", "relation", "direction"), [
+    ("ca 20-21 air mi NE of Estes Park.", RelationType.DISTANCE_AND_DIRECTION, "NE"),
+    ("2 to 3 mi S of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "S"),
+    ("Lyons, 4\N{EN DASH}5 mi E.", RelationType.DISTANCE_AND_DIRECTION, "E."),
+    ("5-6 miles from Loveland.", RelationType.DISTANCE_ONLY, None),
+    ("\N{VULGAR FRACTION ONE HALF}-1 mi W of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "W"),
+    ("9\N{VULGAR FRACTION ONE HALF}-10 mi N of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "N"),
+    ("3/4-1 mi E of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "E"),
+])  # fmt: skip
+def test_a_range_is_never_read_as_one_of_its_numbers(
+    text: str, relation: RelationType, direction: str | None
+) -> None:
+    out = run(text)
+    assert out.relation is relation
+    assert out.distance is None
+    assert MissingKind.DISTANCE in out.missing
+    assert any("range" in q for q in out.open_questions)
+    assert out.reference_feature is not None
+    assert (out.direction.quote if out.direction else None) == direction
+
+
+def test_a_mixed_number_is_not_a_range() -> None:
+    out = run("1-1/2 mi N of Lyons.")
+    assert out.distance is not None
+    assert out.distance.value_quote == "1-1/2"
+    assert not out.missing
+
+
+def test_a_road_number_before_a_range_is_not_a_distance() -> None:
+    assert run("Hwy 20-21 mi N of Lyons.").distance is None
+
+
+@pytest.mark.parametrize("text", ["Hwy 133 - 3 mi S of Lyons.", "Rd. 12 - 3 mi S of Lyons."])
+def test_a_road_number_then_a_dash_keeps_the_distance(text: str) -> None:
+    out = run(text)
+    assert out.distance is not None
+    assert out.distance.value_quote == "3"
+
+
+def test_a_falling_pair_is_not_a_range() -> None:
+    out = run("Site 12 - 3 mi S of Lyons.")
+    assert out.distance is not None
+    assert out.distance.value_quote == "3"
+
+
+def test_an_interstate_number_is_not_a_distance() -> None:
+    assert run("I-70 E of Lyons.").distance is None
+
+
+def test_a_route_range_stays_route_relative() -> None:
+    assert run("3-4 mi up the road from Lyons.").relation is RelationType.ROUTE_RELATIVE

@@ -43,14 +43,25 @@ from localitylens.geo.units import AMBIGUOUS_UNIT_FORMS, parse_unit, to_metres
 # a named collecting place before an offset wins over the offset (see _collecting_place).
 # rules-4: a broad feature (stream, range, park, forest) or the offset's own base never replaces
 # a precise offset; a dotless "Mt" no longer crashes (KeyError in _feature since rules-1).
-RULES_VERSION: Final = "rules-4"
+# rules-5: a range ("20-21 air mi") is read as a range, with the distance missing and a question,
+# never as its upper number (before, a number could start right after a hyphen).
+RULES_VERSION: Final = "rules-5"
 
 # ---------------------------------------------------------------------------------- patterns
 
 _VULGAR = "½¼¾⅓⅔⅛⅜⅝⅞"
+# Never right after a hyphen or dash: "21" in "20-21" is the end of a range, not a distance.
 _NUM = (
-    rf"(?<![\w./])(?:\d+\s*[{_VULGAR}]|\d+(?:\s+|-)\d+/\d+|\d+/\d+|\d*\.\d+|\d+|[{_VULGAR}])"
+    r"(?<![\w./\-\u2013])"
+    rf"(?:\d+\s*[{_VULGAR}]|\d+(?:\s+|-)\d+/\d+|\d+/\d+|\d*\.\d+|\d+|[{_VULGAR}])"
     r"(?![\w/])"
+)
+# A range of whole or decimal numbers: "20-21", "2 to 3". A fraction is never a range's end, so
+# "1-1/2" stays the mixed number 1.5. The distance is then missing, with a question (rules-5).
+_RANGE_END = rf"(?:\d+\s*[{_VULGAR}]|\d+(?:\.\d+)?|[{_VULGAR}])(?![\w/])"
+_RANGE = (
+    rf"(?P<low>(?<![\w./\-\u2013])(?:\d+\s*[{_VULGAR}]|\d+/\d+|\d*\.\d+|\d+|[{_VULGAR}]))"
+    rf"(?:\s*[-\u2013]\s*|\s+(?i:to)\s+)(?={_RANGE_END})"
 )
 _UNIT = (
     r"(?i:miles?\b|mi\b\.?|kilomet(?:er|re)s?\b|km\b\.?|met(?:er|re)s?\b|feet\b|ft\b\.?"
@@ -78,7 +89,7 @@ _RE_NO_LOCALITY = re.compile(
     r"|s\.\s?loc\.?|sine loco|unknown|none)\s*\.?\s*$"
 )
 _RE_ROUTE = re.compile(
-    rf"(?P<num>{_NUM})\s*(?P<unit>{_UNIT})\s+(?:(?:{_DIR})\s+)?"
+    rf"(?:{_RANGE})?(?P<num>(?(low){_RANGE_END}|{_NUM}))\s*(?P<unit>{_UNIT})\s+(?:(?:{_DIR})\s+)?"
     r"(?i:along|up|down|via|by|on)\s+[^,;]*"
 )
 _RE_ROUTE_ANYWHERE = re.compile(r"(?i:\bby (?:road|trail|rail|car|auto)\b|\broad miles?\b)")
@@ -88,15 +99,15 @@ _RE_ORTHOGONAL = re.compile(
 )
 _RE_BETWEEN = re.compile(rf"(?i:between)\s+(?P<f1>{_FEATURE})\s+(?i:and|&)\s+(?P<f2>{_FEATURE})")
 _RE_OFFSET_A = re.compile(
-    rf"(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*(?:{_AIR}(?P<unit>{_UNIT}))?\s*(?P<dir>{_DIR})\s+{_OF}\s+"
+    rf"(?P<qual>{_QUAL})?(?:{_RANGE})?(?P<num>(?(low){_RANGE_END}|{_QTY}))\s*(?:{_AIR}(?P<unit>{_UNIT}))?\s*(?P<dir>{_DIR})\s+{_OF}\s+"
     rf"(?:the\s+)?(?P<feat>{_FEATURE})"
 )
 _RE_OFFSET_B = re.compile(
-    rf"(?P<feat>{_FEATURE})\s*,?\s+(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*(?:{_AIR}(?P<unit>{_UNIT}))?\s*"
+    rf"(?P<feat>{_FEATURE})\s*,?\s+(?P<qual>{_QUAL})?(?:{_RANGE})?(?P<num>(?(low){_RANGE_END}|{_QTY}))\s*(?:{_AIR}(?P<unit>{_UNIT}))?\s*"
     rf"(?P<dir>{_DIR})(?!\.?\s?(?i:[NSEW])\.)(?=\s*(?:[,.;:)]|$))"
 )
 _RE_DISTANCE_ONLY = re.compile(
-    rf"(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*{_AIR}(?P<unit>{_UNIT})\s+{_OF}\s+(?:the\s+)?"
+    rf"(?P<qual>{_QUAL})?(?:{_RANGE})?(?P<num>(?(low){_RANGE_END}|{_QTY}))\s*{_AIR}(?P<unit>{_UNIT})\s+{_OF}\s+(?:the\s+)?"
     rf"(?P<feat>{_FEATURE})"
 )
 _RE_DIRECTION_ONLY = re.compile(
@@ -327,8 +338,17 @@ class RulesExtractor:
         admin_spans: list[tuple[int, int]],
         num_groups: tuple[str, ...] = ("num",),
     ) -> tuple[re.Match[str], str | None] | None:
-        """First usable match plus its feature text (cut short at a following admin mention)."""
-        for m in pattern.finditer(text):
+        """First usable match plus its feature text (cut short at a following admin mention).
+
+        A "range" whose first number is a road number ("Hwy 133 - 3 mi S") or is not below the
+        second is no range: the search resumes at the second number, which may be a distance.
+        """
+        pos = 0
+        while (m := pattern.search(text, pos)) is not None:
+            pos = m.end() if m.end() > m.start() else m.start() + 1
+            if "low" in m.re.groupindex and m.group("low") and not self._is_range(m):
+                pos = m.start("num")
+                continue
             if any(self._is_designation(text, m.start(g)) for g in num_groups):
                 continue
             if any(parse_quantity(m.group(g)) is None for g in num_groups):
@@ -346,6 +366,15 @@ class RulesExtractor:
                 continue
             return m, feature_text
         return None
+
+    def _is_range(self, m: re.Match[str]) -> bool:
+        low, high = parse_quantity(m.group("low")), parse_quantity(m.group("num"))
+        return (
+            low is not None
+            and high is not None
+            and low.value < high.value
+            and not self._is_designation(m.string, m.start("low"))
+        )
 
     @staticmethod
     def _is_designation(text: str, num_start: int) -> bool:
@@ -373,7 +402,16 @@ class RulesExtractor:
         draft.relation_quote = text[start:end].strip().rstrip(",")
         if draft.feature is None:
             draft.missing.append(MissingKind.REFERENCE_FEATURE)
-        if "num" in groups and m.group("num"):
+        if "low" in groups and m.group("low"):
+            # A range: keep the relation, ask instead of picking a number (rules-5).
+            unit_text = (m.group("unit") or "").strip()
+            low_to_high = text[m.start("low") : m.end("num")]
+            draft.missing.append(MissingKind.DISTANCE)
+            draft.questions.append(
+                f"The distance is a range ({(low_to_high + ' ' + unit_text).strip()}): "
+                "which distance should the region use?"
+            )
+        elif "num" in groups and m.group("num"):
             distance: dict[str, Any] = {"value_quote": m.group("num").strip()}
             unit_text = m.group("unit") if "unit" in groups else None
             if unit_text:
@@ -431,7 +469,8 @@ class RulesExtractor:
             return start, end
         if text[:start].strip():
             return None  # neither a position word nor the label's opening place
-        quantity = parse_quantity(m.group("num"))
+        # A range's shorter end decides whether the offset is at least a mile (rules-5).
+        quantity = parse_quantity(m.group("low") or m.group("num"))
         unit = parse_unit(m.group("unit")) if m.group("unit") else None
         if (
             quantity is None

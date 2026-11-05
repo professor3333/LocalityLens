@@ -10,7 +10,7 @@
   "system": "hybrid",
   "extractor_version": "hybrid-1",
   "components": {
-    "rules": "rules-4",
+    "rules": "rules-5",
     "llm": "llm-x2g2-qwen3.5-4b-q4km"
   },
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",

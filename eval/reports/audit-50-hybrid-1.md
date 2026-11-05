@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **llm_call**: `made` 15 · `skipped` 35
 
-**relation**: `named_feature` 27 · `distance_and_direction` 15 · `direction_only` 5 · `distance_only` 1 · `route_relative` 1 · `other` 1
+**relation**: `named_feature` 28 · `distance_and_direction` 14 · `direction_only` 5 · `distance_only` 1 · `route_relative` 1 · `other` 1
 
 **retrieval**: `candidates_found` 39 · `feature_absent_from_index` 9 · `no_reference_feature` 2
 
@@ -38,7 +38,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A20 | Morrison Creek. Buffalo Creek Recreation Area, along Morrison Creek and former National Forest Road 547, 2.69 km. south of National Forest Road 550, 63.3 km. south of the GNIS location of Golden. | named_feature | Morrison Creek | candidates_found | Morrison Creek (Stream, Jefferson, exact_official) | needs_information |
 | A21 | Near Deer Creek, Chatfield Arboretum site, Denver Botanic Gardens, located at junction of Highway 75 and Deer Creek Rd. | named_feature | Near Deer Creek | candidates_found | East Deer Creek (Stream, La Plata, fuzzy_official) | needs_information |
 | A22 | Lost Man Campground, upper Roaring Fork Valley east of Aspen. | direction_only | Aspen | candidates_found | Aspen (Populated Place, Pitkin, exact_official) | needs_information |
-| A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | distance_and_direction | Craig | candidates_found | Craig (Populated Place, Moffat, exact_official) | needs_information |
+| A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | named_feature | Black Mountain | candidates_found | Black Mountain (Summit, Moffat, exact_official) | needs_information |
 | A24 | Tolland. James Peak. | named_feature | Tolland | candidates_found | Tolland (Populated Place, Gilpin, exact_official) | needs_information |
 | A25 | Nine miles north of Hotchkiss on Oak Mesa. | distance_and_direction | Hotchkiss | candidates_found | Hotchkiss (Populated Place, Delta, exact_official) | needs_information |
 | A26 | S slope of Mt. Zenobia. | named_feature | Mt. Zenobia | candidates_found | Zenobia Peak (Summit, Moffat, core_official) | needs_information |

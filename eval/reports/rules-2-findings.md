@@ -16,6 +16,8 @@ shared, versioned code:
   Practices does not treat words separately.
 - **Ranges ("20-21 air mi") and compound words ("twenty-five") are still not parsed.** They
   give a validation issue instead of a guessed value.
+  *Correction (rules-5): that holds for the LLM's quotes only. The rules read a range as its
+  second number until rules-5 ([findings](rules-5-findings.md)).*
 
 Because the quantity parser is shared, the LLM's quotes are checked with it too
 (`VALIDATION_VERSION` 3). Its completions did not change: they came from the completion cache,

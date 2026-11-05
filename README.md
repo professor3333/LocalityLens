@@ -88,7 +88,7 @@ command. Every value carries its `[start, end)` span in the original text:
 ```console
 $ uv run localitylens baseline run --limit 2 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
-extractor   rules-4
+extractor   rules-5
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -273,7 +273,7 @@ only if it reaches a candidate ([findings](eval/reports/hybrid-1-findings.md)):
 $ uv run localitylens interpret --system hybrid --limit 1 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
 system      hybrid-1: rules result used; no LLM call
-extractor   rules-4
+extractor   rules-5
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -426,6 +426,12 @@ offset ([findings](eval/reports/rules-4-findings.md)). No score changes on these
 none of them has such a label, but 360 of the 1,323 unread groups where rules-3 replaced an offset
 go back to it.
 
+**Then rules-5.** A distance range ("ca 20-21 air mi") was read as its second number, a silent
+false precision. Ranges are now asked about: the distance is missing and an open question names
+the range ([findings](eval/reports/rules-5-findings.md)). On the read samples only A23 changes
+(now correct, in-sample: rules 50 → 51, hybrid-1 55 → 56 of 92). On 38,272 unread groups,
+217 ranges read as one number now ask instead.
+
 **On fresh data: dev-2.** 50 new groups were annotated and then scored once by a plan pushed
 before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
 [findings](eval/reports/dev-2-findings.md)). Correct candidates of 36 answerable:
@@ -454,15 +460,16 @@ fail validation. On dev and validation data it gives 27 correct candidates of 92
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 ([findings](eval/reports/qwen3.5-2b-findings.md)).
 
-**Full regions, with 68 measured extents and rules-4** (findings for
+**Full regions, with 68 measured extents and rules-5** (findings for
 [extents](eval/reports/extents-findings.md), [batch 4](eval/reports/extents-batch-4-findings.md),
-[rules-3](eval/reports/rules-3-findings.md) and [rules-4](eval/reports/rules-4-findings.md)):
+[rules-3](eval/reports/rules-3-findings.md), [rules-4](eval/reports/rules-4-findings.md) and
+[rules-5](eval/reports/rules-5-findings.md)):
 
-| | Rules `rules-4` | LLM | **Hybrid `hybrid-1`** | Target |
+| | Rules `rules-5` | LLM | **Hybrid `hybrid-1`** | Target |
 |---|---|---|---|---|
 | *Read samples (audit, dev-1, validation: 92 answerable)* | | | | |
-| Regions computed | 34 | 34 | **37** | |
-| … correct (precision) | 30 (88%) | 29 (85%) | **33 (89%)** | ≥ 95% |
+| Regions computed | 33 | 34 | **36** | |
+| … correct (precision) | 30 (91%) | 29 (85%) | **33 (92%)** | ≥ 95% |
 | Useful coverage | 30 (33%) | 29 (32%) | **33 (36%)** | ≥ 70% |
 | *dev-2, unseen labels (36 answerable)* | | | | |
 | Regions computed | 10 | 8 | **11** | |
@@ -471,11 +478,11 @@ against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 
 - **Unseen labels behave like the read ones.** dev-2's 12 new extents took its regions from 2
   to 11, 10 of them correct (median correct radius 3.2 km).
-- **More extents expose reading errors.** Every new incorrect region was already a wrong
-  reading that used to stop at `needs_information`: an offset from Boulder chosen over the
-  place named later (Rocky Flats ×2, Bluebell Canyon), and a range, "20-21 air mi", that the
-  rules read as exactly 21 mi. Precision fell from 97% to 89% on the read samples, so the target
-  needs better readings, not more extents.
+- **More extents expose reading errors.** Every incorrect region that batch 4 added was already
+  a wrong reading that used to stop at `needs_information`: an offset from Boulder chosen over
+  the place named later (Rocky Flats ×2, Bluebell Canyon), and a range, "20-21 air mi", that the
+  rules read as exactly 21 mi. rules-5 fixes the range, so precision on the read samples is 92%
+  (it was 97% before batch 4). The target needs better readings, not more extents.
 - **What blocks the rest:** extents with no defensible edge (towns with no mapped limit, long
   slopes, canyon passes) and direction-only labels with no distance.
 - **"Correct" tests the interpretation and the reference,** not the size of the radius: one
@@ -549,7 +556,8 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
   places, and leading words ("Above", "Near") absorbed into names. rules-2 fixes "air mi" and
   spelled-out numbers. rules-3 fixes spaced directions ("n. w.") and prefers a named collecting
-  place written before an offset, and rules-4 keeps the offset when that place is broad.
+  place written before an offset, rules-4 keeps the offset when that place is broad, and rules-5
+  asks about distance ranges instead of reading their second number.
 - **The LLM reads what the rules miss, and makes its own errors:** it handles "air mi",
   separates "Above"/"Near" from names and flags more route descriptions. It also called 7 labels
   that name a place "no locality", and 9 of its outputs were rejected by validation (as designed).

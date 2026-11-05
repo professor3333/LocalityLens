@@ -34,7 +34,7 @@ This card describes the model as used in release `0.1.0-dev`.
 | Generation | temperature 0, top-k 1, seed 20261101, at most 512 tokens, thinking off |
 | Prompt | `extraction-v2`, SHA-256 `8074f1f8…`: label text fenced as data, 11 few-shot examples with invented place names |
 | Output contract | schema `extraction-1`, grammar 2 (JSON schema enforced by llama-server), quotes only, never offsets |
-| Downstream | validation 3, core key 1, county context 1, rules `rules-4`, uncertainty policy `gbif-bp-2020/1`. Test releases 1 and 2 used validation 2 and `rules-1` |
+| Downstream | validation 3, core key 1, county context 1, rules `rules-5`, uncertainty policy `gbif-bp-2020/1`. Test releases 1 and 2 used validation 2 and `rules-1` |
 | Data | gazetteer `gnis-co-2026-09-29`, specimens `gbif-cu-2026-11-01`; see the [dataset card](dataset_card.md) |
 
 All of the above is pinned in [`release/manifest.json`](../release/manifest.json). Tests
@@ -85,8 +85,8 @@ On the locked test, correct proposal candidates of 56 answerable records:
 
 For hybrid-1, the model is called on 39% of records.
 
-With 68 measured extents and rules-4, on the read dev and validation data (160 records), hybrid-1
-computes 37 full regions, 33 of them correct (89%; target ≥ 95%), a useful coverage of 36%
+With 68 measured extents and rules-5, on the read dev and validation data (160 records), hybrid-1
+computes 36 full regions, 33 of them correct (92%; target ≥ 95%), a useful coverage of 36%
 (target ≥ 70%). On dev-2's unseen labels it computes 11, 10 correct (91%), a useful coverage of
 28% ([batch 4 findings](../eval/reports/extents-batch-4-findings.md)).
 Containment, and these measures on the locked test, are not measured yet. See
