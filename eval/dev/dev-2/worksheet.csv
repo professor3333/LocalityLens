@@ -1,51 +1,51 @@
 audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
-E01,2573339156,Jackson,"North-central Colorado:North Park: along County Road 6 in the vicinity of Trappers Gulch at the south end of Battle Ridge, ca 11 air mi WNW of Cowdrey; ca 17 air mi NW of Walden."
-E02,2573333942,Park,"Lost Creek Area, Tarryall Mtn., 80 km (50mi) southwest of Denver and 80 km northwest of Colo. Springs."
-E03,2573330873,Lincoln,"Hugo, 0.7 mi. NW. Mount Calvary Cemetery."
-E04,2573450143,Denver,"S. Arthur Henry Middle School, corner of W Bates and S Golden, Bear Valley, SW Denver."
-E05,2573447089,Eagle,"Tributary of the Colorado River, approx. 100 m above confluence with Colorado River, 1 mi NW of Blue Hill."
-E06,2573442610,Moffat,N.W. Moffat county. 6 mi SW of Greystone on NE-facing slope of Douglas Mountain.
-E07,2573546339,La Plata,Los Pinos (Bayfield).
-E08,2573466240,Gunnison,½ mi. N of Almont.
-E09,2573536983,Larimer,Neota Wilderness. 7 mi S of Hwy. 14 on Long Draw Rd. West of road on summit of Flattop Mountain.
-E10,3030082591,Boulder,"Heil Valley Ranch, Ingersoll Quarry;"
-E11,2573460536,Rio Grande,Rio Grande National Forest; ~12 miles SE of South Fork; W of Forest Road 14
-E12,2573483534,Routt,"Trail from Slavonia to Gilpin Lake and Continental Divide, Routt National Forest, ca. 30 mi. N of Steamboat Springs."
-E13,2573545158,Boulder,"Campus of University, Boulder."
-E14,2573468045,El Paso,"Artists glen, Pikes Peak region."
-E15,2573333595,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: Forest Trail 607, S of Colo Hwy 145, ca 16 air mi NE of Dolores on Morrison Trail, Bear Creek drainage."
-E16,2573466961,Park,"Mosquito Range Mountains; High Creek Fen, The Nature Conservancy. South of Fairplay."
-E17,2573492285,Jefferson,S. Table Mt. S. facing slope just W. of Quaker rd. below mesa edge; common on 1980 burn site.
-E18,2573385466,Moffat,Dinosaur National Monument. N of Bear Draw and Mantle Ranch Road.
-E19,2573492144,Park,"Rosalie Peak, Mt. Evans Wilderness, Arapahoe National Forest."
-E20,2573325938,Rio Blanco,"Flat Tops/White River Plateau: ridge between Cyclone and Rough Creek drainages, ca 18 air mi WSW of Oak Creek."
-E21,2573332754,Jefferson,"Clear Creek, near Wheat Ridge."
-E22,2573439468,Routt,Near Beaver Creek.
-E23,2573536507,Boulder,"Along the road up the mesa W of the National Bureau of Standards, Boulder."
-E24,2573332798,Moffat,Swede Spring on Cold Springs Mountain.
-E25,2573530091,Montezuma,"Mesa Verde NP; Yucca House, east of new acquisition."
-E26,2573487109,Moffat,"Browns Park, Goose Refuge."
-E27,2573437356,Boulder,"Niwot Ridge, upper saddle."
-E28,2573527415,Moffat,30 miles north of Craig.
-E29,2573332884,Jefferson,"Rocky Flats Site, 7 mi S of Boulder, on Rocky Flats Pediment. By Woman Ck. and in meadow S of Woman Ck."
-E30,2573534857,Alamosa,10 mi. W of Mosca SW of Great Sand dunes National Monument.
-E31,2573446028,Boulder,University camp between Nederland and Ward.
-E32,2573478293,Boulder,"Plains and mesas, Boulder."
-E33,2573344349,Garfield,South side of Douglas Pass.
-E34,2573439023,Las Animas,Near small lake at summit of ridge above San Francisco Pass.
-E35,2573486149,Dolores,4 miles east of Cahone.
-E36,2573327899,Baca,"Junction of road O and R, Pasture 5D."
-E37,2573333552,Boulder,On Audubon Mt.
-E38,2573327534,Gunnison,Slope of Blue Mesa a few miles southwest of Sapinero.
-E39,2573484173,Grand/Larimer,Milner Pass.
-E40,3950494369,,Hoosier Pass.
-E41,2573325072,Boulder,NCAR Mesa.
-E42,2573552225,Larimer,North Fork Poudre.
-E43,2573326086,Boulder,Arapahoe glacier.
-E44,2573338722,Unknown-W,Medicine Bow Forest.
-E45,2573328898,Boulder,Mt. Audubon.
-E46,2573377525,Boulder,Boulder Falls.
-E47,2573324535,Prowers,Verdun.
-E48,2573343442,El Paso,"North slope, Minnehaha."
-E49,2573523795,Gunnison,Somerset.
-E50,2573325033,Saguache,North of Moffat.
+E01,2573339156,Jackson,"North-central Colorado:North Park: along County Road 6 in the vicinity of Trappers Gulch at the south end of Battle Ridge, ca 11 air mi WNW of Cowdrey; ca 17 air mi NW of Walden.",named_feature?,yes,Trappers Gulch,169950,,,,vicinity,extent;other: identify the County Road 6 segment,"multi: North-central Colorado; North Park; along County Road 6; south end of Battle Ridge; ca 11 air mi WNW of Cowdrey; ca 17 air mi NW of Walden. Selected the vicinity of Trappers Gulch as the named local clause. Whether it is tighter than the two air-mile offsets is uncertain from text alone. GNIS: Trappers Gulch, Valley, Jackson County; the supplied county distinguishes it from Trappers Gulch in Garfield County."
+E02,2573333942,Park,"Lost Creek Area, Tarryall Mtn., 80 km (50mi) southwest of Denver and 80 km northwest of Colo. Springs.",named_feature,yes,Tarryall Mtn.,202941?,,,,,extent;other: confirm Tarryall Mtn. and Tarryall Mountains equivalence,"multi: Lost Creek Area; 80 km (50mi) southwest of Denver; 80 km northwest of Colo. Springs. The long offsets are context. GNIS: no singular Tarryall Mountain; Tarryall Mountains (202941), Range, Park County, is the candidate, flagged because the label is singular."
+E03,2573330873,Lincoln,"Hugo, 0.7 mi. NW. Mount Calvary Cemetery.",named_feature?,yes,Mount Calvary Cemetery,absent,,,,,extent;feature_not_in_gnis,"multi: Hugo, 0.7 mi. NW. Selected the named cemetery as the smallest place. Alternative: distance_and_direction, Hugo (195141), 0.7 mile, NW, which may be the clause locating the cemetery. GNIS: no Mount Calvary or Calvary Cemetery entry. Hugo is not substituted for the cemetery."
+E04,2573450143,Denver,"S. Arthur Henry Middle School, corner of W Bates and S Golden, Bear Valley, SW Denver.",named_feature,yes,S. Arthur Henry Middle School,absent,,,,,extent;feature_not_in_gnis,multi: corner of W Bates and S Golden; Bear Valley; SW Denver. The school name is kept as written; the street corner would locate it. GNIS: no entry under the school name. Denver is not substituted.
+E05,2573447089,Eagle,"Tributary of the Colorado River, approx. 100 m above confluence with Colorado River, 1 mi NW of Blue Hill.",distance_and_direction?,yes,Blue Hill,175596;175743,1,mile,NW,,extent;which_feature;other: identify the unnamed tributary,"multi: tributary of the Colorado River, approx. 100 m above confluence with Colorado River. The confluence clause is smaller, but the tributary is unnamed, so the offset is the clause that can be measured. approx. belongs to the 100 m, not the offset. GNIS: Blue Hill (175596), Gap, and Blue Hill (175743), Summit, both Eagle County; the label does not say which."
+E06,2573442610,Moffat,N.W. Moffat county. 6 mi SW of Greystone on NE-facing slope of Douglas Mountain.,named_feature,yes,Douglas Mountain,170538,,,,,extent,"multi: N.W. Moffat county; 6 mi SW of Greystone. Selected NE-facing slope of Douglas Mountain, as for the same wording in V014; NE is the slope's aspect and the 6 mi locates it. GNIS: Douglas Mountain, Range, Moffat County."
+E07,2573546339,La Plata,Los Pinos (Bayfield).,named_feature,yes,Los Pinos;Bayfield,184411,,,,,extent;historical_name?,"The parenthesis equates Los Pinos with Bayfield. GNIS: Bayfield, Populated Place, La Plata County; no Los Pinos entry or variant, so Los Pinos may be an old name, which is unconfirmed."
+E08,2573466240,Gunnison,½ mi. N of Almont.,distance_and_direction,yes,Almont,188934,½,mile,N,,extent,"GNIS: Almont, Populated Place, Gunnison County."
+E09,2573536983,Larimer,Neota Wilderness. 7 mi S of Hwy. 14 on Long Draw Rd. West of road on summit of Flattop Mountain.,named_feature,yes,Flattop Mountain,177261;204966?,,,,,extent;which_feature,"multi: Neota Wilderness; 7 mi S of Hwy. 14 on Long Draw Rd.; west of road. Position: summit of Flattop Mountain. The road distance locates it. GNIS: two Larimer candidates. Flat Top Mountain (177261), Summit, is about 6 km from Neota Creek (177268) by GNIS points, which fits the Neota context. Flattop Mountain (204966), Summit, matches the spelling but is about 22 km from that creek, so it is flagged."
+E10,3030082591,Boulder,"Heil Valley Ranch, Ingersoll Quarry;",named_feature,yes,Ingersoll Quarry,absent,,,,,extent;feature_not_in_gnis,multi: Heil Valley Ranch. GNIS: no Ingersoll entry.
+E11,2573460536,Rio Grande,Rio Grande National Forest; ~12 miles SE of South Fork; W of Forest Road 14,distance_and_direction,yes,South Fork,203420,12,mile,SE,~,extent;other: identify Forest Road 14,"multi: Rio Grande National Forest; W of Forest Road 14, a separate constraint and not a second offset from South Fork. GNIS: South Fork, Populated Place, Rio Grande County."
+E12,2573483534,Routt,"Trail from Slavonia to Gilpin Lake and Continental Divide, Routt National Forest, ca. 30 mi. N of Steamboat Springs.",itinerary,no,Slavonia;Gilpin Lake,196723;170425,,,,,extent;route_geometry,"multi: Continental Divide; Routt National Forest; ca. 30 mi. N of Steamboat Springs. Selected the trail from Slavonia to Gilpin Lake and the Divide; the trail is not reduced to one endpoint, and ca. belongs to the secondary offset. GNIS: Slavonia (196723), Populated Place, and Gilpin Lake (170425), Lake, both Routt County: two endpoints, not alternatives."
+E13,2573545158,Boulder,"Campus of University, Boulder.",named_feature,yes,Campus of University,absent,,,,,extent;feature_not_in_gnis;other: identify the university,multi: Boulder. The university is not named. GNIS: no University or University of Colorado entry. Boulder is not substituted for the campus.
+E14,2573468045,El Paso,"Artists glen, Pikes Peak region.",named_feature,yes,Artists glen,193447,,,,,extent,"multi: Pikes Peak region. GNIS: Artists Glen, Valley, El Paso County."
+E15,2573333595,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: Forest Trail 607, S of Colo Hwy 145, ca 16 air mi NE of Dolores on Morrison Trail, Bear Creek drainage.",distance_and_direction,yes,Dolores,202607,16,mile,NE,ca,extent,"multi: Upper Dolores River Drainage and Adjacent Areas; San Juan National Forest; Forest Trail 607; S of Colo Hwy 145; on Morrison Trail; Bear Creek drainage. air mi is a straight-line distance. GNIS: Dolores, Populated Place, Montezuma County."
+E16,2573466961,Park,"Mosquito Range Mountains; High Creek Fen, The Nature Conservancy. South of Fairplay.",named_feature,yes,High Creek Fen,absent,,,,,extent;feature_not_in_gnis,"multi: Mosquito Range Mountains; The Nature Conservancy; South of Fairplay. GNIS: no High Creek Fen entry. High Creek (180254), Stream, Park County, is a different feature and is not substituted."
+E17,2573492285,Jefferson,S. Table Mt. S. facing slope just W. of Quaker rd. below mesa edge; common on 1980 burn site.,named_feature,yes,S. Table Mt.,202838,,,,,extent;other: identify Quaker rd.,"Position: south-facing slope, just W. of Quaker rd., below the mesa edge; 1980 burn site. S. in S. Table Mt. is part of the name and S. facing is aspect. GNIS: South Table Mountain, Summit, Jefferson County."
+E18,2573385466,Moffat,Dinosaur National Monument. N of Bear Draw and Mantle Ranch Road.,direction_only,yes,Bear Draw;Mantle Ranch Road,170907,,,N,,extent;distance;feature_not_in_gnis,"multi: Dinosaur National Monument. N of both named features, with no distance. GNIS: Bear Draw (170907), Valley, Moffat County, chosen over Bear Draw in Jackson County by the supplied county. Mantle Ranch Road is not indexed."
+E19,2573492144,Park,"Rosalie Peak, Mt. Evans Wilderness, Arapahoe National Forest.",named_feature,yes,Rosalie Peak,182495,,,,,extent,"multi: Mt. Evans Wilderness; Arapahoe National Forest. GNIS: Rosalie Peak, Summit, Park County."
+E20,2573325938,Rio Blanco,"Flat Tops/White River Plateau: ridge between Cyclone and Rough Creek drainages, ca 18 air mi WSW of Oak Creek.",distance_and_direction?,yes,Oak Creek,172929;172735?,18,mile,WSW,ca,extent;which_feature,"multi: Flat Tops/White River Plateau; ridge between Cyclone and Rough Creek drainages. The ridge is unnamed, so the air-mile offset is the clause that can be measured; the drainages constrain it. GNIS: Oak Creek (172929), Populated Place, Routt County, is the likely origin. Oak Creek (172735), Stream, is in the supplied Rio Blanco County and is flagged."
+E21,2573332754,Jefferson,"Clear Creek, near Wheat Ridge.",named_feature,yes,Clear Creek,181805,,,,near,extent;other: identify the reach near Wheat Ridge,"multi: near Wheat Ridge. Selected Clear Creek; near qualifies its relation to Wheat Ridge, as for Silver Lake in D21. GNIS: Clear Creek (181805), Stream, primary county Adams, the only Clear Creek indexed in the Front Range counties checked; the other Clear Creeks are elsewhere."
+E22,2573439468,Routt,Near Beaver Creek.,named_feature,yes,Beaver Creek,169843;170468;171497;172754;173072;173080,,,,Near,extent;which_feature,"GNIS: six streams named Beaver Creek have Routt as primary county, and the label does not distinguish them."
+E23,2573536507,Boulder,"Along the road up the mesa W of the National Bureau of Standards, Boulder.",direction_only?,yes,National Bureau of Standards,absent,,,W,,extent;distance;feature_not_in_gnis;other: identify the road up the mesa,"multi: along the road up the mesa; Boulder. Selected W of the National Bureau of Standards. Alternative: route_relative, no, because the road is the setting, though no along-road distance is given. GNIS: no Bureau of Standards or National Institute of Standards entry. Boulder is not substituted."
+E24,2573332798,Moffat,Swede Spring on Cold Springs Mountain.,named_feature,yes,Swede Spring,169800,,,,,extent,"multi: on Cold Springs Mountain. GNIS: Swede Spring, Spring, Moffat County."
+E25,2573530091,Montezuma,"Mesa Verde NP; Yucca House, east of new acquisition.",named_feature,yes,Yucca House,absent,,,,,extent;feature_not_in_gnis;other: identify the new acquisition,"multi: Mesa Verde NP; east of new acquisition, a position that can't be resolved from the label. GNIS: no Yucca House entry. The park is not substituted."
+E26,2573487109,Moffat,"Browns Park, Goose Refuge.",named_feature,yes,Goose Refuge,absent,,,,,extent;feature_not_in_gnis,multi: Browns Park. GNIS: no Goose Refuge or Browns Park National Wildlife Refuge entry. Browns Park is broader and is not substituted.
+E27,2573437356,Boulder,"Niwot Ridge, upper saddle.",named_feature,yes,Niwot Ridge,169443,,,,,extent;other: identify the upper saddle,"Position: upper saddle on the ridge. GNIS: Niwot Ridge, Ridge, Boulder County. Niwot Mountain (178482) is a different feature."
+E28,2573527415,Moffat,30 miles north of Craig.,distance_and_direction,yes,Craig,171304,30,mile,N,,extent,"GNIS: Craig, Populated Place, Moffat County."
+E29,2573332884,Jefferson,"Rocky Flats Site, 7 mi S of Boulder, on Rocky Flats Pediment. By Woman Ck. and in meadow S of Woman Ck.",named_feature,yes,Woman Ck.,181233,,,,,extent;other: identify the reach on the Rocky Flats Site,"multi: Rocky Flats Site; 7 mi S of Boulder; on Rocky Flats Pediment. Position: by the creek and in a meadow S of it. S is beside the creek, not a measured offset. GNIS: Woman Creek, Stream, Jefferson County."
+E30,2573534857,Alamosa,10 mi. W of Mosca SW of Great Sand dunes National Monument.,distance_and_direction,yes,Mosca,196391,10,mile,W,,extent,"multi: SW of Great Sand dunes National Monument, a separate constraint. GNIS: Mosca, Populated Place, Alamosa County."
+E31,2573446028,Boulder,University camp between Nederland and Ward.,named_feature?,yes,University camp,absent,,,,,extent;feature_not_in_gnis;other: identify the camp,"multi: between Nederland and Ward. Selected the named camp. Alternative: between_features, no, Nederland;Ward. GNIS: no University Camp entry. The towns are not substituted."
+E32,2573478293,Boulder,"Plains and mesas, Boulder.",named_feature,yes,Boulder,178680,,,,,extent,"Plains and mesas describes the setting around Boulder, so the town's extent may be too small. GNIS: Boulder, Populated Place, Boulder County."
+E33,2573344349,Garfield,South side of Douglas Pass.,named_feature,yes,Douglas Pass,172125,,,,,extent,"Position: south side of the pass; not an offset. GNIS: Douglas Pass, Gap, Garfield County."
+E34,2573439023,Las Animas,Near small lake at summit of ridge above San Francisco Pass.,named_feature,yes,San Francisco Pass,194907,,,,Near,extent;other: identify the small lake and the ridge,"Position: near a small lake at the summit of a ridge above the pass. Neither lake nor ridge is named, so the pass is the reference, and above counts as named_feature under the guide. GNIS: San Francisco Pass, Gap, Las Animas County."
+E35,2573486149,Dolores,4 miles east of Cahone.,distance_and_direction,yes,Cahone,176613,4,mile,E,,extent,"GNIS: Cahone, Populated Place, Dolores County."
+E36,2573327899,Baca,"Junction of road O and R, Pasture 5D.",named_feature,yes,road O;road R,absent,,,,,extent;feature_not_in_gnis;other: identify the road junction and Pasture 5D,multi: Pasture 5D. Both road names identify one junction. Road and pasture names were not searched as GNIS features beyond the label's wording; no named place is given.
+E37,2573333552,Boulder,On Audubon Mt.,named_feature,yes,Audubon Mt.,178497,,,,,extent,"GNIS: Mount Audubon, Summit, Boulder County."
+E38,2573327534,Gunnison,Slope of Blue Mesa a few miles southwest of Sapinero.,named_feature,yes,Blue Mesa,203337,,,,,extent,"multi: a few miles southwest of Sapinero, which has no measured distance. Position: slope. GNIS: Blue Mesa, Summit, Gunnison County, chosen over Blue Mesa in Mesa County by the supplied county."
+E39,2573484173,Grand/Larimer,Milner Pass.,named_feature,yes,Milner Pass,177509,,,,,extent,"County is supplied as Grand/Larimer. GNIS: Milner Pass, Gap, primary county Grand."
+E40,3950494369,,Hoosier Pass.,named_feature,yes,Hoosier Pass,179963;191218,,,,,extent;which_feature,"No county is supplied. GNIS: Hoosier Pass (179963), Gap, Summit County, and Hoosier Pass (191218), Gap, Teller County; nothing on the label distinguishes them."
+E41,2573325072,Boulder,NCAR Mesa.,named_feature,yes,NCAR Mesa,absent,,,,,extent;feature_not_in_gnis,"GNIS: no NCAR Mesa or National Center for Atmospheric Research entry. Table Mountain (178285), Summit, Boulder County, has the variant Table Mesa, but nothing here ties it to NCAR Mesa, so it is not substituted."
+E42,2573552225,Larimer,North Fork Poudre.,named_feature,yes,North Fork Poudre,177209,,,,,extent,"Poudre is read as Cache la Poudre for lookup. GNIS: North Fork Cache La Poudre River, Stream, Larimer County."
+E43,2573326086,Boulder,Arapahoe glacier.,named_feature,yes,Arapahoe glacier,178461,,,,,extent,"The label spelling is kept. GNIS: Arapaho Glacier, Glacier, Boulder County."
+E44,2573338722,Unknown-W,Medicine Bow Forest.,named_feature,yes,Medicine Bow Forest,absent,,,,,extent;feature_not_in_gnis;other: county supplied as Unknown-W,Unknown-W is preserved. GNIS: no Medicine Bow or Medicine Bow National Forest entry.
+E45,2573328898,Boulder,Mt. Audubon.,named_feature,yes,Mt. Audubon,178497,,,,,extent,"GNIS: Mount Audubon, Summit, Boulder County."
+E46,2573377525,Boulder,Boulder Falls.,named_feature,yes,Boulder Falls,178582,,,,,extent,"GNIS: Boulder Falls, Falls, Boulder County."
+E47,2573324535,Prowers,Verdun.,named_feature,yes,Verdun,absent,,,,,extent;feature_not_in_gnis;historical_name?,"GNIS: no Verdun entry. It may be an old locality, which is unconfirmed."
+E48,2573343442,El Paso,"North slope, Minnehaha.",named_feature,yes,Minnehaha,193440,,,,,extent,"Position: north slope; not an offset. GNIS: Minnehaha, Populated Place, El Paso County."
+E49,2573523795,Gunnison,Somerset.,named_feature,yes,Somerset,186369,,,,,extent,"GNIS: Somerset, Populated Place, Gunnison County."
+E50,2573325033,Saguache,North of Moffat.,direction_only,yes,Moffat,203585,,,N,,extent;distance,"The supplied Saguache county makes Moffat the town, not Moffat County. GNIS: Moffat, Populated Place, Saguache County."
