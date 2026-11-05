@@ -1,6 +1,6 @@
 # dev-2: scores against Claude's annotations
 
-rules `rules-5` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
+rules `rules-6` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
 
 Annotated records: 50. Categories: answerable 36 · reference_absent 13 · unsupported 1. Annotated types: named_feature 38 · distance_and_direction 8 · direction_only 3 · itinerary 1.
 

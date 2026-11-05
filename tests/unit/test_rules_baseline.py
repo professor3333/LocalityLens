@@ -301,6 +301,8 @@ def test_a_dropped_offsets_qualifier_does_not_qualify_the_place() -> None:
     ("\N{VULGAR FRACTION ONE HALF}-1 mi W of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "W"),
     ("9\N{VULGAR FRACTION ONE HALF}-10 mi N of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "N"),
     ("3/4-1 mi E of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "E"),
+    ("2 or 3 mi NE of Lyons.", RelationType.DISTANCE_AND_DIRECTION, "NE"),  # rules-6
+    ("2 or 3 miles from Loveland.", RelationType.DISTANCE_ONLY, None),  # rules-6
 ])  # fmt: skip
 def test_a_range_is_never_read_as_one_of_its_numbers(
     text: str, relation: RelationType, direction: str | None

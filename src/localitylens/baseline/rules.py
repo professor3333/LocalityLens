@@ -45,7 +45,8 @@ from localitylens.geo.units import AMBIGUOUS_UNIT_FORMS, parse_unit, to_metres
 # a precise offset; a dotless "Mt" no longer crashes (KeyError in _feature since rules-1).
 # rules-5: a range ("20-21 air mi") is read as a range, with the distance missing and a question,
 # never as its upper number (before, a number could start right after a hyphen).
-RULES_VERSION: Final = "rules-5"
+# rules-6: "or" also joins a range ("2 or 3 mi"), which rules-5 read as its second number.
+RULES_VERSION: Final = "rules-6"
 
 # ---------------------------------------------------------------------------------- patterns
 
@@ -56,12 +57,13 @@ _NUM = (
     rf"(?:\d+\s*[{_VULGAR}]|\d+(?:\s+|-)\d+/\d+|\d+/\d+|\d*\.\d+|\d+|[{_VULGAR}])"
     r"(?![\w/])"
 )
-# A range of whole or decimal numbers: "20-21", "2 to 3". A fraction is never a range's end, so
-# "1-1/2" stays the mixed number 1.5. The distance is then missing, with a question (rules-5).
+# A range of whole or decimal numbers: "20-21", "2 to 3", "2 or 3" (rules-6). A fraction is never
+# a range's end, so "1-1/2" stays the mixed number 1.5. The distance is then missing, with a
+# question (rules-5).
 _RANGE_END = rf"(?:\d+\s*[{_VULGAR}]|\d+(?:\.\d+)?|[{_VULGAR}])(?![\w/])"
 _RANGE = (
     rf"(?P<low>(?<![\w./\-\u2013])(?:\d+\s*[{_VULGAR}]|\d+/\d+|\d*\.\d+|\d+|[{_VULGAR}]))"
-    rf"(?:\s*[-\u2013]\s*|\s+(?i:to)\s+)(?={_RANGE_END})"
+    rf"(?:\s*[-\u2013]\s*|\s+(?i:to|or)\s+)(?={_RANGE_END})"
 )
 _UNIT = (
     r"(?i:miles?\b|mi\b\.?|kilomet(?:er|re)s?\b|km\b\.?|met(?:er|re)s?\b|feet\b|ft\b\.?"

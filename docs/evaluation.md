@@ -22,7 +22,7 @@ correct proposal once the feature's extent is supplied and no other question blo
 With the [extent store](../data/reviewed/) (68 of 115 features measured), dev and validation
 runs also report regions computed, their precision and useful coverage
 ([findings](../eval/reports/extents-findings.md), [batch 4](../eval/reports/extents-batch-4-findings.md)):
-with rules-5, hybrid-1 computes 36 regions on the 160 read records, 33 correct (92%), a useful
+with rules-6, hybrid-1 computes 36 regions on the 160 read records, 33 correct (92%), a useful
 coverage of 33 of 92 answerable (36%); on dev-2's unseen labels, 11 regions, 10 correct (91%),
 a useful coverage of 10 of 36 (28%). "Correct" tests the
 interpretation and the reference, not the size of the radius.
@@ -92,7 +92,8 @@ request and also wrote the rules, so this is weaker evidence than the owner's bl
 Only 3 of its labels are the kind rules-3
 and rules-4 decide, so it does not test them. rules-5 asks about distance ranges instead of
 reading their second number; on the read samples it changes only A23 (in-sample, rules 50 → 51,
-hybrid-1 55 → 56 of 92; [rules-5 findings](../eval/reports/rules-5-findings.md)). dev-3 is drawn for that (35 of 50 "place, offset"
+hybrid-1 55 → 56 of 92; [rules-5 findings](../eval/reports/rules-5-findings.md)). rules-6 adds
+"2 or 3 mi" ranges and changes no read label ([rules-6 findings](../eval/reports/rules-6-findings.md)). dev-3 is drawn for that (35 of 50 "place, offset"
 labels, text shape version 2). Claude has annotated it, with the same limit, and no system has
 run on it. From dev-3 on, samples also exclude
 labels whose wording repeats a read or reserved group under another county (exclusion version

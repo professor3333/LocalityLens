@@ -166,9 +166,9 @@ def test_runs_with_the_store_compute_proposals_and_say_where_extents_came_from(
     assert "reviewed-extent store" in with_store["note"]
 
     json_path, _ = write_report(with_store, tmp_path / "reports", "s")
-    assert json_path.name == "s-rules-5-extents.json"  # never overwrites the plain run
+    assert json_path.name == "s-rules-6-extents.json"  # never overwrites the plain run
     plain_path, _ = write_report(plain, tmp_path / "reports", "s")
-    assert plain_path.name == "s-rules-5.json"
+    assert plain_path.name == "s-rules-6.json"
 
 
 def test_hybrid_refuses_components_run_with_different_stores(

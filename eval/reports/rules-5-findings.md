@@ -64,7 +64,8 @@ label and 4 fall back to direction-only. No other change sets a distance.
 
 ## What this means
 
-- **No more silent ranges.** About 220 unread labels per 38,000 had a range read as one number,
-  a false precision of up to the range's width.
+- **Fewer silent ranges.** About 220 unread labels per 38,000 had a range read as one number,
+  a false precision of up to the range's width. *Correction: "or" ranges ("2 or 3 mi") were
+  still read as one number until [rules-6](rules-6-findings.md).*
 - **dev-3 will test rules-5** together with rules-3 and rules-4. Nothing in this change was
   designed on dev-3, which has not been read.

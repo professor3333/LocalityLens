@@ -88,7 +88,7 @@ command. Every value carries its `[start, end)` span in the original text:
 ```console
 $ uv run localitylens baseline run --limit 2 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
-extractor   rules-5
+extractor   rules-6
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -273,7 +273,7 @@ only if it reaches a candidate ([findings](eval/reports/hybrid-1-findings.md)):
 $ uv run localitylens interpret --system hybrid --limit 1 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
 system      hybrid-1: rules result used; no LLM call
-extractor   rules-5
+extractor   rules-6
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -430,7 +430,9 @@ go back to it.
 false precision. Ranges are now asked about: the distance is missing and an open question names
 the range ([findings](eval/reports/rules-5-findings.md)). On the read samples only A23 changes
 (now correct, in-sample: rules 50 → 51, hybrid-1 55 → 56 of 92). On 38,272 unread groups,
-217 ranges read as one number now ask instead.
+217 ranges read as one number now ask instead. rules-6 adds "2 or 3 mi" ranges, which rules-5
+still read as one number; no read or unread label outside dev-3 and the held-out groups changes
+([findings](eval/reports/rules-6-findings.md)).
 
 **On fresh data: dev-2.** 50 new groups were annotated by Claude, at the owner's request, and
 then scored once by a plan pushed before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
@@ -462,12 +464,12 @@ fail validation. On dev and validation data it gives 27 correct candidates of 92
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 ([findings](eval/reports/qwen3.5-2b-findings.md)).
 
-**Full regions, with 68 measured extents and rules-5** (findings for
+**Full regions, with 68 measured extents and rules-6** (findings for
 [extents](eval/reports/extents-findings.md), [batch 4](eval/reports/extents-batch-4-findings.md),
 [rules-3](eval/reports/rules-3-findings.md), [rules-4](eval/reports/rules-4-findings.md) and
 [rules-5](eval/reports/rules-5-findings.md)):
 
-| | Rules `rules-5` | LLM | **Hybrid `hybrid-1`** | Target |
+| | Rules `rules-6` | LLM | **Hybrid `hybrid-1`** | Target |
 |---|---|---|---|---|
 | *Read samples (audit, dev-1, validation: 92 answerable)* | | | | |
 | Regions computed | 33 | 34 | **36** | |
