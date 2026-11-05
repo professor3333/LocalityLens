@@ -64,6 +64,10 @@ The extent store holds few dev-2 references, so only 2 records reach a full regi
 Useful coverage is 2 of 36 for the rules and for hybrid-1. That says nothing about precision on
 unseen data, and only that dev-2's references still need extents.
 
+**Update (extents batch 4):** after 12 of dev-2's references were measured, hybrid-1 computes 11
+regions on dev-2, 10 correct (useful coverage 10 of 36). The plan's reports above are kept as
+`dev-2-*-extents-plan`. See the [batch 4 findings](extents-batch-4-findings.md).
+
 ## A repeated label: E40 is not unseen
 
 E40, "Hoosier Pass.", has exactly the same text as validation's V021. Their supplied counties

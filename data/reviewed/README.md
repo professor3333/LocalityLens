@@ -34,6 +34,7 @@ row (`latitude`, `longitude`, `datum`) **to the farthest point of the feature's 
   guide's midpoint fallback.
 - **Flats, basins, valleys, ranges:** measure to the farthest edge of the named landform as the
   map shows it. Say in `note` what you took as the edge.
+- **Glaciers:** the named ice polygon in USGS hydrography (NHD), found by the row's GNIS ID.
 - **If you can't defend a number, leave the row pending.** An empty `extent_m` is allowed. The
   record keeps asking for the extent, which is better than a wrong radius.
 
@@ -53,7 +54,7 @@ Then check the file:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 56 reviewed, 41 pending, 0 problems
+extents-1: 68 reviewed, 47 pending, 0 problems
 ```
 
 ## Rules
@@ -74,12 +75,19 @@ an answerable record whose annotated type can become a proposal (named feature, 
 direction, distance only). It used the audit, dev-1 and validation worksheets, 97 features in
 all. It never overwrites an existing file.
 
+Batch 4 (2026-11-05) added the 18 dev-2 references that block a correct dev-2 candidate
+([findings](../../eval/reports/extents-batch-4-findings.md)): 12 measured, 6 pending.
+
 ## How the measured rows were checked
 
 - **Towns** (incorporated or census-designated place limits on The National Map): the extent
   must be at least the farthest vertex of the town's own polygon in the USGS `govunits`
   service. Matching is by place name, because those polygons carry census-entity GNIS IDs,
   not the populated-place IDs in this file.
+- **Towns, streams and glaciers in batch 4:** the reading *is* the farthest vertex of the
+  feature's own USGS polygon or line (`govunits` by place name; NHD flowlines or ice polygon by
+  the row's GNIS ID), and each was drawn on the USGS Topo basemap to check that it matches the
+  mapped feature.
 - **Streams and any row whose note gives an end point:** the GRS80 geodesic distance from
   the row's point to that end point must not exceed the extent.
 - **Summits and gaps:** the same geodesic check runs to the recorded far point. It tests the
@@ -90,9 +98,13 @@ all. It never overwrites an existing file.
   Service) along each measured line. A summit's profile must fall to its far point without
   crossing a separate summit (a rise of more than about 300 ft above a saddle), and a gap's
   approach must end on a valley floor. This check corrected Thunder Mountain and Veta Pass.
-  Fremont Pass went back to pending, because its north side is mine-altered ground.
+  Fremont Pass went back to pending, because its north side is mine-altered ground. In batch 4 the
+  profiles located the edges in the first place (Rosalie Peak, Milner Pass, San Francisco
+  Pass), and they sent Mount Audubon and Douglas Pass to pending.
 - **Towns stay pending** when The National Map has no limit of their own (Hesperus, Gothic,
-  Climax, …). **Streams stay pending** when the far end of the named reach isn't clear.
+  Climax, Cahone, Minnehaha, …). **Streams stay pending** when the far end of the named reach isn't clear.
   **Summits stay pending** when a slope or mesa surface runs on with no edge, or when the map
   can't settle what the name covers (Two Buttes). **Gaps stay pending** when an approach
-  has no natural valley floor (Fremont Pass).
+  has no natural valley floor (Fremont Pass, Douglas Pass). **Ridges and falls stay pending**
+  when the named ridge has no clear end (Niwot Ridge) or the map shows only a point (Boulder
+  Falls).

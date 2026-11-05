@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 35 · `feature_absent_from_index` 19 · `no_reference_feature` 4 · `None` 2
 
-**proposal**: `needs_information` 30 · `unsupported` 15 · `computed` 13 · `invalid_extraction` 2
+**proposal**: `needs_information` 29 · `unsupported` 15 · `computed` 14 · `invalid_extraction` 2
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -71,4 +71,4 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V057 | Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird. | distance_and_direction | Wray | candidates_found | Wray (Populated Place, Yuma, exact_official) | computed |
 | V058 | Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel. | distance_and_direction | Needle Eye Tunnel | feature_absent_from_index |  | needs_information |
 | V059 | Boulder Mountain Parks. West side of Bear Pk. & S. Boulder Pk, in rich ravine below the W. ridge of Bear Pk. | named_feature | Boulder Mountain Parks | feature_absent_from_index |  | needs_information |
-| V060 | Bluebell Canyon, south edge of Boulder. | named_feature | Boulder | candidates_found | Boulder (Populated Place, Boulder, exact_official) | needs_information |
+| V060 | Bluebell Canyon, south edge of Boulder. | named_feature | Boulder | candidates_found | Boulder (Populated Place, Boulder, exact_official) | computed |

@@ -76,8 +76,8 @@
         },
         "computed_proposals_correct": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "unsupported_flagged": {
           "hits": 0,
@@ -218,8 +218,8 @@
         },
         "computed_proposals_correct": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "unsupported_flagged": {
           "hits": 0,
@@ -587,7 +587,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -731,7 +731,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 6
         },
         {
@@ -2391,7 +2391,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -2535,7 +2535,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 6
         },
         {
@@ -3055,14 +3055,14 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 10,
+          "hits": 12,
           "n": 50,
-          "rate": 0.2
+          "rate": 0.24
         },
         "precision": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "useful_coverage": {
           "hits": 9,
@@ -3089,14 +3089,14 @@
       },
       "hybrid": {
         "computed": {
-          "hits": 10,
+          "hits": 12,
           "n": 50,
-          "rate": 0.2
+          "rate": 0.24
         },
         "precision": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "useful_coverage": {
           "hits": 9,
@@ -3207,8 +3207,8 @@
         },
         "computed_proposals_correct": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "unsupported_flagged": {
           "hits": 0,
@@ -3349,8 +3349,8 @@
         },
         "computed_proposals_correct": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "unsupported_flagged": {
           "hits": 0,
@@ -3700,7 +3700,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -3826,7 +3826,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 6
         },
         {
@@ -5144,7 +5144,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -5270,7 +5270,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 6
         },
         {
@@ -5646,14 +5646,14 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 10,
+          "hits": 12,
           "n": 40,
-          "rate": 0.25
+          "rate": 0.3
         },
         "precision": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "useful_coverage": {
           "hits": 9,
@@ -5680,14 +5680,14 @@
       },
       "hybrid": {
         "computed": {
-          "hits": 10,
+          "hits": 12,
           "n": 40,
-          "rate": 0.25
+          "rate": 0.3
         },
         "precision": {
           "hits": 9,
-          "n": 10,
-          "rate": 0.9
+          "n": 12,
+          "rate": 0.75
         },
         "useful_coverage": {
           "hits": 9,

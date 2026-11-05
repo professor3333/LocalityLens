@@ -11,9 +11,9 @@
   "seed": "dev-2/1",
   "extent_store": {
     "version": "extents-1",
-    "sha256": "5a98f0c23253d864de1e5ec86c37e0baf40623095ae2fb2e01dda1a97355849d",
-    "reviewed": 56,
-    "pending": 41
+    "sha256": "a3ee12cb542d2133db941d6a3ff5e96098135dbb81a3bf457125129c01f4f6e9",
+    "reviewed": 68,
+    "pending": 47
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -30,9 +30,9 @@
       "feature_absent_from_index": 7
     },
     "proposal": {
-      "needs_information": 41,
-      "unsupported": 7,
-      "computed": 2
+      "needs_information": 33,
+      "computed": 10,
+      "unsupported": 7
     }
   },
   "records": [
@@ -249,10 +249,10 @@
         "county": "La Plata",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 3039,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E08",
@@ -428,10 +428,10 @@
         "county": "Boulder",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 12039,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E14",
@@ -495,10 +495,10 @@
         "county": "Montezuma",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 10274,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 11029,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E16",
@@ -623,10 +623,10 @@
         "county": "Park",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 3439,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E20",
@@ -906,10 +906,10 @@
         "county": "Moffat",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 37306,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 39427,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E29",
@@ -1008,10 +1008,10 @@
         "county": "Boulder",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 12039,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E33",
@@ -1075,8 +1075,8 @@
       },
       "proposal": "needs_information",
       "radius_lower_bound_m": 40,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 3040,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E35",
@@ -1212,10 +1212,10 @@
         "county": "Grand",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 1839,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E40",
@@ -1492,10 +1492,10 @@
         "county": "Gunnison",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 1739,
+      "extent": "reviewed"
     },
     {
       "audit_id": "E50",

@@ -30,9 +30,9 @@
   },
   "extent_store": {
     "version": "extents-1",
-    "sha256": "5a98f0c23253d864de1e5ec86c37e0baf40623095ae2fb2e01dda1a97355849d",
-    "reviewed": 56,
-    "pending": 41
+    "sha256": "a3ee12cb542d2133db941d6a3ff5e96098135dbb81a3bf457125129c01f4f6e9",
+    "reviewed": 68,
+    "pending": 47
   },
   "note": "Rules first; the LLM's result is used only where the rules reach no gazetteer candidate and the LLM does. Built from the two component reports (both deterministic). The top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -57,9 +57,9 @@
       "feature_absent_from_index": 6
     },
     "proposal": {
-      "needs_information": 42,
-      "unsupported": 6,
-      "computed": 2
+      "needs_information": 33,
+      "computed": 11,
+      "unsupported": 6
     }
   },
   "records": [
@@ -196,7 +196,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -298,10 +298,10 @@
         "county": "La Plata",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 3039,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -509,10 +509,10 @@
         "county": "Boulder",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 12039,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -580,10 +580,10 @@
         "county": "Montezuma",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 10274,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 11029,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -716,10 +716,10 @@
         "county": "Park",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 3439,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -755,10 +755,10 @@
         "county": "Rio Blanco",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 5852,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 38814,
+      "extent": "reviewed",
       "trace": {
         "prompt_sha256": "a57ed94843c6d25e958567aeba42077cd07ed6386d9cc1ed7e361ec6bcd67aac",
         "prompt_tokens": 2372,
@@ -766,7 +766,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1049,10 +1049,10 @@
         "county": "Moffat",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 37306,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 39427,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -1189,10 +1189,10 @@
         "county": "Boulder",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 12039,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -1260,8 +1260,8 @@
       },
       "proposal": "needs_information",
       "radius_lower_bound_m": 40,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 3040,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -1370,7 +1370,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1435,10 +1435,10 @@
         "county": "Grand",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 1839,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -1507,7 +1507,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -1775,10 +1775,10 @@
         "county": "Gunnison",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 1739,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },

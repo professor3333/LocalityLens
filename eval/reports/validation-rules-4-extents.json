@@ -11,9 +11,9 @@
   "seed": "benchmark/1",
   "extent_store": {
     "version": "extents-1",
-    "sha256": "5a98f0c23253d864de1e5ec86c37e0baf40623095ae2fb2e01dda1a97355849d",
-    "reviewed": 56,
-    "pending": 41
+    "sha256": "a3ee12cb542d2133db941d6a3ff5e96098135dbb81a3bf457125129c01f4f6e9",
+    "reviewed": 68,
+    "pending": 47
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -31,8 +31,8 @@
       "no_reference_feature": 8
     },
     "proposal": {
-      "needs_information": 42,
-      "computed": 10,
+      "needs_information": 41,
+      "computed": 11,
       "unsupported": 8
     }
   },
@@ -871,10 +871,10 @@
         "county": "Boulder",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 9000,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 18006,
+      "extent": "reviewed"
     },
     {
       "audit_id": "V030",

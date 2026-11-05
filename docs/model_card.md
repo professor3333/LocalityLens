@@ -85,9 +85,10 @@ On the locked test, correct proposal candidates of 56 answerable records:
 
 For hybrid-1, the model is called on 39% of records.
 
-With 56 measured extents and rules-4, on dev and validation data, hybrid-1 computes 34 full
-regions of 160 records, 33 of them correct (97%, in-sample; target ≥ 95%), a useful coverage of
-36% (target ≥ 70%).
+With 68 measured extents and rules-4, on the read dev and validation data (160 records), hybrid-1
+computes 37 full regions, 33 of them correct (89%; target ≥ 95%), a useful coverage of 36%
+(target ≥ 70%). On dev-2's unseen labels it computes 11, 10 correct (91%), a useful coverage of
+28% ([batch 4 findings](../eval/reports/extents-batch-4-findings.md)).
 Containment, and these measures on the locked test, are not measured yet. See
 [evaluation](evaluation.md) for definitions and every report.
 

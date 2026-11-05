@@ -78,8 +78,8 @@
         },
         "computed_proposals_correct": {
           "hits": 10,
-          "n": 10,
-          "rate": 1.0
+          "n": 11,
+          "rate": 0.909
         },
         "unsupported_flagged": {
           "hits": 3,
@@ -149,8 +149,8 @@
         },
         "computed_proposals_correct": {
           "hits": 12,
-          "n": 13,
-          "rate": 0.923
+          "n": 14,
+          "rate": 0.857
         },
         "unsupported_flagged": {
           "hits": 3,
@@ -220,8 +220,8 @@
         },
         "computed_proposals_correct": {
           "hits": 12,
-          "n": 12,
-          "rate": 1.0
+          "n": 13,
+          "rate": 0.923
         },
         "unsupported_flagged": {
           "hits": 3,
@@ -871,7 +871,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 5
         },
         {
@@ -2511,7 +2511,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 2
         }
       ],
@@ -3035,7 +3035,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 5
         },
         {
@@ -3627,14 +3627,14 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 10,
+          "hits": 11,
           "n": 60,
-          "rate": 0.167
+          "rate": 0.183
         },
         "precision": {
           "hits": 10,
-          "n": 10,
-          "rate": 1.0
+          "n": 11,
+          "rate": 0.909
         },
         "useful_coverage": {
           "hits": 10,
@@ -3644,14 +3644,14 @@
       },
       "llm": {
         "computed": {
-          "hits": 13,
+          "hits": 14,
           "n": 60,
-          "rate": 0.217
+          "rate": 0.233
         },
         "precision": {
           "hits": 12,
-          "n": 13,
-          "rate": 0.923
+          "n": 14,
+          "rate": 0.857
         },
         "useful_coverage": {
           "hits": 12,
@@ -3661,14 +3661,14 @@
       },
       "hybrid": {
         "computed": {
-          "hits": 12,
+          "hits": 13,
           "n": 60,
-          "rate": 0.2
+          "rate": 0.217
         },
         "precision": {
           "hits": 12,
-          "n": 12,
-          "rate": 1.0
+          "n": 13,
+          "rate": 0.923
         },
         "useful_coverage": {
           "hits": 12,
@@ -3779,8 +3779,8 @@
         },
         "computed_proposals_correct": {
           "hits": 10,
-          "n": 10,
-          "rate": 1.0
+          "n": 11,
+          "rate": 0.909
         },
         "unsupported_flagged": {
           "hits": 2,
@@ -3850,8 +3850,8 @@
         },
         "computed_proposals_correct": {
           "hits": 12,
-          "n": 13,
-          "rate": 0.923
+          "n": 14,
+          "rate": 0.857
         },
         "unsupported_flagged": {
           "hits": 2,
@@ -3921,8 +3921,8 @@
         },
         "computed_proposals_correct": {
           "hits": 12,
-          "n": 12,
-          "rate": 1.0
+          "n": 13,
+          "rate": 0.923
         },
         "unsupported_flagged": {
           "hits": 2,
@@ -4452,7 +4452,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 5
         },
         {
@@ -5786,7 +5786,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 2
         }
       ],
@@ -6220,7 +6220,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 5
         },
         {
@@ -6704,14 +6704,14 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 10,
+          "hits": 11,
           "n": 49,
-          "rate": 0.204
+          "rate": 0.224
         },
         "precision": {
           "hits": 10,
-          "n": 10,
-          "rate": 1.0
+          "n": 11,
+          "rate": 0.909
         },
         "useful_coverage": {
           "hits": 10,
@@ -6721,14 +6721,14 @@
       },
       "llm": {
         "computed": {
-          "hits": 13,
+          "hits": 14,
           "n": 49,
-          "rate": 0.265
+          "rate": 0.286
         },
         "precision": {
           "hits": 12,
-          "n": 13,
-          "rate": 0.923
+          "n": 14,
+          "rate": 0.857
         },
         "useful_coverage": {
           "hits": 12,
@@ -6738,14 +6738,14 @@
       },
       "hybrid": {
         "computed": {
-          "hits": 12,
+          "hits": 13,
           "n": 49,
-          "rate": 0.245
+          "rate": 0.265
         },
         "precision": {
           "hits": 12,
-          "n": 12,
-          "rate": 1.0
+          "n": 13,
+          "rate": 0.923
         },
         "useful_coverage": {
           "hits": 12,

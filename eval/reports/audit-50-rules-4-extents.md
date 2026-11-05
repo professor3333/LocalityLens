@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 35 · `feature_absent_from_index` 12 · `no_reference_feature` 3
 
-**proposal**: `needs_information` 37 · `computed` 10 · `unsupported` 3
+**proposal**: `needs_information` 35 · `computed` 12 · `unsupported` 3
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -26,7 +26,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A12 | Silt Mesa (right-of-way). | named_feature | Silt Mesa | feature_absent_from_index |  | needs_information |
 | A13 | Northern Gunnison Basin: ca 5 air mi SSW of Paonia. | distance_and_direction | Paonia | candidates_found | Paonia (Populated Place, Delta, exact_official) | computed |
 | A14 | White River Plateau. Coffee Pot Road, 8 mi W of Hwy 301. | distance_and_direction | Hwy | feature_absent_from_index |  | needs_information |
-| A15 | Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Along a 2-track road next to Woman Creek bypass north of C-2 pond. | distance_and_direction | Boulder | candidates_found | Boulder (Populated Place, Boulder, exact_official) | needs_information |
+| A15 | Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Along a 2-track road next to Woman Creek bypass north of C-2 pond. | distance_and_direction | Boulder | candidates_found | Boulder (Populated Place, Boulder, exact_official) | computed |
 | A16 | South Park area. | named_feature | South Park | candidates_found | South Park (Flat, San Juan, exact_official) | needs_information |
 | A17 | Mesa de Maya Region of southeastern CO. Gotera Canyon. | named_feature | Mesa de Maya Region | feature_absent_from_index |  | needs_information |
 | A18 | Rico Mts.; northern ridge of Sockrider Mt. | named_feature | Rico Mts | feature_absent_from_index |  | needs_information |
@@ -34,7 +34,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A20 | Morrison Creek. Buffalo Creek Recreation Area, along Morrison Creek and former National Forest Road 547, 2.69 km. south of National Forest Road 550, 63.3 km. south of the GNIS location of Golden. | distance_and_direction | National Forest Road | feature_absent_from_index |  | needs_information |
 | A21 | Near Deer Creek, Chatfield Arboretum site, Denver Botanic Gardens, located at junction of Highway 75 and Deer Creek Rd. | named_feature | Near Deer Creek | candidates_found | East Deer Creek (Stream, La Plata, fuzzy_official) | needs_information |
 | A22 | Lost Man Campground, upper Roaring Fork Valley east of Aspen. | direction_only | Aspen | candidates_found | Aspen (Populated Place, Pitkin, exact_official) | needs_information |
-| A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | distance_and_direction | Craig | candidates_found | Craig (Populated Place, Moffat, exact_official) | needs_information |
+| A23 | North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig. | distance_and_direction | Craig | candidates_found | Craig (Populated Place, Moffat, exact_official) | computed |
 | A24 | Tolland. James Peak. | named_feature | Tolland | candidates_found | Tolland (Populated Place, Gilpin, exact_official) | needs_information |
 | A25 | Nine miles north of Hotchkiss on Oak Mesa. | distance_and_direction | Hotchkiss | candidates_found | Hotchkiss (Populated Place, Delta, exact_official) | computed |
 | A26 | S slope of Mt. Zenobia. | named_feature | Mt. Zenobia | candidates_found | Zenobia Peak (Summit, Moffat, core_official) | needs_information |

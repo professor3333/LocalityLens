@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 33 · `feature_absent_from_index` 19 · `no_reference_feature` 8
 
-**proposal**: `needs_information` 42 · `computed` 10 · `unsupported` 8
+**proposal**: `needs_information` 41 · `computed` 11 · `unsupported` 8
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -40,7 +40,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V026 | Castleton Ranch, along Carbon Creek, just east of County Road 730, near jct. with CR 737. | direction_only | County Road | feature_absent_from_index |  | needs_information |
 | V027 | Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table. | direction_only | Billiard Table | feature_absent_from_index |  | needs_information |
 | V028 | Bull Domingo Hills at east edge of Wet Mountain Valley about 1 mile north of Westcliffe. | distance_and_direction | Westcliffe | candidates_found | Westcliffe (Populated Place, Custer, exact_official) | computed |
-| V029 | Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Rock Creek. | distance_and_direction | Boulder | candidates_found | Boulder (Populated Place, Boulder, exact_official) | needs_information |
+| V029 | Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Rock Creek. | distance_and_direction | Boulder | candidates_found | Boulder (Populated Place, Boulder, exact_official) | computed |
 | V030 | Along the trail up Sawtooth Peak (Buchanan Pass). Just E of the summit of the pass. | named_feature | Sawtooth Peak | candidates_found | Sawtooth Peak (Summit, Pueblo, exact_official) | needs_information |
 | V031 | San Juan National Forest: Tenmile Basin. Animas River drainage ca. 18 mi. S.E. of Silverton. Meadow NE and above Balsam Lake. | distance_and_direction | Silverton | candidates_found | Silverton (Populated Place, San Juan, exact_official) | needs_information |
 | V032 | Summit of Rountop Mountain, Fire Lookout. Dinosaur National Monument. East-facing slope between lookout and brink of Hell Canyon. | named_feature | Fire Lookout | feature_absent_from_index |  | needs_information |

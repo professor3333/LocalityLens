@@ -14,7 +14,7 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 | Reference top-1 acceptable (answerable) | 19/31 (61%) | 15/31 (48%) | 20/31 (64%) |
 | Reference in top 5 (answerable) | 19/31 (61%) | 15/31 (48%) | 20/31 (64%) |
 | **Correct proposal candidates** (answerable) | 17/31 (55%) | 13/31 (42%) | 17/31 (55%) |
-| Computed proposals that are correct | 9/10 (90%) | 7/9 (78%) | 9/10 (90%) |
+| Computed proposals that are correct | 9/12 (75%) | 7/9 (78%) | 9/12 (75%) |
 | Unsupported records flagged unsupported | 0/4 (0%) | 4/4 (100%) | 0/4 (0%) |
 | References absent from GNIS reported absent | 6/15 (40%) | 11/15 (73%) | 4/15 (27%) |
 | Place names read as no locality | 0 | 1 | 0 |
@@ -24,8 +24,8 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 
 | Metric | rules | llm | hybrid |
 |---|---|---|---|
-| Computed proposals (of all records) | 10/50 (20%) | 9/50 (18%) | 10/50 (20%) |
-| Computed proposals that are correct | 9/10 (90%) | 7/9 (78%) | 9/10 (90%) |
+| Computed proposals (of all records) | 12/50 (24%) | 9/50 (18%) | 12/50 (24%) |
+| Computed proposals that are correct | 9/12 (75%) | 7/9 (78%) | 9/12 (75%) |
 | Useful coverage (of answerable) | 9/31 (29%) | 7/31 (23%) | 9/31 (29%) |
 
 **Paired, correct proposal candidates (LLM − rules):** -13% (95% bootstrap CI -29% to +3%); LLM-only 2, rules-only 6, exact sign test p = 0.2891.
@@ -46,7 +46,7 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 | Reference top-1 acceptable (answerable) | 16/24 (67%) | 13/24 (54%) | 17/24 (71%) |
 | Reference in top 5 (answerable) | 16/24 (67%) | 13/24 (54%) | 17/24 (71%) |
 | **Correct proposal candidates** (answerable) | 15/24 (62%) | 11/24 (46%) | 15/24 (62%) |
-| Computed proposals that are correct | 9/10 (90%) | 6/8 (75%) | 9/10 (90%) |
+| Computed proposals that are correct | 9/12 (75%) | 6/8 (75%) | 9/12 (75%) |
 | Unsupported records flagged unsupported | 0/3 (0%) | 3/3 (100%) | 0/3 (0%) |
 | References absent from GNIS reported absent | 6/13 (46%) | 9/13 (69%) | 4/13 (31%) |
 

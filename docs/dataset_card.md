@@ -96,7 +96,7 @@ feature kind were not tallied.
 ### Reviewed feature extents
 
 [`data/reviewed/extents.csv`](../data/reviewed/) holds measured extents for the references of
-the dev and validation annotations: one row per GNIS feature, 97 rows. Each measurement is the
+the dev and validation annotations: one row per GNIS feature, 115 rows (68 measured). Each measurement is the
 radial from the GNIS representative point to the farthest point of the feature (Best Practices
 §3.4.1). Each row records its method, source, who measured it and the date, and is checked
 against the snapshot. Rows with no measurement stay pending. The README there gives the
