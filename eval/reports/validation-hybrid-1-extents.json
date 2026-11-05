@@ -30,9 +30,9 @@
   },
   "extent_store": {
     "version": "extents-1",
-    "sha256": "a3ee12cb542d2133db941d6a3ff5e96098135dbb81a3bf457125129c01f4f6e9",
-    "reviewed": 68,
-    "pending": 47
+    "sha256": "85b610b3c31bdd4b8e003079441b721d8d6a136d8f74d0179cccb39041984a25",
+    "reviewed": 67,
+    "pending": 48
   },
   "note": "Rules first; the LLM's result is used only where the rules reach no gazetteer candidate and the LLM does. Built from the two component reports (both deterministic). The top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -57,8 +57,8 @@
       "no_reference_feature": 5
     },
     "proposal": {
-      "needs_information": 41,
-      "computed": 13,
+      "needs_information": 42,
+      "computed": 12,
       "unsupported": 6
     }
   },
@@ -94,7 +94,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -417,7 +417,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -459,7 +459,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       },
       "source": "llm",
@@ -528,10 +528,10 @@
         "county": "Chaffee",
         "match": "exact_official"
       },
-      "proposal": "computed",
+      "proposal": "needs_information",
       "radius_lower_bound_m": 39,
-      "radius_m": 3439,
-      "extent": "reviewed",
+      "radius_m": null,
+      "extent": null,
       "source": "rules",
       "llm_called": false
     },
@@ -879,7 +879,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -1210,7 +1210,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1318,7 +1318,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1752,7 +1752,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.03,
         "cache_hits": 1
       }
     },
@@ -1795,7 +1795,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       },
       "source": "llm",
@@ -2128,7 +2128,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       },
       "source": "llm",

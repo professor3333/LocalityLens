@@ -19,11 +19,11 @@ A record reaches a full region only when its reference has a measured extent, so
 measure across all splits is the **correct proposal candidate**: an answerable record whose
 critical interpretation matches and whose **top-ranked** candidate is acceptable. It becomes a
 correct proposal once the feature's extent is supplied and no other question blocks it.
-With the [extent store](../data/reviewed/) (68 of 115 features measured), dev and validation
+With the [extent store](../data/reviewed/) (67 of 115 features measured), dev and validation
 runs also report regions computed, their precision and useful coverage
 ([findings](../eval/reports/extents-findings.md), [batch 4](../eval/reports/extents-batch-4-findings.md)):
-with rules-6, hybrid-1 computes 36 regions on the 160 read records, 33 correct (92%), a useful
-coverage of 33 of 92 answerable (36%); on dev-2's unseen labels, 11 regions, 10 correct (91%),
+with rules-6, hybrid-1 computes 35 regions on the 160 read records, 32 correct (91%), a useful
+coverage of 32 of 92 answerable (35%); on dev-2's unseen labels, 11 regions, 10 correct (91%),
 a useful coverage of 10 of 36 (28%). "Correct" tests the
 interpretation and the reference, not the size of the radius.
 

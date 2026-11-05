@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 35 · `feature_absent_from_index` 19 · `no_reference_feature` 4 · `None` 2
 
-**proposal**: `needs_information` 29 · `unsupported` 15 · `computed` 14 · `invalid_extraction` 2
+**proposal**: `needs_information` 30 · `unsupported` 15 · `computed` 13 · `invalid_extraction` 2
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -24,7 +24,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V010 | Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station. | itinerary | Rainbow gas sta. | feature_absent_from_index |  | unsupported |
 | V011 | West Rim of Uncompahgre Plateau, near road between Columbine Pass and Uncompahgre Butte, along road to Love Mesa. | route_relative | Uncompahgre Plateau | candidates_found | Uncompahgre Plateau (Plain, Montrose, exact_official) | unsupported |
 | V012 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, drainage N of North Peak. | named_feature | North Peak | candidates_found | North Peak (Summit, Pueblo, exact_official) | needs_information |
-| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | named_feature | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | computed |
+| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | named_feature | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | needs_information |
 | V014 | Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone. | distance_and_direction | Greystone | candidates_found | Greystone (Populated Place, Moffat, exact_official) | needs_information |
 | V015 | Moun tains about the head waters of Clear Creek. In the valley near Empire. | named_feature | Clear Creek | candidates_found | Clear Creek (Stream, Jackson, exact_official) | needs_information |
 | V016 | Gravelly slope of Table Mesa, 3 mi. s. of Lyons. | distance_and_direction | Lyons | candidates_found | Lyons (Populated Place, Boulder, exact_official) | needs_information |

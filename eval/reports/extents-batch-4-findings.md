@@ -124,3 +124,24 @@ Every new incorrect region was already a wrong reading. The extent only lets it 
   on extents with no defensible edge, or on direction-only labels with no distance.
 - **The precision target needs better readings, not more extents.** The new errors come from
   choosing the wrong clause (Rocky Flats, Bluebell Canyon) and from the range bug.
+
+## Check afterwards (2026-11-05)
+
+Every batch-4 row was rechecked against the live services: fresh `govunits` and NHD queries
+give the stored readouts to the metre, each recorded far point is within its extent, the
+rounding follows the rule, and new 3DEP profiles (100 m steps) find no separate summit on the
+terrain lines. Two questions came up about rows measured with the terrain rule:
+
+- **Mount Shavano (batch 3) is pending again.** Its recorded SE line crosses an unnamed knob
+  319 ft above the col, a separate summit by the store's rule. Its east flank also falls at
+  15-40% for 5 km with no slope break, so no edge is defensible on either side. V013 loses its
+  region: on the read samples hybrid-1 now computes 35 regions, 32 correct (91%), a useful
+  coverage of 32 of 92. dev-2 is unchanged.
+- **Rosalie Peak stays at 3,400 m, with the convention written down.** Bandit Peak rises only
+  about 230 ft above its saddle with Rosalie, so by height alone it would be part of Rosalie and
+  the region would reach Deer Creek beyond it (3.8 km or more). Every summit row already treats
+  a named neighbour as separate (Bear Peak and South Boulder Peak, Shavano and Tabeguache Peak).
+  The store guide now states it: a neighbour is a separate summit when GNIS names it, or when it
+  is unnamed and rises more than about 300 ft above the saddle.
+
+The store holds 67 reviewed rows and 48 pending.

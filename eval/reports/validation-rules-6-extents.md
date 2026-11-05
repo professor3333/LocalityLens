@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 33 · `feature_absent_from_index` 19 · `no_reference_feature` 8
 
-**proposal**: `needs_information` 41 · `computed` 11 · `unsupported` 8
+**proposal**: `needs_information` 42 · `computed` 10 · `unsupported` 8
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -24,7 +24,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V010 | Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station. | direction_only | Rainbow | feature_absent_from_index |  | needs_information |
 | V011 | West Rim of Uncompahgre Plateau, near road between Columbine Pass and Uncompahgre Butte, along road to Love Mesa. | between_features |  | no_reference_feature |  | unsupported |
 | V012 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, drainage N of North Peak. | direction_only | North Peak | candidates_found | North Peak (Summit, Pueblo, exact_official) | needs_information |
-| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | named_feature | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | computed |
+| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | named_feature | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | needs_information |
 | V014 | Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone. | named_feature | Douglas Mt. | candidates_found | Douglas Mountain (Summit, Jefferson, core_official) | needs_information |
 | V015 | Moun tains about the head waters of Clear Creek. In the valley near Empire. | named_feature | Empire | candidates_found | Empire (Populated Place, Clear Creek, exact_official) | needs_information |
 | V016 | Gravelly slope of Table Mesa, 3 mi. s. of Lyons. | named_feature | Table Mesa | candidates_found | Table Mountain (Summit, Boulder, exact_variant) | needs_information |

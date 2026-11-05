@@ -130,8 +130,8 @@ per GNIS feature, each a recorded map measurement with its method, source, who m
 and the date. Pass
 `--extents data/reviewed/extents.csv` to `baseline run`, `interpret` or the audit runs. Every
 row is checked against the pinned snapshot first. Its 115 rows are the references of the dev and
-validation annotations. 68 have been measured so far: 24 towns and 19 streams on USGS The
-National Map, 12 summits and 9 gaps on the USGS Topo basemap, a glacier from USGS hydrography,
+validation annotations. 67 have been measured so far: 24 towns and 19 streams on USGS The
+National Map, 11 summits and 9 gaps on the USGS Topo basemap, a glacier from USGS hydrography,
 and 3 lakes on Google Maps. Towns and streams were checked against the USGS boundary polygon,
 the NHD lines carrying the feature's GNIS ID, or the recorded end point.
 Summit and gap edges are terrain judgments, checked against USGS 3DEP elevation profiles, and
@@ -139,7 +139,7 @@ each row says what it took as the edge:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 68 reviewed, 47 pending, 0 problems
+extents-1: 67 reviewed, 48 pending, 0 problems
 ```
 
 A reference with a measured extent gets a full region. Grand Lake's radius is its 1,300 m
@@ -464,7 +464,7 @@ fail validation. On dev and validation data it gives 27 correct candidates of 92
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 ([findings](eval/reports/qwen3.5-2b-findings.md)).
 
-**Full regions, with 68 measured extents and rules-6** (findings for
+**Full regions, with 67 measured extents and rules-6** (findings for
 [extents](eval/reports/extents-findings.md), [batch 4](eval/reports/extents-batch-4-findings.md),
 [rules-3](eval/reports/rules-3-findings.md), [rules-4](eval/reports/rules-4-findings.md) and
 [rules-5](eval/reports/rules-5-findings.md)):
@@ -472,9 +472,9 @@ against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 | | Rules `rules-6` | LLM | **Hybrid `hybrid-1`** | Target |
 |---|---|---|---|---|
 | *Read samples (audit, dev-1, validation: 92 answerable)* | | | | |
-| Regions computed | 33 | 34 | **36** | |
-| … correct (precision) | 30 (91%) | 29 (85%) | **33 (92%)** | ≥ 95% |
-| Useful coverage | 30 (33%) | 29 (32%) | **33 (36%)** | ≥ 70% |
+| Regions computed | 32 | 33 | **35** | |
+| … correct (precision) | 29 (91%) | 28 (85%) | **32 (91%)** | ≥ 95% |
+| Useful coverage | 29 (32%) | 28 (30%) | **32 (35%)** | ≥ 70% |
 | *dev-2, unseen labels (36 answerable)* | | | | |
 | Regions computed | 10 | 8 | **11** | |
 | … correct (precision) | 9 (90%) | 7 (88%) | **10 (91%)** | ≥ 95% |
@@ -485,8 +485,9 @@ against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 - **More extents expose reading errors.** Every incorrect region that batch 4 added was already
   a wrong reading that used to stop at `needs_information`: an offset from Boulder chosen over
   the place named later (Rocky Flats ×2, Bluebell Canyon), and a range, "20-21 air mi", that the
-  rules read as exactly 21 mi. rules-5 fixes the range, so precision on the read samples is 92%
-  (it was 97% before batch 4). The target needs better readings, not more extents.
+  rules read as exactly 21 mi. rules-5 fixes the range. A recheck then sent Mount Shavano back
+  to pending (no defensible edge), which removes one correct region (V013). Precision on the
+  read samples is 91% (97% before batch 4). The target needs better readings, not more extents.
 - **What blocks the rest:** extents with no defensible edge (towns with no mapped limit, long
   slopes, canyon passes) and direction-only labels with no distance.
 - **"Correct" tests the interpretation and the reference,** not the size of the radius: one
@@ -555,8 +556,8 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 - **Real labels are multi-clause.** Many chain a forest, a range, a road and an offset in one
   string. The rules read one clause, and not always the most specific one.
 - **Unknown extent is the main blocker.** Most references are towns, summits and streams with a
-  single GNIS point, so honest proposals ask for an extent. With 68 of the store's 115 rows
-  measured, 12 audit records get a full region under the rules (9 of them correct).
+  single GNIS point, so honest proposals ask for an extent. With 67 of the store's 115 rows
+  measured, 11 audit records get a full region under the rules (9 of them correct).
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
   places, and leading words ("Above", "Near") absorbed into names. rules-2 fixes "air mi" and
   spelled-out numbers. rules-3 fixes spaced directions ("n. w.") and prefers a named collecting
@@ -599,7 +600,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | Phase | Scope | Status |
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
-| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (68 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · candidate disambiguation · footprints · map review UI · GeoJSON | 🚧 started |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · candidate disambiguation · footprints · map review UI · GeoJSON | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |

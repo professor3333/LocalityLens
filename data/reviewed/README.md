@@ -27,7 +27,9 @@ row (`latitude`, `longitude`, `datum`) **to the farthest point of the feature's 
   smaller town.
 - **Summits:** the boundary follows the valleys, saddles and plains that separate the mountain
   from its neighbours (Quick Reference Guide §2.1.2). Say in `note` what you took as the edge on
-  each side.
+  each side. A neighbour is a **separate summit** when GNIS names it, or when it is unnamed and
+  rises more than about 300 ft above the saddle between them. The edge toward it is that
+  saddle.
 - **Gaps:** this is a rule of this project, because the guide has none for passes. Across the
   ridge, a gap ends where each approach reaches its valley floor. Along the ridge, it ends at
   the straight-line midpoint toward each flanking summit or neighbouring pass, adapted from the
@@ -54,7 +56,7 @@ Then check the file:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 68 reviewed, 47 pending, 0 problems
+extents-1: 67 reviewed, 48 pending, 0 problems
 ```
 
 ## Rules
@@ -97,7 +99,9 @@ Batch 4 (2026-11-05) added the 18 dev-2 references that block a correct dev-2 ca
 - **Summits and gaps, against elevation:** a USGS 3DEP profile (Elevation Point Query
   Service) along each measured line. A summit's profile must fall to its far point without
   crossing a separate summit (a rise of more than about 300 ft above a saddle), and a gap's
-  approach must end on a valley floor. This check corrected Thunder Mountain and Veta Pass.
+  approach must end on a valley floor. This check corrected Thunder Mountain and Veta Pass. A
+  later check with 100 m steps sent Mount Shavano back to pending: its SE line crosses an
+  unnamed knob 319 ft above the col, and its east flank falls at 15-40% for 5 km with no edge.
   Fremont Pass went back to pending, because its north side is mine-altered ground. In batch 4 the
   profiles located the edges in the first place (Rosalie Peak, Milner Pass, San Francisco
   Pass), and they sent Mount Audubon and Douglas Pass to pending.
