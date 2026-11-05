@@ -423,7 +423,24 @@ knowing these labels.
 5 mi E of Salida" became a 1,500 km circle. Streams, ranges, parks and forests now keep the
 offset ([findings](eval/reports/rules-4-findings.md)). No score changes on these samples, because
 none of them has such a label, but 360 of the 1,323 unread groups where rules-3 replaced an offset
-go back to it. A fresh dev sample, dev-2, is waiting for annotation to check the rule.
+go back to it.
+
+**On fresh data: dev-2.** 50 new groups were annotated and then scored once by a plan pushed
+before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
+[findings](eval/reports/dev-2-findings.md)). Correct candidates of 36 answerable:
+
+| rules-4 | LLM v2 | hybrid-1 |
+|---|---|---|
+| 19 (53%) | 17 (47%) | **21 (58%)** |
+
+- **The overall picture holds on unseen labels.** hybrid-1 leads the rules by 2 records (CI +0
+  to +14 points) and is never behind, and the LLM alone is not better than the rules. The rates
+  are close to the in-sample rates, so there is no sign the rules were overfitted.
+- **rules-3 and rules-4 are still untested.** Only 3 dev-2 labels have a place right before an
+  offset. rules-4 changes no reading, and rules-3 changes one (E29) and no score.
+- **One label is a repeat:** E40, "Hoosier Pass.", has the same text as validation's V021,
+  under a different county. Without it: 18 / 16 / 20 of 35. No locked-test text repeats a read
+  one.
 
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,

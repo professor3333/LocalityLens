@@ -83,7 +83,10 @@ audit gains are in-sample ([rules-2 findings](../eval/reports/rules-2-findings.m
 gives audit 17 / 13 / 17, dev-1 17 / 18 / 19 and validation 16 / 15 / 19, also in-sample
 ([rules-3 findings](../eval/reports/rules-3-findings.md)). rules-4 keeps the offset when the place
 is a broad feature and changes none of these numbers
-([rules-4 findings](../eval/reports/rules-4-findings.md)); dev-2 is drawn to check it.
+([rules-4 findings](../eval/reports/rules-4-findings.md)). On fresh data, dev-2 (36 answerable,
+scored once by a pinned plan) gives rules-4 19, LLM 17 and hybrid-1 21
+([dev-2 findings](../eval/reports/dev-2-findings.md)). Only 3 of its labels are the kind rules-3
+and rules-4 decide, so it does not test them.
 
 - **LLM v2:** Qwen3.5-4B Q4_K_M, prompt `extraction-v2`, greedy decoding.
 - **hybrid-1:** runs the rules first, and the LLM only where the rules reach no gazetteer
