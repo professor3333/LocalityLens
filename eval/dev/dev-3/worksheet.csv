@@ -1,0 +1,51 @@
+audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
+F01,2573474237,Routt,Between Yampa and Toponas.
+F02,2573325895,Park,Several miles north of the town of Jefferson via county roads 35 & 37 to Deadman Gulch SE to east of Jefferson Hill.
+F03,2573444832,Morgan,Roadside rangeland between I-76 & railroad.
+F04,2573482157,Pitkin,Top of range near Ivanhoe.
+F05,2573416394,Gilpin,Near Teller Lake.
+F06,2573547128,Rio Blanco,About 5 miles NW of Rangely on Colorado Hwy 64.
+F07,2573536491,San Juan,"San Juan Nat. Forest: Tenmile Basin, Animas River drainage ca. 18 mi. S.E. of Silverton; alpine meadow west of Lake 12260', on shelf on the south side of the valley."
+F08,2573536765,Saguache,"Steep talus along Hwy. 40, 4 mi e. of Gunnison Co. line and 7 mi. e. of Parlin."
+F09,2573519913,Eagle,"State Route 131, 12.7 km (7.9 mi) north of Wolcott (measured from the Eagle River bridge)."
+F10,2573324158,Pueblo,SE Pueblo County. Vigil & St. Vrain Grant. On Pipeline Road 10 mi S of jct with Hwy 10.
+F11,2573527928,San Miguel,Spring Creek Mesa. [Neuguets Ranche.] [sp.?]
+F12,3462351329,Eagle,White River National Forest; ~6 miles S of Minturn; N of Half Moon Pass
+F13,2573485461,Boulder,"Bank of Boulder Creek at bridge on west end of White Rocks, 8 mi NE of Boulder."
+F14,2573378960,Clear Creek,Empire Pass.
+F15,2573344147,Montrose,"Black Canyon of the Gunnison National Monument, South rim, 1.2 mi. S of Visitior Center."
+F16,6516896353,Hinsdale,Devil's Creek.
+F17,2573475599,San Juan,"San Juan National Forest: No-Name Basin, Animas River drainage, ca. 18 mi SE of Silverton. On the north side of Monitor."
+F18,2573535486,Clear Creek,"Arapaho National Forest. Engelmann Peak, 3 miles north of Bakerville."
+F19,2573538652,Larimer,"Rocky Mountain National Park, Glacier Gorge Trail, 1 Mile SE of Bear Lake."
+F20,2573324541,Larimer,Specimen Mountain.
+F21,2573482914,Garfield,"Flat Tops/White River Plateau: meadows above Deep Creek, ca 15 air miles NE of Glenwood Springs."
+F22,2573327769,Moffat,Cross Mountain Gorge.
+F23,2573436848,Baca,"Comanche National Grassland: Picture Canyon near restroom, 27.5 air mi SSW of Springfield."
+F24,2573441133,Montrose,"Upper Dolores River Drainage and Adjacent Areas: Paradox Valley area, ca 16 air mi W of Nucla on Davis Mesa along County Road DD16."
+F25,3462358323,Jefferson,"Lippincott Property. Northernmost Jefferson County, parcel jointly owned by Jefferson County Open Space and City of Boulder OSMP, southwest segment of parcel, nearly up to the railroad tracks, 22.6 km. north northwest of the GNIS location of Golden."
+F26,2573439357,Gunnison,"Southern Gunnison Basin: Sawatch Range: along Agate Creek near the Agate Creek Campground, ca 3 air mi NE of Sargents; ca 7.2 air mi W of Chipeta Mountain."
+F27,2573460114,Rio Grande,Rio Grande National Forest; ~9 miles WNW of Platoro; N of Crater Lake Trail
+F28,2573334621,Eagle,"Central Colorado: Gore Range, West Slope Continental Divide: Shrine Ridge Trail just NW of Shrine Pass, ca 12 air mi SE of Vail"
+F29,2573543396,Otero,"Comanche National Grassland: N of David Canyon Road, ca 16 air mi S of La Junta."
+F30,2573338371,Mesa,"Colorado National Monument, north end, ca. 3 mi south of Fruita, above Coke Ovens Overlook."
+F31,2573443122,Hinsdale,"Rocky Cliffs, 1 mile southwest of Cathedral."
+F32,2573463419,Conejos,"Rio Grande National Forest; ~17 miles SSE of Platoro; ""First Meadows"" of Elk Creek"
+F33,2573330680,Saguache,"Baca National Wildlife Refuge, San Luis Valley; ca. 1.8 miles southwest of Crestone. South of Crestone Creek near old cattle shelter."
+F34,2573443826,Las Animas,"Region of the Mesa de Maya. Side of Carrizo Mt., about 15 miles SE of Kim."
+F35,2573468524,Rio Blanco,"West fork of Fawn Creek in White River National Forest, 6.5 mi. north of Buford."
+F36,2573448739,Routt,"Little South Fork of Elk River, 2 mi S of Seedhouse G.S., Routt National Forest, ca 28 mi N of Steamboat Springs."
+F37,2573446702,Garfield,"White River Plateau, ½ mile N of Crane Park."
+F38,3462345323,Jefferson,"Ranson/Edwards Homestead Open Space Park. High plains above Rocky Flats, 19.4 km. NNW of the GNIS location of Golden, 1.6 mi. west on CO Hwy 72 from CO Hwy 93, 0.9 mi. north on Plainview Road, then 290 m. west to a small reservoir."
+F39,2573341341,Las Animas,"Valley floors, head of Cottonwood Creek, an eastern tributary of Carrizo Creek, near the Bob Dodge Ranch, 7 mi. S and 16 mi. e. of Kim, just w. of the Baca Co. line."
+F40,2573439235,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: Transfer Campground area, junction of Chicken Creek Trail and Rim Trail, ca 6.5 air mi NE of Mancos."
+F41,2573527059,Grand,"North-central Colorado: Park Range: along old logging road between Jolley and Horse creeks, ca 4 air mi W of Kremmling."
+F42,2573489151,Alamosa,"San Luis Valley, ca. 7 mi. E of Hwy 17 along Sand Dunes entrance road; on greasewood flat near San Luis Lake."
+F43,2573521025,Teller,"Manitou Experimental Forest, ca. 8 miles N of Woodland Park. 2 air miles east State Hwy 67, along Hotel Gulch Rd (349)."
+F44,2573520266,Custer,"Arkansas River Valley. Palmer Land Trust private ranch, ca. 3.5 miles S of Wetmore near highway 96. Along Colo. Hwy 389 (Greenwood Road) and near Hardscrabble Creek."
+F45,2573328771,Summit,"Monte Cristo Creek, 4 mi. N. of Hoosier Pass."
+F46,2573478661,Park,"Lost Creek Area, Tarryall Mtns., 80 km (50 mi) southwest of Denver and 80 km northwest of Colo. Springs; along trail to Hankins Pass."
+F47,2573337589,Grand,"Arapaho National Forest, along Willow Creek, 0.2 mile downstream of Bronco Creek."
+F48,2573473317,Jackson,"North Park, 10 mi. SE of Walden on E side of Owl Creek at main highway crossing."
+F49,2573479524,Lake,"Peekaboo Basin, ca. 6.3 miles southwest of Hwy 82 on South Fork of Lake Creek road, San Isabel National Forest."
+F50,2573350103,Grand,"Rocky Mountain National Park. On top of Thunder Pass, 16 mi N of Grand Lake."

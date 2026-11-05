@@ -1,0 +1,871 @@
+{
+  "audit_version": "1",
+  "snapshot_id": "gbif-cu-2026-11-01",
+  "screen_version": "1",
+  "grouping_version": "1",
+  "seed": "dev-3/1",
+  "eligible_records": 105544,
+  "eligible_groups": 40444,
+  "items": [
+    {
+      "audit_id": "F01",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573474237",
+        "occurrence_id": "132d7750-0f14-49db-a7ec-e93d98007e40",
+        "catalog_number": "00955245",
+        "locality": "Between Yampa and Toponas.",
+        "state_province": "Colorado",
+        "county": "Routt",
+        "country": "United States",
+        "recorded_by": "C. W. Penland; H.F. Wershing",
+        "record_number": "773",
+        "event_date": "1932-07-23",
+        "group_key": "066fc25a04ce3b37"
+      }
+    },
+    {
+      "audit_id": "F02",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573325895",
+        "occurrence_id": "f9982664-1244-46a5-99e4-e21dbfe73dd9",
+        "catalog_number": "00504662",
+        "locality": "Several miles north of the town of Jefferson via county roads 35 & 37 to Deadman Gulch SE to east of Jefferson Hill.",
+        "state_province": "Colorado",
+        "county": "Park",
+        "country": "United States",
+        "recorded_by": "Stan Smookler; Linda Senser 91",
+        "record_number": "222",
+        "event_date": "2000-08-13",
+        "group_key": "8f413e4923807297"
+      }
+    },
+    {
+      "audit_id": "F03",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573444832",
+        "occurrence_id": "48243cf4-9423-40c1-808b-1cdcceed2967",
+        "catalog_number": "00511337",
+        "locality": "Roadside rangeland between I-76 & railroad.",
+        "state_province": "Colorado",
+        "county": "Morgan",
+        "country": "United States",
+        "recorded_by": "Cowles; Bosley",
+        "record_number": "63",
+        "event_date": "1999-05-20",
+        "group_key": "59107522467e96b8"
+      }
+    },
+    {
+      "audit_id": "F04",
+      "group_size": 2,
+      "record": {
+        "gbif_id": "2573482157",
+        "occurrence_id": "2e713987-9614-4c63-a74b-1b0a13d46593",
+        "catalog_number": "00374413",
+        "locality": "Top of range near Ivanhoe.",
+        "state_province": "Colorado",
+        "county": "Pitkin",
+        "country": "United States",
+        "recorded_by": "Will Huestis",
+        "record_number": "sn",
+        "event_date": "1904-08-30",
+        "group_key": "0c18af206ae8ac3e"
+      }
+    },
+    {
+      "audit_id": "F05",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573416394",
+        "occurrence_id": "34d65b42-1b21-4685-a1c3-6decfe5009e1",
+        "catalog_number": "00656462",
+        "locality": "Near Teller Lake.",
+        "state_province": "Colorado",
+        "county": "Gilpin",
+        "country": "United States",
+        "recorded_by": "H.M. Schmoll",
+        "record_number": "12",
+        "event_date": "1919-08-01",
+        "group_key": "b3aecdafc1b58579"
+      }
+    },
+    {
+      "audit_id": "F06",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573547128",
+        "occurrence_id": "308d854b-e12e-431b-8f46-996c5e6db550",
+        "catalog_number": "00206722",
+        "locality": "About 5 miles NW of Rangely on Colorado Hwy 64.",
+        "state_province": "Colorado",
+        "county": "Rio Blanco",
+        "country": "United States",
+        "recorded_by": "D.L. Denham",
+        "record_number": "1492",
+        "event_date": "1967-06-11",
+        "group_key": "952c58c3b8f3863a"
+      }
+    },
+    {
+      "audit_id": "F07",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573536491",
+        "occurrence_id": "9d3b1ede-301a-4a30-ab2d-3495f7789303",
+        "catalog_number": "00275966",
+        "locality": "San Juan Nat. Forest: Tenmile Basin, Animas River drainage ca. 18 mi. S.E. of Silverton; alpine meadow west of Lake 12260', on shelf on the south side of the valley.",
+        "state_province": "Colorado",
+        "county": "San Juan",
+        "country": "United States",
+        "recorded_by": "Joan Michener",
+        "record_number": "F882a",
+        "event_date": "1962-08-18",
+        "group_key": "c988dee777bed0af"
+      }
+    },
+    {
+      "audit_id": "F08",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573536765",
+        "occurrence_id": "1d9be347-b5c3-40b2-8642-3b556784163f",
+        "catalog_number": "00224642",
+        "locality": "Steep talus along Hwy. 40, 4 mi e. of Gunnison Co. line and 7 mi. e. of Parlin.",
+        "state_province": "Colorado",
+        "county": "Saguache",
+        "country": "United States",
+        "recorded_by": "W. A. Weber; G. N. Jones",
+        "record_number": "8555",
+        "event_date": "1953-07-16",
+        "group_key": "2a815f632f76bff5"
+      }
+    },
+    {
+      "audit_id": "F09",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573519913",
+        "occurrence_id": "8d46c0ed-511e-4ffa-bd64-7c0c2b26e74a",
+        "catalog_number": "00820639",
+        "locality": "State Route 131, 12.7 km (7.9 mi) north of Wolcott (measured from the Eagle River bridge).",
+        "state_province": "Colorado",
+        "county": "Eagle",
+        "country": "United States",
+        "recorded_by": "Noel H. Holmgren; Patricia K. Holmgren",
+        "record_number": "14485",
+        "event_date": "2001-08-15",
+        "group_key": "45c4f282963e6f27"
+      }
+    },
+    {
+      "audit_id": "F10",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573324158",
+        "occurrence_id": "94ce154f-46f3-4940-8d7b-11ceaec76253",
+        "catalog_number": "00099085",
+        "locality": "SE Pueblo County. Vigil & St. Vrain Grant. On Pipeline Road 10 mi S of jct with Hwy 10.",
+        "state_province": "Colorado",
+        "county": "Pueblo",
+        "country": "United States",
+        "recorded_by": "Weber; Wittmann",
+        "record_number": "18655",
+        "event_date": "1993-06-12",
+        "group_key": "24cb69428cc779e4"
+      }
+    },
+    {
+      "audit_id": "F11",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573527928",
+        "occurrence_id": "b59f3a32-8bd6-4459-8bcd-2c878cda2ee3",
+        "catalog_number": "00435057",
+        "locality": "Spring Creek Mesa. [Neuguets Ranche.] [sp.?]",
+        "state_province": "Colorado",
+        "county": "San Miguel",
+        "country": "United States",
+        "recorded_by": "Mrs. L.J. Brewster",
+        "record_number": "sn",
+        "event_date": "",
+        "group_key": "308165fc33afc531"
+      }
+    },
+    {
+      "audit_id": "F12",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "3462351329",
+        "occurrence_id": "e7eabac2-07b7-4379-b2fc-1134b561ec32",
+        "catalog_number": "02170785",
+        "locality": "White River National Forest; ~6 miles S of Minturn; N of Half Moon Pass",
+        "state_province": "Colorado",
+        "county": "Eagle",
+        "country": "United States",
+        "recorded_by": "Mathew T Sharples; With Erin A Tripp",
+        "record_number": "1277",
+        "event_date": "2015-08-29",
+        "group_key": "fc6fd071eba857f5"
+      }
+    },
+    {
+      "audit_id": "F13",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573485461",
+        "occurrence_id": "a356cfe8-a401-46e9-a9a7-a9959bd95717",
+        "catalog_number": "00244954",
+        "locality": "Bank of Boulder Creek at bridge on west end of White Rocks, 8 mi NE of Boulder.",
+        "state_province": "Colorado",
+        "county": "Boulder",
+        "country": "United States",
+        "recorded_by": "Martha Weiser",
+        "record_number": "sn",
+        "event_date": "1982-07-16",
+        "group_key": "6d3e5ee6364ffa9a"
+      }
+    },
+    {
+      "audit_id": "F14",
+      "group_size": 3,
+      "record": {
+        "gbif_id": "2573378960",
+        "occurrence_id": "47061e17-5f69-4049-9bd2-24c3b910544b",
+        "catalog_number": "00699090",
+        "locality": "Empire Pass.",
+        "state_province": "Colorado",
+        "county": "Clear Creek",
+        "country": "United States",
+        "recorded_by": "Richard Scully",
+        "record_number": "4",
+        "event_date": "1997-07-03",
+        "group_key": "3b8b4f95b9e5904a"
+      }
+    },
+    {
+      "audit_id": "F15",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573344147",
+        "occurrence_id": "23bf2033-d60b-4d5c-a132-c9ef9eda6e50",
+        "catalog_number": "00074633",
+        "locality": "Black Canyon of the Gunnison National Monument, South rim, 1.2 mi. S of Visitior Center.",
+        "state_province": "Colorado",
+        "county": "Montrose",
+        "country": "United States",
+        "recorded_by": "W. A. Weber; C. Rector, D. Kennedy",
+        "record_number": "16750",
+        "event_date": "1983-06-28",
+        "group_key": "34d5e3ef7d74ad39"
+      }
+    },
+    {
+      "audit_id": "F16",
+      "group_size": 11,
+      "record": {
+        "gbif_id": "6516896353",
+        "occurrence_id": "6f9483b0-b776-495c-ac9b-27a6cd4e1a06",
+        "catalog_number": "02876019",
+        "locality": "Devil's Creek.",
+        "state_province": "Colorado",
+        "county": "Hinsdale",
+        "country": "United States",
+        "recorded_by": "Adele Preusser",
+        "record_number": "920",
+        "event_date": "2023-06-29",
+        "group_key": "ab7ca133bc9460c3"
+      }
+    },
+    {
+      "audit_id": "F17",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573475599",
+        "occurrence_id": "c4e477e7-ce48-4318-a8fe-dd23787d3b8a",
+        "catalog_number": "00264440",
+        "locality": "San Juan National Forest: No-Name Basin, Animas River drainage, ca. 18 mi SE of Silverton. On the north side of Monitor.",
+        "state_province": "Colorado",
+        "county": "San Juan",
+        "country": "United States",
+        "recorded_by": "Joan Michener",
+        "record_number": "512",
+        "event_date": "1961-08-17",
+        "group_key": "df67e485fb203633"
+      }
+    },
+    {
+      "audit_id": "F18",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573535486",
+        "occurrence_id": "27171819-7bbd-4dab-9431-3684f55e60b8",
+        "catalog_number": "00274654",
+        "locality": "Arapaho National Forest. Engelmann Peak, 3 miles north of Bakerville.",
+        "state_province": "Colorado",
+        "county": "Clear Creek",
+        "country": "United States",
+        "recorded_by": "Nan Lederer; Marion Reid",
+        "record_number": "4414",
+        "event_date": "1994-08-28",
+        "group_key": "51c0eb35a3fe0be5"
+      }
+    },
+    {
+      "audit_id": "F19",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573538652",
+        "occurrence_id": "13b3e9a0-e71b-4fa4-8c76-45a890d1df57",
+        "catalog_number": "00807073",
+        "locality": "Rocky Mountain National Park, Glacier Gorge Trail, 1 Mile SE of Bear Lake.",
+        "state_province": "Colorado",
+        "county": "Larimer",
+        "country": "United States",
+        "recorded_by": "F.J. Hermann",
+        "record_number": "26977",
+        "event_date": "1975-10-21",
+        "group_key": "87b92d4af5f66c47"
+      }
+    },
+    {
+      "audit_id": "F20",
+      "group_size": 3,
+      "record": {
+        "gbif_id": "2573324541",
+        "occurrence_id": "730e5e0f-1ac9-495c-bee3-715589e811bd",
+        "catalog_number": "00105353",
+        "locality": "Specimen Mountain.",
+        "state_province": "Colorado",
+        "county": "Larimer",
+        "country": "United States",
+        "recorded_by": "G. E. Osterhout",
+        "record_number": "6650",
+        "event_date": "1926-08-19",
+        "group_key": "ef66b2896e186e08"
+      }
+    },
+    {
+      "audit_id": "F21",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573482914",
+        "occurrence_id": "60a7dabc-33f5-43c0-9ee5-b19155599dbe",
+        "catalog_number": "00214577",
+        "locality": "Flat Tops/White River Plateau: meadows above Deep Creek, ca 15 air miles NE of Glenwood Springs.",
+        "state_province": "Colorado",
+        "county": "Garfield",
+        "country": "United States",
+        "recorded_by": "James P. Vanderhorst",
+        "record_number": "3520",
+        "event_date": "1991-07-23",
+        "group_key": "2e26ba54e92023d0"
+      }
+    },
+    {
+      "audit_id": "F22",
+      "group_size": 9,
+      "record": {
+        "gbif_id": "2573327769",
+        "occurrence_id": "8a0e35c1-a5bf-45b6-805e-746162efb386",
+        "catalog_number": "00060475",
+        "locality": "Cross Mountain Gorge.",
+        "state_province": "Colorado",
+        "county": "Moffat",
+        "country": "United States",
+        "recorded_by": "Ben Northcutt; Jane Bunin",
+        "record_number": "sn",
+        "event_date": "1978",
+        "group_key": "25b55ddeace5e358"
+      }
+    },
+    {
+      "audit_id": "F23",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573436848",
+        "occurrence_id": "24a87440-425f-4b61-840f-004c05653bf1",
+        "catalog_number": "00982199",
+        "locality": "Comanche National Grassland: Picture Canyon near restroom, 27.5 air mi SSW of Springfield.",
+        "state_province": "Colorado",
+        "county": "Baca",
+        "country": "United States",
+        "recorded_by": "Bernadette Kuhn",
+        "record_number": "1712",
+        "event_date": "2007-06-25",
+        "group_key": "e1edf1945ccd81d3"
+      }
+    },
+    {
+      "audit_id": "F24",
+      "group_size": 4,
+      "record": {
+        "gbif_id": "2573441133",
+        "occurrence_id": "d23d20ce-a9b9-4beb-9318-e91938e28b94",
+        "catalog_number": "00862920",
+        "locality": "Upper Dolores River Drainage and Adjacent Areas: Paradox Valley area, ca 16 air mi W of Nucla on Davis Mesa along County Road DD16.",
+        "state_province": "Colorado",
+        "county": "Montrose",
+        "country": "United States",
+        "recorded_by": "Lynn Marie Moore",
+        "record_number": "4196",
+        "event_date": "1995-05-21",
+        "group_key": "1902391a9f62031c"
+      }
+    },
+    {
+      "audit_id": "F25",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "3462358323",
+        "occurrence_id": "f1bddf8e-3327-4799-8ca5-bb7c48a4c42e",
+        "catalog_number": "02433480",
+        "locality": "Lippincott Property. Northernmost Jefferson County, parcel jointly owned by Jefferson County Open Space and City of Boulder OSMP, southwest segment of parcel, nearly up to the railroad tracks, 22.6 km. north northwest of the GNIS location of Golden.",
+        "state_province": "Colorado",
+        "county": "Jefferson",
+        "country": "United States",
+        "recorded_by": "Tom Schweich",
+        "record_number": "2224",
+        "event_date": "2019-08-29",
+        "group_key": "484d5854ea50362d"
+      }
+    },
+    {
+      "audit_id": "F26",
+      "group_size": 2,
+      "record": {
+        "gbif_id": "2573439357",
+        "occurrence_id": "eeaf9a23-6d3f-4771-961e-f15d6947f700",
+        "catalog_number": "00873737",
+        "locality": "Southern Gunnison Basin: Sawatch Range: along Agate Creek near the Agate Creek Campground, ca 3 air mi NE of Sargents; ca 7.2 air mi W of Chipeta Mountain.",
+        "state_province": "Colorado",
+        "county": "Gunnison",
+        "country": "United States",
+        "recorded_by": "Melanie Arnett",
+        "record_number": "1782",
+        "event_date": "1998-07-16",
+        "group_key": "68d15e8d4219491a"
+      }
+    },
+    {
+      "audit_id": "F27",
+      "group_size": 6,
+      "record": {
+        "gbif_id": "2573460114",
+        "occurrence_id": "7f1548ad-638b-4c05-9e8a-a2d523da165c",
+        "catalog_number": "02052413",
+        "locality": "Rio Grande National Forest; ~9 miles WNW of Platoro; N of Crater Lake Trail",
+        "state_province": "Colorado",
+        "county": "Rio Grande",
+        "country": "United States",
+        "recorded_by": "Mathew T. Sharples",
+        "record_number": "348",
+        "event_date": "2013-06-28",
+        "group_key": "b196a926e5c4abec"
+      }
+    },
+    {
+      "audit_id": "F28",
+      "group_size": 6,
+      "record": {
+        "gbif_id": "2573334621",
+        "occurrence_id": "fd69f545-e01c-493f-878b-a44bc5793fe9",
+        "catalog_number": "00863712",
+        "locality": "Central Colorado: Gore Range, West Slope Continental Divide: Shrine Ridge Trail just NW of Shrine Pass, ca 12 air mi SE of Vail",
+        "state_province": "Colorado",
+        "county": "Eagle",
+        "country": "United States",
+        "recorded_by": "Emily A. Holt",
+        "record_number": "2354",
+        "event_date": "2000-07-18",
+        "group_key": "8fe2e5aff70df06f"
+      }
+    },
+    {
+      "audit_id": "F29",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573543396",
+        "occurrence_id": "c17466cb-1ac3-4c59-a65d-f25cab387633",
+        "catalog_number": "00976258",
+        "locality": "Comanche National Grassland: N of David Canyon Road, ca 16 air mi S of La Junta.",
+        "state_province": "Colorado",
+        "county": "Otero",
+        "country": "United States",
+        "recorded_by": "Bernadette Kuhn; Emily Elliott, Brian Elliott",
+        "record_number": "3817",
+        "event_date": "2008-04-20",
+        "group_key": "053200dc03779f08"
+      }
+    },
+    {
+      "audit_id": "F30",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573338371",
+        "occurrence_id": "cc6abff8-02fc-47c7-a92f-0013d4916cbb",
+        "catalog_number": "00011916",
+        "locality": "Colorado National Monument, north end, ca. 3 mi south of Fruita, above Coke Ovens Overlook.",
+        "state_province": "Colorado",
+        "county": "Mesa",
+        "country": "United States",
+        "recorded_by": "S. Shushan; W. A. Weber",
+        "record_number": "9037",
+        "event_date": "1955-05-12",
+        "group_key": "c9b13f5fcd1c4fc4"
+      }
+    },
+    {
+      "audit_id": "F31",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573443122",
+        "occurrence_id": "2395faf7-4839-4221-a969-2b0cfe3aeefa",
+        "catalog_number": "00922849",
+        "locality": "Rocky Cliffs, 1 mile southwest of Cathedral.",
+        "state_province": "Colorado",
+        "county": "Hinsdale",
+        "country": "United States",
+        "recorded_by": "Jim Ratzloff",
+        "record_number": "142",
+        "event_date": "1978-08-23",
+        "group_key": "b3c87ac63b1ce7a0"
+      }
+    },
+    {
+      "audit_id": "F32",
+      "group_size": 2,
+      "record": {
+        "gbif_id": "2573463419",
+        "occurrence_id": "fe3f067a-2b80-4821-9b52-e5b663c52ad3",
+        "catalog_number": "02086767",
+        "locality": "Rio Grande National Forest; ~17 miles SSE of Platoro; \"First Meadows\" of Elk Creek",
+        "state_province": "Colorado",
+        "county": "Conejos",
+        "country": "United States",
+        "recorded_by": "Mathew T. Sharples",
+        "record_number": "662",
+        "event_date": "2013-07-31",
+        "group_key": "d27c17092b587043"
+      }
+    },
+    {
+      "audit_id": "F33",
+      "group_size": 11,
+      "record": {
+        "gbif_id": "2573330680",
+        "occurrence_id": "a095fe1b-0bdc-4f3a-9818-7d5c0f6bd25a",
+        "catalog_number": "01790443",
+        "locality": "Baca National Wildlife Refuge, San Luis Valley; ca. 1.8 miles southwest of Crestone. South of Crestone Creek near old cattle shelter.",
+        "state_province": "Colorado",
+        "county": "Saguache",
+        "country": "United States",
+        "recorded_by": "Pam Regensberg; Melissa Islam and Janet Wingate",
+        "record_number": "794",
+        "event_date": "2012-06-18",
+        "group_key": "de55220cf2adab01"
+      }
+    },
+    {
+      "audit_id": "F34",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573443826",
+        "occurrence_id": "83f1e484-76eb-4db6-85b3-34fef68a3cf1",
+        "catalog_number": "00441808",
+        "locality": "Region of the Mesa de Maya. Side of Carrizo Mt., about 15 miles SE of Kim.",
+        "state_province": "Colorado",
+        "county": "Las Animas",
+        "country": "United States",
+        "recorded_by": "C.M. Rogers",
+        "record_number": "6121",
+        "event_date": "1948-06-29",
+        "group_key": "59984a1c5b41946a"
+      }
+    },
+    {
+      "audit_id": "F35",
+      "group_size": 2,
+      "record": {
+        "gbif_id": "2573468524",
+        "occurrence_id": "86b29662-d24e-4cf9-92e0-eaf31a8f4a90",
+        "catalog_number": "00484345",
+        "locality": "West fork of Fawn Creek in White River National Forest, 6.5 mi. north of Buford.",
+        "state_province": "Colorado",
+        "county": "Rio Blanco",
+        "country": "United States",
+        "recorded_by": "Nan Lederer",
+        "record_number": "3262",
+        "event_date": "1992-06-27",
+        "group_key": "06fe157b625725d6"
+      }
+    },
+    {
+      "audit_id": "F36",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573448739",
+        "occurrence_id": "c59e5066-bcd5-4699-9d8b-f7a4d5358693",
+        "catalog_number": "00537738",
+        "locality": "Little South Fork of Elk River, 2 mi S of Seedhouse G.S., Routt National Forest, ca 28 mi N of Steamboat Springs.",
+        "state_province": "Colorado",
+        "county": "Routt",
+        "country": "United States",
+        "recorded_by": "W. A. Weber",
+        "record_number": "7097",
+        "event_date": "1951-08-01",
+        "group_key": "529734e62986f5f3"
+      }
+    },
+    {
+      "audit_id": "F37",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573446702",
+        "occurrence_id": "0bdfe918-8326-42c2-9427-c31f15bfec73",
+        "catalog_number": "00510818",
+        "locality": "White River Plateau, ½ mile N of Crane Park.",
+        "state_province": "Colorado",
+        "county": "Garfield",
+        "country": "United States",
+        "recorded_by": "Philip C. Miller",
+        "record_number": "106",
+        "event_date": "1963-07-31",
+        "group_key": "49c3731501cb0bbd"
+      }
+    },
+    {
+      "audit_id": "F38",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "3462345323",
+        "occurrence_id": "ad24dd69-9759-4ae8-a23d-327024f29d3a",
+        "catalog_number": "02434553",
+        "locality": "Ranson/Edwards Homestead Open Space Park. High plains above Rocky Flats, 19.4 km. NNW of the GNIS location of Golden, 1.6 mi. west on CO Hwy 72 from CO Hwy 93, 0.9 mi. north on Plainview Road, then 290 m. west to a small reservoir.",
+        "state_province": "Colorado",
+        "county": "Jefferson",
+        "country": "United States",
+        "recorded_by": "Tom Schweich",
+        "record_number": "2203",
+        "event_date": "2019-08-27",
+        "group_key": "17669f2aea2410ef"
+      }
+    },
+    {
+      "audit_id": "F39",
+      "group_size": 3,
+      "record": {
+        "gbif_id": "2573341341",
+        "occurrence_id": "3cb24ec7-2f4a-4ab3-99f3-cfca06396785",
+        "catalog_number": "00023283",
+        "locality": "Valley floors, head of Cottonwood Creek, an eastern tributary of Carrizo Creek, near the Bob Dodge Ranch, 7 mi. S and 16 mi. e. of Kim, just w. of the Baca Co. line.",
+        "state_province": "Colorado",
+        "county": "Las Animas",
+        "country": "United States",
+        "recorded_by": "Wm. A. Weber",
+        "record_number": "4392",
+        "event_date": "1948-08-08",
+        "group_key": "d1982c8978cf50b8"
+      }
+    },
+    {
+      "audit_id": "F40",
+      "group_size": 2,
+      "record": {
+        "gbif_id": "2573439235",
+        "occurrence_id": "d251b92e-f26e-4835-b5f1-9dfacd169cae",
+        "catalog_number": "00494435",
+        "locality": "Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: Transfer Campground area, junction of Chicken Creek Trail and Rim Trail, ca 6.5 air mi NE of Mancos.",
+        "state_province": "Colorado",
+        "county": "Montezuma",
+        "country": "United States",
+        "recorded_by": "Lynn Marie Moore",
+        "record_number": "2442",
+        "event_date": "1994-06-22",
+        "group_key": "0edb6c4cc94979d4"
+      }
+    },
+    {
+      "audit_id": "F41",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573527059",
+        "occurrence_id": "e3d4017c-6924-4414-9075-ca6c757e4167",
+        "catalog_number": "00883793",
+        "locality": "North-central Colorado: Park Range: along old logging road between Jolley and Horse creeks, ca 4 air mi W of Kremmling.",
+        "state_province": "Colorado",
+        "county": "Grand",
+        "country": "United States",
+        "recorded_by": "B. E. Nelson",
+        "record_number": "55519",
+        "event_date": "2001-08-08",
+        "group_key": "57d35cf42231d1c0"
+      }
+    },
+    {
+      "audit_id": "F42",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573489151",
+        "occurrence_id": "e9e0eea2-c370-4926-b1a6-436379448c94",
+        "catalog_number": "00183061",
+        "locality": "San Luis Valley, ca. 7 mi. E of Hwy 17 along Sand Dunes entrance road; on greasewood flat near San Luis Lake.",
+        "state_province": "Colorado",
+        "county": "Alamosa",
+        "country": "United States",
+        "recorded_by": "John Anderson; S. O'Kane",
+        "record_number": "86-93",
+        "event_date": "1986-07-08",
+        "group_key": "1a47f2d2ed40c5f0"
+      }
+    },
+    {
+      "audit_id": "F43",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573521025",
+        "occurrence_id": "fd3c2cb4-e975-4365-9537-30fd37904f66",
+        "catalog_number": "02168953",
+        "locality": "Manitou Experimental Forest, ca. 8 miles N of Woodland Park. 2 air miles east State Hwy 67, along Hotel Gulch Rd (349).",
+        "state_province": "Colorado",
+        "county": "Teller",
+        "country": "United States",
+        "recorded_by": "Melissa Islam; Daniel Gee; Janet Wingate",
+        "record_number": "953",
+        "event_date": "2013-06-27",
+        "group_key": "7a8f17220b466313"
+      }
+    },
+    {
+      "audit_id": "F44",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573520266",
+        "occurrence_id": "87c068d1-35ab-49c4-b364-76ca1977cce4",
+        "catalog_number": "02169464",
+        "locality": "Arkansas River Valley. Palmer Land Trust private ranch, ca. 3.5 miles S of Wetmore near highway 96. Along Colo. Hwy 389 (Greenwood Road) and near Hardscrabble Creek.",
+        "state_province": "Colorado",
+        "county": "Custer",
+        "country": "United States",
+        "recorded_by": "Pam Regensberg; Daniel Gee; Melissa Islam",
+        "record_number": "1123",
+        "event_date": "2013-06-11",
+        "group_key": "f92d1815c39b2d87"
+      }
+    },
+    {
+      "audit_id": "F45",
+      "group_size": 4,
+      "record": {
+        "gbif_id": "2573328771",
+        "occurrence_id": "56f01b4b-9689-4ae3-bfe2-efa3b7006181",
+        "catalog_number": "00080549",
+        "locality": "Monte Cristo Creek, 4 mi. N. of Hoosier Pass.",
+        "state_province": "Colorado",
+        "county": "Summit",
+        "country": "United States",
+        "recorded_by": "Weber; Hulten",
+        "record_number": "11097",
+        "event_date": "1959-07-11",
+        "group_key": "3c0e0ead4fb8ac66"
+      }
+    },
+    {
+      "audit_id": "F46",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573478661",
+        "occurrence_id": "b31ccb07-b8b6-41fc-bdae-3870019a0e16",
+        "catalog_number": "00277681",
+        "locality": "Lost Creek Area, Tarryall Mtns., 80 km (50 mi) southwest of Denver and 80 km northwest of Colo. Springs; along trail to Hankins Pass.",
+        "state_province": "Colorado",
+        "county": "Park",
+        "country": "United States",
+        "recorded_by": "P. Murphy",
+        "record_number": "79-52",
+        "event_date": "1979-06-28",
+        "group_key": "37a94effd7e04b1c"
+      }
+    },
+    {
+      "audit_id": "F47",
+      "group_size": 3,
+      "record": {
+        "gbif_id": "2573337589",
+        "occurrence_id": "18864524-b5bd-4f20-b00a-70ff41a3616a",
+        "catalog_number": "00831933",
+        "locality": "Arapaho National Forest, along Willow Creek, 0.2 mile downstream of Bronco Creek.",
+        "state_province": "Colorado",
+        "county": "Grand",
+        "country": "United States",
+        "recorded_by": "R.J. Rondeau; D. Randolph, S. Spackman",
+        "record_number": "93-854",
+        "event_date": "1993-08-22",
+        "group_key": "181d1ba935844e43"
+      }
+    },
+    {
+      "audit_id": "F48",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573473317",
+        "occurrence_id": "c3ab5e52-d1bf-4a27-b03f-af698edb473f",
+        "catalog_number": "00750893",
+        "locality": "North Park, 10 mi. SE of Walden on E side of Owl Creek at main highway crossing.",
+        "state_province": "Colorado",
+        "county": "Jackson",
+        "country": "United States",
+        "recorded_by": "W. A. Weber",
+        "record_number": "15489",
+        "event_date": "1979-08-13",
+        "group_key": "4624e695d77824c4"
+      }
+    },
+    {
+      "audit_id": "F49",
+      "group_size": 1,
+      "record": {
+        "gbif_id": "2573479524",
+        "occurrence_id": "58bd1c3a-6996-4a17-a6d0-b869b184fc76",
+        "catalog_number": "00299875",
+        "locality": "Peekaboo Basin, ca. 6.3 miles southwest of Hwy 82 on South Fork of Lake Creek road, San Isabel National Forest.",
+        "state_province": "Colorado",
+        "county": "Lake",
+        "country": "United States",
+        "recorded_by": "Emily L. Hartman; Mary Lou Rottman 2871",
+        "record_number": "6600",
+        "event_date": "1986-08-11",
+        "group_key": "02aaf24dae1fda4c"
+      }
+    },
+    {
+      "audit_id": "F50",
+      "group_size": 4,
+      "record": {
+        "gbif_id": "2573350103",
+        "occurrence_id": "d3afd4e4-2611-47f7-98a4-bd2237dbf596",
+        "catalog_number": "00738179",
+        "locality": "Rocky Mountain National Park. On top of Thunder Pass, 16 mi N of Grand Lake.",
+        "state_province": "Colorado",
+        "county": "Grand",
+        "country": "United States",
+        "recorded_by": "Margaret Douglass",
+        "record_number": "61-145",
+        "event_date": "1961-07-06",
+        "group_key": "cb8184fffa62ec20"
+      }
+    }
+  ],
+  "name": "dev-3",
+  "shape_version": "2",
+  "strata": {
+    "place_offset": 35,
+    "offset": 5,
+    "bare": 5,
+    "other": 5
+  },
+  "excluded_viewed_groups": 2120,
+  "exclusion_version": "2"
+}
