@@ -1,0 +1,303 @@
+{
+  "answerable": 32,
+  "place_offset_answerable": 24,
+  "correct_by_version_place_offset": {
+    "rules-2": 6,
+    "rules-3": 7,
+    "rules-4": 6,
+    "rules-5": 6,
+    "rules-6": 6
+  },
+  "correct_by_version_all": {
+    "rules-2": 11,
+    "rules-3": 12,
+    "rules-4": 11,
+    "rules-5": 11,
+    "rules-6": 11
+  },
+  "rules6_vs_rules2_place_offset": {
+    "n": 24,
+    "rules": 6,
+    "llm": 6,
+    "difference": 0.0,
+    "ci95": [
+      -0.125,
+      0.125
+    ],
+    "llm_only": 1,
+    "rules_only": 1,
+    "sign_test_p": 1.0
+  },
+  "rules6_vs_rules2_all": {
+    "n": 32,
+    "rules": 11,
+    "llm": 11,
+    "difference": 0.0,
+    "ci95": [
+      -0.094,
+      0.094
+    ],
+    "llm_only": 1,
+    "rules_only": 1,
+    "sign_test_p": 1.0
+  },
+  "changed_records": [
+    {
+      "audit_id": "F18",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Bakerville",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Arapaho National Forest",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Arapaho National Forest",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Arapaho National Forest",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Arapaho National Forest",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "F36",
+      "stratum": "place_offset",
+      "category": "reference_absent",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Little South Fork of Elk River",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "F42",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Hwy",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "San Luis Valley",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "San Luis Valley",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "San Luis Valley",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "San Luis Valley",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "F43",
+      "stratum": "place_offset",
+      "category": "reference_absent",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Woodland Park",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Manitou Experimental Forest",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Manitou Experimental Forest",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Manitou Experimental Forest",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Manitou Experimental Forest",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "F45",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Hoosier Pass",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Monte Cristo Creek",
+          "correct": true
+        },
+        "rules-4": {
+          "relation": "distance_and_direction",
+          "reference": "Hoosier Pass",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "distance_and_direction",
+          "reference": "Hoosier Pass",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "distance_and_direction",
+          "reference": "Hoosier Pass",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "F48",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Walden",
+          "correct": true
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "North Park",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "North Park",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "North Park",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "North Park",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "F49",
+      "stratum": "place_offset",
+      "category": "reference_absent",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Hwy",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Peekaboo Basin",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Peekaboo Basin",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Peekaboo Basin",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Peekaboo Basin",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "F50",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Grand Lake",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Thunder Pass",
+          "correct": true
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Thunder Pass",
+          "correct": true
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Thunder Pass",
+          "correct": true
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Thunder Pass",
+          "correct": true
+        }
+      }
+    }
+  ],
+  "rules5_vs_rules6_differ": []
+}

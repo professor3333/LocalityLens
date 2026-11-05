@@ -94,8 +94,10 @@ and rules-4 decide, so it does not test them. rules-5 asks about distance ranges
 reading their second number; on the read samples it changes only A23 (in-sample, rules 50 → 51,
 hybrid-1 55 → 56 of 92; [rules-5 findings](../eval/reports/rules-5-findings.md)). rules-6 adds
 "2 or 3 mi" ranges and changes no read label ([rules-6 findings](../eval/reports/rules-6-findings.md)). dev-3 is drawn for that (35 of 50 "place, offset"
-labels, text shape version 2). Claude has annotated it, with the same limit, and no system has
-run on it. From dev-3 on, samples also exclude
+labels, text shape version 2). Claude annotated it (same limit) and it was scored once by a
+pinned plan: rules-6 11, LLM 14, hybrid-1 14 of 32 answerable. Replaying rules-2 to rules-6 on
+its 24 answerable place-offset records gives 6, 7, 6, 6, 6 correct: no evidence that the
+place-or-offset rules help ([dev-3 findings](../eval/reports/dev-3-findings.md)). From dev-3 on, samples also exclude
 labels whose wording repeats a read or reserved group under another county (exclusion version
 2, [dev samples](../eval/dev/README.md)).
 

@@ -456,8 +456,22 @@ then scored once by a plan pushed before any system ran ([plan](eval/dev/dev-2/s
 **Next on fresh data: dev-3.** 50 more groups, 35 of them "place, offset" labels (a clause, then
 an offset such as "Vernal Mesa, 15 mi. E of Montrose"), the case rules-3 and rules-4 decide.
 Samples now also skip any label whose wording repeats a read or held-out one under another
-county ([how it was drawn](eval/dev/README.md#dev-3)). Claude has annotated it, with the same
-limit as dev-2, and no system has run on it.
+county ([how it was drawn](eval/dev/README.md#dev-3)). Claude annotated it, so, as with dev-2,
+it is not an independent check of rules Claude wrote. Scored once by a plan pushed first
+([plan](eval/dev/dev-3/scoring-plan.md), [findings](eval/reports/dev-3-findings.md)), correct
+candidates of 32 answerable:
+
+| rules-6 | LLM v2 | hybrid-1 |
+|---|---|---|
+| 11 (34%) | 14 (44%) | **14 (44%)** |
+
+- **hybrid-1 again leads the rules** (+3, CI +0 to +22 points, never behind), on harder labels
+  than dev-2.
+- **The place-or-offset rules show no gain.** Replaying rules-2 to rules-6 on the 24 answerable
+  place-offset records: 6, 7, 6, 6, 6 correct. rules-3 finds the place in two labels, takes a
+  broad region over the offset in one, and cuts a place at a sentence break in another; rules-4
+  then reverts one of rules-3's gains. The in-sample gains (rules 46 → 50) did not carry over.
+- **No full region is correct:** the 2 computed regions come from wrong readings.
 
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,

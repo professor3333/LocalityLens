@@ -74,8 +74,9 @@ The shape is text only: no gazetteer and no rule decides it, so the stratum also
 the rules do not treat as "place, offset", and broad places (forests, parks, rivers) that
 rules-4 keeps the offset for. The other 15 rows keep the annotator from knowing every row's
 shape. **Claude annotated the worksheet at the owner's request, before any system ran on dev-3.**
-Claude also wrote rules-3 and rules-4, so dev-3 is not an independent check of them. A scoring plan
-is pushed before any system runs, as for dev-2.
+Claude also wrote rules-3 and rules-4, so dev-3 is not an independent check of them. It was
+scored once by its [scoring plan](dev-3/scoring-plan.md), pushed before any system ran
+([findings](../reports/dev-3-findings.md)). dev-3 is now read data.
 
 ## Order of work
 
