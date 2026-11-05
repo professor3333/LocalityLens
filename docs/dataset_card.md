@@ -100,7 +100,9 @@ the dev and validation annotations: one row per GNIS feature, 97 rows. Each meas
 radial from the GNIS representative point to the farthest point of the feature (Best Practices
 §3.4.1). Each row records its method, source, who measured it and the date, and is checked
 against the snapshot. Rows with no measurement stay pending. The README there gives the
-current count.
+current count. Summit and gap edges are terrain judgments, not mapped limits, so they are
+rougher than town limits. Gaps follow a rule of this project, because the Quick Reference Guide
+has none for passes.
 
 ## Licence layering
 

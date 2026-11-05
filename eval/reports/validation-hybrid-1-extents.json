@@ -30,9 +30,9 @@
   },
   "extent_store": {
     "version": "extents-1",
-    "sha256": "caa1c85940ec082e4b86d1d8ac5dfe351befb14a1c479f88a7ab7569b36702f6",
-    "reviewed": 58,
-    "pending": 39
+    "sha256": "dea5872a838868da672fffa8254c7ffcc2ac099e0882aded751eafde7d81f33a",
+    "reviewed": 57,
+    "pending": 40
   },
   "note": "Rules first; the LLM's result is used only where the rules reach no gazetteer candidate and the LLM does. Built from the two component reports (both deterministic). The top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -94,7 +94,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.05,
+        "record_seconds": 1.8,
         "cache_hits": 1
       }
     },
@@ -136,7 +136,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.75,
         "cache_hits": 1
       },
       "source": "llm",
@@ -173,7 +173,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.08,
         "cache_hits": 1
       }
     },
@@ -208,7 +208,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.07,
         "cache_hits": 1
       }
     },
@@ -311,7 +311,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.11,
         "cache_hits": 1
       }
     },
@@ -416,7 +416,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.06,
         "cache_hits": 1
       }
     },
@@ -458,7 +458,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.09,
         "cache_hits": 1
       },
       "source": "llm",
@@ -702,7 +702,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.05,
         "cache_hits": 1
       }
     },
@@ -772,7 +772,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -874,7 +874,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -982,7 +982,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -1017,7 +1017,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -1205,7 +1205,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.26,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1313,7 +1313,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.05,
         "cache_hits": 1
       }
     },
@@ -1381,7 +1381,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.03,
         "cache_hits": 1
       }
     },
@@ -1423,7 +1423,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1494,7 +1494,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -1529,7 +1529,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.08,
         "cache_hits": 1
       }
     },
@@ -1634,7 +1634,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -1675,7 +1675,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.04,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1747,7 +1747,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -1790,7 +1790,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1943,7 +1943,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.17,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1980,7 +1980,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -2123,7 +2123,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.13,
         "cache_hits": 1
       },
       "source": "llm",
@@ -2160,7 +2160,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },
@@ -2195,7 +2195,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },

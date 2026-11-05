@@ -25,8 +25,15 @@ row (`latitude`, `longitude`, `datum`) **to the farthest point of the feature's 
 - **Populated places:** measure to the edge of the settled or incorporated area, and say in
   `note` which boundary you used and that it is the current one. Old labels may describe a
   smaller town.
-- **Summits, gaps, flats, basins, valleys, ranges:** measure to the farthest edge of the named
-  landform as the map shows it. Say in `note` what you took as the edge.
+- **Summits:** the boundary follows the valleys, saddles and plains that separate the mountain
+  from its neighbours (Quick Reference Guide §2.1.2). Say in `note` what you took as the edge on
+  each side.
+- **Gaps:** this is a rule of this project, because the guide has none for passes. Across the
+  ridge, a gap ends where each approach reaches its valley floor. Along the ridge, it ends at
+  the straight-line midpoint toward each flanking summit or neighbouring pass, adapted from the
+  guide's midpoint fallback.
+- **Flats, basins, valleys, ranges:** measure to the farthest edge of the named landform as the
+  map shows it. Say in `note` what you took as the edge.
 - **If you can't defend a number, leave the row pending.** An empty `extent_m` is allowed. The
   record keeps asking for the extent, which is better than a wrong radius.
 
@@ -46,7 +53,7 @@ Then check the file:
 
 ```console
 $ uv run localitylens extents check
-extents-1: 38 reviewed, 59 pending, 0 problems
+extents-1: 57 reviewed, 40 pending, 0 problems
 ```
 
 ## Rules
@@ -75,5 +82,11 @@ all. It never overwrites an existing file.
   not the populated-place IDs in this file.
 - **Streams and any row whose note gives an end point:** the GRS80 geodesic distance from
   the row's point to that end point must not exceed the extent.
+- **Summits and gaps:** the same geodesic check runs to the recorded far point. It tests the
+  arithmetic, not where the edge was drawn, so these rows are rougher than town limits. Four
+  far points were also placed on the USGS National Map 3D Viewer to confirm they fall where
+  their notes say.
 - **Towns stay pending** when The National Map has no limit of their own (Hesperus, Gothic,
   Climax, …). **Streams stay pending** when the far end of the named reach isn't clear.
+  **Summits stay pending** when a slope or mesa surface runs on with no edge, or when the map
+  can't settle what the name covers (Two Buttes).

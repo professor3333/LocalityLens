@@ -11,9 +11,9 @@
   "seed": "audit-50/1",
   "extent_store": {
     "version": "extents-1",
-    "sha256": "caa1c85940ec082e4b86d1d8ac5dfe351befb14a1c479f88a7ab7569b36702f6",
-    "reviewed": 58,
-    "pending": 39
+    "sha256": "dea5872a838868da672fffa8254c7ffcc2ac099e0882aded751eafde7d81f33a",
+    "reviewed": 57,
+    "pending": 40
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
