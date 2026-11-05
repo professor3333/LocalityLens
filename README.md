@@ -88,7 +88,7 @@ command. Every value carries its `[start, end)` span in the original text:
 ```console
 $ uv run localitylens baseline run --limit 2 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
-extractor   rules-1
+extractor   rules-3
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -174,7 +174,7 @@ gbif:2573415079 ready_for_review   feature 202381, radius 4,139 m
 gbif:2573416221 ready_for_review   feature 170650, radius 1,342 m
 gbif:2573441754 ready_for_review   feature 186589, radius 2,957 m
 gbif:2573446625 ready_for_review   feature 204798, radius 27,786 m
-gbif:2573488436 ready_for_review   feature 204950, radius 20,644 m
+gbif:2573488436 ready_for_review   feature 177534, radius 1,639 m
 gbif:2573528015 ready_for_review   feature 186534, radius 13,126 m
 gbif:2573543074 ready_for_review   feature 204755, radius 1,029 m
 gbif:2573548250 ready_for_review   feature 190391, radius 16,039 m
@@ -188,8 +188,8 @@ unresolved    40  -> data/review/export/unresolved.csv
 
 The approved row is "ca 5 air mi SSW of Paonia": a point 5 miles SSW of the GNIS point,
 `EPSG:4269`, uncertainty 2,957 m, with the GNIS feature and the measured extent named in
-`georeferenceSources`. Review is still needed: gbif:2573488436 reads "… south slope of Thunder
-Mt., 16 miles N of Grand Lake", and its region is measured from Grand Lake, not Thunder Mt.
+`georeferenceSources`. Review is still needed: gbif:2573416221 reaches GNIS "Five Spring" from
+the label's "Five Springs" by a fuzzy match, which a curator should confirm.
 
 - **Approval needs a full region.** A curator can choose another retrieved candidate or give
   an extent (with a note on how it was measured). The proposal is then recomputed by the same
@@ -272,7 +272,7 @@ only if it reaches a candidate ([findings](eval/reports/hybrid-1-findings.md)):
 $ uv run localitylens interpret --system hybrid --limit 1 \
       "Larimer Co., Colo., 2 mi NE of Longs Peak summit."
 system      hybrid-1: rules result used; no LLM call
-extractor   rules-1
+extractor   rules-3
 relation    distance_and_direction
 quote       "2 mi NE of Longs Peak summit" [20:48]
 feature     Longs Peak [31:41] type=summit
@@ -407,26 +407,42 @@ records (14 → 17), and hybrid-1 also goes 14 → 17. These gains are in-sample
 labels came from the audit findings. dev-1 and validation are unchanged, and no record got
 worse. The locked test has not been scored with rules-2.
 
+**Then rules-3.** It fixes the two errors behind the incorrect regions
+([findings](eval/reports/rules-3-findings.md)):
+- **Spaced directions:** "10 mi. n. w. Salida" is no longer cut to "10 mi. n".
+- **The collecting place:** a named place written right before an offset is read as where the
+  specimen was collected, when a position word puts it there ("S. slope of Thunder Mt.,
+  16 miles N of Grand Lake") or the label opens with it and the offset is at least a mile
+  ("Vernal Mesa, 15 mi. east of Montrose").
+
+On these samples, correct candidates rise from 46 to 50 for the rules and from 51 to 55 for
+hybrid-1, and no record gets worse. The gains are in-sample, because the rule was written
+knowing these labels. A fresh dev sample, dev-2, is waiting for annotation to check it.
+
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 ([findings](eval/reports/qwen3.5-2b-findings.md)).
 
-**Full regions, with 56 measured extents** (dev and validation data, 160 records, 92
-answerable; [findings](eval/reports/extents-findings.md)):
+**Full regions, with 56 measured extents and rules-3** (dev and validation data, 160 records,
+92 answerable; findings for [extents](eval/reports/extents-findings.md) and
+[rules-3](eval/reports/rules-3-findings.md)):
 
-| | Rules `rules-2` | LLM | **Hybrid `hybrid-1`** | Target |
+| | Rules `rules-3` | LLM | **Hybrid `hybrid-1`** | Target |
 |---|---|---|---|---|
-| Regions computed | 32 | 33 | **35** | |
-| … correct (precision) | 29 (91%) | 29 (88%) | **32 (91%)** | ≥ 95% |
-| Useful coverage (of 92 answerable) | 29 (32%) | 29 (32%) | **32 (35%)** | ≥ 70% |
+| Regions computed | 31 | 33 | **34** | |
+| … correct (precision) | 30 (97%) | 29 (88%) | **33 (97%)** | ≥ 95% |
+| Useful coverage (of 92 answerable) | 30 (33%) | 29 (32%) | **33 (36%)** | ≥ 70% |
 
-All three incorrect hybrid regions measure from the offset's town when the label names a closer
-collecting place ("Vernal Mesa, 15 mi. east of Montrose") or read the offset from the wrong
-place ("S. slope Mt. Shavano, 10 mi. n. w. Salida"). Of the 19 correct candidates that get no
-region, 15 are waiting only for an extent: mostly towns with no mapped limit, and valleys.
-Measuring all of them would bring coverage to about half, still short of 70%. "Correct" tests
-the interpretation and the reference, not the size of the radius.
+- **The precision of 97% is in-sample.** rules-3 was written knowing these labels. With
+  rules-2, hybrid-1 had 32 correct regions of 35 (91%).
+- **One incorrect region is left:** A37 now reaches Thunder Mt., but the annotation's
+  qualifier ("About halfway") isn't a known qualifier word, so the scorer counts none, while
+  the rules report "About".
+- **What blocks the rest:** of the 22 correct candidates with no region, 19 are waiting only
+  for an extent, mostly towns with no mapped limit and valleys. Measuring all of them would
+  bring coverage to about 57%, still short of 70%.
+- **"Correct" tests the interpretation and the reference,** not the size of the radius.
 
 **How to read the "yes":**
 - **The margin is one record.** +10 points of 56 is 5.6 records, and the hybrid gains 6 while
@@ -495,7 +511,8 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
   measured, 10 audit records get a full region under the rules (9 of them correct).
 - **Rules gaps with names:** "air mi", spelled-out numbers, ranges, road designations read as
   places, and leading words ("Above", "Near") absorbed into names. rules-2 fixes "air mi" and
-  spelled-out numbers.
+  spelled-out numbers. rules-3 fixes spaced directions ("n. w.") and prefers a named collecting
+  place written before an offset.
 - **The LLM reads what the rules miss, and makes its own errors:** it handles "air mi",
   separates "Above"/"Near" from names and flags more route descriptions. It also called 7 labels
   that name a place "no locality", and 9 of its outputs were rejected by validation (as designed).

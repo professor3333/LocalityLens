@@ -8,11 +8,11 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **llm_call**: `made` 27 · `skipped` 33
 
-**relation**: `named_feature` 23 · `distance_and_direction` 23 · `direction_only` 8 · `other` 4 · `route_relative` 2
+**relation**: `named_feature` 27 · `distance_and_direction` 19 · `direction_only` 8 · `other` 4 · `route_relative` 2
 
 **retrieval**: `candidates_found` 41 · `feature_absent_from_index` 14 · `no_reference_feature` 5
 
-**proposal**: `needs_information` 41 · `computed` 13 · `unsupported` 6
+**proposal**: `needs_information` 42 · `computed` 12 · `unsupported` 6
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -21,17 +21,17 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V003 | 19th and Alpine Street. | named_feature | Alpine Street | feature_absent_from_index |  | needs_information |
 | V004 | Half mile E of Hiway Nine, 3 mi. S of LaFayette. | distance_and_direction | Hiway Nine | feature_absent_from_index |  | needs_information |
 | V005 | 3 miles east of Roggen on the Painter Hereford Ranch. | distance_and_direction | Roggen | candidates_found | Roggen (Populated Place, Weld, exact_official) | needs_information |
-| V006 | Vernal Mesa, 15 mi. east of Montrose. | distance_and_direction | Montrose | candidates_found | Montrose (Populated Place, Montrose, exact_official) | computed |
+| V006 | Vernal Mesa, 15 mi. east of Montrose. | named_feature | Vernal Mesa | candidates_found | Vernal Mesa (Summit, Montrose, exact_official) | needs_information |
 | V007 | Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa. | direction_only | New Mexico | feature_absent_from_index |  | needs_information |
 | V008 | Lutz Reservoir, NW of Barr Lake. | direction_only | Barr Lake | candidates_found | Barr Lake (Reservoir, Adams, exact_official) | needs_information |
 | V009 | Wet Mountains; Grape Creek drainage, Bear Gulch tributary; ~1.5 miles NW of Yorkville, ~1.5 mile SW of Curley Peak | distance_and_direction | Yorkville | candidates_found | Yorkville (Populated Place, Fremont, exact_official) | needs_information |
 | V010 | Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station. | direction_only | Rainbow | feature_absent_from_index |  | needs_information |
 | V011 | West Rim of Uncompahgre Plateau, near road between Columbine Pass and Uncompahgre Butte, along road to Love Mesa. | route_relative | Uncompahgre Plateau | candidates_found | Uncompahgre Plateau (Plain, Montrose, exact_official) | unsupported |
 | V012 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, drainage N of North Peak. | direction_only | North Peak | candidates_found | North Peak (Summit, Pueblo, exact_official) | needs_information |
-| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | distance_and_direction | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | computed |
-| V014 | Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone. | distance_and_direction | Greystone | candidates_found | Greystone (Populated Place, Moffat, exact_official) | needs_information |
+| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | named_feature | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | computed |
+| V014 | Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone. | named_feature | Douglas Mt. | candidates_found | Douglas Mountain (Summit, Jefferson, core_official) | needs_information |
 | V015 | Moun tains about the head waters of Clear Creek. In the valley near Empire. | named_feature | Empire | candidates_found | Empire (Populated Place, Clear Creek, exact_official) | needs_information |
-| V016 | Gravelly slope of Table Mesa, 3 mi. s. of Lyons. | distance_and_direction | Lyons | candidates_found | Lyons (Populated Place, Boulder, exact_official) | needs_information |
+| V016 | Gravelly slope of Table Mesa, 3 mi. s. of Lyons. | named_feature | Table Mesa | candidates_found | Table Mountain (Summit, Boulder, exact_variant) | needs_information |
 | V017 | Sandstone hill ¼ mile west of Gem Village on north side US 160. | distance_and_direction | Gem Village | candidates_found | Gem Village (Populated Place, La Plata, exact_official) | needs_information |
 | V018 | BLM. Samjbrito Wetalnds.State Hwy 140 to County Road 136. On 136 ca. 4 mi. to County Road 134 | other |  | no_reference_feature |  | unsupported |
 | V019 | Along U.S. 36 near Idalia. | named_feature | Idalia | candidates_found | Idalia (Populated Place, Yuma, exact_official) | needs_information |

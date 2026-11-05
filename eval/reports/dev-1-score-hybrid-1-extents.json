@@ -1,6 +1,6 @@
 {
   "meta": {
-    "rules": "rules-2",
+    "rules": "rules-3",
     "llm": "llm-x2g2-qwen3.5-4b-q4km",
     "hybrid": "hybrid-1",
     "specimens": "gbif-cu-2026-11-01"
@@ -24,9 +24,9 @@
     "systems": {
       "rules": {
         "relation_accuracy": {
-          "hits": 39,
+          "hits": 41,
           "n": 50,
-          "rate": 0.78
+          "rate": 0.82
         },
         "valid_extraction": {
           "hits": 50,
@@ -34,46 +34,46 @@
           "rate": 1.0
         },
         "critical_exact_match": {
-          "hits": 34,
+          "hits": 36,
           "n": 50,
-          "rate": 0.68
+          "rate": 0.72
         },
         "field_accuracy": {
           "distance": {
-            "hits": 44,
+            "hits": 46,
             "n": 50,
-            "rate": 0.88
+            "rate": 0.92
           },
           "unit": {
-            "hits": 45,
+            "hits": 47,
             "n": 50,
-            "rate": 0.9
+            "rate": 0.94
           },
           "direction": {
-            "hits": 40,
+            "hits": 42,
             "n": 50,
-            "rate": 0.8
+            "rate": 0.84
           },
           "qualifiers": {
-            "hits": 45,
+            "hits": 46,
             "n": 50,
-            "rate": 0.9
+            "rate": 0.92
           }
         },
         "reference_top1": {
-          "hits": 16,
-          "n": 29,
-          "rate": 0.552
-        },
-        "reference_recall5": {
           "hits": 17,
           "n": 29,
           "rate": 0.586
         },
-        "correct_proposal_candidates": {
-          "hits": 16,
+        "reference_recall5": {
+          "hits": 18,
           "n": 29,
-          "rate": 0.552
+          "rate": 0.621
+        },
+        "correct_proposal_candidates": {
+          "hits": 17,
+          "n": 29,
+          "rate": 0.586
         },
         "computed_proposals_correct": {
           "hits": 11,
@@ -91,7 +91,7 @@
           "rate": 0.529
         },
         "false_no_locality": 0,
-        "mean_corrections": 1.0
+        "mean_corrections": 0.8
       },
       "llm": {
         "relation_accuracy": {
@@ -166,9 +166,9 @@
       },
       "hybrid": {
         "relation_accuracy": {
-          "hits": 39,
+          "hits": 41,
           "n": 50,
-          "rate": 0.78
+          "rate": 0.82
         },
         "valid_extraction": {
           "hits": 50,
@@ -176,46 +176,46 @@
           "rate": 1.0
         },
         "critical_exact_match": {
-          "hits": 34,
+          "hits": 36,
           "n": 50,
-          "rate": 0.68
+          "rate": 0.72
         },
         "field_accuracy": {
           "distance": {
-            "hits": 44,
+            "hits": 46,
             "n": 50,
-            "rate": 0.88
+            "rate": 0.92
           },
           "unit": {
-            "hits": 45,
+            "hits": 47,
             "n": 50,
-            "rate": 0.9
+            "rate": 0.94
           },
           "direction": {
-            "hits": 39,
+            "hits": 41,
             "n": 50,
-            "rate": 0.78
+            "rate": 0.82
           },
           "qualifiers": {
-            "hits": 45,
+            "hits": 46,
             "n": 50,
-            "rate": 0.9
+            "rate": 0.92
           }
         },
         "reference_top1": {
-          "hits": 18,
-          "n": 29,
-          "rate": 0.621
-        },
-        "reference_recall5": {
           "hits": 19,
           "n": 29,
           "rate": 0.655
         },
-        "correct_proposal_candidates": {
-          "hits": 18,
+        "reference_recall5": {
+          "hits": 20,
           "n": 29,
-          "rate": 0.621
+          "rate": 0.69
+        },
+        "correct_proposal_candidates": {
+          "hits": 19,
+          "n": 29,
+          "rate": 0.655
         },
         "computed_proposals_correct": {
           "hits": 12,
@@ -233,7 +233,7 @@
           "rate": 0.529
         },
         "false_no_locality": 0,
-        "mean_corrections": 0.98
+        "mean_corrections": 0.78
       }
     },
     "by_type": {
@@ -259,9 +259,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 11,
+          "hits": 12,
           "n": 22,
-          "rate": 0.5
+          "rate": 0.545
         },
         "route_relative": {
           "hits": 0,
@@ -323,9 +323,9 @@
           "rate": null
         },
         "named_feature": {
-          "hits": 13,
+          "hits": 14,
           "n": 22,
-          "rate": 0.591
+          "rate": 0.636
         },
         "route_relative": {
           "hits": 0,
@@ -447,20 +447,20 @@
         {
           "audit_id": "D07",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": true,
+          "critical_ok": true,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 0
         },
         {
           "audit_id": "D08",
@@ -807,20 +807,20 @@
         {
           "audit_id": "D27",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 5
+          "corrections": 1
         },
         {
           "audit_id": "D28",
@@ -2251,20 +2251,20 @@
         {
           "audit_id": "D07",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
-          "correct_candidate": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": true,
+          "critical_ok": true,
+          "top1_ok": true,
+          "recall5_ok": true,
+          "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 0
         },
         {
           "audit_id": "D08",
@@ -2611,20 +2611,20 @@
         {
           "audit_id": "D27",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 5
+          "corrections": 1
         },
         {
           "audit_id": "D28",
@@ -3044,29 +3044,29 @@
     },
     "paired_correct_proposal_candidates": {
       "n": 29,
-      "rules": 16,
+      "rules": 17,
       "llm": 18,
-      "difference": 0.069,
+      "difference": 0.034,
       "ci95": [
-        -0.069,
-        0.207
+        -0.103,
+        0.172
       ],
       "llm_only": 3,
-      "rules_only": 1,
-      "sign_test_p": 0.625
+      "rules_only": 2,
+      "sign_test_p": 1.0
     },
     "paired_critical_exact_match": {
       "n": 50,
-      "rules": 34,
+      "rules": 36,
       "llm": 30,
-      "difference": -0.08,
+      "difference": -0.12,
       "ci95": [
-        -0.18,
-        0.02
+        -0.24,
+        0.0
       ],
       "llm_only": 2,
-      "rules_only": 6,
-      "sign_test_p": 0.2891
+      "rules_only": 8,
+      "sign_test_p": 0.1094
     },
     "proposals": {
       "rules": {
@@ -3125,8 +3125,8 @@
       "hybrid": {
         "correct_proposal_candidates": {
           "n": 29,
-          "rules": 16,
-          "llm": 18,
+          "rules": 17,
+          "llm": 19,
           "difference": 0.069,
           "ci95": [
             0.0,
@@ -3138,8 +3138,8 @@
         },
         "critical_exact_match": {
           "n": 50,
-          "rules": 34,
-          "llm": 34,
+          "rules": 36,
+          "llm": 36,
           "difference": 0.0,
           "ci95": [
             0.0,
@@ -3170,9 +3170,9 @@
     "systems": {
       "rules": {
         "relation_accuracy": {
-          "hits": 34,
+          "hits": 35,
           "n": 41,
-          "rate": 0.829
+          "rate": 0.854
         },
         "valid_extraction": {
           "hits": 41,
@@ -3180,25 +3180,25 @@
           "rate": 1.0
         },
         "critical_exact_match": {
-          "hits": 30,
+          "hits": 31,
           "n": 41,
-          "rate": 0.732
+          "rate": 0.756
         },
         "field_accuracy": {
           "distance": {
-            "hits": 37,
-            "n": 41,
-            "rate": 0.902
-          },
-          "unit": {
             "hits": 38,
             "n": 41,
             "rate": 0.927
           },
-          "direction": {
-            "hits": 33,
+          "unit": {
+            "hits": 39,
             "n": 41,
-            "rate": 0.805
+            "rate": 0.951
+          },
+          "direction": {
+            "hits": 34,
+            "n": 41,
+            "rate": 0.829
           },
           "qualifiers": {
             "hits": 38,
@@ -3237,7 +3237,7 @@
           "rate": 0.571
         },
         "false_no_locality": 0,
-        "mean_corrections": 0.88
+        "mean_corrections": 0.78
       },
       "llm": {
         "relation_accuracy": {
@@ -3312,9 +3312,9 @@
       },
       "hybrid": {
         "relation_accuracy": {
-          "hits": 34,
+          "hits": 35,
           "n": 41,
-          "rate": 0.829
+          "rate": 0.854
         },
         "valid_extraction": {
           "hits": 41,
@@ -3322,25 +3322,25 @@
           "rate": 1.0
         },
         "critical_exact_match": {
-          "hits": 30,
+          "hits": 31,
           "n": 41,
-          "rate": 0.732
+          "rate": 0.756
         },
         "field_accuracy": {
           "distance": {
-            "hits": 38,
-            "n": 41,
-            "rate": 0.927
-          },
-          "unit": {
             "hits": 39,
             "n": 41,
             "rate": 0.951
           },
-          "direction": {
-            "hits": 33,
+          "unit": {
+            "hits": 40,
             "n": 41,
-            "rate": 0.805
+            "rate": 0.976
+          },
+          "direction": {
+            "hits": 34,
+            "n": 41,
+            "rate": 0.829
           },
           "qualifiers": {
             "hits": 38,
@@ -3379,7 +3379,7 @@
           "rate": 0.571
         },
         "false_no_locality": 0,
-        "mean_corrections": 0.78
+        "mean_corrections": 0.68
       }
     },
     "by_type": {
@@ -3848,20 +3848,20 @@
         {
           "audit_id": "D27",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 5
+          "corrections": 1
         },
         {
           "audit_id": "D28",
@@ -5328,20 +5328,20 @@
         {
           "audit_id": "D27",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": true,
-          "critical_ok": false,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 5
+          "corrections": 1
         },
         {
           "audit_id": "D28",
@@ -5702,16 +5702,16 @@
     },
     "paired_critical_exact_match": {
       "n": 41,
-      "rules": 30,
+      "rules": 31,
       "llm": 26,
-      "difference": -0.098,
+      "difference": -0.122,
       "ci95": [
-        -0.22,
+        -0.268,
         0.024
       ],
       "llm_only": 2,
-      "rules_only": 6,
-      "sign_test_p": 0.2891
+      "rules_only": 7,
+      "sign_test_p": 0.1797
     },
     "proposals": {
       "rules": {
@@ -5783,8 +5783,8 @@
         },
         "critical_exact_match": {
           "n": 41,
-          "rules": 30,
-          "llm": 30,
+          "rules": 31,
+          "llm": 31,
           "difference": 0.0,
           "ci95": [
             0.0,

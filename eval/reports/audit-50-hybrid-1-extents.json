@@ -10,7 +10,7 @@
   "system": "hybrid",
   "extractor_version": "hybrid-1",
   "components": {
-    "rules": "rules-2",
+    "rules": "rules-3",
     "llm": "llm-x2g2-qwen3.5-4b-q4km"
   },
   "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
@@ -41,20 +41,20 @@
       "llm": 4
     },
     "llm_call": {
-      "made": 14,
-      "skipped": 36
+      "made": 15,
+      "skipped": 35
     },
     "relation": {
-      "named_feature": 25,
-      "distance_and_direction": 17,
+      "named_feature": 27,
+      "distance_and_direction": 15,
       "direction_only": 5,
       "distance_only": 1,
       "route_relative": 1,
       "other": 1
     },
     "retrieval": {
-      "candidates_found": 40,
-      "feature_absent_from_index": 8,
+      "candidates_found": 39,
+      "feature_absent_from_index": 9,
       "no_reference_feature": 2
     },
     "proposal": {
@@ -1330,74 +1330,69 @@
       "audit_id": "A36",
       "locality": "Chico Basin Ranch, ca. 28 miles SE of Colorado Springs. Dry uplands above Black Squirrel Creek.",
       "county": "Pueblo",
-      "relation": "distance_and_direction",
-      "reference": "Colorado Springs",
+      "relation": "named_feature",
+      "reference": "Chico Basin Ranch",
       "validation_errors": [],
-      "retrieval": "candidates_found",
-      "candidates": 4,
-      "candidate_ids": [
-        204797,
-        181177,
-        1794711,
-        190896
-      ],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
       "interpretation": {
-        "relation": "distance_and_direction",
-        "distance": 28.0,
-        "unit": "mile",
-        "direction": "SE",
-        "qualifiers": [
-          "approximate"
-        ]
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
       },
-      "top_candidate": {
-        "feature_id": 204797,
-        "name": "Colorado Springs",
-        "class": "Populated Place",
-        "county": "El Paso",
-        "match": "exact_official"
-      },
+      "top_candidate": null,
       "proposal": "needs_information",
-      "radius_lower_bound_m": 17796,
+      "radius_lower_bound_m": null,
       "radius_m": null,
       "extent": null,
       "source": "rules",
-      "llm_called": false
+      "llm_called": true,
+      "trace": {
+        "prompt_sha256": "28cd2b687bf6d956775a26a2a8c4211d9afe7b50a22672c500602449ef890823",
+        "prompt_tokens": 2367,
+        "completion_tokens": 93,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 0.0,
+        "record_seconds": 0.01,
+        "cache_hits": 1
+      }
     },
     {
       "audit_id": "A37",
       "locality": "Rocky Mountain National Park. Neversummer Range. About halfway up south slope of Thunder Mt., 16 miles N of Grand Lake.",
       "county": "Grand",
-      "relation": "distance_and_direction",
-      "reference": "Grand Lake",
+      "relation": "named_feature",
+      "reference": "Thunder Mt.",
       "validation_errors": [],
       "retrieval": "candidates_found",
-      "candidates": 4,
+      "candidates": 2,
       "candidate_ids": [
-        204950,
-        202505,
-        202532,
-        203936
+        177534,
+        188011
       ],
       "interpretation": {
-        "relation": "distance_and_direction",
-        "distance": 16.0,
-        "unit": "mile",
-        "direction": "N",
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
         "qualifiers": [
           "approximate"
         ]
       },
       "top_candidate": {
-        "feature_id": 204950,
-        "name": "Grand Lake",
-        "class": "Reservoir",
+        "feature_id": 177534,
+        "name": "Thunder Mountain",
+        "class": "Summit",
         "county": "Grand",
-        "match": "exact_official"
+        "match": "core_official"
       },
       "proposal": "computed",
-      "radius_lower_bound_m": 20068,
-      "radius_m": 20644,
+      "radius_lower_bound_m": 39,
+      "radius_m": 1639,
       "extent": "reviewed",
       "source": "rules",
       "llm_called": false

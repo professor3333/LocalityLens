@@ -12,6 +12,9 @@ Design rules:
 
 Detection order: no locality → route-relative → orthogonal offsets → between → distance and
 direction → distance only → direction only → named feature.
+
+A named place written right before an offset can win over the offset (rules-3), following the
+annotation guide's "most specific clause": see :meth:`RulesExtractor._collecting_place`.
 """
 
 from __future__ import annotations
@@ -32,10 +35,12 @@ from localitylens.extract.schema import (
 )
 from localitylens.gazetteer.keys import county_key, name_key
 from localitylens.geo.directions import parse_direction
-from localitylens.geo.units import AMBIGUOUS_UNIT_FORMS, parse_unit
+from localitylens.geo.units import AMBIGUOUS_UNIT_FORMS, parse_unit, to_metres
 
 # rules-2: "air mi" / "air miles", spelled-out numbers before a unit, "ca" without a dot.
-RULES_VERSION: Final = "rules-2"
+# rules-3: an abbreviated direction is never cut short ("10 mi. n. w." is not "10 mi. n");
+# a named collecting place before an offset wins over the offset (see _collecting_place).
+RULES_VERSION: Final = "rules-3"
 
 # ---------------------------------------------------------------------------------- patterns
 
@@ -85,7 +90,7 @@ _RE_OFFSET_A = re.compile(
 )
 _RE_OFFSET_B = re.compile(
     rf"(?P<feat>{_FEATURE})\s*,?\s+(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*(?:{_AIR}(?P<unit>{_UNIT}))?\s*"
-    rf"(?P<dir>{_DIR})(?=\s*(?:[,.;:)]|$))"
+    rf"(?P<dir>{_DIR})(?!\.?\s?(?i:[NSEW])\.)(?=\s*(?:[,.;:)]|$))"
 )
 _RE_DISTANCE_ONLY = re.compile(
     rf"(?P<qual>{_QUAL})?(?P<num>{_QTY})\s*{_AIR}(?P<unit>{_UNIT})\s+{_OF}\s+(?:the\s+)?"
@@ -140,6 +145,22 @@ _NOT_PLACE_WORDS: Final = frozenset(
 
 _HEAD_INITIAL_TYPES: Final = frozenset({"mt.", "mt", "mount", "lake"})
 
+# Collecting place before an offset (rules-3). A position word puts the specimen on the place
+# ("S slope of Thunder Mt., 16 miles N of Grand Lake"): the offset only locates it.
+_RE_ON_PLACE = re.compile(
+    r"(?i:\b(?:slopes?|side|flank|summit|top|foot|base|edge|mouth|head|shore|rim)\s+"
+    r"(?:of\s+)?(?:the\s+)?)$"
+)
+# A name in a route ("toward Independence Pass, 11 mi. E of Aspen") is not a collecting place.
+_RE_ROUTE_BEFORE = re.compile(r"(?i:\b(?:toward|towards|to|from|along|via)\s+)$")
+_ROUTE_NAME_WORDS: Final = frozenset(
+    {"road", "rd", "rd.", "trail", "tr.", "highway", "hwy", "hwy.", "boulevard", "blvd",
+     "blvd.", "drive", "dr.", "street", "st.", "avenue", "ave.", "route", "rte."}
+)  # fmt: skip
+# Below this, an offset region is about as small as most named places, so the offset is the
+# more specific clause ("Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel").
+_OPENING_PLACE_MIN_OFFSET_M: Final = 1609.344
+
 
 # ----------------------------------------------------------------------------------- lexicon
 
@@ -171,6 +192,8 @@ class _Draft:
     direction: dict[str, Any] | None = None
     missing: list[MissingKind] = field(default_factory=list)
     questions: list[str] = field(default_factory=list)
+    # An offset that was read but not applied (rules-3): its qualifiers are not the place's.
+    dropped_span: tuple[int, int] | None = None
 
 
 class RulesExtractor:
@@ -204,7 +227,7 @@ class RulesExtractor:
                 "admin_mentions": [
                     {"level": level, "quote": text[s:e]} for (s, e), level in admin[:6]
                 ],
-                "qualifiers": self._qualifiers(text),
+                "qualifiers": self._qualifiers(text, draft.dropped_span),
                 "missing": list(dict.fromkeys(draft.missing))[:6],
                 "open_questions": draft.questions[:3],
             }
@@ -219,10 +242,14 @@ class RulesExtractor:
         found += [(m.span(), AdminLevel.STATE) for m in _RE_STATE.finditer(text)]
         return sorted(found)
 
-    def _qualifiers(self, text: str) -> list[dict[str, Any]]:
+    def _qualifiers(
+        self, text: str, dropped: tuple[int, int] | None = None
+    ) -> list[dict[str, Any]]:
         out: list[tuple[int, dict[str, Any]]] = []
         for pattern, kind in _RE_QUALIFIERS:
             for m in pattern.finditer(text):
+                if dropped is not None and dropped[0] <= m.start() < dropped[1]:
+                    continue  # "ca. 7 miles W of X" qualifies the offset, not the place
                 out.append((m.start(), {"kind": kind, "quote": m.group(0)}))
         return [q for _, q in sorted(out, key=lambda t: t[0])][:6]
 
@@ -253,9 +280,15 @@ class RulesExtractor:
 
         for pattern in (_RE_OFFSET_A, _RE_OFFSET_B):
             if hit := self._valid_match(pattern, text, admin_spans):
+                if pattern is _RE_OFFSET_A and (
+                    place := self._collecting_place(hit[0], admin_spans)
+                ):
+                    return self._place_before_offset(text, place, hit[0])
                 return self._offset(*hit, RelationType.DISTANCE_AND_DIRECTION)
 
         if hit := self._valid_match(_RE_DISTANCE_ONLY, text, admin_spans):
+            if place := self._collecting_place(hit[0], admin_spans):
+                return self._place_before_offset(text, place, hit[0])
             return self._offset(*hit, RelationType.DISTANCE_ONLY)
 
         if hit := self._valid_match(_RE_DIRECTION_ONLY, text, admin_spans, num_groups=()):
@@ -336,6 +369,63 @@ class RulesExtractor:
                 draft.direction = {"point": point, "quote": dir_text}
             else:
                 draft.missing.append(MissingKind.DIRECTION)
+        return draft
+
+    def _collecting_place(
+        self, m: re.Match[str], admin_spans: list[tuple[int, int]]
+    ) -> tuple[int, int] | None:
+        """A known place written right before an "N units DIR of X" offset that names where the
+        specimen was collected, so the offset only locates it. The annotation guide takes the
+        most specific clause; two label shapes make the place that clause:
+
+        * a position word puts the specimen on the place: "S. slope of Thunder Mt., 16 miles N
+          of Grand Lake", "slope of Douglas Mt., 3/5 mi. SW of Greystone";
+        * the label opens with the place and the offset is at least a mile: "Vernal Mesa,
+          15 mi. east of Montrose". A shorter offset is the more specific clause.
+
+        The place must end right before the offset's comma or semicolon, and it is never a road
+        or a name inside a route ("toward Independence Pass, 11 mi. E of Aspen").
+        """
+        text = m.string
+        before = text[: m.start()].rstrip()
+        if not before.endswith((",", ";")):
+            return None
+        known = [p for p in self._known_phrases(text, admin_spans) if p[1] <= m.start()]
+        if not known:
+            return None
+        start, end = known[-1]
+        if text[end : m.start()].strip(" .,;"):
+            return None  # something else sits between the place and the offset
+        name = text[start:end]
+        if name.split()[-1].lower() in _ROUTE_NAME_WORDS or _RE_ROUTE_BEFORE.search(text[:start]):
+            return None
+        if _RE_ON_PLACE.search(text[:start]):
+            return start, end
+        if text[:start].strip():
+            return None  # neither a position word nor the label's opening place
+        quantity = parse_quantity(m.group("num"))
+        unit = parse_unit(m.group("unit")) if m.group("unit") else None
+        if (
+            quantity is None
+            or unit is None
+            or m.group("unit").strip().lower() in AMBIGUOUS_UNIT_FORMS
+        ):
+            return None
+        if to_metres(quantity.value, unit) < _OPENING_PLACE_MIN_OFFSET_M:
+            return None
+        return start, end
+
+    def _place_before_offset(
+        self, text: str, place: tuple[int, int], offset: re.Match[str]
+    ) -> _Draft:
+        start, end = place
+        draft = _Draft(relation=RelationType.NAMED_FEATURE, dropped_span=offset.span())
+        draft.feature = self._feature(text[start:end])
+        offset_quote = offset.group(0).strip().rstrip(".,")[:160]
+        draft.questions.append(
+            f"The label also gives an offset ({offset_quote!r}); it is read as locating "
+            f"{text[start:end]!r}, the collecting place."
+        )
         return draft
 
     def _named_feature(self, text: str, admin_spans: list[tuple[int, int]]) -> _Draft:

@@ -6,11 +6,11 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **source**: `rules` 46 · `llm` 4
 
-**llm_call**: `made` 14 · `skipped` 36
+**llm_call**: `made` 15 · `skipped` 35
 
-**relation**: `named_feature` 25 · `distance_and_direction` 17 · `direction_only` 5 · `distance_only` 1 · `route_relative` 1 · `other` 1
+**relation**: `named_feature` 27 · `distance_and_direction` 15 · `direction_only` 5 · `distance_only` 1 · `route_relative` 1 · `other` 1
 
-**retrieval**: `candidates_found` 40 · `feature_absent_from_index` 8 · `no_reference_feature` 2
+**retrieval**: `candidates_found` 39 · `feature_absent_from_index` 9 · `no_reference_feature` 2
 
 **proposal**: `needs_information` 38 · `computed` 10 · `unsupported` 2
 
@@ -51,8 +51,8 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A33 | Gravelly bench along highway below Fremont Pass. | named_feature | Fremont Pass | candidates_found | Fremont Pass (Gap, Lake, exact_official) | needs_information |
 | A34 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: San Isabel National Forest: ca 3.4 road mi on Forest 101 from U.S. Hwy 50. | named_feature | Wet Mountains | candidates_found | Wet Mountains (Range, Custer, exact_official) | needs_information |
 | A35 | Gore Range, Eagles Nest Wilderness Area, central Colorado. 1km west of Lower Piney Lake. | direction_only | Lower Piney Lake | candidates_found | Piney Lake (Lake, Eagle, core_official) | needs_information |
-| A36 | Chico Basin Ranch, ca. 28 miles SE of Colorado Springs. Dry uplands above Black Squirrel Creek. | distance_and_direction | Colorado Springs | candidates_found | Colorado Springs (Populated Place, El Paso, exact_official) | needs_information |
-| A37 | Rocky Mountain National Park. Neversummer Range. About halfway up south slope of Thunder Mt., 16 miles N of Grand Lake. | distance_and_direction | Grand Lake | candidates_found | Grand Lake (Reservoir, Grand, exact_official) | computed |
+| A36 | Chico Basin Ranch, ca. 28 miles SE of Colorado Springs. Dry uplands above Black Squirrel Creek. | named_feature | Chico Basin Ranch | feature_absent_from_index |  | needs_information |
+| A37 | Rocky Mountain National Park. Neversummer Range. About halfway up south slope of Thunder Mt., 16 miles N of Grand Lake. | named_feature | Thunder Mt. | candidates_found | Thunder Mountain (Summit, Grand, core_official) | computed |
 | A38 | Rocky Mountain National Park, along Old Fall River Rd., ca. 6 mi. from Fall River entrance to Park. | distance_only | Fall River | candidates_found | Fall River (Stream, Larimer, exact_official) | needs_information |
 | A39 | Dry Creek drainage. | named_feature | Dry Creek | candidates_found | Dry Creek (Stream, Rio Grande, exact_official) | computed |
 | A40 | Mosquito Range, San Isabel National Forest, Weston Pass Rd (FS Rd 7), E from Rte 24, about 1 mi. past USFS boundary, along Big Union Creek. | direction_only | Rte | feature_absent_from_index |  | needs_information |

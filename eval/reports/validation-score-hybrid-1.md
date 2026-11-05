@@ -1,6 +1,6 @@
 # validation: scores against the owner's annotations
 
-rules `rules-2` · llm `llm-x2g2-qwen3.5-4b-q4km` · hybrid `hybrid-1` · specimens `gbif-cu-2026-11-01`
+rules `rules-3` · llm `llm-x2g2-qwen3.5-4b-q4km` · hybrid `hybrid-1` · specimens `gbif-cu-2026-11-01`
 
 Annotated records: 60. Categories: answerable 32 · reference_absent 24 · unsupported 4. Annotated types: named_feature 36 · distance_and_direction 13 · direction_only 5 · distance_only 2 · between_features 2 · admin_only 1 · route_relative 1.
 
@@ -8,21 +8,21 @@ Annotated records: 60. Categories: answerable 32 · reference_absent 24 · unsup
 
 | Metric | rules | llm | hybrid |
 |---|---|---|---|
-| Relation read correctly | 32/60 (53%) | 30/60 (50%) | 33/60 (55%) |
+| Relation read correctly | 36/60 (60%) | 30/60 (50%) | 37/60 (62%) |
 | Extraction passed validation | 60/60 (100%) | 58/60 (97%) | 60/60 (100%) |
-| Critical interpretation exact | 26/60 (43%) | 23/60 (38%) | 27/60 (45%) |
-| Reference top-1 acceptable (answerable) | 15/32 (47%) | 18/32 (56%) | 19/32 (59%) |
-| Reference in top 5 (answerable) | 15/32 (47%) | 18/32 (56%) | 19/32 (59%) |
-| **Correct proposal candidates** (answerable) | 13/32 (41%) | 15/32 (47%) | 16/32 (50%) |
+| Critical interpretation exact | 30/60 (50%) | 23/60 (38%) | 31/60 (52%) |
+| Reference top-1 acceptable (answerable) | 17/32 (53%) | 18/32 (56%) | 21/32 (66%) |
+| Reference in top 5 (answerable) | 18/32 (56%) | 18/32 (56%) | 22/32 (69%) |
+| **Correct proposal candidates** (answerable) | 16/32 (50%) | 15/32 (47%) | 19/32 (59%) |
 | Computed proposals that are correct | 0/0 | 0/0 | 0/0 |
 | Unsupported records flagged unsupported | 3/4 (75%) | 3/4 (75%) | 3/4 (75%) |
 | References absent from GNIS reported absent | 13/24 (54%) | 13/24 (54%) | 12/24 (50%) |
 | Place names read as no locality | 0 | 1 | 0 |
-| Mean fields to correct per record | 1.85 | 1.7 | 1.78 |
+| Mean fields to correct per record | 1.55 | 1.7 | 1.48 |
 
-**Paired, correct proposal candidates (LLM − rules):** +6% (95% bootstrap CI -9% to +22%); LLM-only 4, rules-only 2, exact sign test p = 0.6875.
+**Paired, correct proposal candidates (LLM − rules):** -3% (95% bootstrap CI -19% to +12%); LLM-only 3, rules-only 4, exact sign test p = 1.0.
 
-**Paired, critical exact match (LLM − rules):** -5% (95% bootstrap CI -18% to +8%); LLM-only 6, rules-only 9, exact sign test p = 0.6072.
+**Paired, critical exact match (LLM − rules):** -12% (95% bootstrap CI -25% to +2%); LLM-only 5, rules-only 12, exact sign test p = 0.1435.
 
 **Paired, correct proposal candidates (hybrid − rules):** +9% (95% bootstrap CI +0% to +22%); hybrid-only 3, rules-only 0, exact sign test p = 0.25.
 
@@ -32,17 +32,17 @@ Annotated records: 60. Categories: answerable 32 · reference_absent 24 · unsup
 
 | Metric | rules | llm | hybrid |
 |---|---|---|---|
-| Relation read correctly | 30/49 (61%) | 28/49 (57%) | 30/49 (61%) |
+| Relation read correctly | 34/49 (69%) | 28/49 (57%) | 34/49 (69%) |
 | Extraction passed validation | 49/49 (100%) | 47/49 (96%) | 49/49 (100%) |
-| Critical interpretation exact | 24/49 (49%) | 21/49 (43%) | 24/49 (49%) |
-| Reference top-1 acceptable (answerable) | 15/32 (47%) | 18/32 (56%) | 19/32 (59%) |
-| Reference in top 5 (answerable) | 15/32 (47%) | 18/32 (56%) | 19/32 (59%) |
-| **Correct proposal candidates** (answerable) | 13/32 (41%) | 15/32 (47%) | 16/32 (50%) |
+| Critical interpretation exact | 28/49 (57%) | 21/49 (43%) | 28/49 (57%) |
+| Reference top-1 acceptable (answerable) | 17/32 (53%) | 18/32 (56%) | 21/32 (66%) |
+| Reference in top 5 (answerable) | 18/32 (56%) | 18/32 (56%) | 22/32 (69%) |
+| **Correct proposal candidates** (answerable) | 16/32 (50%) | 15/32 (47%) | 19/32 (59%) |
 | Computed proposals that are correct | 0/0 | 0/0 | 0/0 |
 | Unsupported records flagged unsupported | 2/2 (100%) | 2/2 (100%) | 2/2 (100%) |
 | References absent from GNIS reported absent | 9/15 (60%) | 8/15 (53%) | 8/15 (53%) |
 
-Paired correct proposal candidates: +6% (CI -9% to +22%), p = 0.6875.
+Paired correct proposal candidates: -3% (CI -19% to +12%), p = 1.0.
 
 Paired correct proposal candidates (hybrid − rules): +9% (CI +0% to +22%), p = 0.25.
 
@@ -57,7 +57,7 @@ Paired correct proposal candidates (hybrid − rules): +9% (CI +0% to +22%), p =
 | direction_only | 1/3 (33%) | 0/3 (0%) | 1/3 (33%) |
 | distance_and_direction | 7/8 (88%) | 8/8 (100%) | 8/8 (100%) |
 | distance_only | 0/0 | 0/0 | 0/0 |
-| named_feature | 5/21 (24%) | 7/21 (33%) | 7/21 (33%) |
+| named_feature | 8/21 (38%) | 7/21 (33%) | 10/21 (48%) |
 | route_relative | 0/0 | 0/0 | 0/0 |
 
 </details>
@@ -71,17 +71,17 @@ Paired correct proposal candidates (hybrid − rules): +9% (CI +0% to +22%), p =
 | V003 | reference_absent | C+ R−  | C− R−  | C+ R−  |
 | V004 | reference_absent | C+ R−  | C− R−  | C+ R−  |
 | V005 | reference_absent | C− R−  | C− R−  | C− R−  |
-| V006 | answerable | C− R−  | C− R−  | C− R−  |
+| V006 | answerable | C+ R+ ✓ | C− R−  | C+ R+ ✓ |
 | V007 | answerable | C− R−  | C− R−  | C− R−  |
 | V008 | answerable | C− R−  | C− R−  | C− R−  |
 | V009 | answerable | C− R−  | C− R−  | C− R−  |
 | V010 | reference_absent | C− R−  | C− R−  | C− R−  |
 | V011 | unsupported | C+ R−  | C− R−  | C− R−  |
 | V012 | answerable | C+ R+ ✓ | C− R+  | C+ R+ ✓ |
-| V013 | answerable | C− R+  | C+ R+ ✓ | C− R+  |
-| V014 | answerable | C− R−  | C− R−  | C− R−  |
+| V013 | answerable | C+ R+ ✓ | C+ R+ ✓ | C+ R+ ✓ |
+| V014 | answerable | C+ R−  | C− R−  | C+ R−  |
 | V015 | answerable | C− R+  | C− R−  | C− R+  |
-| V016 | answerable | C− R−  | C− R−  | C− R−  |
+| V016 | answerable | C+ R+ ✓ | C− R−  | C+ R+ ✓ |
 | V017 | answerable | C+ R+ ✓ | C+ R+ ✓ | C+ R+ ✓ |
 | V018 | reference_absent | C− R−  | C− R−  | C− R−  |
 | V019 | reference_absent | C− R−  | C− R−  | C− R−  |

@@ -21,8 +21,8 @@ critical interpretation matches and whose **top-ranked** candidate is acceptable
 correct proposal once the feature's extent is supplied and no other question blocks it.
 With the [extent store](../data/reviewed/) (56 of 97 features measured), dev and validation
 runs also report regions computed, their precision and useful coverage
-([findings](../eval/reports/extents-findings.md)): hybrid-1 computes 35 regions on 160
-records, 32 correct (91%), a useful coverage of 32 of 92 answerable (35%). "Correct" tests the
+([findings](../eval/reports/extents-findings.md)): with rules-3, hybrid-1 computes 34 regions
+on 160 records, 33 correct (97%, in-sample), a useful coverage of 33 of 92 answerable (36%). "Correct" tests the
 interpretation and the reference, not the size of the radius.
 
 ## Metrics (`evaluation/score.py`)
@@ -79,7 +79,9 @@ Correct proposal candidates, against the rules baseline `rules-1`:
 
 These rows are the release configuration (rules-1, validation 2). Since then, rules-2 and
 validation 3 give audit 17 / 13 / 17, dev-1 16 / 18 / 18 and validation 13 / 15 / 16. The
-audit gains are in-sample ([rules-2 findings](../eval/reports/rules-2-findings.md)).
+audit gains are in-sample ([rules-2 findings](../eval/reports/rules-2-findings.md)). rules-3 then
+gives audit 17 / 13 / 17, dev-1 17 / 18 / 19 and validation 16 / 15 / 19, also in-sample
+([rules-3 findings](../eval/reports/rules-3-findings.md)); dev-2 is drawn to check it.
 
 - **LLM v2:** Qwen3.5-4B Q4_K_M, prompt `extraction-v2`, greedy decoding.
 - **hybrid-1:** runs the rules first, and the LLM only where the rules reach no gazetteer

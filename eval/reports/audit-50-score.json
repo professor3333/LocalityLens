@@ -1,6 +1,6 @@
 {
   "meta": {
-    "rules": "rules-2",
+    "rules": "rules-3",
     "llm": "llm-x2g2-qwen3.5-4b-q4km",
     "specimens": "gbif-cu-2026-11-01"
   },
@@ -22,9 +22,9 @@
     "systems": {
       "rules": {
         "relation_accuracy": {
-          "hits": 28,
+          "hits": 30,
           "n": 50,
-          "rate": 0.56
+          "rate": 0.6
         },
         "valid_extraction": {
           "hits": 50,
@@ -32,41 +32,41 @@
           "rate": 1.0
         },
         "critical_exact_match": {
-          "hits": 27,
+          "hits": 28,
           "n": 50,
-          "rate": 0.54
+          "rate": 0.56
         },
         "field_accuracy": {
           "distance": {
-            "hits": 36,
+            "hits": 38,
             "n": 50,
-            "rate": 0.72
+            "rate": 0.76
           },
           "unit": {
+            "hits": 38,
+            "n": 50,
+            "rate": 0.76
+          },
+          "direction": {
             "hits": 36,
             "n": 50,
             "rate": 0.72
           },
-          "direction": {
-            "hits": 34,
-            "n": 50,
-            "rate": 0.68
-          },
           "qualifiers": {
-            "hits": 41,
+            "hits": 42,
             "n": 50,
-            "rate": 0.82
+            "rate": 0.84
           }
         },
         "reference_top1": {
-          "hits": 18,
+          "hits": 19,
           "n": 31,
-          "rate": 0.581
+          "rate": 0.613
         },
         "reference_recall5": {
-          "hits": 18,
+          "hits": 19,
           "n": 31,
-          "rate": 0.581
+          "rate": 0.613
         },
         "correct_proposal_candidates": {
           "hits": 17,
@@ -89,7 +89,7 @@
           "rate": 0.4
         },
         "false_no_locality": 0,
-        "mean_corrections": 1.76
+        "mean_corrections": 1.56
       },
       "llm": {
         "relation_accuracy": {
@@ -854,38 +854,38 @@
         {
           "audit_id": "A36",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
-          "qualifiers_ok": false,
-          "critical_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
+          "qualifiers_ok": true,
+          "critical_ok": true,
           "top1_ok": false,
           "recall5_ok": false,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 1
         },
         {
           "audit_id": "A37",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": false,
           "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
+          "top1_ok": true,
+          "recall5_ok": true,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 1
         },
         {
           "audit_id": "A38",
@@ -2040,16 +2040,16 @@
     },
     "paired_critical_exact_match": {
       "n": 50,
-      "rules": 27,
+      "rules": 28,
       "llm": 23,
-      "difference": -0.08,
+      "difference": -0.1,
       "ci95": [
-        -0.24,
+        -0.26,
         0.08
       ],
       "llm_only": 7,
-      "rules_only": 11,
-      "sign_test_p": 0.4807
+      "rules_only": 12,
+      "sign_test_p": 0.3593
     }
   },
   "excluding_unsure": {
@@ -2070,9 +2070,9 @@
     "systems": {
       "rules": {
         "relation_accuracy": {
-          "hits": 24,
+          "hits": 25,
           "n": 40,
-          "rate": 0.6
+          "rate": 0.625
         },
         "valid_extraction": {
           "hits": 40,
@@ -2086,19 +2086,19 @@
         },
         "field_accuracy": {
           "distance": {
-            "hits": 30,
+            "hits": 31,
             "n": 40,
-            "rate": 0.75
+            "rate": 0.775
           },
           "unit": {
-            "hits": 30,
+            "hits": 31,
             "n": 40,
-            "rate": 0.75
+            "rate": 0.775
           },
           "direction": {
-            "hits": 28,
+            "hits": 29,
             "n": 40,
-            "rate": 0.7
+            "rate": 0.725
           },
           "qualifiers": {
             "hits": 34,
@@ -2107,14 +2107,14 @@
           }
         },
         "reference_top1": {
-          "hits": 15,
+          "hits": 16,
           "n": 24,
-          "rate": 0.625
+          "rate": 0.667
         },
         "reference_recall5": {
-          "hits": 15,
+          "hits": 16,
           "n": 24,
-          "rate": 0.625
+          "rate": 0.667
         },
         "correct_proposal_candidates": {
           "hits": 15,
@@ -2137,7 +2137,7 @@
           "rate": 0.462
         },
         "false_no_locality": 0,
-        "mean_corrections": 1.57
+        "mean_corrections": 1.45
       },
       "llm": {
         "relation_accuracy": {
@@ -2794,20 +2794,20 @@
         {
           "audit_id": "A37",
           "category": "answerable",
-          "relation_ok": false,
+          "relation_ok": true,
           "valid": true,
-          "distance_ok": false,
-          "unit_ok": false,
-          "direction_ok": false,
+          "distance_ok": true,
+          "unit_ok": true,
+          "direction_ok": true,
           "qualifiers_ok": false,
           "critical_ok": false,
-          "top1_ok": false,
-          "recall5_ok": false,
+          "top1_ok": true,
+          "recall5_ok": true,
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
           "computed": false,
-          "corrections": 6
+          "corrections": 1
         },
         {
           "audit_id": "A39",

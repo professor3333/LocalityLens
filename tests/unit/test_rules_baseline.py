@@ -194,3 +194,47 @@ def test_bare_ca_before_a_number_is_a_qualifier() -> None:
 def test_a_number_word_inside_a_name_is_not_a_distance(text: str) -> None:
     out = run(text)
     assert out.distance is None
+
+
+# rules-3: a named collecting place before an offset. Lexicon names are the fixture's.
+@pytest.mark.parametrize(("text", "place"), [
+    ("S. slope of Longs Peak, 6 mi. SW of Estes Park.", "Longs Peak"),
+    ("Gravelly slope of Gold Hill, 3/5 mi. SW of Boulder.", "Gold Hill"),  # position word
+    ("Bear Lake, 9 mi. W of Estes Park.", "Bear Lake"),  # the label opens with the place
+    ("Gold Hill, ca. 7 miles west of Boulder, roadside.", "Gold Hill"),
+])  # fmt: skip
+def test_collecting_place_before_an_offset_wins(text: str, place: str) -> None:
+    out = run(text)
+    assert out.relation is RelationType.NAMED_FEATURE
+    assert out.reference_feature is not None
+    assert out.reference_feature.name_quote == place
+    assert out.distance is None  # the offset is not applied to the place
+    assert any("offset" in q for q in out.open_questions)
+
+
+@pytest.mark.parametrize(("text", "reference"), [
+    ("Gold Hill, 0.3 mi. N. of Boulder.", "Boulder"),  # under a mile: the offset is smaller
+    ("Rocky Mountain, Bear Lake, 8 mi. NNW of Estes Park.", "Estes Park"),  # not opening
+    ("Along the road from Lyons toward Estes Park, 11 mi. E of Lyons.", "Lyons"),  # in a route
+    ("Fort Collins Road, 8 mi W of Loveland.", "Loveland"),  # a road is not a collecting place
+    ("Gold Hill, 5 m E of Boulder.", "Boulder"),  # unit unknown: no size, keep the offset
+])  # fmt: skip
+def test_offset_kept_when_the_place_is_not_the_collecting_place(text: str, reference: str) -> None:
+    out = run(text)
+    assert out.relation is RelationType.DISTANCE_AND_DIRECTION
+    assert out.reference_feature is not None
+    assert out.reference_feature.name_quote == reference
+
+
+def test_a_spaced_direction_abbreviation_is_never_cut_short() -> None:
+    out = run("Longs Peak, 10 mi. n. w. Lyons.")
+    assert out.direction is None or out.direction.quote.lower().replace(" ", "") != "n"
+    assert out.relation is not RelationType.DISTANCE_AND_DIRECTION
+
+
+def test_a_dropped_offsets_qualifier_does_not_qualify_the_place() -> None:
+    out = run("Gold Hill, ca. 7 miles west of Boulder, roadside.")
+    assert out.relation is RelationType.NAMED_FEATURE
+    assert out.qualifiers == []
+    kept = run("About halfway up the S. slope of Longs Peak, 6 mi. SW of Estes Park.")
+    assert [q.quote for q in kept.qualifiers] == ["About"]  # outside the offset: kept

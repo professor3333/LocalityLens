@@ -67,7 +67,7 @@ def test_baseline_cli(index_path: Path, capsys: pytest.CaptureFixture[str]) -> N
         main(["baseline", "run", "3 m E of Testa Lake", "--index", str(index_path), "--json"]) == 0
     )
     payload = json.loads(capsys.readouterr().out)
-    assert payload["extractor"] == "rules-2"
+    assert payload["extractor"] == "rules-3"
     assert "distance_unit" in payload["interpretation"]["missing"]
     assert payload["retrieval"]["outcome"] == "candidates_found"
 

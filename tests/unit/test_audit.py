@@ -92,7 +92,7 @@ def test_rules_report_covers_every_record(index_path: Path, tmp_path: Path) -> N
     assert by_text["Nowhere Hill."]["retrieval"] == "no_reference_feature"
     json_path, md_path = write_report(report, tmp_path)
     assert json.loads(json_path.read_text())["specimen_snapshot"] == "gbif-synthetic"
-    assert md_path.name == "audit-50-rules-2.md"
+    assert md_path.name == "audit-50-rules-3.md"
     assert md_path.read_text().count("\n| A") == 5
 
 
@@ -111,7 +111,7 @@ def test_audit_cli_end_to_end(
     assert "1 of 1 locality groups" in capsys.readouterr().out
     assert main(["audit", "rules", "--sample", str(audit_dir / "audit-50.json"),
                  "--index", str(index_path), "--out", str(reports)]) == 0  # fmt: skip
-    assert (reports / "audit-50-rules-2.json").is_file()
+    assert (reports / "audit-50-rules-3.json").is_file()
 
 
 def test_llm_audit_records_failures_and_continues(index_path: Path) -> None:
