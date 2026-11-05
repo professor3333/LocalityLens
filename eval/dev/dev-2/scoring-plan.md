@@ -4,6 +4,10 @@ dev-2 is a fresh 50-group dev sample, drawn on 2026-11-05 (seed `dev-2/1`) to ch
 and rules-4 on labels nobody had read while writing them. This plan is committed and pushed
 before scoring, so the systems, inputs and reporting are fixed in advance.
 
+**Correction (2026-11-05).** Claude, not the owner, annotated dev-2 and wrote rules-4, so "the
+owner" under "Known limits" below should read "Claude". The plan is otherwise left as it was
+pushed. See the [findings](../../reports/dev-2-findings.md).
+
 ## Frozen inputs
 
 | Input | Pinned |

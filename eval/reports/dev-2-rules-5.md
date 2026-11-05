@@ -2,7 +2,7 @@
 
 Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif-bp-2020/1` · seed `dev-2/1`
 
-> System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and no extent was supplied.
+> System output only. Correctness needs Claude's annotations; the top candidate is the rules ranking, not a reviewed choice, and no extent was supplied.
 
 **relation**: `named_feature` 24 · `distance_and_direction` 12 · `direction_only` 7 · `other` 5 · `between_features` 2
 

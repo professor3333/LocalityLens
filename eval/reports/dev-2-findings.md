@@ -1,9 +1,18 @@
 # dev-2 scored (fresh dev data, scored once by the pinned plan)
 
-dev-2 is 50 groups drawn on 2026-11-05 after rules-3 and before rules-4. The owner annotated it
-from the guide and GNIS (0 checker problems), and it was scored once by
+dev-2 is 50 groups drawn on 2026-11-05 after rules-3 and before rules-4. Claude annotated it at
+the owner's request, from the guide and GNIS (0 checker problems), and it was scored once by
 [`eval/dev/dev-2/scoring-plan.md`](../dev/dev-2/scoring-plan.md), which was pushed before any
 system ran. The code was frozen at rules-4 (`2bfc227`). The locked test was not run.
+
+**Correction (2026-11-05).** This report, the scoring plan, the dev-2 reports and commit
+`12ebc31` first said the owner annotated dev-2. That was wrong: the committed worksheet
+(`ee210198`) is byte-identical to what Claude wrote. No score changes. In the dev-2 reports,
+including the `-plan` and `-pre-rules-5` ones, only the words "the owner's annotations" were
+replaced. The commit message stays as written, because `main`'s history is not rewritten.
+
+Claude also wrote rules-3 and rules-4. So these scores are weaker evidence than the owner's blind
+annotations, and the comparison of rules with the LLM may lean toward the rules.
 
 ## Results
 
@@ -47,7 +56,7 @@ of each version on them:
   annotation's place comes from a later clause, so the rule picks the right relation but the
   wrong place.
 
-The annotator also wrote rules-4, so on these records the annotation is not independent of the
+Claude wrote rules-4 and annotated dev-2, so on these records the annotation is not independent of the
 rule. With 3 records and no score changes, that does not move any total, but it means dev-2 is
 not the test of these rules. A sample stratified toward "place, offset" labels, or the locked
 test in a declared release, would be.

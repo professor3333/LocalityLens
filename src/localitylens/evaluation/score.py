@@ -1,4 +1,4 @@
-"""Score system reports against the owner's annotations (CLAUDE.md §7, §17).
+"""Score system reports against a sample's annotations (CLAUDE.md §7, §17).
 
 Correctness follows the project definition: a proposal is correct only when the critical
 interpretation (relation, distance, unit, direction, qualifiers) matches the annotation **and**
@@ -19,6 +19,7 @@ from dataclasses import asdict, dataclass
 from typing import Any, Final
 
 from localitylens.evaluation.annotations import Annotation, annotated_distance
+from localitylens.evaluation.audit import annotations_by
 
 BOOTSTRAP_RESAMPLES: Final = 10_000
 BOOTSTRAP_SEED: Final = 20261101
@@ -296,8 +297,8 @@ def write_score_report(
     )
     systems = list(full["systems"])
     md = [
-        f"# {'50-record audit' if label == 'audit-50' else label}: scores against the "
-        "owner's annotations",
+        f"# {'50-record audit' if label == 'audit-50' else label}: scores against "
+        f"{annotations_by(label)}",
         "",
         " · ".join(f"{k} `{v}`" for k, v in meta.items()),
         "",

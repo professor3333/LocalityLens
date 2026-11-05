@@ -15,7 +15,7 @@
     "reviewed": 68,
     "pending": 47
   },
-  "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
+  "note": "System output only. Correctness needs Claude's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
     "relation": {
       "named_feature": 24,

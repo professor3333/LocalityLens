@@ -2,7 +2,7 @@
 
 Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif-bp-2020/1` · seed `dev-2/1`
 
-> System output only. Correctness needs the owner's annotations; the top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.
+> System output only. Correctness needs Claude's annotations; the top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.
 
 **relation**: `named_feature` 26 · `distance_and_direction` 11 · `other` 5 · `orthogonal_offsets` 2 · `itinerary` 2 · `route_relative` 1 · `between_features` 1 · `no_locality` 1 · `direction_only` 1
 

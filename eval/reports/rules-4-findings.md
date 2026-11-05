@@ -86,7 +86,7 @@ frozen LLM runs would change. A test now requires every head word to be in the t
 ## What this does not settle
 
 - **The word list is a judgment, not a measurement.** "Gunnison River, 4 mi E of Delta" may really
-  mean the river. How the owner annotates such labels on dev-2 is the first evidence.
+  mean the river. How such labels are annotated on dev-2 is the first evidence.
 - **Names that don't state their breadth still win:** "South Park, 8 mi W of Fairplay" takes South
   Park, and valleys and basins are not excluded.
 - **A town that opens a label still wins:** "Lyons, 3 mi N of Boulder" takes Lyons. There is no

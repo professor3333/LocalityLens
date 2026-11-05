@@ -48,7 +48,8 @@ fields, and they are **not** representative of the collection. Use the audit for
 ## dev-2
 
 Drawn after rules-3 to check it on unread labels; scored once by its
-[scoring plan](dev-2/scoring-plan.md). Same strata as dev-1, prefix `E`, seed `dev-2/1`. Only 3 of
+[scoring plan](dev-2/scoring-plan.md). Same strata as dev-1, prefix `E`, seed `dev-2/1`. Claude
+annotated it at the owner's request. Only 3 of
 its labels put a place right before an offset, so it did not test rules-3 or rules-4
 ([findings](../reports/dev-2-findings.md)).
 
@@ -72,8 +73,9 @@ uv run localitylens dev sample --name dev-3 --seed dev-3/1 --prefix F --out eval
 The shape is text only: no gazetteer and no rule decides it, so the stratum also holds labels
 the rules do not treat as "place, offset", and broad places (forests, parks, rivers) that
 rules-4 keeps the offset for. The other 15 rows keep the annotator from knowing every row's
-shape. **The worksheet is blank: no system runs on dev-3 until
-the owner has annotated it.** Then a scoring plan is pushed before any system runs, as for dev-2.
+shape. **Claude annotated the worksheet at the owner's request, before any system ran on dev-3.**
+Claude also wrote rules-3 and rules-4, so dev-3 is not an independent check of them. A scoring plan
+is pushed before any system runs, as for dev-2.
 
 ## Order of work
 

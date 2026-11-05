@@ -24,7 +24,7 @@
     "model_file": "Qwen3.5-4B-Q4_K_M.gguf",
     "n_ctx": 4096
   },
-  "note": "System output only. Correctness needs the owner's annotations; the top candidate is the system's ranking, not a reviewed choice, and no extent was supplied.",
+  "note": "System output only. Correctness needs Claude's annotations; the top candidate is the system's ranking, not a reviewed choice, and no extent was supplied.",
   "counts": {
     "relation": {
       "named_feature": 26,

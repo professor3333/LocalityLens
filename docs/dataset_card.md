@@ -71,8 +71,10 @@ to recover a location a publisher withheld or generalized.
 
 ## Annotation
 
-One annotator (the project owner) annotated every set **before seeing any system output for
-it**, following [`eval/annotation_guide.md`](../eval/annotation_guide.md):
+The project owner annotated the audit, dev-1, validation and test sets. Claude, the AI assistant
+used on this project, annotated dev-2 and dev-3 at the owner's request. Each set was annotated
+**before any system output for it was seen**, following
+[`eval/annotation_guide.md`](../eval/annotation_guide.md):
 
 - **What each record gets:** description type, supported or not, reference features, every
   acceptable GNIS ID (or `absent`), distance, unit, direction, qualifiers, missing information
@@ -118,8 +120,8 @@ has none for passes.
 
 - **One herbarium, one state, English labels.** Nothing here measures other collections,
   regions or languages.
-- **One annotator.** No second reviewer yet, and no repeat-annotation self-consistency check
-  yet.
+- **One annotator per set.** No second reviewer yet, and no repeat-annotation self-consistency
+  check yet. Claude also wrote the rules, so dev-2 and dev-3 are not independent checks of them.
 - **Small sets.** 56 answerable test records give wide intervals: one record is 1.8 points.
 - **Grouping is not independence.** Grouping removes identical wordings and known shared
   events, but different wordings of one place by different collectors can still fall in

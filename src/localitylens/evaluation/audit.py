@@ -284,6 +284,15 @@ def _add_trace(row: dict[str, Any], extractor: Extractor, started: float) -> Non
         row["trace"]["cache_hits"] = trace.cache_hits
 
 
+# Who filled each sample's worksheet. Every other sample was annotated by the project owner.
+CLAUDE_ANNOTATED: Final = frozenset({"dev-2", "dev-3"})
+
+
+def annotations_by(label: str) -> str:
+    """Whose annotations a sample's reports rest on, in words for the report text."""
+    return "Claude's annotations" if label in CLAUDE_ANNOTATED else "the owner's annotations"
+
+
 _NOTE_TAIL: Final = (
     "the top candidate is the system's ranking, not a reviewed choice, and no extent was supplied."
 )
@@ -299,8 +308,9 @@ def run_rules(
         index,
         "rules",
         lambda gaz: RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys())),
-        "System output only. Correctness needs the owner's annotations; the top candidate is "
-        "the rules ranking, not a reviewed choice, and no extent was supplied.",
+        f"System output only. Correctness needs {annotations_by(sample_label(sample))}; "
+        "the top candidate is the rules ranking, not a reviewed choice, and no extent was "
+        "supplied.",
         limit,
         extents=extents,
     )
@@ -345,7 +355,8 @@ def run_llm(
         index,
         "llm",
         lambda _gaz: LLMExtractor(client, release),
-        "System output only. Correctness needs the owner's annotations; " + _NOTE_TAIL,
+        f"System output only. Correctness needs {annotations_by(sample_label(sample))}; "
+        + _NOTE_TAIL,
         limit,
         meta,
         extents,

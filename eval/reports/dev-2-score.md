@@ -1,4 +1,4 @@
-# dev-2: scores against the owner's annotations
+# dev-2: scores against Claude's annotations
 
 rules `rules-5` · llm `llm-x2g2-qwen3.5-4b-q4km` · specimens `gbif-cu-2026-11-01`
 

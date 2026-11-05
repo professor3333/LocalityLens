@@ -87,11 +87,14 @@ gives audit 17 / 13 / 17, dev-1 17 / 18 / 19 and validation 16 / 15 / 19, also i
 is a broad feature and changes none of these numbers
 ([rules-4 findings](../eval/reports/rules-4-findings.md)). On fresh data, dev-2 (36 answerable,
 scored once by a pinned plan) gives rules-4 19, LLM 17 and hybrid-1 21
-([dev-2 findings](../eval/reports/dev-2-findings.md)). Only 3 of its labels are the kind rules-3
+([dev-2 findings](../eval/reports/dev-2-findings.md)). Claude annotated dev-2 at the owner's
+request and also wrote the rules, so this is weaker evidence than the owner's blind annotations.
+Only 3 of its labels are the kind rules-3
 and rules-4 decide, so it does not test them. rules-5 asks about distance ranges instead of
 reading their second number; on the read samples it changes only A23 (in-sample, rules 50 → 51,
 hybrid-1 55 → 56 of 92; [rules-5 findings](../eval/reports/rules-5-findings.md)). dev-3 is drawn for that (35 of 50 "place, offset"
-labels, text shape version 2) and waits for annotation. From dev-3 on, samples also exclude
+labels, text shape version 2). Claude has annotated it, with the same limit, and no system has
+run on it. From dev-3 on, samples also exclude
 labels whose wording repeats a read or reserved group under another county (exclusion version
 2, [dev samples](../eval/dev/README.md)).
 

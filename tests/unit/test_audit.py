@@ -12,6 +12,7 @@ from localitylens.data.manifest import SnapshotManifest, write_manifest
 from localitylens.evaluation.audit import (
     WORKSHEET_COLUMNS,
     AuditSample,
+    annotations_by,
     load_sample,
     run_rules,
     sample_groups,
@@ -146,3 +147,10 @@ def test_a_different_sample_never_replaces_an_existing_one(tmp_path: Path) -> No
     write_sample(_sample(), tmp_path)
     with pytest.raises(SampleExistsError):
         write_sample(_sample(2), tmp_path)
+
+
+def test_reports_name_who_annotated_each_sample() -> None:
+    assert annotations_by("dev-2") == "Claude's annotations"
+    assert annotations_by("dev-3") == "Claude's annotations"
+    for label in ("audit-50", "dev-1", "validation", "test"):
+        assert annotations_by(label) == "the owner's annotations"

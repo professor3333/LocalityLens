@@ -432,8 +432,8 @@ the range ([findings](eval/reports/rules-5-findings.md)). On the read samples on
 (now correct, in-sample: rules 50 → 51, hybrid-1 55 → 56 of 92). On 38,272 unread groups,
 217 ranges read as one number now ask instead.
 
-**On fresh data: dev-2.** 50 new groups were annotated and then scored once by a plan pushed
-before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
+**On fresh data: dev-2.** 50 new groups were annotated by Claude, at the owner's request, and
+then scored once by a plan pushed before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
 [findings](eval/reports/dev-2-findings.md)). Correct candidates of 36 answerable:
 
 | rules-4 | LLM v2 | hybrid-1 |
@@ -443,6 +443,8 @@ before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
 - **The overall picture holds on unseen labels.** hybrid-1 leads the rules by 2 records (CI +0
   to +14 points) and is never behind, and the LLM alone is not better than the rules. The rates
   are close to the in-sample rates, so there is no sign the rules were overfitted.
+- **This is weaker evidence than the owner's blind sets.** Claude also wrote the rules, so the
+  annotations are not independent of them, and the comparison may lean toward the rules.
 - **rules-3 and rules-4 are still untested.** Only 3 dev-2 labels have a place right before an
   offset. rules-4 changes no reading, and rules-3 changes one (E29) and no score.
 - **One label is a repeat:** E40, "Hoosier Pass.", has the same text as validation's V021,
@@ -452,8 +454,8 @@ before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
 **Next on fresh data: dev-3.** 50 more groups, 35 of them "place, offset" labels (a clause, then
 an offset such as "Vernal Mesa, 15 mi. E of Montrose"), the case rules-3 and rules-4 decide.
 Samples now also skip any label whose wording repeats a read or held-out one under another
-county ([how it was drawn](eval/dev/README.md#dev-3)). It waits for annotation; no system has
-run on it.
+county ([how it was drawn](eval/dev/README.md#dev-3)). Claude has annotated it, with the same
+limit as dev-2, and no system has run on it.
 
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,

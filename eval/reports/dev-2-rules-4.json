@@ -9,7 +9,7 @@
   "core_key_version": "1",
   "county_context_version": "1",
   "seed": "dev-2/1",
-  "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and no extent was supplied.",
+  "note": "System output only. Correctness needs Claude's annotations; the top candidate is the rules ranking, not a reviewed choice, and no extent was supplied.",
   "counts": {
     "relation": {
       "named_feature": 24,
