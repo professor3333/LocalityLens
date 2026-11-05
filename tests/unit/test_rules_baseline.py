@@ -240,7 +240,7 @@ def test_a_dotless_mt_names_a_place_without_stating_a_type() -> None:
 
 
 def test_every_head_initial_type_word_is_in_the_shared_table() -> None:
-    assert _HEAD_INITIAL_TYPES <= TYPE_WORDS.keys()
+    assert TYPE_WORDS.keys() >= _HEAD_INITIAL_TYPES
 
 
 # rules-4: a broad feature, or the offset's own base, never replaces a precise offset.
