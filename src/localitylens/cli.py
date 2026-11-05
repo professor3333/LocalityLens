@@ -429,7 +429,6 @@ def _dev_register(args: argparse.Namespace) -> int:
 def _dev_sample(args: argparse.Namespace) -> int:
     from localitylens.evaluation.audit import AuditSample, write_sample
     from localitylens.evaluation.dev_sample import (
-        SHAPE_VERSION,
         load_registry,
         register,
         sample_strata,
@@ -452,7 +451,13 @@ def _dev_sample(args: argparse.Namespace) -> int:
     viewed |= reserved_groups(Path(args.lock))  # held-out components are never dev data
     summary = ScreenSummary(snapshot_id="")
     items, records, groups, skipped = sample_strata(
-        iter_snapshot(Path(args.snapshot), summary), quotas, args.seed, viewed, args.prefix
+        iter_snapshot(Path(args.snapshot), summary),
+        quotas,
+        args.seed,
+        viewed,
+        args.prefix,
+        shape_version=args.shape_version,
+        exclusion_version=args.exclusion_version,
     )
     sample = AuditSample(
         snapshot_id=summary.snapshot_id,
@@ -463,9 +468,11 @@ def _dev_sample(args: argparse.Namespace) -> int:
         eligible_groups=groups,
         items=tuple(items),
         name=args.name,
-        shape_version=SHAPE_VERSION,
+        shape_version=args.shape_version,
         strata=quotas,
         excluded_viewed_groups=skipped,
+        # omitted at version 1 so the samples drawn before it regenerate byte-identically
+        exclusion_version=args.exclusion_version if args.exclusion_version != "1" else None,
     )
     sample_path, worksheet, written = write_sample(sample, Path(args.out), args.name)
     total = register(registry, args.name, (i.record.group_key for i in items))
@@ -840,6 +847,18 @@ def main(argv: list[str] | None = None) -> int:
     dsm.add_argument("--registry", default="eval/viewed-groups.json")
     dsm.add_argument("--out", required=True)
     dsm.add_argument("--lock", default="eval/splits.lock.json")
+    dsm.add_argument(
+        "--shape-version",
+        choices=("1", "2"),
+        default="2",
+        help="text shapes (1: dev-1, dev-2; 2 adds place_offset)",
+    )
+    dsm.add_argument(
+        "--exclusion-version",
+        choices=("1", "2"),
+        default="2",
+        help="1: by group key (dev-1, dev-2); 2: also by repeated wording",
+    )
     dsm.set_defaults(func=_dev_sample)
 
     bm = sub.add_parser("benchmark", help="held-out validation and locked test splits")

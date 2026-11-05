@@ -62,6 +62,7 @@ class AuditSample(BaseModel):
     shape_version: str | None = None
     strata: dict[str, int] | None = None  # quota per text shape
     excluded_viewed_groups: int | None = None  # groups skipped because already viewed
+    exclusion_version: str | None = None  # dev_sample.EXCLUSION_VERSION; None = version 1
 
 
 def _rank(seed: str, key: str) -> str:

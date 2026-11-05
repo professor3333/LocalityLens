@@ -141,6 +141,16 @@ def group_key(locality: str, county: str) -> str:
     return hashlib.sha256(basis.encode()).hexdigest()[:16]
 
 
+def text_key(locality: str) -> str:
+    """The wording alone (same name key as :func:`group_key`), whatever the supplied county.
+
+    Two groups with one text key show a reader the same label text, so reading one of them
+    means having read both (see ``evaluation.dev_sample.EXCLUSION_VERSION``).
+    """
+    basis = f"t{GROUPING_VERSION}|{name_key(normalize(locality).text)}"
+    return hashlib.sha256(basis.encode()).hexdigest()[:16]
+
+
 def to_record(row: dict[str, str]) -> SpecimenRecord:
     return SpecimenRecord(
         gbif_id=row["gbifID"],

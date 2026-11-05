@@ -7,7 +7,7 @@ import pytest
 from tests.support.synthetic_dwca import row
 
 from localitylens.evaluation.dev_sample import load_registry, register, sample_strata, text_shape
-from localitylens.ingest.specimens import to_record
+from localitylens.ingest.specimens import text_key, to_record
 
 
 @pytest.mark.parametrize(
@@ -58,3 +58,46 @@ def test_quotas_exclusion_and_determinism() -> None:
 def test_a_quota_larger_than_the_pool_is_refused() -> None:
     with pytest.raises(ValueError, match="offset"):
         sample_strata(RECORDS, {"offset": 4}, "s", {RECORDS[4].group_key}, "D")
+
+
+@pytest.mark.parametrize(
+    ("text", "shape"),
+    [("Testa Mesa, 15 mi. east of Osgood.", "place_offset"),
+     ("S. slope of Testa Mt., 16 miles N of Osgood.", "place_offset"),
+     ("Testa Ck.; ca 3 air mi SW from Osgood", "place_offset"),
+     ("Colorado: Testa Co.: Fenn Creek, ca. 2 mi NE of Osgood", "place_offset"),
+     ("Testa Gulch, 9 km W of Osgood", "place_offset"),
+     ("2 mi NE of Testa.", "offset"),
+     ("Testa Peak, elev. 9800 ft.", "offset"),
+     ("Testa Peak, 9800 ft.", "offset"),
+     ("Hwy 12, 3 mi N of Osgood", "offset"),  # the clause before holds a digit
+     ("3 mi N of Osgood, Testa Mesa", "offset"),  # the place comes after
+     ("Testa Peak.", "bare"), ("Hwy 34 at Testa Creek.", "other")],
+)  # fmt: skip
+def test_shape_version_2_carves_place_offset_out_of_offset(text: str, shape: str) -> None:
+    assert text_shape(text, "2") == shape
+    assert text_shape(text) == ("offset" if shape == "place_offset" else shape)
+
+
+def test_an_unknown_version_is_refused() -> None:
+    with pytest.raises(ValueError, match="shape version"):
+        text_shape("Testa Peak.", "3")
+    with pytest.raises(ValueError, match="exclusion version"):
+        sample_strata(RECORDS, {"bare": 1}, "s", set(), "D", exclusion_version="3")
+
+
+def test_exclusion_version_2_also_drops_repeated_wording_under_another_county() -> None:
+    viewed = to_record(row(1, "Testa Pass.", county="Marlow"))
+    repeat = to_record(row(2, "Testa  pass", county=""))  # same name key, other county
+    other = to_record(row(3, "Fenn Pass."))
+    assert viewed.group_key != repeat.group_key
+    assert text_key(viewed.locality) == text_key(repeat.locality)
+    records = [viewed, repeat, other]
+    v1 = sample_strata(records, {"bare": 2}, "s", {viewed.group_key}, "E")
+    assert {i.record.gbif_id for i in v1[0]} == {"2", "3"}
+    assert v1[3] == 1
+    v2 = sample_strata(records, {"bare": 1}, "s", {viewed.group_key}, "E", exclusion_version="2")
+    assert [i.record.gbif_id for i in v2[0]] == ["3"]
+    assert v2[3] == 2
+    with pytest.raises(ValueError, match="only 1"):
+        sample_strata(records, {"bare": 2}, "s", {viewed.group_key}, "E", exclusion_version="2")

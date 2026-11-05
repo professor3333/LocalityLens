@@ -6,6 +6,13 @@ later sample, including the locked test split, must exclude those groups.
 
 Dev samples are stratified by the *shape* of the label text so that rare failure types are
 represented. Shapes use only the label text, never answer-bearing fields.
+
+Exclusion versions:
+
+* ``1``: a group is excluded when its key (wording + supplied county) was viewed or reserved.
+* ``2``: also when its *wording* matches a viewed or reserved group under another county. dev-2's
+  E40 repeated validation's V021 this way. Group keys stay at ``GROUPING_VERSION`` 1, so the
+  registry, the split lock and every worksheet keep their keys.
 """
 
 from __future__ import annotations
@@ -19,9 +26,12 @@ from pathlib import Path
 from typing import Final
 
 from localitylens.evaluation.audit import AuditItem
-from localitylens.ingest.specimens import SpecimenRecord
+from localitylens.ingest.specimens import SpecimenRecord, text_key
 
-SHAPE_VERSION: Final = "1"
+SHAPE_VERSION: Final = "2"
+SHAPE_VERSIONS: Final = ("1", "2")
+EXCLUSION_VERSION: Final = "2"
+EXCLUSION_VERSIONS: Final = ("1", "2")
 REGISTRY_VERSION: Final = "1"
 DEFAULT_REGISTRY: Final = Path("eval/viewed-groups.json")
 
@@ -33,10 +43,32 @@ _OFFSET: Final = re.compile(
 _WORD: Final = re.compile("[A-Za-z][A-Za-z'\u2019.\\-]*")
 
 
-def text_shape(locality: str) -> str:
+# Shape 2: a clause with letters and no digits, then ", " or "; ", then an offset that starts
+# its clause and is measured "of"/"from" something: "Vernal Mesa, 15 mi. east of Montrose",
+# "S. slope of Thunder Mt., 16 miles N of Grand Lake". The clause before may hold any words:
+# no gazetteer or rule decides the shape, so the stratum also holds labels the rules miss.
+_PLACE_OFFSET: Final = re.compile(
+    rf"(?:^|[,;:(])[^\d,;:()]*[A-Za-z][^\d,;:()]*[,;]\s*"
+    rf"(?:(?:about|approx\.?|approximately|ca\.?|circa|c\.|~)\s*)?{_NUMBER}\s*"
+    rf"(?:air\s+|aerial\s+)?(?:mi|miles?|km|kilomet\w*|ft|feet|yds?|yards?)\b\.?"
+    rf"[^,;:]*?\b(?:of|from|fr\.)\s",
+    re.IGNORECASE,
+)
+
+
+def text_shape(locality: str, version: str = "1") -> str:
     """``offset``: a number followed by a distance unit. ``bare``: at most three words and no
-    digits (a place name on its own). ``other``: everything else."""
+    digits (a place name on its own). ``other``: everything else.
+
+    Version 2 adds ``place_offset``, carved out of ``offset``: a wording clause right before an
+    offset clause ("Vernal Mesa, 15 mi. E of Montrose"), the label shape that decides between
+    the place and the offset (rules-3, rules-4).
+    """
+    if version not in SHAPE_VERSIONS:
+        raise ValueError(f"unknown shape version {version!r}")
     if _OFFSET.search(locality):
+        if version == "2" and _PLACE_OFFSET.search(locality):
+            return "place_offset"
         return "offset"
     if not re.search(r"\d", locality) and len(_WORD.findall(locality)) <= 3:
         return "bare"
@@ -80,12 +112,18 @@ def sample_strata(
     seed: str,
     exclude: Iterable[str],
     id_prefix: str,
+    *,
+    shape_version: str = "1",
+    exclusion_version: str = "1",
 ) -> tuple[list[AuditItem], int, int, int]:
     """Per shape, the first ``quota`` unviewed groups in seeded hash order.
 
     Returns (items, eligible records, eligible groups, groups excluded as already viewed).
-    Each group is represented by its lowest-gbifID record, as in the audit.
+    With exclusion version 2 the excluded count includes groups that only repeat the wording of
+    an excluded group. Each group is represented by its lowest-gbifID record, as in the audit.
     """
+    if exclusion_version not in EXCLUSION_VERSIONS:
+        raise ValueError(f"unknown exclusion version {exclusion_version!r}")
     excluded = set(exclude)
     representative: dict[str, SpecimenRecord] = {}
     sizes: Counter[str] = Counter()
@@ -96,10 +134,13 @@ def sample_strata(
         current = representative.get(record.group_key)
         if current is None or int(record.gbif_id) < int(current.gbif_id):
             representative[record.group_key] = record
+    if exclusion_version == "2":
+        texts = {text_key(r.locality) for k, r in representative.items() if k in excluded}
+        excluded |= {k for k, r in representative.items() if text_key(r.locality) in texts}
     skipped = sum(1 for k in representative if k in excluded)
     pools: dict[str, list[str]] = {shape: [] for shape in quotas}
     for key, record in representative.items():
-        shape = text_shape(record.locality)
+        shape = text_shape(record.locality, shape_version)
         if key not in excluded and shape in pools:
             pools[shape].append(key)
     chosen: list[str] = []

@@ -86,7 +86,10 @@ is a broad feature and changes none of these numbers
 ([rules-4 findings](../eval/reports/rules-4-findings.md)). On fresh data, dev-2 (36 answerable,
 scored once by a pinned plan) gives rules-4 19, LLM 17 and hybrid-1 21
 ([dev-2 findings](../eval/reports/dev-2-findings.md)). Only 3 of its labels are the kind rules-3
-and rules-4 decide, so it does not test them.
+and rules-4 decide, so it does not test them. dev-3 is drawn for that (35 of 50 "place, offset"
+labels, text shape version 2) and waits for annotation. From dev-3 on, samples also exclude
+labels whose wording repeats a read or reserved group under another county (exclusion version
+2, [dev samples](../eval/dev/README.md)).
 
 - **LLM v2:** Qwen3.5-4B Q4_K_M, prompt `extraction-v2`, greedy decoding.
 - **hybrid-1:** runs the rules first, and the LLM only where the rules reach no gazetteer

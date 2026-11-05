@@ -442,6 +442,12 @@ before any system ran ([plan](eval/dev/dev-2/scoring-plan.md),
   under a different county. Without it: 18 / 16 / 20 of 35. No locked-test text repeats a read
   one.
 
+**Next on fresh data: dev-3.** 50 more groups, 35 of them "place, offset" labels (a clause, then
+an offset such as "Vernal Mesa, 15 mi. E of Montrose"), the case rules-3 and rules-4 decide.
+Samples now also skip any label whose wording repeats a read or held-out one under another
+county ([how it was drawn](eval/dev/README.md#dev-3)). It waits for annotation; no system has
+run on it.
+
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
