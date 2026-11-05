@@ -30,9 +30,9 @@
   },
   "extent_store": {
     "version": "extents-1",
-    "sha256": "363de7e35d5fa30e82bc637e80a8b04148f6f8322296a63d59605c4eb4c44a3a",
-    "reviewed": 38,
-    "pending": 59
+    "sha256": "caa1c85940ec082e4b86d1d8ac5dfe351befb14a1c479f88a7ab7569b36702f6",
+    "reviewed": 58,
+    "pending": 39
   },
   "note": "Rules first; the LLM's result is used only where the rules reach no gazetteer candidate and the LLM does. Built from the two component reports (both deterministic). The top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -58,8 +58,8 @@
       "no_reference_feature": 2
     },
     "proposal": {
-      "needs_information": 40,
-      "computed": 8,
+      "needs_information": 37,
+      "computed": 11,
       "unsupported": 2
     }
   },
@@ -95,7 +95,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.71,
+        "record_seconds": 0.8,
         "cache_hits": 1
       }
     },
@@ -306,10 +306,10 @@
         "county": "Boulder",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 2039,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -424,7 +424,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.1,
         "cache_hits": 1
       },
       "source": "llm",
@@ -457,10 +457,10 @@
         "county": "Dolores",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 4139,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -495,7 +495,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.05,
         "cache_hits": 1
       }
     },
@@ -571,7 +571,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.04,
         "cache_hits": 1
       },
       "source": "llm",
@@ -715,7 +715,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.03,
         "cache_hits": 1
       }
     },
@@ -795,7 +795,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.04,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1176,7 +1176,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.03,
         "cache_hits": 1
       }
     },
@@ -1246,10 +1246,10 @@
         "county": "Lake",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 2639,
+      "extent": "reviewed",
       "source": "rules",
       "llm_called": false
     },
@@ -1546,7 +1546,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -1624,7 +1624,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.04,
         "cache_hits": 1
       },
       "source": "llm",
@@ -1695,7 +1695,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1765,7 +1765,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.04,
         "cache_hits": 1
       }
     },

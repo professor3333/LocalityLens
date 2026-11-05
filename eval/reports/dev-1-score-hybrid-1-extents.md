@@ -14,7 +14,7 @@ Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsup
 | Reference top-1 acceptable (answerable) | 16/29 (55%) | 20/29 (69%) | 18/29 (62%) |
 | Reference in top 5 (answerable) | 17/29 (59%) | 20/29 (69%) | 19/29 (66%) |
 | **Correct proposal candidates** (answerable) | 16/29 (55%) | 18/29 (62%) | 18/29 (62%) |
-| Computed proposals that are correct | 7/7 (100%) | 8/9 (89%) | 8/8 (100%) |
+| Computed proposals that are correct | 11/11 (100%) | 10/11 (91%) | 12/12 (100%) |
 | Unsupported records flagged unsupported | 3/4 (75%) | 2/4 (50%) | 3/4 (75%) |
 | References absent from GNIS reported absent | 9/17 (53%) | 13/17 (76%) | 9/17 (53%) |
 | Place names read as no locality | 0 | 1 | 0 |
@@ -24,9 +24,9 @@ Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsup
 
 | Metric | rules | llm | hybrid |
 |---|---|---|---|
-| Computed proposals (of all records) | 7/50 (14%) | 9/50 (18%) | 8/50 (16%) |
-| Computed proposals that are correct | 7/7 (100%) | 8/9 (89%) | 8/8 (100%) |
-| Useful coverage (of answerable) | 7/29 (24%) | 8/29 (28%) | 8/29 (28%) |
+| Computed proposals (of all records) | 11/50 (22%) | 11/50 (22%) | 12/50 (24%) |
+| Computed proposals that are correct | 11/11 (100%) | 10/11 (91%) | 12/12 (100%) |
+| Useful coverage (of answerable) | 11/29 (38%) | 10/29 (34%) | 12/29 (41%) |
 
 **Paired, correct proposal candidates (LLM − rules):** +7% (95% bootstrap CI -7% to +21%); LLM-only 3, rules-only 1, exact sign test p = 0.625.
 
@@ -46,7 +46,7 @@ Annotated records: 50. Categories: answerable 29 · reference_absent 17 · unsup
 | Reference top-1 acceptable (answerable) | 14/25 (56%) | 17/25 (68%) | 16/25 (64%) |
 | Reference in top 5 (answerable) | 15/25 (60%) | 17/25 (68%) | 17/25 (68%) |
 | **Correct proposal candidates** (answerable) | 14/25 (56%) | 16/25 (64%) | 16/25 (64%) |
-| Computed proposals that are correct | 6/6 (100%) | 7/8 (88%) | 7/7 (100%) |
+| Computed proposals that are correct | 9/9 (100%) | 9/10 (90%) | 10/10 (100%) |
 | Unsupported records flagged unsupported | 2/2 (100%) | 1/2 (50%) | 2/2 (100%) |
 | References absent from GNIS reported absent | 8/14 (57%) | 12/14 (86%) | 8/14 (57%) |
 

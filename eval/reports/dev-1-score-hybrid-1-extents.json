@@ -76,8 +76,8 @@
           "rate": 0.552
         },
         "computed_proposals_correct": {
-          "hits": 7,
-          "n": 7,
+          "hits": 11,
+          "n": 11,
           "rate": 1.0
         },
         "unsupported_flagged": {
@@ -147,9 +147,9 @@
           "rate": 0.621
         },
         "computed_proposals_correct": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 10,
+          "n": 11,
+          "rate": 0.909
         },
         "unsupported_flagged": {
           "hits": 2,
@@ -218,8 +218,8 @@
           "rate": 0.621
         },
         "computed_proposals_correct": {
-          "hits": 8,
-          "n": 8,
+          "hits": 12,
+          "n": 12,
           "rate": 1.0
         },
         "unsupported_flagged": {
@@ -531,7 +531,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -1053,7 +1053,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -1161,7 +1161,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -1179,7 +1179,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2063,7 +2063,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2081,7 +2081,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2335,7 +2335,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2857,7 +2857,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2965,7 +2965,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2983,7 +2983,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -3071,53 +3071,53 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 7,
+          "hits": 11,
           "n": 50,
-          "rate": 0.14
+          "rate": 0.22
         },
         "precision": {
-          "hits": 7,
-          "n": 7,
+          "hits": 11,
+          "n": 11,
           "rate": 1.0
         },
         "useful_coverage": {
-          "hits": 7,
+          "hits": 11,
           "n": 29,
-          "rate": 0.241
+          "rate": 0.379
         }
       },
       "llm": {
         "computed": {
-          "hits": 9,
+          "hits": 11,
           "n": 50,
-          "rate": 0.18
+          "rate": 0.22
         },
         "precision": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 10,
+          "n": 11,
+          "rate": 0.909
         },
         "useful_coverage": {
-          "hits": 8,
+          "hits": 10,
           "n": 29,
-          "rate": 0.276
+          "rate": 0.345
         }
       },
       "hybrid": {
         "computed": {
-          "hits": 8,
+          "hits": 12,
           "n": 50,
-          "rate": 0.16
+          "rate": 0.24
         },
         "precision": {
-          "hits": 8,
-          "n": 8,
+          "hits": 12,
+          "n": 12,
           "rate": 1.0
         },
         "useful_coverage": {
-          "hits": 8,
+          "hits": 12,
           "n": 29,
-          "rate": 0.276
+          "rate": 0.414
         }
       }
     },
@@ -3222,8 +3222,8 @@
           "rate": 0.56
         },
         "computed_proposals_correct": {
-          "hits": 6,
-          "n": 6,
+          "hits": 9,
+          "n": 9,
           "rate": 1.0
         },
         "unsupported_flagged": {
@@ -3293,9 +3293,9 @@
           "rate": 0.64
         },
         "computed_proposals_correct": {
-          "hits": 7,
-          "n": 8,
-          "rate": 0.875
+          "hits": 9,
+          "n": 10,
+          "rate": 0.9
         },
         "unsupported_flagged": {
           "hits": 1,
@@ -3364,8 +3364,8 @@
           "rate": 0.64
         },
         "computed_proposals_correct": {
-          "hits": 7,
-          "n": 7,
+          "hits": 10,
+          "n": 10,
           "rate": 1.0
         },
         "unsupported_flagged": {
@@ -3626,7 +3626,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -4130,7 +4130,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -4148,7 +4148,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -4870,7 +4870,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -4888,7 +4888,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5106,7 +5106,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5610,7 +5610,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5628,7 +5628,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5716,53 +5716,53 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 6,
+          "hits": 9,
           "n": 41,
-          "rate": 0.146
+          "rate": 0.22
         },
         "precision": {
-          "hits": 6,
-          "n": 6,
+          "hits": 9,
+          "n": 9,
           "rate": 1.0
         },
         "useful_coverage": {
-          "hits": 6,
+          "hits": 9,
           "n": 25,
-          "rate": 0.24
+          "rate": 0.36
         }
       },
       "llm": {
         "computed": {
-          "hits": 8,
+          "hits": 10,
           "n": 41,
-          "rate": 0.195
+          "rate": 0.244
         },
         "precision": {
-          "hits": 7,
-          "n": 8,
-          "rate": 0.875
+          "hits": 9,
+          "n": 10,
+          "rate": 0.9
         },
         "useful_coverage": {
-          "hits": 7,
+          "hits": 9,
           "n": 25,
-          "rate": 0.28
+          "rate": 0.36
         }
       },
       "hybrid": {
         "computed": {
-          "hits": 7,
+          "hits": 10,
           "n": 41,
-          "rate": 0.171
+          "rate": 0.244
         },
         "precision": {
-          "hits": 7,
-          "n": 7,
+          "hits": 10,
+          "n": 10,
           "rate": 1.0
         },
         "useful_coverage": {
-          "hits": 7,
+          "hits": 10,
           "n": 25,
-          "rate": 0.28
+          "rate": 0.4
         }
       }
     },

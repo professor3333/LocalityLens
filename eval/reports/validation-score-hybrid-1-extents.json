@@ -77,9 +77,9 @@
           "rate": 0.406
         },
         "computed_proposals_correct": {
-          "hits": 7,
-          "n": 8,
-          "rate": 0.875
+          "hits": 9,
+          "n": 11,
+          "rate": 0.818
         },
         "unsupported_flagged": {
           "hits": 3,
@@ -148,9 +148,9 @@
           "rate": 0.469
         },
         "computed_proposals_correct": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 12,
+          "n": 13,
+          "rate": 0.923
         },
         "unsupported_flagged": {
           "hits": 3,
@@ -219,9 +219,9 @@
           "rate": 0.5
         },
         "computed_proposals_correct": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 11,
+          "n": 13,
+          "rate": 0.846
         },
         "unsupported_flagged": {
           "hits": 3,
@@ -583,7 +583,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -727,7 +727,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -799,7 +799,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -1467,7 +1467,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -1665,7 +1665,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -1809,7 +1809,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -1881,7 +1881,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2549,7 +2549,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2747,7 +2747,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -2891,7 +2891,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -2963,7 +2963,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -3627,53 +3627,53 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 8,
+          "hits": 11,
           "n": 60,
-          "rate": 0.133
+          "rate": 0.183
         },
         "precision": {
-          "hits": 7,
-          "n": 8,
-          "rate": 0.875
+          "hits": 9,
+          "n": 11,
+          "rate": 0.818
         },
         "useful_coverage": {
-          "hits": 7,
+          "hits": 9,
           "n": 32,
-          "rate": 0.219
+          "rate": 0.281
         }
       },
       "llm": {
         "computed": {
-          "hits": 9,
+          "hits": 13,
           "n": 60,
-          "rate": 0.15
+          "rate": 0.217
         },
         "precision": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 12,
+          "n": 13,
+          "rate": 0.923
         },
         "useful_coverage": {
-          "hits": 8,
+          "hits": 12,
           "n": 32,
-          "rate": 0.25
+          "rate": 0.375
         }
       },
       "hybrid": {
         "computed": {
-          "hits": 9,
+          "hits": 13,
           "n": 60,
-          "rate": 0.15
+          "rate": 0.217
         },
         "precision": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 11,
+          "n": 13,
+          "rate": 0.846
         },
         "useful_coverage": {
-          "hits": 8,
+          "hits": 11,
           "n": 32,
-          "rate": 0.25
+          "rate": 0.344
         }
       }
     },
@@ -3778,9 +3778,9 @@
           "rate": 0.406
         },
         "computed_proposals_correct": {
-          "hits": 7,
-          "n": 8,
-          "rate": 0.875
+          "hits": 9,
+          "n": 11,
+          "rate": 0.818
         },
         "unsupported_flagged": {
           "hits": 2,
@@ -3849,9 +3849,9 @@
           "rate": 0.469
         },
         "computed_proposals_correct": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 12,
+          "n": 13,
+          "rate": 0.923
         },
         "unsupported_flagged": {
           "hits": 2,
@@ -3920,9 +3920,9 @@
           "rate": 0.5
         },
         "computed_proposals_correct": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 11,
+          "n": 13,
+          "rate": 0.846
         },
         "unsupported_flagged": {
           "hits": 2,
@@ -4218,7 +4218,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -4344,7 +4344,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -4398,7 +4398,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -4922,7 +4922,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5102,7 +5102,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5228,7 +5228,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5282,7 +5282,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5806,7 +5806,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -5986,7 +5986,7 @@
           "correct_candidate": false,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 4
         },
         {
@@ -6112,7 +6112,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -6166,7 +6166,7 @@
           "correct_candidate": true,
           "handled_ok": false,
           "false_no_locality": false,
-          "computed": false,
+          "computed": true,
           "corrections": 0
         },
         {
@@ -6704,53 +6704,53 @@
     "proposals": {
       "rules": {
         "computed": {
-          "hits": 8,
+          "hits": 11,
           "n": 49,
-          "rate": 0.163
+          "rate": 0.224
         },
         "precision": {
-          "hits": 7,
-          "n": 8,
-          "rate": 0.875
+          "hits": 9,
+          "n": 11,
+          "rate": 0.818
         },
         "useful_coverage": {
-          "hits": 7,
+          "hits": 9,
           "n": 32,
-          "rate": 0.219
+          "rate": 0.281
         }
       },
       "llm": {
         "computed": {
-          "hits": 9,
+          "hits": 13,
           "n": 49,
-          "rate": 0.184
+          "rate": 0.265
         },
         "precision": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 12,
+          "n": 13,
+          "rate": 0.923
         },
         "useful_coverage": {
-          "hits": 8,
+          "hits": 12,
           "n": 32,
-          "rate": 0.25
+          "rate": 0.375
         }
       },
       "hybrid": {
         "computed": {
-          "hits": 9,
+          "hits": 13,
           "n": 49,
-          "rate": 0.184
+          "rate": 0.265
         },
         "precision": {
-          "hits": 8,
-          "n": 9,
-          "rate": 0.889
+          "hits": 11,
+          "n": 13,
+          "rate": 0.846
         },
         "useful_coverage": {
-          "hits": 8,
+          "hits": 11,
           "n": 32,
-          "rate": 0.25
+          "rate": 0.344
         }
       }
     },

@@ -26,9 +26,9 @@
   },
   "extent_store": {
     "version": "extents-1",
-    "sha256": "363de7e35d5fa30e82bc637e80a8b04148f6f8322296a63d59605c4eb4c44a3a",
-    "reviewed": 38,
-    "pending": 59
+    "sha256": "caa1c85940ec082e4b86d1d8ac5dfe351befb14a1c479f88a7ab7569b36702f6",
+    "reviewed": 58,
+    "pending": 39
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -49,9 +49,9 @@
       "None": 2
     },
     "proposal": {
-      "needs_information": 34,
+      "needs_information": 30,
       "unsupported": 15,
-      "computed": 9,
+      "computed": 13,
       "invalid_extraction": 2
     }
   },
@@ -85,7 +85,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.12,
+        "record_seconds": 0.05,
         "cache_hits": 1
       }
     },
@@ -116,10 +116,10 @@
         "county": "Jefferson",
         "match": "fuzzy_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 1339,
+      "extent": "reviewed",
       "trace": {
         "prompt_sha256": "42bff7adf018af328e9f69a06ab7934fc23655e520244cf8937edde9c6d30562",
         "prompt_tokens": 2347,
@@ -127,7 +127,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -160,7 +160,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -189,7 +189,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.03,
         "cache_hits": 1
       }
     },
@@ -230,7 +230,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.04,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -271,7 +271,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.04,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -306,7 +306,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -378,7 +378,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -411,7 +411,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -453,7 +453,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -497,7 +497,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -528,10 +528,10 @@
         "county": "Chaffee",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 3439,
+      "extent": "reviewed",
       "trace": {
         "prompt_sha256": "0134c754e176d90dd550e9e130dac863a2b691e4eb5ff137ceb586da2b5bd026",
         "prompt_tokens": 2361,
@@ -539,7 +539,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -580,7 +580,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -627,7 +627,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.04,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -668,7 +668,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -709,7 +709,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -744,7 +744,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.07,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -787,7 +787,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.05,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -820,7 +820,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.04,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -851,10 +851,10 @@
         "county": "Summit",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 2239,
+      "extent": "reviewed",
       "trace": {
         "prompt_sha256": "5177485a9c52804e1fb596fc3ba3d558315e5b4ebd017b9544e5f629867df553",
         "prompt_tokens": 2347,
@@ -862,7 +862,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -979,7 +979,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1011,10 +1011,10 @@
         "county": "Lake",
         "match": "core_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 467,
-      "radius_m": null,
-      "extent": null,
+      "radius_m": 1585,
+      "extent": "reviewed",
       "trace": {
         "prompt_sha256": "a8c2494a71d3651438d3121cb34073d24fd74bf0498486c544a6feef480ccc9d",
         "prompt_tokens": 2356,
@@ -1022,7 +1022,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -1055,7 +1055,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1131,7 +1131,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -1209,7 +1209,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -1244,7 +1244,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1366,7 +1366,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1399,7 +1399,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1440,7 +1440,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1473,7 +1473,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1515,7 +1515,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1548,7 +1548,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.03,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1616,7 +1616,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.03,
         "cache_hits": 1
       }
     },
@@ -1819,7 +1819,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1895,7 +1895,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -1984,7 +1984,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -2019,7 +2019,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -2061,7 +2061,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -2135,7 +2135,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -2178,7 +2178,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.01,
+        "record_seconds": 0.02,
         "cache_hits": 1
       }
     },
@@ -2327,7 +2327,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     },
@@ -2370,7 +2370,7 @@
         "attempts": 1,
         "errors": [],
         "model_seconds": 0.0,
-        "record_seconds": 0.02,
+        "record_seconds": 0.01,
         "cache_hits": 1
       }
     }

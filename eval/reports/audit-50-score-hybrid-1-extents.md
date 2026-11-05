@@ -14,7 +14,7 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 | Reference top-1 acceptable (answerable) | 18/31 (58%) | 15/31 (48%) | 19/31 (61%) |
 | Reference in top 5 (answerable) | 18/31 (58%) | 15/31 (48%) | 19/31 (61%) |
 | **Correct proposal candidates** (answerable) | 17/31 (55%) | 13/31 (42%) | 17/31 (55%) |
-| Computed proposals that are correct | 7/8 (88%) | 5/6 (83%) | 7/8 (88%) |
+| Computed proposals that are correct | 10/11 (91%) | 8/10 (80%) | 10/11 (91%) |
 | Unsupported records flagged unsupported | 0/4 (0%) | 4/4 (100%) | 0/4 (0%) |
 | References absent from GNIS reported absent | 6/15 (40%) | 11/15 (73%) | 4/15 (27%) |
 | Place names read as no locality | 0 | 1 | 0 |
@@ -24,9 +24,9 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 
 | Metric | rules | llm | hybrid |
 |---|---|---|---|
-| Computed proposals (of all records) | 8/50 (16%) | 6/50 (12%) | 8/50 (16%) |
-| Computed proposals that are correct | 7/8 (88%) | 5/6 (83%) | 7/8 (88%) |
-| Useful coverage (of answerable) | 7/31 (23%) | 5/31 (16%) | 7/31 (23%) |
+| Computed proposals (of all records) | 11/50 (22%) | 10/50 (20%) | 11/50 (22%) |
+| Computed proposals that are correct | 10/11 (91%) | 8/10 (80%) | 10/11 (91%) |
+| Useful coverage (of answerable) | 10/31 (32%) | 8/31 (26%) | 10/31 (32%) |
 
 **Paired, correct proposal candidates (LLM − rules):** -13% (95% bootstrap CI -29% to +3%); LLM-only 2, rules-only 6, exact sign test p = 0.2891.
 
@@ -46,7 +46,7 @@ Annotated records: 50. Categories: answerable 31 · reference_absent 15 · unsup
 | Reference top-1 acceptable (answerable) | 15/24 (62%) | 13/24 (54%) | 16/24 (67%) |
 | Reference in top 5 (answerable) | 15/24 (62%) | 13/24 (54%) | 16/24 (67%) |
 | **Correct proposal candidates** (answerable) | 15/24 (62%) | 11/24 (46%) | 15/24 (62%) |
-| Computed proposals that are correct | 7/8 (88%) | 4/5 (80%) | 7/8 (88%) |
+| Computed proposals that are correct | 9/10 (90%) | 6/8 (75%) | 9/10 (90%) |
 | Unsupported records flagged unsupported | 0/3 (0%) | 3/3 (100%) | 0/3 (0%) |
 | References absent from GNIS reported absent | 6/13 (46%) | 9/13 (69%) | 4/13 (31%) |
 

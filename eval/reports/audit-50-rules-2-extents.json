@@ -11,9 +11,9 @@
   "seed": "audit-50/1",
   "extent_store": {
     "version": "extents-1",
-    "sha256": "363de7e35d5fa30e82bc637e80a8b04148f6f8322296a63d59605c4eb4c44a3a",
-    "reviewed": 38,
-    "pending": 59
+    "sha256": "caa1c85940ec082e4b86d1d8ac5dfe351befb14a1c479f88a7ab7569b36702f6",
+    "reviewed": 58,
+    "pending": 39
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -31,8 +31,8 @@
       "no_reference_feature": 3
     },
     "proposal": {
-      "needs_information": 39,
-      "computed": 8,
+      "needs_information": 36,
+      "computed": 11,
       "unsupported": 3
     }
   },
@@ -257,10 +257,10 @@
         "county": "Boulder",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 2039,
+      "extent": "reviewed"
     },
     {
       "audit_id": "A08",
@@ -376,10 +376,10 @@
         "county": "Dolores",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 4139,
+      "extent": "reviewed"
     },
     {
       "audit_id": "A12",
@@ -1031,10 +1031,10 @@
         "county": "Lake",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 2639,
+      "extent": "reviewed"
     },
     {
       "audit_id": "A34",

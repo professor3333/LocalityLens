@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 28 · `feature_absent_from_index` 16 · `None` 4 · `no_reference_feature` 2
 
-**proposal**: `needs_information` 31 · `computed` 9 · `unsupported` 6 · `invalid_extraction` 4
+**proposal**: `needs_information` 29 · `computed` 11 · `unsupported` 6 · `invalid_extraction` 4
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -57,8 +57,8 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | D43 | Skull Canyon. | named_feature | Skull Canyon | candidates_found | Skull Canyon (Valley, Baca, exact_official) | needs_information |
 | D44 | Poudre Canyon. | named_feature | Poudre Canyon | feature_absent_from_index |  | needs_information |
 | D45 | At Arboles. | named_feature | Arboles | candidates_found | Arboles (Populated Place, Archuleta, exact_official) | computed |
-| D46 | Rifle Gap. | named_feature | Rifle Gap | candidates_found | Rifle Gap (Gap, Garfield, exact_official) | needs_information |
-| D47 | Arapaho Pass. | named_feature | Arapaho Pass | candidates_found | Arapaho Pass (Gap, Boulder, exact_official) | needs_information |
+| D46 | Rifle Gap. | named_feature | Rifle Gap | candidates_found | Rifle Gap (Gap, Garfield, exact_official) | computed |
+| D47 | Arapaho Pass. | named_feature | Arapaho Pass | candidates_found | Arapaho Pass (Gap, Boulder, exact_official) | computed |
 | D48 | North of Eads. | direction_only | Eads | candidates_found | Eads (Populated Place, Kiowa, exact_official) | needs_information |
 | D49 | North Cheyenne Canon. | named_feature | North Cheyenne Canon | candidates_found | North Cheyenne Canyon (Valley, El Paso, core_official) | needs_information |
 | D50 | Roadside near Florissant. | named_feature | Florissant | candidates_found | Florissant (Populated Place, Teller, exact_official) | needs_information |

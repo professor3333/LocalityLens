@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 33 · `feature_absent_from_index` 19 · `no_reference_feature` 8
 
-**proposal**: `needs_information` 44 · `unsupported` 8 · `computed` 8
+**proposal**: `needs_information` 41 · `computed` 11 · `unsupported` 8
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -24,7 +24,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V010 | Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station. | direction_only | Rainbow | feature_absent_from_index |  | needs_information |
 | V011 | West Rim of Uncompahgre Plateau, near road between Columbine Pass and Uncompahgre Butte, along road to Love Mesa. | between_features |  | no_reference_feature |  | unsupported |
 | V012 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, drainage N of North Peak. | direction_only | North Peak | candidates_found | North Peak (Summit, Pueblo, exact_official) | needs_information |
-| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | distance_and_direction | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | needs_information |
+| V013 | S. slope Mt. Shavano, 10 mi. n. w. Salida. | distance_and_direction | Mt. Shavano | candidates_found | Mount Shavano (Summit, Chaffee, exact_official) | computed |
 | V014 | Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone. | distance_and_direction | Greystone | candidates_found | Greystone (Populated Place, Moffat, exact_official) | needs_information |
 | V015 | Moun tains about the head waters of Clear Creek. In the valley near Empire. | named_feature | Empire | candidates_found | Empire (Populated Place, Clear Creek, exact_official) | needs_information |
 | V016 | Gravelly slope of Table Mesa, 3 mi. s. of Lyons. | distance_and_direction | Lyons | candidates_found | Lyons (Populated Place, Boulder, exact_official) | needs_information |
@@ -32,11 +32,11 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | V018 | BLM. Samjbrito Wetalnds.State Hwy 140 to County Road 136. On 136 ca. 4 mi. to County Road 134 | other |  | no_reference_feature |  | unsupported |
 | V019 | Along U.S. 36 near Idalia. | named_feature | Idalia | candidates_found | Idalia (Populated Place, Yuma, exact_official) | needs_information |
 | V020 | Lone Mesa State Park, 7.5 miles north of southern entrance at FR 514. | named_feature | Lone Mesa State Park | feature_absent_from_index |  | needs_information |
-| V021 | Hoosier Pass. | named_feature | Hoosier Pass | candidates_found | Hoosier Pass (Gap, Summit, exact_official) | needs_information |
+| V021 | Hoosier Pass. | named_feature | Hoosier Pass | candidates_found | Hoosier Pass (Gap, Summit, exact_official) | computed |
 | V022 | Edge of pond on the north side of the Arkansas River. | named_feature | Arkansas River | candidates_found | Arkansas River (Stream, Desha, exact_official) | computed |
 | V023 | Boulder Mt. Parks, NBS Mesa. Along the Enchanted Mesa cutoff trails just S of the gully. | named_feature | Boulder Mt. Parks | feature_absent_from_index |  | needs_information |
 | V024 | Roosevelt National Forest: Medicine Bow Mountains: Rawah Wilderness: Link Trail from Link/McIntyre Trailhead on Old Glendevey Road (County Road 80C), ca 46 air mi NW of Fort Collins. | distance_and_direction | Fort Collins | candidates_found | Fort Collins (Populated Place, Larimer, exact_official) | needs_information |
-| V025 | Ca. 0.25 mi N of Weston Pass summit. | distance_and_direction | Weston Pass | candidates_found | Weston Pass (Gap, Lake, exact_official) | needs_information |
+| V025 | Ca. 0.25 mi N of Weston Pass summit. | distance_and_direction | Weston Pass | candidates_found | Weston Pass (Gap, Lake, exact_official) | computed |
 | V026 | Castleton Ranch, along Carbon Creek, just east of County Road 730, near jct. with CR 737. | direction_only | County Road | feature_absent_from_index |  | needs_information |
 | V027 | Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table. | direction_only | Billiard Table | feature_absent_from_index |  | needs_information |
 | V028 | Bull Domingo Hills at east edge of Wet Mountain Valley about 1 mile north of Westcliffe. | distance_and_direction | Westcliffe | candidates_found | Westcliffe (Populated Place, Custer, exact_official) | computed |

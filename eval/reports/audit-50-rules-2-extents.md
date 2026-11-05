@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 36 · `feature_absent_from_index` 11 · `no_reference_feature` 3
 
-**proposal**: `needs_information` 39 · `computed` 8 · `unsupported` 3
+**proposal**: `needs_information` 36 · `computed` 11 · `unsupported` 3
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -18,11 +18,11 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A04 | San Juan Nat. Forest: Chicago Basin. Animas River drainage ca. 18 mi. S.E. of Silverton. Near the top of Eolus. | distance_and_direction | Silverton | candidates_found | Silverton (Populated Place, San Juan, exact_official) | needs_information |
 | A05 | Collegiate Peaks Overlook, Arkansas Headwaters State Recreation Area, approx. 1 mile east of Johnson Village on CR 34 off of Highway 285. | distance_and_direction | Johnson Village | candidates_found | Johnson Village (Populated Place, Chaffee, exact_official) | needs_information |
 | A06 | Grand Mesa National Forest. Old road on N slope of plateau E of Mesa Creek. | direction_only | Mesa Creek | candidates_found | Mesa Creek (Stream, Mesa, exact_official) | needs_information |
-| A07 | Head of canon on east slope of Flagstaff Mountain, Boulder. | named_feature | Flagstaff Mountain | candidates_found | Flagstaff Mountain (Summit, Boulder, exact_official) | needs_information |
+| A07 | Head of canon on east slope of Flagstaff Mountain, Boulder. | named_feature | Flagstaff Mountain | candidates_found | Flagstaff Mountain (Summit, Boulder, exact_official) | computed |
 | A08 | Shale 15 miles east of Pueblo. | distance_and_direction | Pueblo | candidates_found | Pueblo (Populated Place, Pueblo, exact_official) | computed |
 | A09 | Trail from Soda Tipoff to Mancos River, south rim of Mesa Verde. | named_feature | Mancos River | candidates_found | Mancos River (Stream, San Juan, exact_official) | needs_information |
 | A10 | Above Rainbow Lake. | named_feature | Above Rainbow Lake | feature_absent_from_index |  | needs_information |
-| A11 | Lone Cone. | named_feature | Lone Cone | candidates_found | Lone Cone (Summit, Dolores, exact_official) | needs_information |
+| A11 | Lone Cone. | named_feature | Lone Cone | candidates_found | Lone Cone (Summit, Dolores, exact_official) | computed |
 | A12 | Silt Mesa (right-of-way). | named_feature | Silt Mesa | feature_absent_from_index |  | needs_information |
 | A13 | Northern Gunnison Basin: ca 5 air mi SSW of Paonia. | distance_and_direction | Paonia | candidates_found | Paonia (Populated Place, Delta, exact_official) | computed |
 | A14 | White River Plateau. Coffee Pot Road, 8 mi W of Hwy 301. | distance_and_direction | Hwy | feature_absent_from_index |  | needs_information |
@@ -44,7 +44,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | A30 | Pitkin. | named_feature | Pitkin | candidates_found | Pitkin (Populated Place, Gunnison, exact_official) | computed |
 | A31 | Eastern San Miguel Mts. Seep 0.2 mi. southeast from Graysill Mine. By FR 578. | distance_and_direction | Graysill Mine | feature_absent_from_index |  | needs_information |
 | A32 | Baca National Wildlife Refuge, San Luis Valley. Ca. 2 air miles WSW of Crestone. Ca. ½ mile S of County Rd. T; ¼ mile E of Ranch HQ. Near jct. of N. Crestone and S. Crestone creeks. | distance_and_direction | Crestone | candidates_found | Crestone (Populated Place, Saguache, exact_official) | needs_information |
-| A33 | Gravelly bench along highway below Fremont Pass. | named_feature | Fremont Pass | candidates_found | Fremont Pass (Gap, Lake, exact_official) | needs_information |
+| A33 | Gravelly bench along highway below Fremont Pass. | named_feature | Fremont Pass | candidates_found | Fremont Pass (Gap, Lake, exact_official) | computed |
 | A34 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: San Isabel National Forest: ca 3.4 road mi on Forest 101 from U.S. Hwy 50. | named_feature | Wet Mountains | candidates_found | Wet Mountains (Range, Custer, exact_official) | needs_information |
 | A35 | Gore Range, Eagles Nest Wilderness Area, central Colorado. 1km west of Lower Piney Lake. | direction_only | Lower Piney Lake | candidates_found | Piney Lake (Lake, Eagle, core_official) | needs_information |
 | A36 | Chico Basin Ranch, ca. 28 miles SE of Colorado Springs. Dry uplands above Black Squirrel Creek. | distance_and_direction | Colorado Springs | candidates_found | Colorado Springs (Populated Place, El Paso, exact_official) | needs_information |

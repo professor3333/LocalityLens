@@ -8,7 +8,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 
 **retrieval**: `candidates_found` 32 · `feature_absent_from_index` 14 · `no_reference_feature` 4
 
-**proposal**: `needs_information` 38 · `computed` 7 · `unsupported` 5
+**proposal**: `needs_information` 34 · `computed` 11 · `unsupported` 5
 
 | id | locality | relation | reference | retrieval | top candidate | proposal |
 |---|---|---|---|---|---|---|
@@ -22,7 +22,7 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | D08 | 12 miles south of Hwy. 14 on Long Draw Rd. ½ mile up Neota Creek Valley on glacial moraine. | route_relative |  | no_reference_feature |  | unsupported |
 | D09 | Rocky Mountain National Park, Trail Ridge, on N. side of Toll Pass. | named_feature | Rocky Mountain National Park | feature_absent_from_index |  | needs_information |
 | D10 | ¼ mi. N of Spitzie house site, Brown's Park. | distance_and_direction | Spitzie | feature_absent_from_index |  | needs_information |
-| D11 | Ten Mile Range, east slope, southern part; lower slopes of Quandary Peak. | named_feature | Quandary Peak | candidates_found | Quandary Peak (Summit, Summit, exact_official) | needs_information |
+| D11 | Ten Mile Range, east slope, southern part; lower slopes of Quandary Peak. | named_feature | Quandary Peak | candidates_found | Quandary Peak (Summit, Summit, exact_official) | computed |
 | D12 | Roadside, approximately 2 miles south of the junction of Co. hwys 80 and 145, which is 4 miles east of Naturita. | distance_and_direction | Naturita | candidates_found | Naturita (Populated Place, Montrose, exact_official) | needs_information |
 | D13 | Seasonal pool 1 mi. s. of Baseline Lake, s.e. of Boulder. | distance_and_direction | Baseline Lake | candidates_found | Base Line Reservoir (Reservoir, Boulder, fuzzy_variant) | computed |
 | D14 | Along the highway east from Aspen toward Independence Pass, 11 mi. E of Aspen. | distance_and_direction | Aspen | candidates_found | Aspen (Populated Place, Pitkin, exact_official) | computed |
@@ -51,14 +51,14 @@ Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif
 | D37 | Williams Peak Road. | named_feature | Williams Peak Road | feature_absent_from_index |  | needs_information |
 | D38 | Hartsel. | named_feature | Hartsel | candidates_found | Hartsel (Populated Place, Park, exact_official) | computed |
 | D39 | Dickson Creek. | named_feature | Dickson Creek | candidates_found | Dickson Creek (Stream, Eagle, exact_official) | computed |
-| D40 | La Veta Pass. | named_feature | La Veta Pass | candidates_found | La Veta Pass (Gap, Costilla, exact_official) | needs_information |
+| D40 | La Veta Pass. | named_feature | La Veta Pass | candidates_found | La Veta Pass (Gap, Costilla, exact_official) | computed |
 | D41 | Two Buttes. | named_feature | Two Buttes | candidates_found | Two Buttes (Populated Place, Baca, exact_official) | computed |
 | D42 | Cardinal. | named_feature | Cardinal | candidates_found | Cardinal (historical) (Populated Place, Boulder, exact_official) | needs_information |
 | D43 | Skull Canyon. | named_feature | Skull Canyon | candidates_found | Skull Canyon (Valley, Baca, exact_official) | needs_information |
 | D44 | Poudre Canyon. | named_feature | Poudre Canyon | feature_absent_from_index |  | needs_information |
 | D45 | At Arboles. | named_feature | At Arboles | feature_absent_from_index |  | needs_information |
-| D46 | Rifle Gap. | named_feature | Rifle Gap | candidates_found | Rifle Gap (Gap, Garfield, exact_official) | needs_information |
-| D47 | Arapaho Pass. | named_feature | Arapaho Pass | candidates_found | Arapaho Pass (Gap, Boulder, exact_official) | needs_information |
+| D46 | Rifle Gap. | named_feature | Rifle Gap | candidates_found | Rifle Gap (Gap, Garfield, exact_official) | computed |
+| D47 | Arapaho Pass. | named_feature | Arapaho Pass | candidates_found | Arapaho Pass (Gap, Boulder, exact_official) | computed |
 | D48 | North of Eads. | direction_only | Eads | candidates_found | Eads (Populated Place, Kiowa, exact_official) | needs_information |
 | D49 | North Cheyenne Canon. | named_feature | North Cheyenne Canon | candidates_found | North Cheyenne Canyon (Valley, El Paso, core_official) | needs_information |
 | D50 | Roadside near Florissant. | named_feature | Florissant | candidates_found | Florissant (Populated Place, Teller, exact_official) | needs_information |

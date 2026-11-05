@@ -11,9 +11,9 @@
   "seed": "benchmark/1",
   "extent_store": {
     "version": "extents-1",
-    "sha256": "363de7e35d5fa30e82bc637e80a8b04148f6f8322296a63d59605c4eb4c44a3a",
-    "reviewed": 38,
-    "pending": 59
+    "sha256": "caa1c85940ec082e4b86d1d8ac5dfe351befb14a1c479f88a7ab7569b36702f6",
+    "reviewed": 58,
+    "pending": 39
   },
   "note": "System output only. Correctness needs the owner's annotations; the top candidate is the rules ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.",
   "counts": {
@@ -31,9 +31,9 @@
       "no_reference_feature": 8
     },
     "proposal": {
-      "needs_information": 44,
-      "unsupported": 8,
-      "computed": 8
+      "needs_information": 41,
+      "computed": 11,
+      "unsupported": 8
     }
   },
   "records": [
@@ -391,10 +391,10 @@
         "county": "Chaffee",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 12686,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 14497,
+      "extent": "reviewed"
     },
     {
       "audit_id": "V014",
@@ -631,10 +631,10 @@
         "county": "Summit",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 39,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 2239,
+      "extent": "reviewed"
     },
     {
       "audit_id": "V022",
@@ -752,10 +752,10 @@
         "county": "Lake",
         "match": "exact_official"
       },
-      "proposal": "needs_information",
+      "proposal": "computed",
       "radius_lower_bound_m": 467,
-      "radius_m": null,
-      "extent": null
+      "radius_m": 1585,
+      "extent": "reviewed"
     },
     {
       "audit_id": "V026",
