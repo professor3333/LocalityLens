@@ -1,0 +1,1688 @@
+{
+  "audit_version": "1",
+  "system": "llm",
+  "extractor_version": "llm-x2zs-qwen3.5-4b-q4km",
+  "gazetteer_snapshot": "gnis-co-2026-09-29",
+  "specimen_snapshot": "gbif-cu-2026-11-01",
+  "uncertainty_policy": "gbif-bp-2020/1",
+  "validation_version": "3",
+  "core_key_version": "1",
+  "county_context_version": "1",
+  "seed": "dev-4/1",
+  "model": "Qwen/Qwen3.5-4B@851bf6e806ef",
+  "gguf": "Qwen3.5-4B-Q4_K_M.gguf sha256=00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+  "prompt": "extraction-v2-zeroshot sha256=683bc3c42329fee17e2a5e0edff6cf6ffad44b4eedf0e136f44cd715412b3bca",
+  "generation": {
+    "temperature": 0.0,
+    "top_k": 1,
+    "seed": 20261101,
+    "max_tokens": 512,
+    "enable_thinking": false
+  },
+  "server": {
+    "build_info": "b11960-8642541b2",
+    "model_file": "Qwen3.5-4B-Q4_K_M.gguf",
+    "n_ctx": 4096
+  },
+  "note": "System output only. Correctness needs Claude's annotations; the top candidate is the system's ranking, not a reviewed choice, and no extent was supplied.",
+  "counts": {
+    "relation": {
+      "distance_and_direction": 21,
+      "named_feature": 18,
+      "route_relative": 6,
+      "no_locality": 3,
+      "between_features": 1,
+      "other": 1
+    },
+    "retrieval": {
+      "None": 26,
+      "candidates_found": 14,
+      "feature_absent_from_index": 6,
+      "no_reference_feature": 4
+    },
+    "proposal": {
+      "invalid_extraction": 26,
+      "needs_information": 16,
+      "unsupported": 8
+    }
+  },
+  "records": [
+    {
+      "audit_id": "G01",
+      "locality": "Enchanted Mesa above the National Bureau of Standards.",
+      "county": "Boulder",
+      "relation": "named_feature",
+      "reference": "National Bureau of Standards",
+      "validation_errors": [],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "needs_information",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "e4873c678194bd8d8a627c07f863ba06ad3c9f55938942c02d996ee6208fbebb",
+        "prompt_tokens": 956,
+        "completion_tokens": 84,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 9.31,
+        "record_seconds": 9.4
+      }
+    },
+    {
+      "audit_id": "G02",
+      "locality": "Side of Moly Mtn. near Climax.",
+      "county": "Lake",
+      "relation": "named_feature",
+      "reference": "Moly Mtn.",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 3,
+      "candidate_ids": [
+        202097,
+        202025,
+        189307
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": {
+        "feature_id": 202097,
+        "name": "Owl Mountain",
+        "class": "Summit",
+        "county": "Jackson",
+        "match": "fuzzy_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "4cc628c8c188844fb57225211e2a550e2964a63fc2300161343b13f18f88bfb2",
+        "prompt_tokens": 956,
+        "completion_tokens": 104,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 10.59,
+        "record_seconds": 10.64
+      }
+    },
+    {
+      "audit_id": "G03",
+      "locality": "Entrance to Colorado National Monument.",
+      "county": "Mesa",
+      "relation": "no_locality",
+      "reference": null,
+      "validation_errors": [],
+      "retrieval": "no_reference_feature",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "4f0cc5e7d542535710280864528dd743bc6c2ec43e6d49ea9496fd7139fb3f50",
+        "prompt_tokens": 952,
+        "completion_tokens": 152,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 15.34,
+        "record_seconds": 15.39
+      }
+    },
+    {
+      "audit_id": "G04",
+      "locality": "Northern Gunnison Basin: south-facing slope of Mt. Axtel.",
+      "county": "Gunnison",
+      "relation": "named_feature",
+      "reference": "Mt. Axtel",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 1,
+      "candidate_ids": [
+        203945
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
+      "top_candidate": {
+        "feature_id": 203945,
+        "name": "Mount Axtell",
+        "class": "Summit",
+        "county": "Gunnison",
+        "match": "fuzzy_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "dbbf2760f76ddfab1cec5d7e63cd3c125450fd7a6b97772d2d6057d947c12495",
+        "prompt_tokens": 960,
+        "completion_tokens": 138,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 16.6,
+        "record_seconds": 16.84
+      }
+    },
+    {
+      "audit_id": "G05",
+      "locality": "East of Tolland, five miles west of Rollinsville.",
+      "county": "Gilpin",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "647f9f74a3cc4021f8ff1247b9fb03577ab86957e1e5ad2d1d93f4211975506a",
+        "prompt_tokens": 958,
+        "completion_tokens": 160,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 17.48,
+        "record_seconds": 17.61
+      }
+    },
+    {
+      "audit_id": "G06",
+      "locality": "Colorado National Monument, Grand Junction entrance highway.",
+      "county": "Mesa",
+      "relation": "no_locality",
+      "reference": null,
+      "validation_errors": [],
+      "retrieval": "no_reference_feature",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "25b6bdf3d10f05da19ad1befca277e31aed85d07fb96de27158d1110874c43d3",
+        "prompt_tokens": 954,
+        "completion_tokens": 175,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 17.07,
+        "record_seconds": 17.2
+      }
+    },
+    {
+      "audit_id": "G07",
+      "locality": "25 mi below Manitou.",
+      "county": "El Paso",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "154fa311b682ddfc2c0d8d25a617c49bfe2ddae71bcb447579b50571f6e2dc5b",
+        "prompt_tokens": 952,
+        "completion_tokens": 138,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 13.27,
+        "record_seconds": 13.33
+      }
+    },
+    {
+      "audit_id": "G08",
+      "locality": "Uncompahgre National Forest, along Divide Road, 6.7 miles SSW of Colorado Hwy. 141 at Taylor Ranch, junction about 15 miles from U.S. Hwy. 50 at Whitewater, on the edge and in a large meadow 0.5 mile south of the northern boundary of the Forest.",
+      "county": "Mesa",
+      "relation": "route_relative",
+      "reference": null,
+      "validation_errors": [
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "88a419c0d3499bb02703bd95b76e1d495a3ce9d1fd512e15d46c3328aab79ba8",
+        "prompt_tokens": 1017,
+        "completion_tokens": 278,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 23.05,
+        "record_seconds": 23.09
+      }
+    },
+    {
+      "audit_id": "G09",
+      "locality": "Plains Conservation Center, West Bijou Creek property, 5760 acres in the Denver Basin along West Bijou Creek, 38 miles SE of downtown Denver and 12 miles S of Strasburg. Approx. 3/4 mile E of W Bijou Creek.",
+      "county": "Elbert",
+      "relation": "named_feature",
+      "reference": "West Bijou Creek",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 2,
+      "candidate_ids": [
+        184779,
+        184780
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
+      "top_candidate": {
+        "feature_id": 184779,
+        "name": "West Bijou Creek",
+        "class": "Stream",
+        "county": "Elbert",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "294b5183e97608f526e947f1a007f7b30492195cad718b8b11f24751e7d893ce",
+        "prompt_tokens": 1004,
+        "completion_tokens": 216,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 18.17,
+        "record_seconds": 18.27
+      }
+    },
+    {
+      "audit_id": "G10",
+      "locality": "Vermejo Park Ranch: in Long Canyon 0.65 air miles north of mouth of Joe Baker Canyon; 1.1 air miles north of New Mexico and 15 air miles southwest of Raton.",
+      "county": "Las Animas",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "092407c5a01ec229a92a180e18163dceca0a486fe8690c800cc39c60ab457d7b",
+        "prompt_tokens": 990,
+        "completion_tokens": 250,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 19.89,
+        "record_seconds": 19.93
+      }
+    },
+    {
+      "audit_id": "G11",
+      "locality": "Near Trinidad. W of Trinidad on 12 ca. 10 miles then N on Burro Canyon Rd 1.3 miles. W of road.",
+      "county": "Las Animas",
+      "relation": "route_relative",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "47b6be7885b5c951a538c0efe1fec06a9647a1faae399e102bdb418d1bbbc805",
+        "prompt_tokens": 978,
+        "completion_tokens": 216,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 17.26,
+        "record_seconds": 17.28
+      }
+    },
+    {
+      "audit_id": "G12",
+      "locality": "Northern Gunnison Basin: ca. 2 air mi. S of Paonia Reservoir.",
+      "county": "Gunnison",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "7b3cd7ee089884d9676f56935dbb5c0320b365cb4ea04add3ced57e3298404c9",
+        "prompt_tokens": 964,
+        "completion_tokens": 116,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 10.48,
+        "record_seconds": 10.51
+      }
+    },
+    {
+      "audit_id": "G13",
+      "locality": "South Park, Mile Creek road at crossing of culvert, 0.7 mi from Jct. Hwy 8.",
+      "county": "Park",
+      "relation": "route_relative",
+      "reference": "Jct. Hwy 8",
+      "validation_errors": [],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": 0.7,
+        "unit": "mile",
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "80bf7e371747ef654cd819d1b8794bf551bcd8098f00357f6e3e663779d5819f",
+        "prompt_tokens": 970,
+        "completion_tokens": 181,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 15.19,
+        "record_seconds": 15.24
+      }
+    },
+    {
+      "audit_id": "G14",
+      "locality": "White Rocks Area Conservation Easement, along north bank of Boulder Creek, 8 mi NE of Boulder. East entrance area.",
+      "county": "Boulder",
+      "relation": "named_feature",
+      "reference": "Boulder Creek",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 5,
+      "candidate_ids": [
+        178573,
+        169871,
+        175929,
+        178354,
+        186997
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": 8.0,
+        "unit": "mile",
+        "direction": "NE",
+        "qualifiers": []
+      },
+      "top_candidate": {
+        "feature_id": 178573,
+        "name": "Middle Boulder Creek",
+        "class": "Stream",
+        "county": "Boulder",
+        "match": "exact_variant"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "d41db513dc192974ec4a12e2dd414b5cc1577c87e345fa3cf928245d8258b861",
+        "prompt_tokens": 971,
+        "completion_tokens": 182,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 15.09,
+        "record_seconds": 15.15
+      }
+    },
+    {
+      "audit_id": "G15",
+      "locality": "Beneath NW escarpment, Colorado National Monument, 3 mi. S of Fruita, W of hwy approach to Monument.",
+      "county": "Mesa",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "679e93eb7274c58d4902753c3d8b9253745edcbd08e249bd4903252decb8f288",
+        "prompt_tokens": 974,
+        "completion_tokens": 93,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 9.28,
+        "record_seconds": 9.31
+      }
+    },
+    {
+      "audit_id": "G16",
+      "locality": "Slope of Caribou Hill, ca. six miles west of Nederland.",
+      "county": "Boulder",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "86425d7e90d3eca36bf16967895d353c4686e3e1ccb35d080384b596d448d06b",
+        "prompt_tokens": 961,
+        "completion_tokens": 183,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 14.74,
+        "record_seconds": 14.77
+      }
+    },
+    {
+      "audit_id": "G17",
+      "locality": "Southern Gunnison Basin: Curecanti National Recreation Area: ca 1.2 air mi N of Sapinero Mesa, just W of Fourmile Gulch Bay, ca 18.8 air mi WSW of Gunnison.",
+      "county": "Gunnison",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "08c08779121a11b1d2f063d3b965109215163e7f5b7067524c36d83cf08f249f",
+        "prompt_tokens": 994,
+        "completion_tokens": 288,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 22.04,
+        "record_seconds": 22.09
+      }
+    },
+    {
+      "audit_id": "G18",
+      "locality": "Cathedral Creek in Piceance Basin, 18 mi NE of Douglas Pass.",
+      "county": "Rio Blanco",
+      "relation": "named_feature",
+      "reference": "Piceance Basin",
+      "validation_errors": [],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": 18.0,
+        "unit": "mile",
+        "direction": "NE",
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "needs_information",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "af139cdfab5a8cf190d2f35703845a31396dcfe41c1ec9f48e4c82a6f0dc60fa",
+        "prompt_tokens": 964,
+        "completion_tokens": 158,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 13.43,
+        "record_seconds": 13.49
+      }
+    },
+    {
+      "audit_id": "G19",
+      "locality": "Little South Fork of Elk River, 2 mi S of Seedhouse G.S., Routt National Forest, ca 29 mi N of Steamboat Springs.",
+      "county": "Routt",
+      "relation": "named_feature",
+      "reference": null,
+      "validation_errors": [
+        "contradictory_missing",
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "0b4ea235b8efb1cab21ec138aa57ce29a0da826423273c93aeeb5891f9418db3",
+        "prompt_tokens": 978,
+        "completion_tokens": 275,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 21.7,
+        "record_seconds": 21.74
+      }
+    },
+    {
+      "audit_id": "G20",
+      "locality": "U.S. Air Force Academy, ca. 30 ft. from Deadman's Lake and ca. 10 ft. from walking path.",
+      "county": "El Paso",
+      "relation": "distance_and_direction",
+      "reference": "Deadman's Lake",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 5,
+      "candidate_ids": [
+        197434,
+        180095,
+        180501,
+        180991,
+        192444
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 30.0,
+        "unit": "foot",
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
+      "top_candidate": {
+        "feature_id": 197434,
+        "name": "Deadmans Lake",
+        "class": "Lake",
+        "county": "El Paso",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "d16f30bbb47a8a346450613fbd8dedb218459e5c9b08821b7787df0145795f98",
+        "prompt_tokens": 976,
+        "completion_tokens": 181,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 15.1,
+        "record_seconds": 15.17
+      }
+    },
+    {
+      "audit_id": "G21",
+      "locality": "Cedaredge, 0.2 miles east of Highway 65 on SE Deer Trail Ave.",
+      "county": "Delta",
+      "relation": "route_relative",
+      "reference": "Highway 65",
+      "validation_errors": [],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "515e0286fb58a063f812bd19836d6465c37da3f7f8d5e32bccb17a460221fa7d",
+        "prompt_tokens": 967,
+        "completion_tokens": 185,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 15.08,
+        "record_seconds": 15.12
+      }
+    },
+    {
+      "audit_id": "G22",
+      "locality": "Comanche National Grassland: near base of Shale Hills, ca 16.5 air mi S of La Junta.",
+      "county": "Otero",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "14616bcb790965a3210ca7d7dffa7c5bac447ba2881ca3e9903949e7eece7fb7",
+        "prompt_tokens": 971,
+        "completion_tokens": 93,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 9.21,
+        "record_seconds": 9.23
+      }
+    },
+    {
+      "audit_id": "G23",
+      "locality": "Mesa de Maya, 5 miles south of Kim.",
+      "county": "Las Animas",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "5d9d2adf572e9b60fbba779cf3e065759c2597452006c8b3c5bfe362bfb5eeb6",
+        "prompt_tokens": 957,
+        "completion_tokens": 85,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 8.71,
+        "record_seconds": 8.74
+      }
+    },
+    {
+      "audit_id": "G24",
+      "locality": "Between Rollinsville and Black Hawk, eight miles from Black Hawk.",
+      "county": "Gilpin",
+      "relation": "between_features",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "1cae34b9a8ccee68be0a181c2f27116919e1ac2f2b27f9cd4d1bf53514984c4e",
+        "prompt_tokens": 959,
+        "completion_tokens": 136,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 12.02,
+        "record_seconds": 12.05
+      }
+    },
+    {
+      "audit_id": "G25",
+      "locality": "Central Colorado: Sawatch Range, East Slope Continental Divide: at lake at top of Porcupine Gulch, pond crossed on W by Continental Divide/Colorado Trail, ca 10 air mi NW of Leadville.",
+      "county": "Lake",
+      "relation": "named_feature",
+      "reference": "Porcupine Gulch",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 5,
+      "candidate_ids": [
+        179825,
+        172070,
+        181810,
+        187020,
+        187559
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
+      "top_candidate": {
+        "feature_id": 179825,
+        "name": "Porcupine Gulch",
+        "class": "Valley",
+        "county": "Lake",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "f5c9896a077f1351a13a058c17dc31078396b045154661c01faae285e3d1734f",
+        "prompt_tokens": 991,
+        "completion_tokens": 249,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 24.06,
+        "record_seconds": 24.69
+      }
+    },
+    {
+      "audit_id": "G26",
+      "locality": "Silver Lake.",
+      "county": "Boulder",
+      "relation": "named_feature",
+      "reference": "Silver Lake.",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 5,
+      "candidate_ids": [
+        178478,
+        175300,
+        181373,
+        187180,
+        187672
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": {
+        "feature_id": 178478,
+        "name": "Silver Lake",
+        "class": "Reservoir",
+        "county": "Boulder",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "b3f594be03beac37fa827dbc4adfb90fb5626c2244504ace304db2395a54c8ad",
+        "prompt_tokens": 948,
+        "completion_tokens": 82,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 16.91,
+        "record_seconds": 18.91
+      }
+    },
+    {
+      "audit_id": "G27",
+      "locality": "Flat Tops/ White River Plateau: Flat Tops Wilderness: Sheep Mountain, ca 28 air mi NNE of Glenwood Springs. Also SEC 34.",
+      "county": "Garfield",
+      "relation": "named_feature",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "5765f94c7f3245c6fb8b7e1a72ed0e8b380ecb72e2721bc602b6d6cc70983a42",
+        "prompt_tokens": 979,
+        "completion_tokens": 236,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 25.9,
+        "record_seconds": 28.11
+      }
+    },
+    {
+      "audit_id": "G28",
+      "locality": "E Side of Black Forest, Latigo Blvd, 0.7 mi E of Elbert Rd.",
+      "county": "El Paso",
+      "relation": "distance_and_direction",
+      "reference": "Elbert Rd.",
+      "validation_errors": [],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 0.7,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "needs_information",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "24729b99445fef48d4cd6ec1b8c28407420457cb8b6a9e167dcbea2a5bc6ce75",
+        "prompt_tokens": 966,
+        "completion_tokens": 163,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 18.62,
+        "record_seconds": 20.58
+      }
+    },
+    {
+      "audit_id": "G29",
+      "locality": "Banner Peak.",
+      "county": "Jefferson",
+      "relation": "named_feature",
+      "reference": "Banner Peak",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 5,
+      "candidate_ids": [
+        183311,
+        177207,
+        191913,
+        178956,
+        169741
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": {
+        "feature_id": 183311,
+        "name": "Banner Peak",
+        "class": "Summit",
+        "county": "Jefferson",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "26f60f9918c7c923ce752a3d70d053a78313abd09c2c651e8496858c934a9021",
+        "prompt_tokens": 948,
+        "completion_tokens": 104,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 11.92,
+        "record_seconds": 12.59
+      }
+    },
+    {
+      "audit_id": "G30",
+      "locality": "North-central Colorado: Elkhead Mountains: near the head of Elkhead Creek at the north end of California Park, ca 1.5 air mi E of Saddle Mountain; ca 22.5 air mi NE of Hayden.",
+      "county": "Routt",
+      "relation": "named_feature",
+      "reference": "Elkhead Creek",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 1,
+      "candidate_ids": [
+        171295
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "approximate",
+          "near"
+        ]
+      },
+      "top_candidate": {
+        "feature_id": 171295,
+        "name": "Elkhead Creek",
+        "class": "Stream",
+        "county": "Moffat",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "318816f0bc220990badb3e92cd9d9154e529ba1ae7976fc43a64ff8b4f9990ac",
+        "prompt_tokens": 993,
+        "completion_tokens": 294,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 22.75,
+        "record_seconds": 23.24
+      }
+    },
+    {
+      "audit_id": "G31",
+      "locality": "Rio Grande National Forest. On forest service road, CA. 13.6 MI NW of Colorado 17.",
+      "county": "Conejos",
+      "relation": "route_relative",
+      "reference": "Colorado 17",
+      "validation_errors": [],
+      "retrieval": "feature_absent_from_index",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "e2ff784de509640be077244eb3c3a837894e5dc28a58818e3e820dc4d9babc63",
+        "prompt_tokens": 970,
+        "completion_tokens": 173,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 16.05,
+        "record_seconds": 16.42
+      }
+    },
+    {
+      "audit_id": "G32",
+      "locality": "Colorado Mtns.",
+      "county": "Unknown",
+      "relation": "other",
+      "reference": null,
+      "validation_errors": [],
+      "retrieval": "no_reference_feature",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "other",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "1c23c117f416d389d9035222b36f1c2f1c50d259a7800b3838a6750139c6c193",
+        "prompt_tokens": 950,
+        "completion_tokens": 154,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 12.67,
+        "record_seconds": 12.8
+      }
+    },
+    {
+      "audit_id": "G33",
+      "locality": "Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, Game Ridge, SE of Westcliffe, ca 0.8 mi E of Rosita on County Road 328.",
+      "county": "Custer",
+      "relation": "named_feature",
+      "reference": "Wet Mountains",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 4,
+      "candidate_ids": [
+        204777,
+        184024,
+        189068,
+        173676
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": [
+          "approximate"
+        ]
+      },
+      "top_candidate": {
+        "feature_id": 204777,
+        "name": "Wet Mountains",
+        "class": "Range",
+        "county": "Custer",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "29a0f6797c081648637d92480d66752f95dd07cb68990c30ee42cefd0814d1c5",
+        "prompt_tokens": 992,
+        "completion_tokens": 208,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 16.37,
+        "record_seconds": 16.49
+      }
+    },
+    {
+      "audit_id": "G34",
+      "locality": "West slope of Steamboat Mt., 1 mile northwest of Lyons.",
+      "county": "Boulder",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "7cce5889374c2e90ca1f2e6b25b9161de31c2ad8ba3c84116288872eb70104bd",
+        "prompt_tokens": 959,
+        "completion_tokens": 107,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 9.85,
+        "record_seconds": 9.91
+      }
+    },
+    {
+      "audit_id": "G35",
+      "locality": "Pole Canyon, Boulder.",
+      "county": "Boulder",
+      "relation": "named_feature",
+      "reference": "Pole Canyon",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 5,
+      "candidate_ids": [
+        174168,
+        176314,
+        190366,
+        194053,
+        170203
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": {
+        "feature_id": 174168,
+        "name": "Pole Canyon",
+        "class": "Valley",
+        "county": "Garfield",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "344c36c000ac77d0ea2dde7617abbe17965528501049b59a192ce4fa5b563936",
+        "prompt_tokens": 951,
+        "completion_tokens": 133,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 11.4,
+        "record_seconds": 11.49
+      }
+    },
+    {
+      "audit_id": "G36",
+      "locality": "Sarvis Creek wetlands adjacent to Buffalo Park, ca. 17.0 air miles NW of Kremmling, by Forest Service Road 100 (19).",
+      "county": "Grand",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "d846a7da8711866e0fb966642ab71ff42e036e235c7e0e32cf8a3bf81b455aff",
+        "prompt_tokens": 982,
+        "completion_tokens": 279,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 21.96,
+        "record_seconds": 22.05
+      }
+    },
+    {
+      "audit_id": "G37",
+      "locality": "Front Range: Arapaho National Forest: Georgia Pass to the eastern slopes of Mount Guyot, ca 6-7 air mi ESE of Breckenridge.",
+      "county": "Summit",
+      "relation": "named_feature",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "unparseable_distance",
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "b2fab9435aacec9f349ef984d75d3857e17cee0dc0fae5f482816c6a64adb739",
+        "prompt_tokens": 979,
+        "completion_tokens": 279,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 25.75,
+        "record_seconds": 26.27
+      }
+    },
+    {
+      "audit_id": "G38",
+      "locality": "Rocky Flats Site, 7 mi S of Boulder. North of Lindsay farm.",
+      "county": "Jefferson",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "a158ab58a2cb5bd3969e2700e6dc5b989f19a74da81c2396c09fc87746e3aefa",
+        "prompt_tokens": 963,
+        "completion_tokens": 154,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 17.52,
+        "record_seconds": 18.02
+      }
+    },
+    {
+      "audit_id": "G39",
+      "locality": "Rio Grande National Forest; ~5 miles SW of Platoro; W slope of ridge NW of Conejos Peak summit",
+      "county": "Conejos",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "unparseable_distance",
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "9899486ede28ca031f290448dc907f1690759f495941ff577377f89e0f22cefd",
+        "prompt_tokens": 969,
+        "completion_tokens": 255,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 24.76,
+        "record_seconds": 25.43
+      }
+    },
+    {
+      "audit_id": "G40",
+      "locality": "Small butte on s. side of Hwy. 96; Arkansas River Valley, 1 mile e. of Livsey.",
+      "county": "Pueblo",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "083e71300d44510ecd5b06dc4b7dc252291eb610a6d17a55228739efc63eca7c",
+        "prompt_tokens": 972,
+        "completion_tokens": 90,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 8.69,
+        "record_seconds": 8.91
+      }
+    },
+    {
+      "audit_id": "G41",
+      "locality": "Kremmling.",
+      "county": "Grand",
+      "relation": "no_locality",
+      "reference": null,
+      "validation_errors": [],
+      "retrieval": "no_reference_feature",
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": {
+        "relation": "no_locality",
+        "distance": null,
+        "unit": null,
+        "direction": null,
+        "qualifiers": []
+      },
+      "top_candidate": null,
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "edd675d61202194f1acee2bbd9727a79c665335ae3c5e8f8d2805eccf2ac348e",
+        "prompt_tokens": 950,
+        "completion_tokens": 171,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 13.37,
+        "record_seconds": 13.43
+      }
+    },
+    {
+      "audit_id": "G42",
+      "locality": "Temporary pool, filled in early summer by overflow from Baseline Lake, W of Cherryvale Road and the Lake, 4 mi E of Boulder.",
+      "county": "Boulder",
+      "relation": "distance_and_direction",
+      "reference": "Boulder",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 3,
+      "candidate_ids": [
+        178680,
+        181189,
+        189305
+      ],
+      "interpretation": {
+        "relation": "distance_and_direction",
+        "distance": 4.0,
+        "unit": "mile",
+        "direction": "E",
+        "qualifiers": []
+      },
+      "top_candidate": {
+        "feature_id": 178680,
+        "name": "Boulder",
+        "class": "Populated Place",
+        "county": "Boulder",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 5326,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "926b123a2c77ce82711659b19509df1b4e42b599d6dc3b7b5213c5ede8ee7672",
+        "prompt_tokens": 975,
+        "completion_tokens": 154,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 12.65,
+        "record_seconds": 12.79
+      }
+    },
+    {
+      "audit_id": "G43",
+      "locality": "Burch's Lake, 4 mi E of Lyons.",
+      "county": "Boulder",
+      "relation": "named_feature",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "a9f75ea79dd43bfb2e05134f19af4f6536e207b3257e7324abe276685d94c483",
+        "prompt_tokens": 957,
+        "completion_tokens": 85,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 8.44,
+        "record_seconds": 8.57
+      }
+    },
+    {
+      "audit_id": "G44",
+      "locality": "Roadbed, falls and vicinity, 0.5 miles south of South Mineral Campground.",
+      "county": "San Juan",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "required_component_undeclared",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "8072238ab26a4c0c6c831f3a4038347281b3df739c3f584e9e518dea33c33263",
+        "prompt_tokens": 964,
+        "completion_tokens": 94,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 8.84,
+        "record_seconds": 8.93
+      }
+    },
+    {
+      "audit_id": "G45",
+      "locality": "Park creek above Leon Creek Cow Camp in Grand Mesa National Forest, 4 mi. south of Vega Reservoir.",
+      "county": "Mesa",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "required_component_undeclared",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "50b778529dc75c0f4a2c9bbb10ed32863cd6a3ae3d96e49dcd97e77a70e9dd61",
+        "prompt_tokens": 968,
+        "completion_tokens": 93,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 8.58,
+        "record_seconds": 8.65
+      }
+    },
+    {
+      "audit_id": "G46",
+      "locality": "Central Colorado: Sawatch Range, West Slope Continental Divide: along Mt. Holy Cross Trail, ca 10 air mi SW of Redcliff.",
+      "county": "Eagle",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "quote_not_found",
+        "required_component_undeclared"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "efeef823ae34dbf93e4fd4d4456d882a6fda0d906c19d06c3fe22d887e80d358",
+        "prompt_tokens": 977,
+        "completion_tokens": 111,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 9.7,
+        "record_seconds": 9.75
+      }
+    },
+    {
+      "audit_id": "G47",
+      "locality": "Rocky Mountain National Park. Neversummer Range. Lulu Mountain, 16 mi N of Grand Lake.",
+      "county": "Grand",
+      "relation": "named_feature",
+      "reference": "Grand Lake",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 4,
+      "candidate_ids": [
+        204950,
+        202505,
+        202532,
+        203936
+      ],
+      "interpretation": {
+        "relation": "named_feature",
+        "distance": 16.0,
+        "unit": "mile",
+        "direction": "N",
+        "qualifiers": []
+      },
+      "top_candidate": {
+        "feature_id": 204950,
+        "name": "Grand Lake",
+        "class": "Reservoir",
+        "county": "Grand",
+        "match": "exact_official"
+      },
+      "proposal": "needs_information",
+      "radius_lower_bound_m": 39,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "8e77a705298443a79ed145ade32d71a483a8f0615540b3b2ad19aa4cb29bdd56",
+        "prompt_tokens": 969,
+        "completion_tokens": 206,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 15.4,
+        "record_seconds": 15.48
+      }
+    },
+    {
+      "audit_id": "G48",
+      "locality": "Dinosaur National Monument. Schoonover Buttes, ca 1.2 mi NW of confluence of Pothole & Johnson Canyons.",
+      "county": "Moffat",
+      "relation": "named_feature",
+      "reference": null,
+      "validation_errors": [
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "e1f224a194b9a3b7702505196d7a327360ea6b35de5cf1cbf4bd94ae990e29e3",
+        "prompt_tokens": 976,
+        "completion_tokens": 251,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 22.71,
+        "record_seconds": 22.78
+      }
+    },
+    {
+      "audit_id": "G49",
+      "locality": "Flat Tops/White River Plateau: Rifle Mountain Park: East Rifle Creek, Sawmill Gulch, 0.3 air mi. SE of Community Building; ca. 15 air mi. SE of Community Building; ca. 15 air mi. NNE of Rifle.",
+      "county": "Garfield",
+      "relation": "distance_and_direction",
+      "reference": null,
+      "validation_errors": [
+        "direction_mismatch",
+        "contradictory_missing"
+      ],
+      "retrieval": null,
+      "candidates": 0,
+      "candidate_ids": [],
+      "interpretation": null,
+      "top_candidate": null,
+      "proposal": "invalid_extraction",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "adb3ff2cd0de54b8a52f5ea50a5b3cc9674333e060a626b7b3089116632ae060",
+        "prompt_tokens": 1004,
+        "completion_tokens": 222,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 18.76,
+        "record_seconds": 18.92
+      }
+    },
+    {
+      "audit_id": "G50",
+      "locality": "Along road to Stone Cellar R.S. and Saguache Park, near junction of main highway, 4 mi. w. of Cochetopa Pass.",
+      "county": "Saguache",
+      "relation": "route_relative",
+      "reference": "Cochetopa Pass",
+      "validation_errors": [],
+      "retrieval": "candidates_found",
+      "candidates": 2,
+      "candidate_ids": [
+        190046,
+        190037
+      ],
+      "interpretation": {
+        "relation": "route_relative",
+        "distance": 4.0,
+        "unit": "mile",
+        "direction": null,
+        "qualifiers": [
+          "near"
+        ]
+      },
+      "top_candidate": {
+        "feature_id": 190046,
+        "name": "Cochetopa Pass",
+        "class": "Gap",
+        "county": "Saguache",
+        "match": "exact_official"
+      },
+      "proposal": "unsupported",
+      "radius_lower_bound_m": null,
+      "radius_m": null,
+      "trace": {
+        "prompt_sha256": "02d7057c6d93e807ea959c5c465cccaecd4b0acbfa697d79c8bf9f9ac5997ad0",
+        "prompt_tokens": 978,
+        "completion_tokens": 219,
+        "attempts": 1,
+        "errors": [],
+        "model_seconds": 17.37,
+        "record_seconds": 17.56
+      }
+    }
+  ],
+  "cache": {
+    "version": "llm-cache-1",
+    "hits": 0,
+    "misses": 50
+  }
+}

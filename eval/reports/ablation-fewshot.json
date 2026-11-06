@@ -1,0 +1,218 @@
+{
+  "full": "llm-x2g2-qwen3.5-4b-q4km",
+  "zero_shot": "llm-x2zs-qwen3.5-4b-q4km",
+  "samples": {
+    "audit-50": {
+      "annotator": "owner",
+      "answerable": 31,
+      "correct": {
+        "full": 13,
+        "zero_shot": 2
+      },
+      "critical_exact": {
+        "full": 15,
+        "zero_shot": 4
+      },
+      "invalid_extractions": {
+        "full": 1,
+        "zero_shot": 20
+      },
+      "zero_shot_vs_full": {
+        "n": 31,
+        "rules": 13,
+        "llm": 2,
+        "difference": -0.355,
+        "ci95": [
+          -0.548,
+          -0.129
+        ],
+        "llm_only": 2,
+        "rules_only": 13,
+        "sign_test_p": 0.0074
+      }
+    },
+    "dev-1": {
+      "annotator": "owner",
+      "answerable": 29,
+      "correct": {
+        "full": 18,
+        "zero_shot": 5
+      },
+      "critical_exact": {
+        "full": 22,
+        "zero_shot": 7
+      },
+      "invalid_extractions": {
+        "full": 4,
+        "zero_shot": 14
+      },
+      "zero_shot_vs_full": {
+        "n": 29,
+        "rules": 18,
+        "llm": 5,
+        "difference": -0.448,
+        "ci95": [
+          -0.655,
+          -0.241
+        ],
+        "llm_only": 1,
+        "rules_only": 14,
+        "sign_test_p": 0.001
+      }
+    },
+    "validation": {
+      "annotator": "owner",
+      "answerable": 32,
+      "correct": {
+        "full": 15,
+        "zero_shot": 4
+      },
+      "critical_exact": {
+        "full": 17,
+        "zero_shot": 5
+      },
+      "invalid_extractions": {
+        "full": 2,
+        "zero_shot": 23
+      },
+      "zero_shot_vs_full": {
+        "n": 32,
+        "rules": 15,
+        "llm": 4,
+        "difference": -0.344,
+        "ci95": [
+          -0.5,
+          -0.188
+        ],
+        "llm_only": 0,
+        "rules_only": 11,
+        "sign_test_p": 0.001
+      }
+    },
+    "dev-2": {
+      "annotator": "Claude",
+      "answerable": 36,
+      "correct": {
+        "full": 17,
+        "zero_shot": 5
+      },
+      "critical_exact": {
+        "full": 23,
+        "zero_shot": 8
+      },
+      "invalid_extractions": {
+        "full": 6,
+        "zero_shot": 22
+      },
+      "zero_shot_vs_full": {
+        "n": 36,
+        "rules": 17,
+        "llm": 5,
+        "difference": -0.333,
+        "ci95": [
+          -0.5,
+          -0.194
+        ],
+        "llm_only": 0,
+        "rules_only": 12,
+        "sign_test_p": 0.0005
+      }
+    },
+    "dev-3": {
+      "annotator": "Claude",
+      "answerable": 32,
+      "correct": {
+        "full": 14,
+        "zero_shot": 3
+      },
+      "critical_exact": {
+        "full": 16,
+        "zero_shot": 4
+      },
+      "invalid_extractions": {
+        "full": 10,
+        "zero_shot": 32
+      },
+      "zero_shot_vs_full": {
+        "n": 32,
+        "rules": 14,
+        "llm": 3,
+        "difference": -0.344,
+        "ci95": [
+          -0.5,
+          -0.188
+        ],
+        "llm_only": 0,
+        "rules_only": 11,
+        "sign_test_p": 0.001
+      }
+    },
+    "dev-4": {
+      "annotator": "Claude",
+      "answerable": 29,
+      "correct": {
+        "full": 14,
+        "zero_shot": 2
+      },
+      "critical_exact": {
+        "full": 15,
+        "zero_shot": 2
+      },
+      "invalid_extractions": {
+        "full": 3,
+        "zero_shot": 26
+      },
+      "zero_shot_vs_full": {
+        "n": 29,
+        "rules": 14,
+        "llm": 2,
+        "difference": -0.414,
+        "ci95": [
+          -0.586,
+          -0.241
+        ],
+        "llm_only": 0,
+        "rules_only": 12,
+        "sign_test_p": 0.0005
+      }
+    }
+  },
+  "pooled": {
+    "owner": {
+      "n": 92,
+      "full": 46,
+      "zero_shot": 11,
+      "zero_shot_vs_full": {
+        "n": 92,
+        "rules": 46,
+        "llm": 11,
+        "difference": -0.38,
+        "ci95": [
+          -0.489,
+          -0.272
+        ],
+        "llm_only": 3,
+        "rules_only": 38,
+        "sign_test_p": 0.0
+      }
+    },
+    "Claude": {
+      "n": 97,
+      "full": 45,
+      "zero_shot": 10,
+      "zero_shot_vs_full": {
+        "n": 97,
+        "rules": 45,
+        "llm": 10,
+        "difference": -0.361,
+        "ci95": [
+          -0.454,
+          -0.268
+        ],
+        "llm_only": 0,
+        "rules_only": 35,
+        "sign_test_p": 0.0
+      }
+    }
+  }
+}
