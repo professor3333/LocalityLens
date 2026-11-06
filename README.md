@@ -473,9 +473,18 @@ candidates of 32 answerable:
   then reverts one of rules-3's gains. The in-sample gains (rules 46 → 50) did not carry over.
 - **No full region is correct:** the 2 computed regions come from wrong readings.
 
-**Next on fresh data: dev-4,** 50 groups with 35 "place, offset" labels, drawn for the owner to
-annotate, so the place-or-offset rules get an independent test. The rules stay at rules-6 until
-it is scored ([dev samples](eval/dev/README.md#dev-4)).
+**dev-4,** 50 more groups with 35 "place, offset" labels. It was drawn for the owner to annotate;
+the owner then had Claude annotate it, so it is the same weak kind of evidence as dev-3. Scored
+once by a plan pushed first ([plan](eval/dev/dev-4/scoring-plan.md),
+[findings](eval/reports/dev-4-findings.md)), correct candidates of 29 answerable: rules-6 9,
+**LLM 14**, hybrid-1 10.
+
+- **The place-or-offset rules lose ground again:** rules-2 to rules-6 give 6, 6, 5, 5, 5 of 22
+  place-offset records. Over dev-3 and dev-4 they gain 2 and lose 3.
+- **The LLM reads those labels better,** and rules-first hybrid-1 never asks it when the rules
+  reach any candidate (6 such records here). Over dev-2 to dev-4 the LLM and hybrid-1 tie at 45
+  of 97, against 39 for the rules.
+- **All 3 full regions are wrong** (offsets from Boulder and Grand Lake).
 
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,

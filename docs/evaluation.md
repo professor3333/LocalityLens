@@ -97,7 +97,10 @@ hybrid-1 55 → 56 of 92; [rules-5 findings](../eval/reports/rules-5-findings.md
 labels, text shape version 2). Claude annotated it (same limit) and it was scored once by a
 pinned plan: rules-6 11, LLM 14, hybrid-1 14 of 32 answerable. Replaying rules-2 to rules-6 on
 its 24 answerable place-offset records gives 6, 7, 6, 6, 6 correct: no evidence that the
-place-or-offset rules help ([dev-3 findings](../eval/reports/dev-3-findings.md)). From dev-3 on, samples also exclude
+place-or-offset rules help ([dev-3 findings](../eval/reports/dev-3-findings.md)). dev-4 (also
+Claude-annotated, plan pushed before any run) gives rules-6 9, LLM 14, hybrid-1 10 of 29, and
+6, 6, 5, 5, 5 of 22 place-offset records across rules-2 to rules-6
+([dev-4 findings](../eval/reports/dev-4-findings.md)). From dev-3 on, samples also exclude
 labels whose wording repeats a read or reserved group under another county (exclusion version
 2, [dev samples](../eval/dev/README.md)).
 

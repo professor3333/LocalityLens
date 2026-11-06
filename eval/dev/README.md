@@ -99,8 +99,9 @@ groups excluded, 0 overlap by group key or by wording, 250 groups now registered
 - **The code stays at rules-6** until dev-4 is scored, so dev-4 tests exactly what dev-3
   tested. Known rules bugs found on dev-3 (a place cut at a sentence break, F18) stay unfixed
   for that reason.
-- The [scoring plan](dev-4/scoring-plan.md) is pushed before any system runs, as for dev-2 and
-  dev-3. Its main question repeats dev-3's: rules-6 against a rules-2 replay on the answerable place-offset
+- The [scoring plan](dev-4/scoring-plan.md) was pushed before any system ran, as for dev-2 and
+  dev-3, and dev-4 was scored once by it ([findings](../reports/dev-4-findings.md)). dev-4 is
+  now read data. Its main question repeats dev-3's: rules-6 against a rules-2 replay on the answerable place-offset
   records ([`scripts/replay_rules_versions.py`](../../scripts/replay_rules_versions.py)).
 
 ## Order of work

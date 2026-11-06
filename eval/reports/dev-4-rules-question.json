@@ -1,0 +1,335 @@
+{
+  "answerable": 29,
+  "place_offset_answerable": 22,
+  "correct_by_version_place_offset": {
+    "rules-2": 6,
+    "rules-3": 6,
+    "rules-4": 5,
+    "rules-5": 5,
+    "rules-6": 5
+  },
+  "correct_by_version_all": {
+    "rules-2": 10,
+    "rules-3": 10,
+    "rules-4": 9,
+    "rules-5": 9,
+    "rules-6": 9
+  },
+  "rules6_vs_rules2_place_offset": {
+    "n": 22,
+    "rules": 6,
+    "llm": 5,
+    "difference": -0.045,
+    "ci95": [
+      -0.182,
+      0.091
+    ],
+    "llm_only": 1,
+    "rules_only": 2,
+    "sign_test_p": 1.0
+  },
+  "rules6_vs_rules2_all": {
+    "n": 29,
+    "rules": 10,
+    "llm": 9,
+    "difference": -0.034,
+    "ci95": [
+      -0.172,
+      0.069
+    ],
+    "llm_only": 1,
+    "rules_only": 2,
+    "sign_test_p": 1.0
+  },
+  "changed_records": [
+    {
+      "audit_id": "G05",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Rollinsville",
+          "correct": true
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "East of Tolland",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "East of Tolland",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "East of Tolland",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "East of Tolland",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "G10",
+      "stratum": "offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "New Mexico",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Joe Baker Canyon",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Joe Baker Canyon",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Joe Baker Canyon",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Joe Baker Canyon",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "G16",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Nederland",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Slope of Caribou Hill",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Slope of Caribou Hill",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Slope of Caribou Hill",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Slope of Caribou Hill",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "G19",
+      "stratum": "place_offset",
+      "category": "reference_absent",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Little South Fork of Elk River",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "distance_and_direction",
+          "reference": "Seedhouse G",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "G22",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "La Junta",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Shale Hills",
+          "correct": true
+        },
+        "rules-4": {
+          "relation": "distance_and_direction",
+          "reference": "La Junta",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "distance_and_direction",
+          "reference": "La Junta",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "distance_and_direction",
+          "reference": "La Junta",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "G23",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Kim",
+          "correct": true
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Mesa de Maya",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Mesa de Maya",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Mesa de Maya",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Mesa de Maya",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "G34",
+      "stratum": "place_offset",
+      "category": "answerable",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Lyons",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Steamboat Mt.",
+          "correct": true
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Steamboat Mt.",
+          "correct": true
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Steamboat Mt.",
+          "correct": true
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Steamboat Mt.",
+          "correct": true
+        }
+      }
+    },
+    {
+      "audit_id": "G37",
+      "stratum": "place_offset",
+      "category": "unsupported",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Breckenridge",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "distance_and_direction",
+          "reference": "Breckenridge",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "distance_and_direction",
+          "reference": "Breckenridge",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Mount Guyot",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Mount Guyot",
+          "correct": false
+        }
+      }
+    },
+    {
+      "audit_id": "G38",
+      "stratum": "place_offset",
+      "category": "reference_absent",
+      "readings": {
+        "rules-2": {
+          "relation": "distance_and_direction",
+          "reference": "Boulder",
+          "correct": false
+        },
+        "rules-3": {
+          "relation": "named_feature",
+          "reference": "Rocky Flats Site",
+          "correct": false
+        },
+        "rules-4": {
+          "relation": "named_feature",
+          "reference": "Rocky Flats Site",
+          "correct": false
+        },
+        "rules-5": {
+          "relation": "named_feature",
+          "reference": "Rocky Flats Site",
+          "correct": false
+        },
+        "rules-6": {
+          "relation": "named_feature",
+          "reference": "Rocky Flats Site",
+          "correct": false
+        }
+      }
+    }
+  ],
+  "rules5_vs_rules6_differ": []
+}
