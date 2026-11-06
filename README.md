@@ -878,6 +878,7 @@ uv run mypy src/                                            # strict type check
 HYPOTHESIS_PROFILE=thorough uv run pytest tests/property    # 5,000 examples per property
 uv run playwright install chromium-headless-shell           # once, for the browser test
 uv run pytest -m e2e                                        # review flow in a real browser
+uv run pytest tests/adversarial                              # abstain, flag or refuse: never guess
 ```
 
 CI runs lint, format, strict mypy, the full test suite and the browser test of the review flow
@@ -909,6 +910,7 @@ src/localitylens/
 tests/
 ├── unit/         behaviour tests (synthetic GNIS + DwC-A fixtures, no network)
 ├── e2e/          the review flow in headless Chromium (Playwright)
+├── adversarial/  injection, malformed output, crashes, conflicts, withheld data, …
 ├── property/     Hypothesis invariants
 └── support/      shared fixture builders
 data/manifests/   committed snapshot manifests (raw data is gitignored)

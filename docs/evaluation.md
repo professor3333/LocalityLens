@@ -133,3 +133,19 @@ cache (`extract/cache.py`) record 0 model seconds and are never used for latency
 - **Review policy thresholds** (`configs/review_policy.yaml`, planned): no selection-confidence
   thresholds are set yet, and nothing reaches `ready_for_review`.
 - **Annotation self-consistency** (a repeat pass on a subset by the same annotator).
+
+## Adversarial tests
+
+[`tests/adversarial/`](../tests/adversarial/test_adversarial.py) runs every adversarial case in
+the test plan end to end on synthetic data, and checks that the system abstains, flags or
+refuses: swapped directions, missing or ambiguous units, repeated place names, conflicting
+counties and states, injected instructions (including a label that tries to close the prompt's
+data fence and a model that obeys and returns coordinates), unknown landmarks, withheld
+locations, malformed model output, a worker crash after the model call, cancelled batches and
+oversized input. They are behaviour tests, not a scored adversarial evaluation set.
+
+Writing them found one gap: the guard on the model's free-text questions caught coordinates
+only with three or more decimals or a degree sign, so a pair like "40.0, -105.0" passed. It now
+also matches latitude/longitude pairs. None of the 469 cached model completions (105 questions)
+is affected.
+

@@ -29,8 +29,13 @@ from localitylens.release import ReleaseManifest
 
 MAX_ATTEMPTS: Final = 2  # one bounded retry on malformed output
 
-# Decimal degrees with 3+ decimals, or a degree sign: never legitimate in a model's question.
-_COORDINATE: Final = re.compile(r"-?\b\d{1,3}\.\d{3,}\b|\d\s*°")
+# Coordinate-like text: 3+ decimals ("40.255"), a degree sign, or a latitude/longitude pair with
+# any decimals ("40.0, -105.0"; found by the adversarial suite: it passed the first two).
+_COORDINATE: Final = re.compile(
+    r"-?\b\d{1,3}\.\d{3,}\b|\d\s*°"
+    r"|(?<![\d.])-?\d{1,2}\.\d+\s*[,;]\s*-?\d{2,3}\.\d+(?![\d.])"
+    r"|(?<![\d.])-?\d{1,2}\.\d+\s+-\d{2,3}\.\d+(?![\d.])"
+)
 
 
 # Version of the grammar schema derived from ExtractionOutput. 1: the plain Pydantic schema.
