@@ -8,6 +8,8 @@
   approval without a full region, and stores an identical retry only once.
 * **Label text is untrusted.** Templates autoescape everything; no route renders raw HTML from
   data.
+* **A JSON API** under ``/api`` (:mod:`localitylens.web.api`) serves the same store: batch
+  status, streamed progress, cancel/resume, records, decisions and export.
 * **Export** writes the approved Darwin Core CSV and the unresolved report with the same
   functions as ``localitylens review export``, to fixed paths, and serves only those two files.
 * **Forms work without JavaScript.** With HTMX a decision reports its error in place; without
@@ -32,6 +34,7 @@ from localitylens.domain.status import RecordStatus
 from localitylens.export.darwin_core import export_approved, export_unresolved
 from localitylens.geo.extents import ExtentStore
 from localitylens.review.store import Action, ReviewError, ReviewStore
+from localitylens.web.api import build_router
 from localitylens.web.views import queue_view, record_view
 
 HERE: Final = Path(__file__).parent
@@ -133,6 +136,15 @@ def create_app(config: ReviewConfig) -> FastAPI:
         )
 
     exports = {"occurrences.csv": config.export_out, "unresolved.csv": config.unresolved_out}
+    app.include_router(
+        build_router(
+            store,
+            reviewer=config.reviewer,
+            extent_lookup=config.extents.get if config.extents else None,
+            exports=exports,
+            same_origin=_same_origin,
+        )
+    )
 
     @app.get("/", response_class=HTMLResponse)
     def queue(request: Request, status: str | None = None) -> Response:

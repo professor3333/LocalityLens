@@ -263,8 +263,25 @@ review screen on http://127.0.0.1:8000/  db data/review/review.sqlite  reviewer:
   research, each with a rationale. Approve is offered only when a retrieved candidate exists.
 - **Export** from the queue writes the same Darwin Core CSV and unresolved report as
   `review export`, and offers both files for download.
+- **A JSON API** on the same server (`/api`): batch status and a Server-Sent Events progress
+  stream, cancel and resume, records, idempotent decisions (201 when created, 200 for a
+  retry) and export. The worker stays a separate process (`review work`), so the API never
+  waits on a model call. Real output while a worker ran:
+
+  ```console
+  $ curl -sN "http://127.0.0.1:8000/api/batches/b-eee06dc4d4ce9984/events"
+  event: progress
+  data: {"batch_id": "b-eee06dc4d4ce9984", "state": "active", …, "open": 50}
+  event: progress
+  data: {…, "jobs": {"done": 50}, "total": 50, "finished": 50, "open": 0}
+  event: end
+  $ curl -s -H "Content-Type: application/json" \
+        -d '{"action":"approve","rationale":"Paonia as proposed"}' \
+        http://127.0.0.1:8000/api/records/gbif:2573441754/decisions
+  {"decision_id":"f0fbd481…","created":true,"status":"approved","edits":{},…}
+  ```
 - **Local only:** it binds to 127.0.0.1 and refuses other hosts, label text is always escaped,
-  and cross-site form posts are refused. HTMX and Leaflet are vendored, pinned copies; only the
+  and cross-site posts are refused (API posts must also be JSON). HTMX and Leaflet are vendored, pinned copies; only the
   USGS map tiles need the network.
 
 - **Approval needs a full region.** A curator can choose another retrieved candidate or give
@@ -705,7 +722,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · candidate disambiguation · footprints · GeoJSON | 🚧 started |
-| **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · job-status API · OpenTelemetry export · Docker Compose | 🚧 started |
+| **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · OpenTelemetry export · Docker Compose | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
@@ -744,7 +761,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `review/store.py` · `review/importer.py` | Review store `review-3`: immutable originals, proposals, idempotent curator decisions, batches, jobs and traces, in SQLite (WAL); every status change through `domain/status.py`. Older stores are upgraded in place |
 | `telemetry/trace.py` | Trace schema `telemetry-1`: one trace per job attempt, stored with the step and emitted as a JSON line; no free-text fields |
 | `jobs/queue.py` · `jobs/worker.py` | Persistent job queue `jobs-1`: idempotent batch and job keys, leases (300 s), 3 attempts for transient failures, cancellation and resume, recovery of expired leases and orphaned records |
-| `web/` | Local review screen: FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
+| `web/` | Local review screen and JSON API (`api-1`): one FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
 | `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
