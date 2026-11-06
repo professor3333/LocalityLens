@@ -58,6 +58,7 @@ class ReviewConfig:
     export_out: Path = Path("data/review/export/occurrences.csv")
     unresolved_out: Path = Path("data/review/export/unresolved.csv")
     release: Path = Path("release/manifest.json")
+    index: Path = Path("data/derived/gazetteer.sqlite")  # for imports (gazetteer snapshot)
 
 
 def config_from_env(
@@ -149,6 +150,8 @@ def create_app(config: ReviewConfig) -> FastAPI:
             extent_lookup=config.extents.get if config.extents else None,
             exports=exports,
             same_origin=_same_origin,
+            index=config.index,
+            release=config.release,
         )
     )
 

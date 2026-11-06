@@ -7,6 +7,9 @@ export. Same store and rules as the review screen; local only, like it.
   CORS preflight, and no CORS is allowed) and pass the same-origin check as the forms.
 * **Decisions are idempotent.** The response says whether the decision was ``created`` (201)
   or already stored (200); a retried request never adds a decision or an export row.
+* **Imports** (``POST /api/imports``) take a CSV upload (multipart), map and screen it like
+  ``review import --csv``, return every refused row with its reason, and queue the accepted
+  records for the worker.
 * **Errors are explicit:** 400 for a refused decision (with the store's reason), 404 for an
   unknown record or batch, 415 for a non-JSON body, 403 for a cross-site request.
 """
@@ -15,21 +18,29 @@ from __future__ import annotations
 
 import asyncio
 import json
+import tempfile
 import time
 from collections.abc import AsyncIterator, Callable
-from typing import Any, Literal
+from pathlib import Path
+from typing import Annotated, Any, Literal
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, Form, HTTPException, Request, UploadFile
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, ConfigDict, Field
 
+from localitylens.baseline.rules import RULES_VERSION
 from localitylens.domain.status import RecordStatus
 from localitylens.export.darwin_core import export_approved, export_unresolved
+from localitylens.gazetteer.index import Gazetteer
+from localitylens.ingest.csv_import import MappingError, read_csv
 from localitylens.jobs.queue import Batch, JobQueue
+from localitylens.release import load_release
+from localitylens.review.importer import enqueue_records, extractor_version
 from localitylens.review.store import Action, ReviewError, ReviewStore
 from localitylens.web.views import summary_line
 
 API_VERSION = "api-1"
+MAX_UPLOAD_BYTES = 50 * 1024 * 1024
 OPEN_STATES = ("pending", "leased")
 
 
@@ -62,6 +73,8 @@ def build_router(
     extent_lookup: Callable[[int], Any] | None,
     exports: dict[str, Any],
     same_origin: Callable[[Request], bool],
+    index: Path | None = None,
+    release: Path | None = None,
 ) -> APIRouter:
     api = APIRouter(prefix="/api")
 
@@ -212,6 +225,73 @@ def build_router(
         payload = {"decision_id": d.decision_id, "created": d.created, "status": status,
                    "edits": d.edits, "final_proposal": d.final_proposal}  # fmt: skip
         return JSONResponse(payload, status_code=201 if d.created else 200)
+
+    # --- imports ------------------------------------------------------------------------------
+
+    def upload_guard(request: Request) -> None:
+        if not same_origin(request):
+            raise HTTPException(status_code=403, detail="cross-site requests are refused")
+        ctype = request.headers.get("content-type", "").split(";")[0].strip()
+        if ctype != "multipart/form-data":
+            raise HTTPException(status_code=415, detail="send multipart/form-data with a file")
+
+    @api.post("/imports", dependencies=[Depends(upload_guard)])
+    async def import_csv(
+        file: UploadFile,
+        system: Annotated[Literal["rules", "llm", "hybrid"], Form()] = "rules",
+        mapping: Annotated[str, Form()] = "{}",
+    ) -> JSONResponse:
+        """Upload a CSV of records: map, screen and queue them (the worker processes them).
+        Every refused row comes back with its reason."""
+        raw = await file.read(MAX_UPLOAD_BYTES + 1)
+        if len(raw) > MAX_UPLOAD_BYTES:
+            raise HTTPException(status_code=413, detail=f"over {MAX_UPLOAD_BYTES} bytes")
+        try:
+            columns = json.loads(mapping)
+            if not isinstance(columns, dict) or not all(
+                isinstance(k, str) and isinstance(v, str) for k, v in columns.items()
+            ):
+                raise ValueError("mapping must be a JSON object of column: term")
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=f"mapping: {exc}") from exc
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "upload.csv"
+            path.write_bytes(raw)
+            try:
+                parsed = read_csv(path, columns)
+            except MappingError as exc:
+                raise HTTPException(status_code=400, detail=str(exc)) from exc
+        result: dict[str, Any] = {
+            "snapshot_id": parsed.snapshot_id, "sha256": parsed.sha256, "rows": parsed.rows,
+            "accepted": len(parsed.records),
+            "refused": [{"row": r.row, "identifier": r.identifier, "reason": r.reason}
+                        for r in parsed.rejected],
+            "ignored_answer_columns": parsed.ignored_answer_columns,
+            "mapping": parsed.mapping, "batch_id": None,
+        }  # fmt: skip
+        if not parsed.records:
+            return JSONResponse(result, status_code=200)
+        if index is None or not index.is_file():
+            raise HTTPException(status_code=503, detail="no gazetteer index (gazetteer build)")
+        llm_version = None
+        release_id = "rules-only"
+        if system != "rules":
+            if release is None:
+                raise HTTPException(status_code=503, detail="no release manifest")
+            pinned = load_release(release)
+            llm_version, release_id = pinned.extractor_id, pinned.release
+        with Gazetteer(index) as gaz:
+            gazetteer_snapshot = gaz.snapshot_id
+        with store() as s:
+            batch_id = enqueue_records(
+                s, queue(s), [r for _, r in parsed.records], [rid for rid, _ in parsed.records],
+                snapshot_id=parsed.snapshot_id, system=system, release=release_id,
+                gazetteer_snapshot=gazetteer_snapshot,
+                extractor=extractor_version(system, RULES_VERSION, llm_version),
+            )  # fmt: skip
+            result["batch_id"] = batch_id
+            result["batch"] = _batch_json(queue(s).batch(batch_id))
+        return JSONResponse(result, status_code=201)
 
     # --- export -------------------------------------------------------------------------------
 

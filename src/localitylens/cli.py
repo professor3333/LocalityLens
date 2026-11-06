@@ -327,26 +327,62 @@ def _extents_check(args: argparse.Namespace) -> int:
     return 2 if check.problems else 0
 
 
+def _pair(text: str) -> tuple[str, str]:
+    column, sep, term = text.partition("=")
+    if not sep or not column.strip() or not term.strip():
+        raise argparse.ArgumentTypeError(f"--map expects column=term, got {text!r}")
+    return column.strip(), term.strip()
+
+
 def _review_import(args: argparse.Namespace) -> int:
+    from collections import Counter
+
     from localitylens.evaluation.audit import load_sample
     from localitylens.gazetteer.index import Gazetteer
     from localitylens.review.importer import import_records
     from localitylens.review.store import ReviewStore
 
-    if _is_locked(Path(args.sample)):
+    source = Path(args.sample or args.csv)
+    if _is_locked(source):
         print("refused: the locked test split is never imported for review", file=sys.stderr)
         return 2
-    sample = load_sample(Path(args.sample))
+    record_ids: list[str] | None = None
+    if args.csv:
+        from localitylens.ingest.csv_import import MappingError, read_csv, write_rejects
+
+        try:
+            mapping = dict(_pair(m) for m in args.map or [])
+            parsed = read_csv(source, mapping, encoding=args.encoding)
+        except (MappingError, argparse.ArgumentTypeError) as exc:
+            print(f"refused: {source}: {exc}", file=sys.stderr)
+            return 2
+        records = [r for _, r in parsed.records]
+        record_ids = [rid for rid, _ in parsed.records]
+        snapshot_id = parsed.snapshot_id
+        print(f"{source}: {parsed.rows} rows, {len(records)} accepted, "
+              f"{len(parsed.rejected)} refused (snapshot {snapshot_id})")  # fmt: skip
+        for reason, n in sorted(Counter(r.reason for r in parsed.rejected).items()):
+            print(f"  refused  {reason}: {n}")
+        if parsed.ignored_answer_columns:
+            print("  never read (answer-bearing): " + ", ".join(parsed.ignored_answer_columns))
+        if parsed.rejected:
+            rejects = Path(args.rejects or f"data/review/rejects-{snapshot_id}.csv")
+            write_rejects(parsed, rejects)
+            print(f"  refusals written to {rejects}")
+    else:
+        sample = load_sample(source)
+        records = [i.record for i in sample.items]
+        snapshot_id = sample.snapshot_id
     extents = _load_extents(args)
     _log_json(args)
     with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
         rules, llm, release_id = _extractors(args, gaz, args.system)
         counts = import_records(
-            store, [i.record for i in sample.items], sample.snapshot_id, gaz,
+            store, records, snapshot_id, gaz,
             system=args.system, rules=rules, llm=llm, release=release_id, extents=extents,
-            process_now=not args.no_process,
+            process_now=not args.no_process, record_ids=record_ids,
         )  # fmt: skip
-    print(f"imported {len(sample.items)} records ({args.system})")
+    print(f"imported {len(records)} records ({args.system})")
     if args.no_process:
         print("  queued; process with `localitylens review work`")
     for status, n in sorted(counts.items()):
@@ -576,7 +612,7 @@ def _review_serve(args: argparse.Namespace) -> int:
     config = config_from_env(
         Path(args.db), _load_extents(args), Path(args.out), Path(args.unresolved)
     )
-    config = dataclasses.replace(config, release=Path(args.release))
+    config = dataclasses.replace(config, release=Path(args.release), index=Path(args.index))
     who = config.reviewer or "asked on each decision (set LOCALITYLENS_REVIEWER to fix it)"
     print(f"review screen on http://{args.host}:{args.port}/  db {args.db}  reviewer: {who}")
     serve(config, host=args.host, port=args.port)
@@ -1095,7 +1131,17 @@ def main(argv: list[str] | None = None) -> int:
     rv_sub = rv.add_subparsers(dest="review_command", required=True)
     db_help = "review database (SQLite)"
     ri = rv_sub.add_parser("import", help="import a sample and run the pipeline on queued records")
-    ri.add_argument("--sample", required=True)
+    src = ri.add_mutually_exclusive_group(required=True)
+    src.add_argument("--sample", help="a project sample (JSON)")
+    src.add_argument("--csv", help="your own records: CSV with Darwin Core columns")
+    ri.add_argument(
+        "--map",
+        action="append",
+        metavar="COLUMN=TERM",
+        help="map a CSV column onto a Darwin Core term (repeatable)",
+    )
+    ri.add_argument("--rejects", help="where to write the refused rows (CSV)")
+    ri.add_argument("--encoding", default="utf-8-sig", help="CSV text encoding")
     ri.add_argument("--system", choices=["rules", "llm", "hybrid"], default="hybrid")
     ri.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     ri.add_argument("--index", default="data/derived/gazetteer.sqlite")

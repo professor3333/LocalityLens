@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import time
 from collections import Counter
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 
 from localitylens.extract.validate import VALIDATION_VERSION, Severity
 from localitylens.gazetteer.index import Gazetteer
@@ -41,6 +41,7 @@ def import_records(
     clock: Clock = time.time,
     owner: str | None = None,
     process_now: bool = True,
+    record_ids: Sequence[str] | None = None,
 ) -> Counter[str]:
     """Add the records, queue a job for each still-``queued`` one, and (unless ``process_now``
     is False) work the batch through. Returns the count per new status of the records that
@@ -49,16 +50,47 @@ def import_records(
         raise ValueError(f"unknown system {system!r}")
     if system != "rules" and llm is None:
         raise ValueError(f"system {system!r} needs an LLM extractor")
-    ids = [store.add_record(r, snapshot_id) for r in records]  # originals first, once each
+    records = list(records)
+    if record_ids is not None and len(record_ids) != len(records):
+        raise ValueError("record_ids must match records one for one")
+    given = list(record_ids) if record_ids is not None else [None] * len(records)
     queue = JobQueue(store, clock=clock)
-    batch_id = queue.enqueue(
-        ids, system=system, release=release, snapshot_id=snapshot_id,
-        gazetteer=gazetteer.snapshot_id, extractor=_version(system, rules, llm),
+    batch_id = enqueue_records(
+        store, queue, records, given, snapshot_id=snapshot_id, system=system, release=release,
+        gazetteer_snapshot=gazetteer.snapshot_id, extractor=_version(system, rules, llm),
     )  # fmt: skip
     if not process_now:
         return Counter()
     return work_batch(store, queue, batch_id, gazetteer, rules=rules, llm=llm, extents=extents,
                       owner=owner)  # fmt: skip
+
+
+def enqueue_records(
+    store: ReviewStore,
+    queue: JobQueue,
+    records: Sequence[SpecimenRecord],
+    record_ids: Sequence[str | None],
+    *,
+    snapshot_id: str,
+    system: str,
+    release: str,
+    gazetteer_snapshot: str,
+    extractor: str,
+) -> str:
+    """Store the originals (once each) and queue a job for each still-``queued`` one. Returns
+    the batch ID; the worker (``review work``) processes it."""
+    ids = [
+        store.add_record(r, snapshot_id, rid) for r, rid in zip(records, record_ids, strict=True)
+    ]
+    return queue.enqueue(ids, system=system, release=release, snapshot_id=snapshot_id,
+                         gazetteer=gazetteer_snapshot, extractor=extractor)  # fmt: skip
+
+
+def extractor_version(system: str, rules_version: str, llm_version: str | None) -> str:
+    """The batch's extractor label, without constructing any extractor."""
+    if system == "rules" or llm_version is None:
+        return rules_version
+    return llm_version if system == "llm" else f"hybrid-1({rules_version}+{llm_version})"
 
 
 def work_batch(
@@ -196,6 +228,4 @@ def _run(
 
 
 def _version(system: str, rules: Extractor, llm: Extractor | None) -> str:
-    if system == "rules" or llm is None:
-        return rules.version
-    return llm.version if system == "llm" else f"hybrid-1({rules.version}+{llm.version})"
+    return extractor_version(system, rules.version, llm.version if llm is not None else None)

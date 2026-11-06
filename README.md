@@ -195,6 +195,32 @@ the label's "Five Springs" by a fuzzy match, which a curator should confirm, and
 is an offset from Boulder ("7 miles south of Boulder") where the annotation names a more
 specific place (Rocky Flats): a full region, and a wrong one.
 
+**Import your own records** from a CSV with Darwin Core columns. Headers that are Darwin Core
+terms map automatically (`dwc:` prefix and case don't matter); `--map COLUMN=TERM` maps the
+rest. Required: an identifier (`occurrenceID`, `catalogNumber` or `gbifID`), `locality` and/or
+`verbatimLocality` (the label as written is preferred and stored unchanged), `stateProvince`,
+`county`, and `country` or `countryCode`. Coordinates and other answer-bearing columns are
+never read. Every row is accepted or refused with a reason (no identifier, a repeated one, no
+text, text over 4,000 characters, outside the scope, or withheld/generalized by the publisher),
+and refusals go to a report. A test file of five audit records, one Utah record and one with
+withheld information:
+
+```console
+$ uv run localitylens review import --csv mine.csv --system rules --extents data/reviewed/extents.csv
+mine.csv: 7 rows, 5 accepted, 2 refused (snapshot csv-2ddf0c99d631)
+  refused  screened out: outside_colorado: 1
+  refused  screened out: sensitive_withheld: 1
+  never read (answer-bearing): decimalLatitude
+  refusals written to data/review/rejects-csv-2ddf0c99d631.csv
+imported 5 records (rules)
+  needs_information  4
+  ready_for_review   1
+```
+
+The snapshot ID is a hash of the file, so every record points back to it. The same import
+is `POST /api/imports` (a multipart upload): it returns each refused row with its reason and
+queues the accepted records for the worker.
+
 **Imports run through a persistent job queue** in the same SQLite file. A worker leases one
 record at a time; if it crashes, the lease expires and the record goes back to `queued`, so an
 interrupted import is resumed by `review work`. A model-server outage is retried (3 attempts);
@@ -798,10 +824,11 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
 | `review/store.py` · `review/importer.py` | Review store `review-3`: immutable originals, proposals, idempotent curator decisions, batches, jobs and traces, in SQLite (WAL); every status change through `domain/status.py`. Older stores are upgraded in place |
 | `telemetry/trace.py` · `telemetry/otel.py` | Trace schema `telemetry-1`: one trace per job attempt, stored with the step, emitted as a JSON line and (opt-in) as an OpenTelemetry span with stage children; no free-text fields |
+| `ingest/csv_import.py` | CSV import `csv-1`: Darwin Core column mapping, the same screening as the GBIF snapshot (scope, sensitive records, placeholders), explicit refusals with reasons, answer-bearing columns never read |
 | `jobs/queue.py` · `jobs/worker.py` | Persistent job queue `jobs-1`: idempotent batch and job keys, leases (300 s), 3 attempts for transient failures, cancellation and resume, recovery of expired leases and orphaned records |
 | `web/` | Local review screen and JSON API (`api-1`): one FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` (`--sample` or `--csv`) · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 

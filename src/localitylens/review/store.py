@@ -276,9 +276,12 @@ class ReviewStore:
 
     # --- records ------------------------------------------------------------------------------
 
-    def add_record(self, record: SpecimenRecord, snapshot_id: str) -> str:
-        """Store an original record once; importing it again changes nothing."""
-        record_id = f"gbif:{record.gbif_id}"
+    def add_record(
+        self, record: SpecimenRecord, snapshot_id: str, record_id: str | None = None
+    ) -> str:
+        """Store an original record once; importing it again changes nothing. The ID is
+        ``gbif:<gbifID>`` unless given (CSV imports: :func:`ingest.csv_import.record_id`)."""
+        record_id = record_id or f"gbif:{record.gbif_id}"
         self._con.execute(
             "INSERT OR IGNORE INTO record VALUES (?,?,?,?,?,?,?,?,?,?,?)",
             (record_id, record.gbif_id, record.occurrence_id, record.catalog_number,

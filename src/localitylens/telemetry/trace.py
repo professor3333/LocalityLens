@@ -71,7 +71,7 @@ class RecordTrace(BaseModel):
     at: str  # UTC, ISO 8601
     job_id: str = Field(pattern=r"^[0-9a-f]{16}$")
     batch_id: str = Field(pattern=r"^b-[0-9a-f]{16}$")
-    record_id: str = Field(pattern=r"^gbif:[0-9]+$")
+    record_id: str = Field(pattern=r"^(gbif:[0-9]+|occ:[A-Za-z0-9._\-]{1,64})$")
     attempt: int = Field(ge=1)
     input_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     system: str = Field(pattern=_CODE)
