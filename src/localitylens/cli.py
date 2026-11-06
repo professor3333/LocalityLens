@@ -17,13 +17,34 @@ _EXTENTS_HELP: Final = "reviewed-extent store (CSV) to take feature extents from
 _WITH_EXTENTS_HELP: Final = "use the -extents reports (runs made with --extents)"
 
 
-def _fetch_gnis(args: argparse.Namespace) -> int:
-    from localitylens.data.gnis_fetch import fetch_gnis
+def _pinned_gnis(release: str) -> str:
+    """The gazetteer snapshot the release manifest pins."""
+    from localitylens.release import load_release
 
-    path, manifest = fetch_gnis(Path(args.raw_root), Path(args.manifest_dir))
-    print(f"{manifest.snapshot_id} -> {path}")
-    for f in manifest.files:
-        print(f"  {f.name}  {f.size_bytes:>11,} bytes  sha256={f.sha256}")
+    return load_release(Path(release)).gazetteer_snapshot
+
+
+def _fetch_gnis(args: argparse.Namespace) -> int:
+    from localitylens.data.gnis_fetch import fetch_gnis, fetch_pinned_gnis
+    from localitylens.data.manifest import ChecksumMismatchError
+
+    if args.latest:
+        path, manifest = fetch_gnis(Path(args.raw_root), Path(args.manifest_dir))
+        print(f"{manifest.snapshot_id} (current USGS files) -> {path}")
+        print(f"  new manifest written to {args.manifest_dir}/{manifest.snapshot_id}.json")
+        sources = ["USGS"] * len(manifest.files)
+    else:
+        snapshot_id = args.snapshot or _pinned_gnis(args.release)
+        try:
+            path, manifest, sources = fetch_pinned_gnis(
+                snapshot_id, Path(args.raw_root), Path(args.manifest_dir)
+            )
+        except (FileNotFoundError, ChecksumMismatchError) as exc:
+            print(f"refused: {exc}", file=sys.stderr)
+            return 2
+        print(f"{manifest.snapshot_id} (pinned) -> {path}")
+    for f, source in zip(manifest.files, sources, strict=True):
+        print(f"  {f.name}  {f.size_bytes:>11,} bytes  sha256={f.sha256[:16]}…  from {source}")
     return 0
 
 
@@ -269,6 +290,21 @@ def _load_extents(args: argparse.Namespace) -> ExtentStore | None:
         return load_store(Path(args.extents), gaz)
 
 
+def _extents_or_refuse(args: argparse.Namespace) -> Any:
+    """The extent store, or False (after saying why) when it fails its check against the
+    gazetteer: processing without the reviewed extents would silently change the proposals."""
+    from localitylens.geo.extents import ExtentStoreError
+
+    try:
+        return _load_extents(args)
+    except ExtentStoreError as exc:
+        print(f"refused: {exc}"[:600], file=sys.stderr)
+        print("  the extent store is pinned to a GNIS snapshot: build the gazetteer from it "
+              "(`localitylens data fetch-gnis` then `localitylens gazetteer build`)",
+              file=sys.stderr)  # fmt: skip
+        return False
+
+
 _LOCKED: Final = Path("eval/benchmark/test")
 
 
@@ -373,7 +409,9 @@ def _review_import(args: argparse.Namespace) -> int:
         sample = load_sample(source)
         records = [i.record for i in sample.items]
         snapshot_id = sample.snapshot_id
-    extents = _load_extents(args)
+    extents = _extents_or_refuse(args)
+    if extents is False:
+        return 2
     _log_json(args)
     with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
         rules, llm, release_id = _extractors(args, gaz, args.system)
@@ -432,7 +470,9 @@ def _review_work(args: argparse.Namespace) -> int:
     from localitylens.jobs.queue import JobQueue
     from localitylens.review.store import ReviewStore
 
-    extents = _load_extents(args)
+    extents = _extents_or_refuse(args)
+    if extents is False:
+        return 2
     _log_json(args)
     stop = {"now": False}
     if args.watch:
@@ -607,11 +647,17 @@ def _review_export(args: argparse.Namespace) -> int:
 def _review_serve(args: argparse.Namespace) -> int:
     import dataclasses
 
+    from localitylens.geo.extents import ExtentStoreError
     from localitylens.web.app import config_from_env, serve
 
-    config = config_from_env(
-        Path(args.db), _load_extents(args), Path(args.out), Path(args.unresolved)
-    )
+    problem = None
+    try:
+        extents = _load_extents(args)
+    except ExtentStoreError as exc:  # e.g. a gazetteer built from another snapshot
+        extents, problem = None, str(exc)
+        print(f"warning: extent store not loaded, /readyz reports it: {problem[:200]}")
+    config = config_from_env(Path(args.db), extents, Path(args.out), Path(args.unresolved))
+    config = dataclasses.replace(config, extents_problem=problem)
     config = dataclasses.replace(config, release=Path(args.release), index=Path(args.index))
     who = config.reviewer or "asked on each decision (set LOCALITYLENS_REVIEWER to fix it)"
     print(f"review screen on http://{args.host}:{args.port}/  db {args.db}  reviewer: {who}")
@@ -737,7 +783,16 @@ def _build(args: argparse.Namespace) -> int:
     from localitylens.data.manifest import load_manifest
     from localitylens.gazetteer.index import build_index
 
-    snapshot = Path(args.snapshot)
+    if args.snapshot:
+        snapshot = Path(args.snapshot)
+    else:
+        from localitylens.data.gnis_fetch import snapshot_directory
+
+        snapshot = snapshot_directory(Path("data/raw/gnis"), _pinned_gnis(args.release))
+    if not (snapshot / "manifest.json").is_file():
+        print(f"refused: no GNIS snapshot at {snapshot} (run `localitylens data fetch-gnis`)",
+              file=sys.stderr)  # fmt: skip
+        return 2
     manifest = load_manifest(snapshot / "manifest.json")
     build_index(snapshot, manifest, Path(args.out))
     print(f"built {args.out} from {manifest.snapshot_id}")
@@ -954,9 +1009,16 @@ def main(argv: list[str] | None = None) -> int:
     data = sub.add_parser("data", help="source snapshots").add_subparsers(
         dest="data_command", required=True
     )
-    fg = data.add_parser("fetch-gnis", help="download a GNIS Colorado snapshot + manifest")
+    fg = data.add_parser(
+        "fetch-gnis", help="download the pinned GNIS Colorado snapshot (or --latest)"
+    )
     fg.add_argument("--raw-root", default="data/raw/gnis")
     fg.add_argument("--manifest-dir", default="data/manifests")
+    fg.add_argument("--snapshot", help="a committed snapshot ID (default: the release's pin)")
+    fg.add_argument(
+        "--latest", action="store_true", help="the current USGS files instead, with a new manifest"
+    )
+    fg.add_argument("--release", default="release/manifest.json")
     fg.set_defaults(func=_fetch_gnis)
     fb = data.add_parser(
         "fetch-gbif", help="request + download the CU Herbarium GBIF snapshot (DOI) + manifest"
@@ -1080,7 +1142,8 @@ def main(argv: list[str] | None = None) -> int:
         dest="gaz_command", required=True
     )
     b = gaz.add_parser("build", help="build the SQLite index from a verified snapshot")
-    b.add_argument("--snapshot", required=True, help="data/raw/gnis/<publication date>")
+    b.add_argument("--snapshot", help="data/raw/gnis/<date> (default: the release's pinned one)")
+    b.add_argument("--release", default="release/manifest.json")
     b.add_argument("--out", default="data/derived/gazetteer.sqlite")
     b.set_defaults(func=_build)
 

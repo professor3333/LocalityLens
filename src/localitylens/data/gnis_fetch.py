@@ -1,6 +1,12 @@
-"""Download a GNIS snapshot (Colorado Domestic Names + national All Names) and write its manifest.
+"""GNIS snapshots: the pinned one (default) or the current USGS files (``--latest``).
 
-Run during ingestion only; the application never contacts USGS at runtime.
+USGS serves only its current GNIS files, so the snapshot a release is built on stops being
+downloadable when USGS republishes. :func:`fetch_pinned_gnis` therefore downloads the pinned
+snapshot from this project's GitHub release ``data-<snapshot id>`` (the original files,
+unchanged), falling back to the USGS URLs in the manifest, and verifies every file against the
+committed manifest in ``data/manifests``. :func:`fetch_gnis` downloads the current USGS files
+and writes a new manifest. Run during ingestion only; the application never contacts USGS or
+GitHub at runtime.
 """
 
 from __future__ import annotations
@@ -19,6 +25,7 @@ from localitylens.data.manifest import (
     ChecksumMismatchError,
     SnapshotFile,
     SnapshotManifest,
+    load_manifest,
     sha256_file,
     verify_snapshot,
     write_manifest,
@@ -39,6 +46,7 @@ USAGE_CONSTRAINTS: Final = (
 )
 _PUBDATE_RE: Final = re.compile(r"<pubdate>(\d{8})</pubdate>")
 _USER_AGENT: Final = "LocalityLens-ingest/0.1 (+https://github.com/professor3333/LocalityLens)"
+MIRROR: Final = "https://github.com/professor3333/LocalityLens/releases/download"
 
 
 def _download(url: str, dest: Path, attempts: int = 4) -> str | None:
@@ -131,6 +139,59 @@ def fetch_gnis(raw_root: Path, manifest_dir: Path) -> tuple[Path, SnapshotManife
         incoming.rename(final)
         write_manifest(manifest_dir / f"{snapshot_id}.json", manifest)
         return final, manifest
+    finally:
+        if incoming.exists():
+            shutil.rmtree(incoming)
+
+
+def snapshot_directory(raw_root: Path, snapshot_id: str) -> Path:
+    """``raw_root/<publication date>`` for a ``gnis-co-<date>`` snapshot ID."""
+    if not snapshot_id.startswith("gnis-co-"):
+        raise ValueError(f"not a GNIS snapshot ID: {snapshot_id!r}")
+    return raw_root / snapshot_id.removeprefix("gnis-co-")
+
+
+def fetch_pinned_gnis(
+    snapshot_id: str, raw_root: Path, manifest_dir: Path
+) -> tuple[Path, SnapshotManifest, list[str]]:
+    """Download the pinned snapshot named by its committed manifest and verify it.
+
+    Returns (directory, manifest, the source of each file). An existing, verified copy is
+    reused. A file that matches neither the mirror nor USGS byte for byte is never kept.
+    """
+    manifest_path = manifest_dir / f"{snapshot_id}.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"no committed manifest {manifest_path}")
+    manifest = load_manifest(manifest_path)
+    final = snapshot_directory(raw_root, snapshot_id)
+    if (final / "manifest.json").is_file():
+        verify_snapshot(final, manifest)  # raises if a local copy was altered
+        return final, manifest, ["already present"] * len(manifest.files)
+    if final.exists():
+        raise ChecksumMismatchError(f"{final} exists without a manifest; refusing to touch it")
+    incoming = raw_root / f".incoming-{uuid.uuid4().hex}"
+    incoming.mkdir(parents=True)
+    sources: list[str] = []
+    try:
+        for f in manifest.files:
+            dest = incoming / f.name
+            for url in (f"{MIRROR}/data-{snapshot_id}/{f.name}", f.url):
+                try:
+                    _download(url, dest)
+                except OSError:
+                    continue
+                if dest.stat().st_size == f.size_bytes and sha256_file(dest) == f.sha256:
+                    sources.append(url)
+                    break
+                dest.unlink()  # e.g. USGS has republished: never keep a different file
+            else:
+                raise ChecksumMismatchError(
+                    f"{f.name}: no source matches the manifest's SHA-256 {f.sha256[:12]}…"
+                )
+        verify_snapshot(incoming, manifest)
+        write_manifest(incoming / "manifest.json", manifest)
+        incoming.rename(final)
+        return final, manifest, sources
     finally:
         if incoming.exists():
             shutil.rmtree(incoming)

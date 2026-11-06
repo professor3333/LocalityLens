@@ -76,11 +76,19 @@ correct by construction, and an invented quote fails validation.
 ```bash
 git clone https://github.com/professor3333/LocalityLens.git && cd LocalityLens
 uv sync
-uv run localitylens data fetch-gnis                        # ~23 MB from USGS, checksummed
-uv run localitylens gazetteer build --snapshot data/raw/gnis/2026-09-29
+uv run localitylens data fetch-gnis                        # the pinned GNIS snapshot, ~23 MB, checksummed
+uv run localitylens gazetteer build                        # SQLite index from that snapshot
 # optional, needs a free GBIF account (GBIF_USER, GBIF_PWD, GBIF_EMAIL in .env):
 uv run localitylens data fetch-gbif                        # ~165 MB Darwin Core Archive + DOI
 ```
+
+**The GNIS snapshot is pinned.** USGS serves only its current files, so `data fetch-gnis`
+downloads the exact snapshot the release is built on (`gnis-co-2026-09-29`) from this
+repository's [data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gnis-co-2026-09-29)
+(the original files, unchanged; USGS public domain), falls back to USGS, and checks every file
+against the committed manifest. The reviewed extents and all results refer to this snapshot.
+`data fetch-gnis --latest` gets the current USGS files instead, as a new snapshot with its own
+manifest.
 
 **Interpret a whole label** with the rules baseline: extraction, validation and retrieval in one
 command. Every value carries its `[start, end)` span in the original text:
@@ -97,8 +105,8 @@ direction   NE [25:27]
 admin       county "Larimer Co." · state "Colo."
 missing     none
 retrieval   candidates_found (county context: Larimer Co., from text)
-  1.  204979  Longs Peak         Summit   Boulder   exact_official  type=y county=n
-  2.  186722  Youngs Peak        Summit   Delta     fuzzy_official  type=y county=n
+  1.  204979  Longs Peak                 Summit          Boulder      exact_official  type=y county=n
+  2.  186722  Youngs Peak                Summit          Delta        fuzzy_official  type=y county=n
 ```
 
 **Add a point-radius proposal** with `--propose`. Every uncertainty component is listed with
@@ -335,8 +343,8 @@ direction   E [4:5]
 missing     distance_unit
 question    Does 'm' mean miles or metres?
 retrieval   candidates_found
-  1.  177636  Estes Park         Flat              Larimer   exact_official
-  2.  204674  Estes Park         Populated Place   Larimer   exact_official
+  1.  177636  Estes Park                 Flat            Larimer      exact_official  
+  2.  204674  Estes Park                 Populated Place Larimer      exact_official  
 ```
 
 **Route descriptions are flagged, not flattened** into a straight-line offset:
@@ -427,8 +435,8 @@ the match**:
 
 ```console
 $ uv run localitylens gazetteer search "Long's Pk." --county "Larimer Co." --limit 2
-  204979  Longs Peak      Summit  Boulder      exact_official  sim=100.0  county=n
-  186722  Youngs Peak     Summit  Delta        fuzzy_official  sim= 85.7  county=n
+  204979  Longs Peak                       Summit           Boulder      exact_official  sim=100.0 county=n state=y  (40.25486, -105.61624)
+  186722  Youngs Peak                      Summit           Delta        fuzzy_official  sim= 85.7 county=n state=y  (38.71133, -107.60635)
 ```
 
 **A former name on an old label.** Mount Evans was renamed Mount Blue Sky in 2023, and a
@@ -437,8 +445,8 @@ equally with current ones, and context decides:
 
 ```console
 $ uv run localitylens gazetteer search "Mt. Evans" --county "Clear Creek" --limit 2
-  204716  Mount Blue Sky  Summit  Clear Creek  exact_variant   sim=100.0  county=y
-  179941  Mount Evans     Summit  Park         exact_official  sim=100.0  county=n
+  204716  Mount Blue Sky                   Summit           Clear Creek  exact_variant   sim=100.0 county=y state=y  (39.58812, -105.64373)
+  179941  Mount Evans                      Summit           Park         exact_official  sim=100.0 county=n state=y  (39.25679, -106.18155)
 ```
 
 **A place the gazetteer doesn't hold** is reported as absent. It is never guessed:
@@ -458,8 +466,8 @@ llama-server for LLM and hybrid imports. Everything listens on the host's 127.0.
 
 ```bash
 docker compose build
-docker compose run --rm review data fetch-gnis                    # once: GNIS snapshot
-docker compose run --rm review gazetteer build --snapshot data/raw/gnis/2026-09-29
+docker compose run --rm review data fetch-gnis                    # once: the pinned GNIS snapshot
+docker compose run --rm review gazetteer build
 docker compose up -d                                              # screen + worker
 docker compose run --rm review review import --sample eval/audit/audit-50.json --system rules \
     --db /app/data/review/review.sqlite --index /app/data/derived/gazetteer.sqlite \

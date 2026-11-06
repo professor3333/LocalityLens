@@ -50,9 +50,11 @@ def _mismatches(release: ReleaseManifest) -> list[str]:
     return [f"{k}: manifest {a!r}, code {b!r}" for k, (a, b) in checks.items() if a != b]
 
 
-def report(db: Path, release_path: Path) -> tuple[bool, dict[str, Any]]:
+def report(
+    db: Path, release_path: Path, extra_problems: list[str] | None = None
+) -> tuple[bool, dict[str, Any]]:
     """(ready, report). Never raises for a missing or broken input: it says what is wrong."""
-    problems: list[str] = []
+    problems: list[str] = list(extra_problems or [])
     out: dict[str, Any] = {
         "package": _package_version(),
         "store_schema": STORE_SCHEMA_VERSION,

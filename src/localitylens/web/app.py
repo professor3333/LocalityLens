@@ -59,6 +59,7 @@ class ReviewConfig:
     unresolved_out: Path = Path("data/review/export/unresolved.csv")
     release: Path = Path("release/manifest.json")
     index: Path = Path("data/derived/gazetteer.sqlite")  # for imports (gazetteer snapshot)
+    extents_problem: str | None = None  # an extent store that failed its check (not ready)
 
 
 def config_from_env(
@@ -157,12 +158,12 @@ def create_app(config: ReviewConfig) -> FastAPI:
 
     @app.get("/readyz")
     def readyz() -> JSONResponse:
-        ready, payload = readiness_report(config.db, config.release)
+        ready, payload = readiness_report(config.db, config.release, _extra(config))
         return JSONResponse(payload, status_code=200 if ready else 503)
 
     @app.get("/api/version")
     def version() -> JSONResponse:
-        return JSONResponse(readiness_report(config.db, config.release)[1])
+        return JSONResponse(readiness_report(config.db, config.release, _extra(config))[1])
 
     @app.get("/", response_class=HTMLResponse)
     def queue(request: Request, status: str | None = None) -> Response:
@@ -251,6 +252,10 @@ def create_app(config: ReviewConfig) -> FastAPI:
         return RedirectResponse(target, status_code=303)
 
     return app
+
+
+def _extra(config: ReviewConfig) -> list[str]:
+    return [f"extent store: {config.extents_problem}"] if config.extents_problem else []
 
 
 def serve(config: ReviewConfig, host: str = "127.0.0.1", port: int = 8000) -> None:
