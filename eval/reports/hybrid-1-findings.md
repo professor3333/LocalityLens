@@ -77,3 +77,7 @@ Declared in [`declaration-2.json`](../benchmark/declaration-2.json) and scored o
 **25 of 56** against the rules' 19, **+10.7 points** (CI +3.6 to +19.6), 6 gained and none
 lost. That clears the +10 point target by one record, about twice the gain expected above
 ([result](test-release-2.md)).
+
+Release 3 ([`declaration-3.json`](../benchmark/declaration-3.json)) reran both components with
+the current rules (rules-6): hybrid-1 **28 of 56** against rules-6's 22, again **+10.7 points**
+(CI +3.6 to +19.6), 6 gained and none lost ([result](test-release-3.md)).

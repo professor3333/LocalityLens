@@ -1,0 +1,10 @@
+  warning T040 qualifiers           'just' is not a known qualifier
+  warning T047 qualifiers           'just' is not a known qualifier
+  warning T083 qualifiers           'just' is not a known qualifier
+  warning T086 qualifiers           'just' is not a known qualifier
+  warning T097 qualifiers           'just' is not a known qualifier
+critical_exact_match         rules=62/120  llm=50/120  hybrid=63/120
+reference_top1               rules=24/56  llm=27/56  hybrid=32/56
+correct_proposal_candidates  rules=22/56  llm=18/56  hybrid=28/56
+  report  eval/benchmark/test/reports/release-3/test-score-hybrid-1.md
+  data    eval/benchmark/test/reports/release-3/test-score-hybrid-1.json

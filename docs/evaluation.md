@@ -63,12 +63,17 @@ interpretation and the reference, not the size of the radius.
    - Only totals are published, whatever they show.
    - Any later change is a new release with a new declaration.
 
-**Decision rule** (both declarations):
+**Decision rule** (all three declarations):
 - **yes:** the difference is at least +10 points **and** the interval's lower bound is above 0
 - **no:** the interval's upper bound is below +10
 - **not shown:** anything else
 
 ## Results so far
+
+**Locked test, release 3** (current rules `rules-6`, validation 3; 56 answerable): rules 22,
+LLM v2 alone 18, **hybrid-1 28**. hybrid-1 − rules: +10.7 points (CI +3.6 to +19.6, p = 0.031),
+6 gained and 0 lost: **yes**, again by one record
+([release 3](../eval/reports/test-release-3.md)).
 
 Correct proposal candidates, against the rules baseline `rules-1`:
 
@@ -110,6 +115,7 @@ labels whose wording repeats a read or reserved group under another county (excl
 
 **Full reports:**
 - [release 1](../eval/reports/test-release-1.md) · [release 2](../eval/reports/test-release-2.md)
+  · [release 3](../eval/reports/test-release-3.md)
   · [validation](../eval/reports/validation-findings.md)
 - [audit](../eval/reports/audit-50-score.md) · [dev-1](../eval/reports/dev-1-score.md)
 - [hybrid selection](../eval/reports/hybrid-1-findings.md) ·

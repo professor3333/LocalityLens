@@ -1,0 +1,529 @@
+{
+  "declaration": "eval/benchmark/declaration-3.json",
+  "run": {
+    "code_commit": "06673944066b7fc10c297625b05c31dcc7f41705",
+    "code_note": "8542e0f plus the declaration file only; source code identical to the declared commit",
+    "started": "2026-11-06T15:16:41Z",
+    "finished": "2026-11-06T15:38:25Z",
+    "llm_cache": "off (--no-cache)",
+    "extents": "none"
+  },
+  "note": "Aggregates only. Per-record outputs are under eval/benchmark/test/reports/release-3/ and are never read during development.",
+  "meta": {
+    "rules": "rules-6",
+    "llm": "llm-x2g2-qwen3.5-4b-q4km",
+    "hybrid": "hybrid-1",
+    "specimens": "gbif-cu-2026-11-01"
+  },
+  "records": 120,
+  "categories": {
+    "answerable": 56,
+    "reference_absent": 48,
+    "unsupported": 16
+  },
+  "annotated_types": {
+    "named_feature": 70,
+    "distance_and_direction": 17,
+    "direction_only": 15,
+    "route_relative": 8,
+    "between_features": 6,
+    "distance_only": 2,
+    "itinerary": 1,
+    "admin_only": 1
+  },
+  "systems": {
+    "rules": {
+      "relation_accuracy": {
+        "hits": 75,
+        "n": 120,
+        "rate": 0.625
+      },
+      "valid_extraction": {
+        "hits": 120,
+        "n": 120,
+        "rate": 1.0
+      },
+      "critical_exact_match": {
+        "hits": 62,
+        "n": 120,
+        "rate": 0.517
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 89,
+          "n": 120,
+          "rate": 0.742
+        },
+        "unit": {
+          "hits": 93,
+          "n": 120,
+          "rate": 0.775
+        },
+        "direction": {
+          "hits": 84,
+          "n": 120,
+          "rate": 0.7
+        },
+        "qualifiers": {
+          "hits": 106,
+          "n": 120,
+          "rate": 0.883
+        }
+      },
+      "reference_top1": {
+        "hits": 24,
+        "n": 56,
+        "rate": 0.429
+      },
+      "reference_recall5": {
+        "hits": 25,
+        "n": 56,
+        "rate": 0.446
+      },
+      "correct_proposal_candidates": {
+        "hits": 22,
+        "n": 56,
+        "rate": 0.393
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 7,
+        "n": 16,
+        "rate": 0.438
+      },
+      "absent_reported_absent": {
+        "hits": 17,
+        "n": 48,
+        "rate": 0.354
+      },
+      "false_no_locality": 0,
+      "mean_corrections": 1.54
+    },
+    "llm": {
+      "relation_accuracy": {
+        "hits": 67,
+        "n": 120,
+        "rate": 0.558
+      },
+      "valid_extraction": {
+        "hits": 107,
+        "n": 120,
+        "rate": 0.892
+      },
+      "critical_exact_match": {
+        "hits": 50,
+        "n": 120,
+        "rate": 0.417
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 95,
+          "n": 120,
+          "rate": 0.792
+        },
+        "unit": {
+          "hits": 98,
+          "n": 120,
+          "rate": 0.817
+        },
+        "direction": {
+          "hits": 83,
+          "n": 120,
+          "rate": 0.692
+        },
+        "qualifiers": {
+          "hits": 87,
+          "n": 120,
+          "rate": 0.725
+        }
+      },
+      "reference_top1": {
+        "hits": 27,
+        "n": 56,
+        "rate": 0.482
+      },
+      "reference_recall5": {
+        "hits": 28,
+        "n": 56,
+        "rate": 0.5
+      },
+      "correct_proposal_candidates": {
+        "hits": 18,
+        "n": 56,
+        "rate": 0.321
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 9,
+        "n": 16,
+        "rate": 0.562
+      },
+      "absent_reported_absent": {
+        "hits": 26,
+        "n": 48,
+        "rate": 0.542
+      },
+      "false_no_locality": 2,
+      "mean_corrections": 1.66
+    },
+    "hybrid": {
+      "relation_accuracy": {
+        "hits": 76,
+        "n": 120,
+        "rate": 0.633
+      },
+      "valid_extraction": {
+        "hits": 120,
+        "n": 120,
+        "rate": 1.0
+      },
+      "critical_exact_match": {
+        "hits": 63,
+        "n": 120,
+        "rate": 0.525
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 90,
+          "n": 120,
+          "rate": 0.75
+        },
+        "unit": {
+          "hits": 94,
+          "n": 120,
+          "rate": 0.783
+        },
+        "direction": {
+          "hits": 83,
+          "n": 120,
+          "rate": 0.692
+        },
+        "qualifiers": {
+          "hits": 106,
+          "n": 120,
+          "rate": 0.883
+        }
+      },
+      "reference_top1": {
+        "hits": 32,
+        "n": 56,
+        "rate": 0.571
+      },
+      "reference_recall5": {
+        "hits": 34,
+        "n": 56,
+        "rate": 0.607
+      },
+      "correct_proposal_candidates": {
+        "hits": 28,
+        "n": 56,
+        "rate": 0.5
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 7,
+        "n": 16,
+        "rate": 0.438
+      },
+      "absent_reported_absent": {
+        "hits": 14,
+        "n": 48,
+        "rate": 0.292
+      },
+      "false_no_locality": 0,
+      "mean_corrections": 1.46
+    }
+  },
+  "by_type": {
+    "rules": {
+      "admin_only": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "between_features": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "direction_only": {
+        "hits": 4,
+        "n": 7,
+        "rate": 0.571
+      },
+      "distance_and_direction": {
+        "hits": 6,
+        "n": 9,
+        "rate": 0.667
+      },
+      "distance_only": {
+        "hits": 0,
+        "n": 2,
+        "rate": 0.0
+      },
+      "itinerary": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "named_feature": {
+        "hits": 12,
+        "n": 38,
+        "rate": 0.316
+      },
+      "route_relative": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      }
+    },
+    "llm": {
+      "admin_only": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "between_features": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "direction_only": {
+        "hits": 1,
+        "n": 7,
+        "rate": 0.143
+      },
+      "distance_and_direction": {
+        "hits": 6,
+        "n": 9,
+        "rate": 0.667
+      },
+      "distance_only": {
+        "hits": 0,
+        "n": 2,
+        "rate": 0.0
+      },
+      "itinerary": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "named_feature": {
+        "hits": 11,
+        "n": 38,
+        "rate": 0.289
+      },
+      "route_relative": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      }
+    },
+    "hybrid": {
+      "admin_only": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "between_features": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "direction_only": {
+        "hits": 4,
+        "n": 7,
+        "rate": 0.571
+      },
+      "distance_and_direction": {
+        "hits": 7,
+        "n": 9,
+        "rate": 0.778
+      },
+      "distance_only": {
+        "hits": 0,
+        "n": 2,
+        "rate": 0.0
+      },
+      "itinerary": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "named_feature": {
+        "hits": 17,
+        "n": 38,
+        "rate": 0.447
+      },
+      "route_relative": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      }
+    }
+  },
+  "paired_hybrid_vs_rules": {
+    "correct_proposal_candidates": {
+      "n": 56,
+      "rules": 22,
+      "llm": 28,
+      "difference": 0.107,
+      "ci95": [
+        0.036,
+        0.196
+      ],
+      "llm_only": 6,
+      "rules_only": 0,
+      "sign_test_p": 0.0312
+    },
+    "critical_exact_match": {
+      "n": 120,
+      "rules": 62,
+      "llm": 63,
+      "difference": 0.008,
+      "ci95": [
+        -0.017,
+        0.042
+      ],
+      "llm_only": 2,
+      "rules_only": 1,
+      "sign_test_p": 1.0
+    }
+  },
+  "paired_llm_vs_rules": {
+    "correct_proposal_candidates": {
+      "n": 56,
+      "rules": 22,
+      "llm": 18,
+      "difference": -0.071,
+      "ci95": [
+        -0.214,
+        0.071
+      ],
+      "llm_only": 7,
+      "rules_only": 11,
+      "sign_test_p": 0.4807
+    },
+    "critical_exact_match": {
+      "n": 120,
+      "rules": 62,
+      "llm": 50,
+      "difference": -0.1,
+      "ci95": [
+        -0.208,
+        0.008
+      ],
+      "llm_only": 16,
+      "rules_only": 28,
+      "sign_test_p": 0.0961
+    }
+  },
+  "sensitivity_excluding_unsure": {
+    "excluded": 23,
+    "categories": {
+      "answerable": 50,
+      "reference_absent": 37,
+      "unsupported": 10
+    },
+    "paired_hybrid_vs_rules": {
+      "correct_proposal_candidates": {
+        "n": 50,
+        "rules": 20,
+        "llm": 26,
+        "difference": 0.12,
+        "ci95": [
+          0.04,
+          0.22
+        ],
+        "llm_only": 6,
+        "rules_only": 0,
+        "sign_test_p": 0.0312
+      },
+      "critical_exact_match": {
+        "n": 97,
+        "rules": 53,
+        "llm": 54,
+        "difference": 0.01,
+        "ci95": [
+          -0.021,
+          0.052
+        ],
+        "llm_only": 2,
+        "rules_only": 1,
+        "sign_test_p": 1.0
+      }
+    }
+  },
+  "hybrid_counts": {
+    "source": {
+      "rules": 107,
+      "llm": 13
+    },
+    "llm_call": {
+      "made": 45,
+      "skipped": 75
+    },
+    "relation": {
+      "named_feature": 56,
+      "direction_only": 25,
+      "distance_and_direction": 23,
+      "other": 6,
+      "route_relative": 6,
+      "between_features": 4
+    },
+    "retrieval": {
+      "candidates_found": 88,
+      "feature_absent_from_index": 18,
+      "no_reference_feature": 14
+    },
+    "proposal": {
+      "needs_information": 104,
+      "unsupported": 16
+    }
+  },
+  "llm_counts": {
+    "relation": {
+      "named_feature": 52,
+      "distance_and_direction": 25,
+      "route_relative": 12,
+      "between_features": 10,
+      "orthogonal_offsets": 8,
+      "other": 5,
+      "direction_only": 3,
+      "itinerary": 3,
+      "no_locality": 2
+    },
+    "retrieval": {
+      "candidates_found": 63,
+      "feature_absent_from_index": 37,
+      "None": 13,
+      "no_reference_feature": 7
+    },
+    "proposal": {
+      "needs_information": 75,
+      "unsupported": 32,
+      "invalid_extraction": 13
+    }
+  },
+  "model_time_s": {
+    "llm_only_total": 1284.7,
+    "hybrid_calls": 45,
+    "hybrid_total": 478.7,
+    "p50": 9.9,
+    "p95": 16.4,
+    "note": "Per-record model seconds from this release's LLM run (cache off), Apple M1 8 GB, warm server."
+  },
+  "decision": "yes"
+}
