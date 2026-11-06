@@ -93,8 +93,12 @@ def now_iso() -> str:
 
 
 def emit(trace: RecordTrace) -> None:
-    """One JSON line per trace on the telemetry logger."""
+    """One JSON line per trace on the telemetry logger, and a span when OpenTelemetry export
+    is on (:mod:`localitylens.telemetry.otel`)."""
     log.info(json.dumps(trace.model_dump(mode="json", exclude_none=True), sort_keys=True))
+    from localitylens.telemetry import otel  # imported here: otel imports this module
+
+    otel.record(trace)
 
 
 def json_lines_handler(path: str) -> logging.Handler:

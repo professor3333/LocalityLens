@@ -355,6 +355,15 @@ def _review_import(args: argparse.Namespace) -> int:
 
 
 def _log_json(args: argparse.Namespace) -> None:
+    """Telemetry sinks for a processing command: JSON lines (--log-json) and OpenTelemetry
+    (LOCALITYLENS_OTEL=console|otlp)."""
+    from localitylens.telemetry.otel import configure_from_env
+
+    provider = configure_from_env()
+    if provider is not None:
+        import atexit
+
+        atexit.register(provider.shutdown)  # flush batched spans on exit
     if getattr(args, "log_json", None):
         from localitylens.telemetry.trace import json_lines_handler
 
