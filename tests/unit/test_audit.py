@@ -152,5 +152,6 @@ def test_a_different_sample_never_replaces_an_existing_one(tmp_path: Path) -> No
 def test_reports_name_who_annotated_each_sample() -> None:
     assert annotations_by("dev-2") == "Claude's annotations"
     assert annotations_by("dev-3") == "Claude's annotations"
+    assert annotations_by("dev-4") == "Claude's annotations"
     for label in ("audit-50", "dev-1", "validation", "test"):
         assert annotations_by(label) == "the owner's annotations"

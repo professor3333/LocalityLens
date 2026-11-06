@@ -285,7 +285,7 @@ def _add_trace(row: dict[str, Any], extractor: Extractor, started: float) -> Non
 
 
 # Who filled each sample's worksheet. Every other sample was annotated by the project owner.
-CLAUDE_ANNOTATED: Final = frozenset({"dev-2", "dev-3"})
+CLAUDE_ANNOTATED: Final = frozenset({"dev-2", "dev-3", "dev-4"})
 
 
 def annotations_by(label: str) -> str:

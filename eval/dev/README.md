@@ -80,9 +80,10 @@ scored once by its [scoring plan](dev-3/scoring-plan.md), pushed before any syst
 
 ## dev-4
 
-Drawn on 2026-11-06 to test the place-or-offset rules (rules-3 to rules-6) **independently**:
-dev-3 could not, because its annotator also wrote the rules, and it showed no gain
-(6, 7, 6, 6, 6 correct across rules-2 to rules-6).
+Drawn on 2026-11-06 to test the place-or-offset rules (rules-3 to rules-6) independently of
+their author, after dev-3 could not and showed no gain (6, 7, 6, 6, 6 correct across rules-2 to
+rules-6). **The owner then decided that Claude annotates it**, so like dev-3 it is not an
+independent check of those rules.
 
 ```bash
 uv run localitylens dev sample --name dev-4 --seed dev-4/1 --prefix G --out eval/dev/dev-4 \
@@ -93,13 +94,13 @@ Same design as dev-3 (text shape version 2, exclusion version 2): 2,172 viewed o
 groups excluded, 0 overlap by group key or by wording, 250 groups now registered. Sample SHA-256
 `b5ecfe3aa820…`, blank worksheet `95c264d2f9cc…`.
 
-- **The owner annotates it**, with the [annotation guide](../annotation_guide.md), before any
-  system runs and without looking at any system's output on these records.
+- **Claude annotated it** at the owner's request, with the
+  [annotation guide](../annotation_guide.md), before any system ran on these records.
 - **The code stays at rules-6** until dev-4 is scored, so dev-4 tests exactly what dev-3
   tested. Known rules bugs found on dev-3 (a place cut at a sentence break, F18) stay unfixed
   for that reason.
-- Then a scoring plan is pushed before any system runs, as for dev-2 and dev-3. Its main
-  question repeats dev-3's: rules-6 against a rules-2 replay on the answerable place-offset
+- The [scoring plan](dev-4/scoring-plan.md) is pushed before any system runs, as for dev-2 and
+  dev-3. Its main question repeats dev-3's: rules-6 against a rules-2 replay on the answerable place-offset
   records ([`scripts/replay_rules_versions.py`](../../scripts/replay_rules_versions.py)).
 
 ## Order of work
