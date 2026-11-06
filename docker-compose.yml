@@ -1,0 +1,59 @@
+# Local deployment: the review screen + JSON API, one worker,
+# and (profile "llm") llama-server. Everything listens on the host's 127.0.0.1 only.
+#
+#   docker compose up -d                       # review screen on http://127.0.0.1:8000/
+#   docker compose --profile llm up -d         # also llama-server, for llm/hybrid imports
+#   docker compose run --rm review review import --sample eval/... --system rules
+#
+# ./data is mounted at /app/data: raw snapshots, the gazetteer index, the review store and the
+# reviewed extents. ./models holds the pinned GGUF (release/manifest.json).
+name: localitylens
+
+x-app: &app
+  build: .
+  image: localitylens:local
+  volumes:
+    - ./data:/app/data
+    - ./eval:/app/eval:ro
+  environment:
+    LOCALITYLENS_REVIEWER: ${LOCALITYLENS_REVIEWER:-}
+    LOCALITYLENS_OTEL: ${LOCALITYLENS_OTEL:-off}
+  # On Linux, run as your own user so the container can write ./data:
+  #   LOCALITYLENS_UID=$(id -u) LOCALITYLENS_GID=$(id -g) docker compose up -d
+  user: "${LOCALITYLENS_UID:-10001}:${LOCALITYLENS_GID:-10001}"
+  restart: unless-stopped
+
+services:
+  review:
+    <<: *app
+    command: ["review", "serve", "--host", "0.0.0.0", "--port", "8000",
+              "--db", "/app/data/review/review.sqlite",
+              "--index", "/app/data/derived/gazetteer.sqlite",
+              "--extents", "/app/data/reviewed/extents.csv"]
+    ports:
+      - "127.0.0.1:${LOCALITYLENS_PORT:-8000}:8000"   # host loopback only, never 0.0.0.0
+
+  worker:
+    <<: *app
+    command: ["review", "work", "--watch",
+              "--db", "/app/data/review/review.sqlite",
+              "--index", "/app/data/derived/gazetteer.sqlite",
+              "--extents", "/app/data/reviewed/extents.csv",
+              "--url", "http://127.0.0.1:8080"]
+    stop_grace_period: 2m   # SIGTERM finishes the current job
+    healthcheck:
+      disable: true   # the image's check probes /readyz, which only the review service serves
+
+  llama:
+    profiles: ["llm"]
+    # llama.cpp b11960, the build pinned in release/manifest.json.
+    image: ghcr.io/ggml-org/llama.cpp:server-b11960@sha256:8052c13edd987de8858f8150031e025ac3d66823f09cf3ec8220899c4abce220
+    # Shares the worker's network namespace: the worker reaches it on 127.0.0.1:8080, and it
+    # keeps the manifest's --host 127.0.0.1, so no network can reach it.
+    network_mode: "service:worker"
+    command: ["-m", "/models/Qwen3.5-4B-Q4_K_M.gguf",
+              "--host", "127.0.0.1", "--port", "8080", "-c", "4096", "-np", "1",
+              "--no-context-shift"]
+    volumes:
+      - ./models:/models:ro
+    restart: unless-stopped

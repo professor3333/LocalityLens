@@ -387,29 +387,63 @@ def _extractors(args: argparse.Namespace, gaz: Any, system: str) -> tuple[Any, A
 
 
 def _review_work(args: argparse.Namespace) -> int:
-    """Resume: work every pending job of active batches (or one batch)."""
+    """Resume: work every pending job of active batches (or one batch). With --watch, keep
+    polling for new jobs until SIGTERM/SIGINT, which stops after the current job."""
+    import signal
     import time
 
     from localitylens.gazetteer.index import Gazetteer
     from localitylens.jobs.queue import JobQueue
-    from localitylens.review.importer import work_batch
     from localitylens.review.store import ReviewStore
 
     extents = _load_extents(args)
     _log_json(args)
+    stop = {"now": False}
+    if args.watch:
+
+        def _stop(signum: int, _frame: object) -> None:
+            stop["now"] = True
+            print(f"signal {signum}: stopping after the current job", flush=True)
+
+        signal.signal(signal.SIGTERM, _stop)
+        signal.signal(signal.SIGINT, _stop)
     with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
         queue = JobQueue(store, clock=time.time, lease_s=args.lease, max_attempts=args.attempts)
-        batches = [queue.batch(args.batch)] if args.batch else queue.batches()
-        for b in batches:
-            open_jobs = b.jobs.get("pending", 0) + b.jobs.get("leased", 0)
-            if b.state.value != "active" or not open_jobs:
-                continue
-            rules, llm, _release = _extractors(args, gaz, b.system)
-            counts = work_batch(store, queue, b.batch_id, gaz, rules=rules, llm=llm,
-                                extents=extents, max_jobs=args.max_jobs)  # fmt: skip
-            print(f"{b.batch_id} ({b.system}): " + (", ".join(
-                f"{s} {n}" for s, n in sorted(counts.items())) or "nothing finished"))  # fmt: skip
-    return 0
+        while True:
+            _work_round(args, gaz, store, queue, extents, lambda: stop["now"])
+            if not args.watch or stop["now"]:
+                return 0
+            for _ in range(int(args.poll * 10)):  # sleep in short steps to react to signals
+                if stop["now"]:
+                    return 0
+                time.sleep(0.1)
+
+
+def _work_round(
+    args: argparse.Namespace,
+    gaz: Any,
+    store: Any,
+    queue: Any,
+    extents: Any,
+    should_stop: Any,
+) -> None:
+    """One pass over the active batches with open jobs."""
+    from localitylens.review.importer import work_batch
+
+    batches = [queue.batch(args.batch)] if args.batch else queue.batches()
+    for b in batches:
+        open_jobs = b.jobs.get("pending", 0) + b.jobs.get("leased", 0)
+        if b.state.value != "active" or not open_jobs:
+            continue
+        rules, llm, _release = _extractors(args, gaz, b.system)
+        counts = work_batch(
+            store, queue, b.batch_id, gaz, rules=rules, llm=llm, extents=extents,
+            max_jobs=args.max_jobs, should_stop=should_stop,
+        )  # fmt: skip
+        done = ", ".join(f"{s} {n}" for s, n in sorted(counts.items())) or "nothing finished"
+        print(f"{b.batch_id} ({b.system}): {done}", flush=True)
+        if should_stop():
+            return
 
 
 def _review_traces(args: argparse.Namespace) -> int:
@@ -535,11 +569,14 @@ def _review_export(args: argparse.Namespace) -> int:
 
 
 def _review_serve(args: argparse.Namespace) -> int:
+    import dataclasses
+
     from localitylens.web.app import config_from_env, serve
 
     config = config_from_env(
         Path(args.db), _load_extents(args), Path(args.out), Path(args.unresolved)
     )
+    config = dataclasses.replace(config, release=Path(args.release))
     who = config.reviewer or "asked on each decision (set LOCALITYLENS_REVIEWER to fix it)"
     print(f"review screen on http://{args.host}:{args.port}/  db {args.db}  reviewer: {who}")
     serve(config, host=args.host, port=args.port)
@@ -1083,6 +1120,12 @@ def main(argv: list[str] | None = None) -> int:
     rw.add_argument("--url", default="http://127.0.0.1:8080")
     rw.add_argument("--release", default="release/manifest.json")
     rw.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
+    rw.add_argument(
+        "--watch",
+        action="store_true",
+        help="keep polling for new jobs (the Docker worker); stop with SIGTERM",
+    )
+    rw.add_argument("--poll", type=float, default=5.0, help="seconds between polls with --watch")
     rw.set_defaults(func=_review_work)
     rt = rv_sub.add_parser("traces", help="telemetry summary: outcomes, latency, model use")
     rt.add_argument("--batch", help="only this batch")
@@ -1124,6 +1167,7 @@ def main(argv: list[str] | None = None) -> int:
     rs.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rs.add_argument("--host", default="127.0.0.1", help="loopback only")
     rs.add_argument("--port", type=int, default=8000)
+    rs.add_argument("--release", default="release/manifest.json")
     rs.add_argument("--out", default="data/review/export/occurrences.csv")
     rs.add_argument("--unresolved", default="data/review/export/unresolved.csv")
     rs.set_defaults(func=_review_serve)

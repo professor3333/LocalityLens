@@ -215,11 +215,10 @@ def test_config_reads_the_reviewer_setting(monkeypatch: pytest.MonkeyPatch, db: 
     assert config_from_env(db).reviewer is None
 
 
-def test_only_loopback_and_an_existing_database(db: Path, tmp_path: Path) -> None:
+def test_only_loopback(db: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("LOCALITYLENS_CONTAINER", raising=False)
     with pytest.raises(ValueError, match="local only"):
         serve(ReviewConfig(db=db), host="0.0.0.0")
-    with pytest.raises(FileNotFoundError):
-        create_app(ReviewConfig(db=tmp_path / "missing.sqlite"))
 
 
 def test_approve_is_offered_only_when_it_can_succeed(client: TestClient) -> None:

@@ -424,6 +424,41 @@ feature_absent_from_index
 
 <sub>Some outputs are trimmed in width and length. The full output also shows state/type flags and the GNIS representative point (NAD83), which is evidence, not a georeference.</sub>
 
+### Run it with Docker Compose
+
+One image holds the review screen, the JSON API and the worker; an optional profile adds
+llama-server for LLM and hybrid imports. Everything listens on the host's 127.0.0.1 only, and
+`./data` (snapshots, gazetteer, review store, reviewed extents) is mounted, never baked in.
+
+```bash
+docker compose build
+docker compose run --rm review data fetch-gnis                    # once: GNIS snapshot
+docker compose run --rm review gazetteer build --snapshot data/raw/gnis/2026-09-29
+docker compose up -d                                              # screen + worker
+docker compose run --rm review review import --sample eval/audit/audit-50.json --system rules \
+    --db /app/data/review/review.sqlite --index /app/data/derived/gazetteer.sqlite \
+    --extents /app/data/reviewed/extents.csv --no-process         # the worker picks it up
+docker compose --profile llm up -d                                # also llama-server (needs ./models)
+```
+
+`/readyz` answers 503 until the review store exists and `release/manifest.json` matches the
+code, and reports every pinned version (model and revision, GGUF SHA-256, llama.cpp build,
+prompt, schema and policy versions, snapshots, store and API versions). Checked with the audit
+sample: the containerized worker processed all 50 records (36 needing information, 11 ready,
+3 unsupported, as on the host), and stopped cleanly on SIGTERM:
+
+```console
+$ curl -s http://127.0.0.1:8000/readyz | jq -c '{ready, release: .release.release, model: .release.model.id, llama_cpp: .release.llama_cpp.build, store: .store_schema}'
+{"ready":true,"release":"0.1.0-dev","model":"Qwen/Qwen3.5-4B","llama_cpp":"b11960-8642541b2","store":"review-3"}
+```
+
+- **llama-server never gets a network address:** it shares the worker's network namespace and
+  keeps the manifest's `--host 127.0.0.1`. The `llm` profile is configured but was not run on
+  the 8 GB development machine.
+- **On Linux,** run as your own user so the container can write `./data`:
+  `LOCALITYLENS_UID=$(id -u) LOCALITYLENS_GID=$(id -g) docker compose up -d`.
+- Images are pinned by digest: Python 3.12 slim, uv 0.12.5, llama.cpp `server-b11960`.
+
 ## 🛡️ Design guarantees
 
 | Guarantee | How it is enforced today | |
@@ -725,7 +760,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · candidate disambiguation · footprints · GeoJSON | 🚧 started |
-| **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · Docker Compose | 🚧 started |
+| **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
@@ -766,7 +801,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `jobs/queue.py` · `jobs/worker.py` | Persistent job queue `jobs-1`: idempotent batch and job keys, leases (300 s), 3 attempts for transient failures, cancellation and resume, recovery of expired leases and orphaned records |
 | `web/` | Local review screen and JSON API (`api-1`): one FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 

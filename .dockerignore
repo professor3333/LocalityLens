@@ -1,0 +1,19 @@
+# Only the code, lockfile and release manifest go into the image; data and models are mounted.
+.git
+.venv
+data
+models
+eval
+tests
+docs
+scripts
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.hypothesis
+*.gguf
+*.sqlite
+*.db
+.env

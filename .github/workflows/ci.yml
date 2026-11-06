@@ -32,3 +32,5 @@ jobs:
         run: uv run playwright install --with-deps chromium-headless-shell
       - name: End-to-end tests (review screen)
         run: uv run pytest -m e2e
+      - name: Docker image
+        run: docker compose build

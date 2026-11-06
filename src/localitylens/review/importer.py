@@ -72,13 +72,21 @@ def work_batch(
     extents: ExtentStore | None = None,
     owner: str | None = None,
     max_jobs: int | None = None,
+    should_stop: Callable[[], bool] = lambda: False,
 ) -> Counter[str]:
     """Work one batch's pending jobs. Returns the count per final status reached."""
     batch = queue.batch(batch_id)
     process = pipeline_step(store, gazetteer, system=batch.system, rules=rules, llm=llm,
                             release=batch.release, extents=extents)  # fmt: skip
     before = _job_states(store, batch_id)
-    work(queue, process, owner=owner or default_owner(), batch_id=batch_id, max_jobs=max_jobs)
+    work(
+        queue,
+        process,
+        owner=owner or default_owner(),
+        batch_id=batch_id,
+        max_jobs=max_jobs,
+        should_stop=should_stop,
+    )
     outcome: Counter[str] = Counter()
     for record_id, state in _job_states(store, batch_id).items():
         if state in ("done", "failed") and before.get(record_id) != state:

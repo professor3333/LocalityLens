@@ -1,7 +1,12 @@
 """The local review screen: a queue and a record page over the review store (FastAPI + Jinja2).
 
 * **Local only.** :func:`serve` refuses any host but loopback; there are no accounts, so a
-  shared deployment needs authenticated sessions first (CLAUDE.md §10).
+  shared deployment needs authenticated sessions first. The one exception is
+  the container image (``LOCALITYLENS_CONTAINER=1``), which must bind ``0.0.0.0`` inside its
+  own network namespace; Docker Compose publishes that port on the host's 127.0.0.1 only.
+* **Readiness:** ``/readyz`` (and ``/api/version``) report every pinned version and answer 503
+  until the store exists and the release manifest matches the code
+  (:mod:`localitylens.web.readiness`).
 * **No model calls and no geometry here.** Records are imported and processed by
   ``localitylens review import``. Decisions go through :meth:`ReviewStore.decide`, which checks
   the transition, recomputes an edited proposal with the same deterministic code, refuses an
@@ -26,7 +31,7 @@ from typing import Annotated, Final
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI, Form, HTTPException, Request
-from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -35,11 +40,13 @@ from localitylens.export.darwin_core import export_approved, export_unresolved
 from localitylens.geo.extents import ExtentStore
 from localitylens.review.store import Action, ReviewError, ReviewStore
 from localitylens.web.api import build_router
+from localitylens.web.readiness import report as readiness_report
 from localitylens.web.views import queue_view, record_view
 
 HERE: Final = Path(__file__).parent
 REVIEWER_ENV: Final = "LOCALITYLENS_REVIEWER"
 LOOPBACK: Final = frozenset({"127.0.0.1", "localhost", "::1"})
+CONTAINER_ENV: Final = "LOCALITYLENS_CONTAINER"
 APPROVABLE: Final = frozenset({RecordStatus.READY_FOR_REVIEW, RecordStatus.NEEDS_INFORMATION})
 
 
@@ -50,6 +57,7 @@ class ReviewConfig:
     reviewer: str | None = None  # from LOCALITYLENS_REVIEWER; asked on the form when unset
     export_out: Path = Path("data/review/export/occurrences.csv")
     unresolved_out: Path = Path("data/review/export/unresolved.csv")
+    release: Path = Path("release/manifest.json")
 
 
 def config_from_env(
@@ -85,8 +93,6 @@ def _number(text: str | None, what: str) -> float | None:
 
 
 def create_app(config: ReviewConfig) -> FastAPI:
-    if not config.db.is_file():
-        raise FileNotFoundError(f"{config.db}: no review database (run `review import` first)")
     app = FastAPI(title="LocalityLens review", docs_url=None, redoc_url=None, openapi_url=None)
     app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
     templates = Jinja2Templates(directory=HERE / "templates")
@@ -145,6 +151,15 @@ def create_app(config: ReviewConfig) -> FastAPI:
             same_origin=_same_origin,
         )
     )
+
+    @app.get("/readyz")
+    def readyz() -> JSONResponse:
+        ready, payload = readiness_report(config.db, config.release)
+        return JSONResponse(payload, status_code=200 if ready else 503)
+
+    @app.get("/api/version")
+    def version() -> JSONResponse:
+        return JSONResponse(readiness_report(config.db, config.release)[1])
 
     @app.get("/", response_class=HTMLResponse)
     def queue(request: Request, status: str | None = None) -> Response:
@@ -236,8 +251,10 @@ def create_app(config: ReviewConfig) -> FastAPI:
 
 
 def serve(config: ReviewConfig, host: str = "127.0.0.1", port: int = 8000) -> None:
-    """Run the review screen with uvicorn, on a loopback address only."""
-    if host not in LOOPBACK:
+    """Run the review screen with uvicorn, on a loopback address only (or 0.0.0.0 inside the
+    container image, whose port Compose publishes on the host's loopback)."""
+    in_container = os.environ.get(CONTAINER_ENV) == "1"
+    if host not in LOOPBACK and not (in_container and host == "0.0.0.0"):
         raise ValueError(f"refusing to bind {host!r}: the review screen is local only")
     import uvicorn
 
