@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING, Any, Final
 
 from localitylens.extract.schema import FeatureType
 
@@ -328,10 +328,8 @@ def _extents_check(args: argparse.Namespace) -> int:
 
 
 def _review_import(args: argparse.Namespace) -> int:
-    from localitylens.baseline.rules import Lexicon, RulesExtractor
     from localitylens.evaluation.audit import load_sample
     from localitylens.gazetteer.index import Gazetteer
-    from localitylens.pipeline.interpret import Extractor
     from localitylens.review.importer import import_records
     from localitylens.review.store import ReviewStore
 
@@ -340,25 +338,90 @@ def _review_import(args: argparse.Namespace) -> int:
         return 2
     sample = load_sample(Path(args.sample))
     extents = _load_extents(args)
-    release_id = "rules-only"
     with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
-        rules = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
-        llm: Extractor | None = None
-        if args.system != "rules":
-            from localitylens.extract.llm import LLMExtractor
-            from localitylens.extract.llm_client import LlamaServerClient
-            from localitylens.release import load_release
-
-            release = load_release(Path(args.release))
-            release_id = release.release
-            llm = LLMExtractor(LlamaServerClient(args.url), release)
+        rules, llm, release_id = _extractors(args, gaz, args.system)
         counts = import_records(
             store, [i.record for i in sample.items], sample.snapshot_id, gaz,
             system=args.system, rules=rules, llm=llm, release=release_id, extents=extents,
+            process_now=not args.no_process,
         )  # fmt: skip
     print(f"imported {len(sample.items)} records ({args.system})")
+    if args.no_process:
+        print("  queued; process with `localitylens review work`")
     for status, n in sorted(counts.items()):
         print(f"  {status:<18} {n}")
+    return 0
+
+
+def _extractors(args: argparse.Namespace, gaz: Any, system: str) -> tuple[Any, Any, str]:
+    """(rules, llm or None, release ID) for a system."""
+    from localitylens.baseline.rules import Lexicon, RulesExtractor
+
+    rules = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
+    if system == "rules":
+        return rules, None, "rules-only"
+    from localitylens.extract.llm import LLMExtractor
+    from localitylens.extract.llm_client import LlamaServerClient
+    from localitylens.release import load_release
+
+    release = load_release(Path(args.release))
+    return rules, LLMExtractor(LlamaServerClient(args.url), release), release.release
+
+
+def _review_work(args: argparse.Namespace) -> int:
+    """Resume: work every pending job of active batches (or one batch)."""
+    import time
+
+    from localitylens.gazetteer.index import Gazetteer
+    from localitylens.jobs.queue import JobQueue
+    from localitylens.review.importer import work_batch
+    from localitylens.review.store import ReviewStore
+
+    extents = _load_extents(args)
+    with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
+        queue = JobQueue(store, clock=time.time, lease_s=args.lease, max_attempts=args.attempts)
+        batches = [queue.batch(args.batch)] if args.batch else queue.batches()
+        for b in batches:
+            open_jobs = b.jobs.get("pending", 0) + b.jobs.get("leased", 0)
+            if b.state.value != "active" or not open_jobs:
+                continue
+            rules, llm, _release = _extractors(args, gaz, b.system)
+            counts = work_batch(store, queue, b.batch_id, gaz, rules=rules, llm=llm,
+                                extents=extents, max_jobs=args.max_jobs)  # fmt: skip
+            print(f"{b.batch_id} ({b.system}): " + (", ".join(
+                f"{s} {n}" for s, n in sorted(counts.items())) or "nothing finished"))  # fmt: skip
+    return 0
+
+
+def _review_jobs(args: argparse.Namespace) -> int:
+    import time
+
+    from localitylens.jobs.queue import JobQueue
+    from localitylens.review.store import ReviewStore
+
+    with ReviewStore(Path(args.db)) as store:
+        queue = JobQueue(store, clock=time.time)
+        rows = queue.batches()
+        for b in rows:
+            jobs = ", ".join(f"{s} {n}" for s, n in sorted(b.jobs.items())) or "no jobs"
+            print(f"{b.batch_id}  {b.state.value:<9} {b.system:<6} {b.created_at}  {jobs}")
+        print(f"{len(rows)} batches")
+    return 0
+
+
+def _review_cancel(args: argparse.Namespace) -> int:
+    import time
+
+    from localitylens.jobs.queue import JobQueue
+    from localitylens.review.store import ReviewStore
+
+    with ReviewStore(Path(args.db)) as store:
+        queue = JobQueue(store, clock=time.time)
+        if args.resume:
+            print(f"{args.batch}: resumed, {queue.resume(args.batch)} jobs pending again")
+        else:
+            n = queue.cancel(args.batch)
+            print(f"{args.batch}: cancelled, {n} pending jobs stopped (records stay queued)")
     return 0
 
 
@@ -947,7 +1010,31 @@ def main(argv: list[str] | None = None) -> int:
     ri.add_argument("--extents", help=_EXTENTS_HELP)
     ri.add_argument("--url", default="http://127.0.0.1:8080")
     ri.add_argument("--release", default="release/manifest.json")
+    ri.add_argument(
+        "--no-process",
+        action="store_true",
+        help="only queue the records; process later with `review work`",
+    )
     ri.set_defaults(func=_review_import)
+    rw = rv_sub.add_parser("work", help="process pending jobs (resumes an interrupted import)")
+    rw.add_argument("--batch", help="only this batch")
+    rw.add_argument("--max-jobs", type=int, help="stop after this many jobs")
+    rw.add_argument("--lease", type=float, default=300.0, help="lease seconds per job")
+    rw.add_argument("--attempts", type=int, default=3, help="attempts before a job fails")
+    rw.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rw.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    rw.add_argument("--extents", help=_EXTENTS_HELP)
+    rw.add_argument("--url", default="http://127.0.0.1:8080")
+    rw.add_argument("--release", default="release/manifest.json")
+    rw.set_defaults(func=_review_work)
+    rj = rv_sub.add_parser("jobs", help="list batches and their job states")
+    rj.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rj.set_defaults(func=_review_jobs)
+    rc = rv_sub.add_parser("cancel", help="cancel a batch (pending records stay queued)")
+    rc.add_argument("batch")
+    rc.add_argument("--resume", action="store_true", help="reactivate a cancelled batch instead")
+    rc.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rc.set_defaults(func=_review_cancel)
     rq = rv_sub.add_parser("queue", help="list records with their status and what blocks them")
     rq.add_argument("--status", help="only this status, e.g. ready_for_review")
     rq.add_argument("--db", default="data/review/review.sqlite", help=db_help)

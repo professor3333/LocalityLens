@@ -10,6 +10,10 @@
 * **Decisions are idempotent.** A decision carries a key, by default the hash of what was
   decided. Submitting the same decision again returns the stored one and writes nothing, so a
   retried request never duplicates a decision or an export row.
+* **Jobs are kept apart from records.** ``batch`` and ``job`` hold processing state (lease,
+  attempts, cancellation) for :mod:`localitylens.jobs`; a record's status says only where the
+  record is in its lifecycle (CLAUDE.md §3). Both live in this file so a status change and its
+  job update commit together.
 * **Each decision records** the reviewer, a UTC timestamp, the rationale and the edits as a diff
   against the proposal (``{"feature_id": [old, new], ...}``). Edits are marked as human edits in
   the export.
@@ -21,7 +25,8 @@ import dataclasses
 import hashlib
 import json
 import sqlite3
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from enum import StrEnum
@@ -40,7 +45,10 @@ from localitylens.geo.georeference import (
 )
 from localitylens.ingest.specimens import SpecimenRecord
 
-STORE_SCHEMA_VERSION: Final = "review-1"
+# review-2 adds the batch and job tables (persistent jobs). A review-1 store is upgraded in place:
+# the new tables are created empty and nothing else changes.
+STORE_SCHEMA_VERSION: Final = "review-2"
+_UPGRADABLE: Final = frozenset({"review-1"})
 
 _SCHEMA: Final = """
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -82,6 +90,31 @@ CREATE TABLE IF NOT EXISTS decision (
     final_proposal  TEXT REFERENCES proposal(proposal_id),
     decided_at      TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS batch (
+    batch_id     TEXT PRIMARY KEY,
+    system       TEXT NOT NULL,
+    release      TEXT NOT NULL,
+    snapshot_id  TEXT NOT NULL,              -- specimen snapshot
+    gazetteer    TEXT NOT NULL,              -- gazetteer snapshot
+    extractor    TEXT NOT NULL,              -- extractor version (for failure rows)
+    state        TEXT NOT NULL,              -- active | cancelled
+    created_at   TEXT NOT NULL,
+    cancelled_at TEXT
+);
+CREATE TABLE IF NOT EXISTS job (
+    job_id        TEXT PRIMARY KEY,          -- hash(batch_id, record_id): enqueueing is idempotent
+    batch_id      TEXT NOT NULL REFERENCES batch(batch_id),
+    record_id     TEXT NOT NULL REFERENCES record(record_id),
+    seq           INTEGER NOT NULL,          -- order within the batch
+    state         TEXT NOT NULL,             -- pending | leased | done | failed | cancelled
+    attempts      INTEGER NOT NULL,
+    lease_owner   TEXT,
+    lease_expires REAL,                      -- unix seconds
+    last_error    TEXT,                      -- a category, never label text
+    updated_at    TEXT NOT NULL,
+    UNIQUE (batch_id, record_id)
+);
+CREATE INDEX IF NOT EXISTS job_state ON job(state, batch_id, seq);
 CREATE INDEX IF NOT EXISTS proposal_record ON proposal(record_id);
 CREATE INDEX IF NOT EXISTS decision_record ON decision(record_id);
 """
@@ -156,6 +189,8 @@ class ReviewStore:
         row = self._con.execute("SELECT value FROM meta WHERE key='schema'").fetchone()
         if row is None:
             self._con.execute("INSERT INTO meta VALUES ('schema', ?)", (STORE_SCHEMA_VERSION,))
+        elif row["value"] in _UPGRADABLE:  # the new tables were just created by _SCHEMA
+            self._con.execute("UPDATE meta SET value=? WHERE key='schema'", (STORE_SCHEMA_VERSION,))
         elif row["value"] != STORE_SCHEMA_VERSION:
             raise ReviewError(f"store schema {row['value']}, expected {STORE_SCHEMA_VERSION}")
 
@@ -167,6 +202,33 @@ class ReviewStore:
 
     def __exit__(self, *_: object) -> None:
         self.close()
+
+    @property
+    def connection(self) -> sqlite3.Connection:
+        """For :mod:`localitylens.jobs`, which keeps its tables in this file."""
+        return self._con
+
+    @contextmanager
+    def transaction(self) -> Iterator[None]:
+        """One atomic unit (``BEGIN IMMEDIATE``). Inside an open transaction it simply joins it."""
+        if self._con.in_transaction:
+            yield
+            return
+        self._con.execute("BEGIN IMMEDIATE")
+        try:
+            yield
+        except BaseException:
+            self._con.execute("ROLLBACK")
+            raise
+        self._con.execute("COMMIT")
+
+    def start_processing(self, record_id: str) -> None:
+        """``queued`` → ``processing``, when a worker leases the record's job."""
+        self._set_status(record_id, RecordStatus.PROCESSING)
+
+    def requeue(self, record_id: str) -> None:
+        """``processing`` → ``queued``: an expired lease or a retry after a transient failure."""
+        self._set_status(record_id, RecordStatus.QUEUED)
 
     # --- records ------------------------------------------------------------------------------
 
@@ -220,14 +282,19 @@ class ReviewStore:
         proposal: GeoreferenceProposal | None,
         failure: str | None = None,
     ) -> str:
-        """Record one pipeline run for a queued record and move it to its outcome status."""
+        """Record one pipeline run and move the record to its outcome status.
+
+        The record is ``queued`` (processed directly) or already ``processing`` (leased by a
+        worker); both end in the outcome status.
+        """
         if failure is not None:
             outcome, target = f"failed:{failure}", RecordStatus.FAILED
         elif proposal is None:
             outcome, target = "invalid_extraction", RecordStatus.NEEDS_INFORMATION
         else:
             outcome, target = proposal.outcome.value, _OUTCOME_STATUS[proposal.outcome]
-        self._set_status(record_id, RecordStatus.PROCESSING)
+        if self.status(record_id) is not RecordStatus.PROCESSING:
+            self._set_status(record_id, RecordStatus.PROCESSING)
         proposal_id = self._insert_proposal(record_id, system, extractor_version, release,
                                             gazetteer_snapshot, "pipeline", interpretation,
                                             candidates, proposal, outcome)  # fmt: skip
