@@ -93,6 +93,9 @@ def query(pause_s: float = 1.0) -> None:
                 try:
                     with urllib.request.urlopen(url, timeout=90) as resp:  # fixed host
                         body = resp.read()
+                    if not body.strip():  # HTTP 200, empty body: GEOLocate found nothing
+                        body = json.dumps({"type": "FeatureCollection", "features": [],
+                                           "empty_body": True}).encode()  # fmt: skip
                     json.loads(body)  # must parse; stored only as data
                     path.write_bytes(body)
                     sent += 1

@@ -1,0 +1,3889 @@
+{
+  "version": "geolocate-compare-1",
+  "endpoint": "https://www.geo-locate.org/webservices/geolocatesvcv2/glcwrap.aspx",
+  "settings": {
+    "enableH2O": "false",
+    "hwyX": "false",
+    "doUncert": "true",
+    "doPoly": "false",
+    "displacePoly": "false",
+    "languageKey": "0",
+    "fmt": "geojson"
+  },
+  "ours": {
+    "rules": "rules-6",
+    "llm": "llm-x2g2-qwen3.5-4b-q4km",
+    "hybrid": "hybrid-1"
+  },
+  "samples": {
+    "audit-50": {
+      "annotator": "owner",
+      "answerable": 31,
+      "with_defensible_position": 29,
+      "no_defensible_position": 2,
+      "geolocate_no_response": 0,
+      "geolocate": {
+        "records": 29,
+        "with_point": 28,
+        "within_1000_m": 16,
+        "within_5000_m": 20,
+        "median_error_m": 385
+      },
+      "rules": {
+        "records": 29,
+        "with_point": 21,
+        "within_1000_m": 19,
+        "within_5000_m": 19,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 29,
+        "with_point": 19,
+        "within_1000_m": 16,
+        "within_5000_m": 18,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 29,
+        "with_point": 23,
+        "within_1000_m": 20,
+        "within_5000_m": 20,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 7,
+        "does_not": 3,
+        "median_radius_when_contained_m": 8855
+      }
+    },
+    "dev-1": {
+      "annotator": "owner",
+      "answerable": 29,
+      "with_defensible_position": 27,
+      "no_defensible_position": 2,
+      "geolocate_no_response": 0,
+      "geolocate": {
+        "records": 27,
+        "with_point": 27,
+        "within_1000_m": 15,
+        "within_5000_m": 19,
+        "median_error_m": 47
+      },
+      "rules": {
+        "records": 27,
+        "with_point": 21,
+        "within_1000_m": 16,
+        "within_5000_m": 16,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 27,
+        "with_point": 22,
+        "within_1000_m": 20,
+        "within_5000_m": 20,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 27,
+        "with_point": 23,
+        "within_1000_m": 18,
+        "within_5000_m": 18,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 7,
+        "does_not": 5,
+        "median_radius_when_contained_m": 5219
+      }
+    },
+    "validation": {
+      "annotator": "owner",
+      "answerable": 32,
+      "with_defensible_position": 29,
+      "no_defensible_position": 3,
+      "geolocate_no_response": 0,
+      "geolocate": {
+        "records": 29,
+        "with_point": 27,
+        "within_1000_m": 13,
+        "within_5000_m": 19,
+        "median_error_m": 1332
+      },
+      "rules": {
+        "records": 29,
+        "with_point": 21,
+        "within_1000_m": 16,
+        "within_5000_m": 19,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 29,
+        "with_point": 24,
+        "within_1000_m": 17,
+        "within_5000_m": 21,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 29,
+        "with_point": 25,
+        "within_1000_m": 20,
+        "within_5000_m": 23,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 9,
+        "does_not": 2,
+        "median_radius_when_contained_m": 9654
+      }
+    },
+    "dev-2": {
+      "annotator": "Claude",
+      "answerable": 36,
+      "with_defensible_position": 34,
+      "no_defensible_position": 2,
+      "geolocate_no_response": 0,
+      "geolocate": {
+        "records": 34,
+        "with_point": 33,
+        "within_1000_m": 21,
+        "within_5000_m": 25,
+        "median_error_m": 80
+      },
+      "rules": {
+        "records": 34,
+        "with_point": 25,
+        "within_1000_m": 18,
+        "within_5000_m": 19,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 34,
+        "with_point": 21,
+        "within_1000_m": 17,
+        "within_5000_m": 18,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 34,
+        "with_point": 27,
+        "within_1000_m": 20,
+        "within_5000_m": 21,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 5,
+        "does_not": 1,
+        "median_radius_when_contained_m": 11399
+      }
+    },
+    "dev-3": {
+      "annotator": "Claude",
+      "answerable": 32,
+      "with_defensible_position": 31,
+      "no_defensible_position": 1,
+      "geolocate_no_response": 0,
+      "geolocate": {
+        "records": 31,
+        "with_point": 30,
+        "within_1000_m": 12,
+        "within_5000_m": 19,
+        "median_error_m": 2594
+      },
+      "rules": {
+        "records": 31,
+        "with_point": 25,
+        "within_1000_m": 17,
+        "within_5000_m": 19,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 31,
+        "with_point": 21,
+        "within_1000_m": 15,
+        "within_5000_m": 16,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 31,
+        "with_point": 28,
+        "within_1000_m": 20,
+        "within_5000_m": 22,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 11,
+        "does_not": 2,
+        "median_radius_when_contained_m": 13034
+      }
+    },
+    "dev-4": {
+      "annotator": "Claude",
+      "answerable": 29,
+      "with_defensible_position": 26,
+      "no_defensible_position": 3,
+      "geolocate_no_response": 0,
+      "geolocate": {
+        "records": 26,
+        "with_point": 26,
+        "within_1000_m": 11,
+        "within_5000_m": 19,
+        "median_error_m": 1387
+      },
+      "rules": {
+        "records": 26,
+        "with_point": 21,
+        "within_1000_m": 12,
+        "within_5000_m": 16,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 26,
+        "with_point": 20,
+        "within_1000_m": 15,
+        "within_5000_m": 17,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 26,
+        "with_point": 24,
+        "within_1000_m": 14,
+        "within_5000_m": 19,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 11,
+        "does_not": 2,
+        "median_radius_when_contained_m": 7434
+      }
+    }
+  },
+  "pooled": {
+    "owner": {
+      "geolocate": {
+        "records": 85,
+        "with_point": 82,
+        "within_1000_m": 44,
+        "within_5000_m": 58,
+        "median_error_m": 536
+      },
+      "rules": {
+        "records": 85,
+        "with_point": 63,
+        "within_1000_m": 51,
+        "within_5000_m": 54,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 85,
+        "with_point": 65,
+        "within_1000_m": 53,
+        "within_5000_m": 59,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 85,
+        "with_point": 71,
+        "within_1000_m": 58,
+        "within_5000_m": 61,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 23,
+        "does_not": 10,
+        "median_radius_when_contained_m": 8157
+      }
+    },
+    "Claude": {
+      "geolocate": {
+        "records": 91,
+        "with_point": 89,
+        "within_1000_m": 44,
+        "within_5000_m": 63,
+        "median_error_m": 1038
+      },
+      "rules": {
+        "records": 91,
+        "with_point": 71,
+        "within_1000_m": 47,
+        "within_5000_m": 54,
+        "median_error_m": 0
+      },
+      "llm": {
+        "records": 91,
+        "with_point": 62,
+        "within_1000_m": 47,
+        "within_5000_m": 51,
+        "median_error_m": 0
+      },
+      "hybrid": {
+        "records": 91,
+        "with_point": 79,
+        "within_1000_m": 54,
+        "within_5000_m": 62,
+        "median_error_m": 0
+      },
+      "geolocate_containment": {
+        "contains": 27,
+        "does_not": 5,
+        "median_radius_when_contained_m": 10173
+      }
+    }
+  },
+  "records": [
+    {
+      "sample": "audit-50",
+      "audit_id": "A02",
+      "geolocate": {
+        "error_m": 31,
+        "radius_m": 8855.0,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of EATON",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A03",
+      "geolocate": {
+        "error_m": 1991,
+        "radius_m": null,
+        "score": 81.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthEast of ALMONT"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A04",
+      "geolocate": {
+        "error_m": 1800,
+        "radius_m": null,
+        "score": 43.0,
+        "precision": "Low",
+        "parse_pattern": "CHICAGO BASIN"
+      },
+      "rules": {
+        "error_m": 16796
+      },
+      "llm": {
+        "error_m": 1800
+      },
+      "hybrid": {
+        "error_m": 16796
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A07",
+      "geolocate": {
+        "error_m": 669,
+        "radius_m": null,
+        "score": 48.0,
+        "precision": "Low",
+        "parse_pattern": "FLAGSTAFF MOUNTAIN"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A08",
+      "geolocate": {
+        "error_m": 100,
+        "radius_m": 28958.0,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of PUEBLO",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A10",
+      "geolocate": {
+        "error_m": 30104,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "RAINBOW LAKE"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 114298
+      },
+      "hybrid": {
+        "error_m": 114298
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A11",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "LONE CONE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A13",
+      "geolocate": {
+        "error_m": 15,
+        "radius_m": 3585.0,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "Distance SSW of PAONIA",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A16",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 40.0,
+        "precision": "Low",
+        "parse_pattern": "SOUTH PARK"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A17",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 43.0,
+        "precision": "Low",
+        "parse_pattern": "GOTERA CANYON"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A18",
+      "geolocate": {
+        "error_m": 4797,
+        "radius_m": 1398.0,
+        "score": 36.0,
+        "precision": "Low",
+        "parse_pattern": "RICO",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A23",
+      "geolocate": {
+        "error_m": 10693,
+        "radius_m": null,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthEast of CRAIG"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A24",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 40.0,
+        "precision": "Low",
+        "parse_pattern": "JAMES PEAK"
+      },
+      "rules": {
+        "error_m": 10460
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 10460
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A25",
+      "geolocate": {
+        "error_m": 14484,
+        "radius_m": 2412.0,
+        "score": 41.0,
+        "precision": "Low",
+        "parse_pattern": "HOTCHKISS",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A26",
+      "geolocate": null,
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A27",
+      "geolocate": {
+        "error_m": 83578,
+        "radius_m": 2766.0,
+        "score": 40.0,
+        "precision": "Low",
+        "parse_pattern": "GUNNISON",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A28",
+      "geolocate": {
+        "error_m": 14,
+        "radius_m": null,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "Distance West of HESPERUS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A29",
+      "geolocate": {
+        "error_m": 28,
+        "radius_m": null,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of WETMORE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A30",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 1074.0,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "PITKIN",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A32",
+      "geolocate": {
+        "error_m": 990,
+        "radius_m": 2442.0,
+        "score": 85.0,
+        "precision": "High",
+        "parse_pattern": "Distance WSW of CRESTONE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 982
+      },
+      "llm": {
+        "error_m": 982
+      },
+      "hybrid": {
+        "error_m": 982
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A33",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "FREMONT PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A35",
+      "geolocate": {
+        "error_m": 12006,
+        "radius_m": null,
+        "score": 52.0,
+        "precision": "Low",
+        "parse_pattern": "EAGLES NEST WILDERNESS"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A36",
+      "geolocate": {
+        "error_m": 16314,
+        "radius_m": 32275.0,
+        "score": 93.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthEast of COLORADO SPRINGS",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A37",
+      "geolocate": {
+        "error_m": 2709,
+        "radius_m": 21731.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of GRAND LAKE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 3615
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A39",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 39.0,
+        "precision": "Low",
+        "parse_pattern": "DRY CREEK"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A42",
+      "geolocate": {
+        "error_m": 18,
+        "radius_m": null,
+        "score": 73.0,
+        "precision": "High",
+        "parse_pattern": "Distance WSW of FIVE SPRING"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A43",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "MORRIS GULCH"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A44",
+      "geolocate": {
+        "error_m": 18170,
+        "radius_m": null,
+        "score": 38.0,
+        "precision": "Low",
+        "parse_pattern": "HESPERUS"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "audit-50",
+      "audit_id": "A48",
+      "geolocate": {
+        "error_m": 6082,
+        "radius_m": null,
+        "score": 46.0,
+        "precision": "Low",
+        "parse_pattern": "CHOKECHERRY DRAW"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D01",
+      "geolocate": {
+        "error_m": 19312,
+        "radius_m": 15528.0,
+        "score": 50.0,
+        "precision": "Medium",
+        "parse_pattern": "Distance South of %GRINDSTONE LAKE%",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D03",
+      "geolocate": {
+        "error_m": 1,
+        "radius_m": null,
+        "score": 43.0,
+        "precision": "Low",
+        "parse_pattern": "HOOSIER RIDGE"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D05",
+      "geolocate": {
+        "error_m": 17309,
+        "radius_m": null,
+        "score": 58.0,
+        "precision": "Low",
+        "parse_pattern": "ROCKY MOUNTAIN NATIONAL PARK"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D07",
+      "geolocate": {
+        "error_m": 2590,
+        "radius_m": null,
+        "score": 90.0,
+        "precision": "High",
+        "parse_pattern": "Distance West of COTTONWOOD LAKE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D11",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 43.0,
+        "precision": "Low",
+        "parse_pattern": "QUANDARY PEAK"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 2
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D13",
+      "geolocate": {
+        "error_m": 1540,
+        "radius_m": 908.0,
+        "score": 73.0,
+        "precision": "High",
+        "parse_pattern": "(g3)Baseline Lake",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D14",
+      "geolocate": {
+        "error_m": 72,
+        "radius_m": 16782.0,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of ASPEN",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D15",
+      "geolocate": {
+        "error_m": 11,
+        "radius_m": 5219.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance NNW of GRAND LAKE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D17",
+      "geolocate": {
+        "error_m": 163281,
+        "radius_m": 31571.0,
+        "score": 72.0,
+        "precision": "High",
+        "parse_pattern": "(g3)Platte River",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 53292
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 53292
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D21",
+      "geolocate": {
+        "error_m": 26736,
+        "radius_m": 8157.0,
+        "score": 54.0,
+        "precision": "Medium",
+        "parse_pattern": "Near BOULDER",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 26736
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 26736
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D23",
+      "geolocate": {
+        "error_m": 19521,
+        "radius_m": null,
+        "score": 56.0,
+        "precision": "Medium",
+        "parse_pattern": "Near DEVIL CREEK"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D26",
+      "geolocate": {
+        "error_m": 46,
+        "radius_m": 14845.0,
+        "score": 85.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of MONTROSE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D27",
+      "geolocate": {
+        "error_m": 1237461,
+        "radius_m": 2719.0,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "GRAND LAKE",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 1248241
+      },
+      "llm": {
+        "error_m": 1248241
+      },
+      "hybrid": {
+        "error_m": 1248241
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D29",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 48.0,
+        "precision": "Low",
+        "parse_pattern": "NORTH COLONY CREEK"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D33",
+      "geolocate": {
+        "error_m": 58800,
+        "radius_m": null,
+        "score": 38.0,
+        "precision": "Low",
+        "parse_pattern": "SAPINERO"
+      },
+      "rules": {
+        "error_m": 58800
+      },
+      "llm": {
+        "error_m": 58800
+      },
+      "hybrid": {
+        "error_m": 58800
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D35",
+      "geolocate": {
+        "error_m": 3486,
+        "radius_m": 8157.0,
+        "score": 39.0,
+        "precision": "Low",
+        "parse_pattern": "BOULDER",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 336428
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 336428
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D38",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "HARTSEL"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D39",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 88.0,
+        "precision": "High",
+        "parse_pattern": "DICKSON CREEK"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D40",
+      "geolocate": {
+        "error_m": 1110,
+        "radius_m": null,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "LA VETA PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D41",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 731.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "TWO BUTTES",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D42",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "CARDINAL"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D43",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "SKULL CANYON"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D45",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 3421.0,
+        "score": 54.0,
+        "precision": "Medium",
+        "parse_pattern": "At ARBOLES",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D46",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "RIFLE GAP"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D47",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "ARAPAHO PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D49",
+      "geolocate": {
+        "error_m": 196715,
+        "radius_m": null,
+        "score": 38.0,
+        "precision": "Low",
+        "parse_pattern": "CHEYENNE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-1",
+      "audit_id": "D50",
+      "geolocate": {
+        "error_m": 47,
+        "radius_m": 3036.0,
+        "score": 60.0,
+        "precision": "Medium",
+        "parse_pattern": "(g3)Florissant",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V002",
+      "geolocate": null,
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V006",
+      "geolocate": {
+        "error_m": 1888,
+        "radius_m": 23598.0,
+        "score": 85.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of MONTROSE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 1794
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V007",
+      "geolocate": {
+        "error_m": 9656,
+        "radius_m": null,
+        "score": 50.0,
+        "precision": "Medium",
+        "parse_pattern": "Distance South of %FISHERS PEAK MESA%"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V008",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 44.0,
+        "precision": "Low",
+        "parse_pattern": "LUTZ RESERVOIR"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V009",
+      "geolocate": {
+        "error_m": 4463,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of CURLEY PEAK"
+      },
+      "rules": {
+        "error_m": 3586
+      },
+      "llm": {
+        "error_m": 3586
+      },
+      "hybrid": {
+        "error_m": 3586
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V013",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 43.0,
+        "precision": "Low",
+        "parse_pattern": "MOUNT SHAVANO"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V014",
+      "geolocate": {
+        "error_m": 15919,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of GREYSTONE"
+      },
+      "rules": {
+        "error_m": 311056
+      },
+      "llm": {
+        "error_m": 15922
+      },
+      "hybrid": {
+        "error_m": 311056
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V015",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 703.0,
+        "score": 53.0,
+        "precision": "Medium",
+        "parse_pattern": "Near EMPIRE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 106521
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V016",
+      "geolocate": {
+        "error_m": 6112,
+        "radius_m": 6123.0,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of LYONS",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 6112
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V017",
+      "geolocate": {
+        "error_m": 402,
+        "radius_m": null,
+        "score": 41.0,
+        "precision": "Low",
+        "parse_pattern": "GEM VILLAGE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V021",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "HOOSIER PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V022",
+      "geolocate": {
+        "error_m": 1295148,
+        "radius_m": 206227.0,
+        "score": 74.0,
+        "precision": "High",
+        "parse_pattern": "(g3)Arkansas River",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V025",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of WESTON PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V028",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 4425.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of WESTCLIFFE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V029",
+      "geolocate": {
+        "error_m": 25906,
+        "radius_m": null,
+        "score": 44.0,
+        "precision": "Medium",
+        "parse_pattern": "Distance South of %ROCKY FLATS%"
+      },
+      "rules": {
+        "error_m": 19314
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 19314
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V035",
+      "geolocate": null,
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V042",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 48.0,
+        "precision": "Low",
+        "parse_pattern": "ROARING FORK RIVER"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V043",
+      "geolocate": {
+        "error_m": 5068,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of CANYON CITY"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V045",
+      "geolocate": {
+        "error_m": 1332,
+        "radius_m": null,
+        "score": 45.0,
+        "precision": "Low",
+        "parse_pattern": "LONE EAGLE PEAK"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V046",
+      "geolocate": {
+        "error_m": 30,
+        "radius_m": null,
+        "score": 81.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of IDALIA"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V048",
+      "geolocate": {
+        "error_m": 34765,
+        "radius_m": 1115.0,
+        "score": 55.0,
+        "precision": "Medium",
+        "parse_pattern": "Near ANTONITO",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V049",
+      "geolocate": {
+        "error_m": 3841,
+        "radius_m": 4388.0,
+        "score": 52.0,
+        "precision": "Medium",
+        "parse_pattern": "Near ASPEN",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 3841
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 3841
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V050",
+      "geolocate": {
+        "error_m": 8851,
+        "radius_m": null,
+        "score": 36.0,
+        "precision": "Low",
+        "parse_pattern": "GOTHIC"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V054",
+      "geolocate": {
+        "error_m": 89,
+        "radius_m": 9654.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of WESTCLIFFE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V055",
+      "geolocate": {
+        "error_m": 4346,
+        "radius_m": 29504.0,
+        "score": 89.0,
+        "precision": "High",
+        "parse_pattern": "Distance West of FORT COLLINS",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 4442
+      },
+      "llm": {
+        "error_m": 4442
+      },
+      "hybrid": {
+        "error_m": 4442
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V056",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 13667.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "ALLENSPARK",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V057",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 17679.0,
+        "score": 81.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of WRAY",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V059",
+      "geolocate": {
+        "error_m": 825,
+        "radius_m": null,
+        "score": 46.0,
+        "precision": "Low",
+        "parse_pattern": "BOULDER MOUNTAIN"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "validation",
+      "audit_id": "V060",
+      "geolocate": {
+        "error_m": 1742,
+        "radius_m": null,
+        "score": 45.0,
+        "precision": "Low",
+        "parse_pattern": "BLUEBELL CANYON"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 1941
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E01",
+      "geolocate": {
+        "error_m": 649,
+        "radius_m": 11417.0,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of WALDEN",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 2377
+      },
+      "llm": {
+        "error_m": 2377
+      },
+      "hybrid": {
+        "error_m": 2377
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E02",
+      "geolocate": {
+        "error_m": 3143,
+        "radius_m": null,
+        "score": 40.0,
+        "precision": "Low",
+        "parse_pattern": "LOST CREEK"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E05",
+      "geolocate": {
+        "error_m": 1330,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of BLUE HILL"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E06",
+      "geolocate": {
+        "error_m": 12862,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of GREYSTONE"
+      },
+      "rules": {
+        "error_m": 11781
+      },
+      "llm": {
+        "error_m": 11781
+      },
+      "hybrid": {
+        "error_m": 11781
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E07",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 1968.0,
+        "score": 40.0,
+        "precision": "Low",
+        "parse_pattern": "BAYFIELD",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E08",
+      "geolocate": {
+        "error_m": 805,
+        "radius_m": null,
+        "score": 36.0,
+        "precision": "Low",
+        "parse_pattern": "ALMONT"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E09",
+      "geolocate": {
+        "error_m": 11265,
+        "radius_m": null,
+        "score": 49.0,
+        "precision": "Medium",
+        "parse_pattern": "Distance South of %FLATTOP MOUNTAIN%"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E11",
+      "geolocate": {
+        "error_m": 80,
+        "radius_m": null,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthEast of SOUTH FORK"
+      },
+      "rules": {
+        "error_m": 300872
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 300872
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E14",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "ARTISTS GLEN"
+      },
+      "rules": {
+        "error_m": 8070
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 8070
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E15",
+      "geolocate": {
+        "error_m": 37,
+        "radius_m": 11399.0,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthEast of DOLORES",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E17",
+      "geolocate": {
+        "error_m": 42199,
+        "radius_m": null,
+        "score": 34.0,
+        "precision": "Low",
+        "parse_pattern": "MESA"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E19",
+      "geolocate": {
+        "error_m": 881,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "ROSALIE PEAK"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E20",
+      "geolocate": {
+        "error_m": 144,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance WSW of OAK CREEK"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E21",
+      "geolocate": {
+        "error_m": 12913,
+        "radius_m": 5495.0,
+        "score": 58.0,
+        "precision": "Medium",
+        "parse_pattern": "Near WHEAT RIDGE",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 12913
+      },
+      "llm": {
+        "error_m": 133119
+      },
+      "hybrid": {
+        "error_m": 12913
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E22",
+      "geolocate": {
+        "error_m": 259650,
+        "radius_m": null,
+        "score": 62.0,
+        "precision": "Medium",
+        "parse_pattern": "(g1)Beaver Creek"
+      },
+      "rules": {
+        "error_m": 31894
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 31894
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E24",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "SWEDE SPRING"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 480990
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E27",
+      "geolocate": {
+        "error_m": 1933,
+        "radius_m": null,
+        "score": 41.0,
+        "precision": "Low",
+        "parse_pattern": "NIWOT RIDGE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E28",
+      "geolocate": {
+        "error_m": 1,
+        "radius_m": 39941.0,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of CRAIG",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E29",
+      "geolocate": {
+        "error_m": 12169,
+        "radius_m": null,
+        "score": 44.0,
+        "precision": "Medium",
+        "parse_pattern": "Distance South of %ROCKY FLATS%"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E30",
+      "geolocate": {
+        "error_m": 68,
+        "radius_m": null,
+        "score": 80.0,
+        "precision": "High",
+        "parse_pattern": "Distance West of MOSCA"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E32",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 8157.0,
+        "score": 39.0,
+        "precision": "Low",
+        "parse_pattern": "BOULDER",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E33",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "DOUGLAS PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E34",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 48.0,
+        "precision": "Low",
+        "parse_pattern": "SAN FRANCISCO PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E35",
+      "geolocate": {
+        "error_m": 27,
+        "radius_m": null,
+        "score": 81.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of CAHONE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E37",
+      "geolocate": null,
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E38",
+      "geolocate": {
+        "error_m": 2234,
+        "radius_m": null,
+        "score": 39.0,
+        "precision": "Low",
+        "parse_pattern": "BLUE MESA"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E39",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "MILNER PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E40",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "HOOSIER PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E42",
+      "geolocate": {
+        "error_m": 40851,
+        "radius_m": null,
+        "score": 40.0,
+        "precision": "Low",
+        "parse_pattern": "NORTH FORK"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E43",
+      "geolocate": {
+        "error_m": 326746,
+        "radius_m": null,
+        "score": 38.0,
+        "precision": "Low",
+        "parse_pattern": "ARAPAHOE"
+      },
+      "rules": {
+        "error_m": 325529
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 325529
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E45",
+      "geolocate": {
+        "error_m": 16,
+        "radius_m": null,
+        "score": 88.0,
+        "precision": "High",
+        "parse_pattern": "MOUNT AUDUBON"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E46",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 88.0,
+        "precision": "High",
+        "parse_pattern": "BOULDER FALLS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E48",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 39.0,
+        "precision": "Low",
+        "parse_pattern": "MINNEHAHA"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-2",
+      "audit_id": "E49",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "SOMERSET"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F05",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 56.0,
+        "precision": "Medium",
+        "parse_pattern": "Near TELLER LAKE"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F06",
+      "geolocate": {
+        "error_m": 18,
+        "radius_m": 7449.0,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of RANGELY",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F08",
+      "geolocate": {
+        "error_m": 36137,
+        "radius_m": 88058.0,
+        "score": 92.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of GUNNISON COUNTY",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F11",
+      "geolocate": {
+        "error_m": 48256,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "SPRING CREEK"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F12",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of MINTURN"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F14",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "EMPIRE PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F16",
+      "geolocate": null,
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F17",
+      "geolocate": {
+        "error_m": 17185,
+        "radius_m": 12325.0,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthEast of SILVERTON",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 17048
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 17048
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F18",
+      "geolocate": {
+        "error_m": 1235,
+        "radius_m": null,
+        "score": 85.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of BAKERVILLE"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F19",
+      "geolocate": {
+        "error_m": 1942,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthEast of BEAR LAKE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F20",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 92.0,
+        "precision": "High",
+        "parse_pattern": "SPECIMEN MOUNTAIN"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F21",
+      "geolocate": {
+        "error_m": 354,
+        "radius_m": 13034.0,
+        "score": 93.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthEast of GLENWOOD SPRINGS",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F22",
+      "geolocate": {
+        "error_m": 7555,
+        "radius_m": null,
+        "score": 44.0,
+        "precision": "Low",
+        "parse_pattern": "CROSS MOUNTAIN"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F23",
+      "geolocate": {
+        "error_m": 12946,
+        "radius_m": 8947.0,
+        "score": 88.0,
+        "precision": "High",
+        "parse_pattern": "Distance SSW of SPRINGFIELD",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 12867
+      },
+      "llm": {
+        "error_m": 12867
+      },
+      "hybrid": {
+        "error_m": 12867
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F24",
+      "geolocate": {
+        "error_m": 3733,
+        "radius_m": 21095.0,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance West of NUCLA",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 3634
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 3634
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F25",
+      "geolocate": {
+        "error_m": 40126,
+        "radius_m": 55500.0,
+        "score": 48.0,
+        "precision": "Low",
+        "parse_pattern": "JEFFERSON COUNTY",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F27",
+      "geolocate": {
+        "error_m": 73924,
+        "radius_m": null,
+        "score": 60.0,
+        "precision": "Medium",
+        "parse_pattern": "(g1)Rio Grande"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F29",
+      "geolocate": {
+        "error_m": 1,
+        "radius_m": 22827.0,
+        "score": 85.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of LA JUNTA",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F31",
+      "geolocate": {
+        "error_m": 5,
+        "radius_m": null,
+        "score": 84.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of CATHEDRAL"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F32",
+      "geolocate": {
+        "error_m": 2113,
+        "radius_m": null,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance SSE of PLATORO"
+      },
+      "rules": {
+        "error_m": 746
+      },
+      "llm": {
+        "error_m": 5504
+      },
+      "hybrid": {
+        "error_m": 746
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F33",
+      "geolocate": {
+        "error_m": 9,
+        "radius_m": 1541.0,
+        "score": 85.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of CRESTONE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F34",
+      "geolocate": {
+        "error_m": 10066,
+        "radius_m": 10173.0,
+        "score": 80.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthEast of KIM",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 10116
+      },
+      "llm": {
+        "error_m": 10116
+      },
+      "hybrid": {
+        "error_m": 10116
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F35",
+      "geolocate": {
+        "error_m": 5651,
+        "radius_m": null,
+        "score": 81.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of BUFORD"
+      },
+      "rules": {
+        "error_m": 7134
+      },
+      "llm": {
+        "error_m": 7134
+      },
+      "hybrid": {
+        "error_m": 7134
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F37",
+      "geolocate": {
+        "error_m": 12574,
+        "radius_m": null,
+        "score": 49.0,
+        "precision": "Low",
+        "parse_pattern": "WHITE RIVER PLATEAU"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F38",
+      "geolocate": {
+        "error_m": 4202,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Medium",
+        "parse_pattern": "Distance North of %PLAINVIEW%"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F41",
+      "geolocate": {
+        "error_m": 25,
+        "radius_m": 7395.0,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "Distance West of KREMMLING",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F42",
+      "geolocate": {
+        "error_m": 58975,
+        "radius_m": null,
+        "score": 63.0,
+        "precision": "Medium",
+        "parse_pattern": "(g1)San Luis Lake"
+      },
+      "rules": {
+        "error_m": 12421
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 12421
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F44",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of WETMORE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F45",
+      "geolocate": {
+        "error_m": 3076,
+        "radius_m": null,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of HOOSIER PASS"
+      },
+      "rules": {
+        "error_m": 3076
+      },
+      "llm": {
+        "error_m": 3076
+      },
+      "hybrid": {
+        "error_m": 3076
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F48",
+      "geolocate": {
+        "error_m": 61,
+        "radius_m": 7185.0,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthEast of WALDEN",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 32968
+      },
+      "llm": {
+        "error_m": 32968
+      },
+      "hybrid": {
+        "error_m": 32968
+      }
+    },
+    {
+      "sample": "dev-3",
+      "audit_id": "F50",
+      "geolocate": {
+        "error_m": 4127,
+        "radius_m": 21731.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of GRAND LAKE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G04",
+      "geolocate": {
+        "error_m": 33839,
+        "radius_m": 2766.0,
+        "score": 40.0,
+        "precision": "Low",
+        "parse_pattern": "GUNNISON",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G05",
+      "geolocate": {
+        "error_m": 8142,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "ROLLINSVILLE"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G10",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 49.0,
+        "precision": "Medium",
+        "parse_pattern": "Distance North of %JOE BAKER CANYON%"
+      },
+      "rules": {
+        "error_m": 1046
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 1046
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G12",
+      "geolocate": {
+        "error_m": 1591,
+        "radius_m": 5891.0,
+        "score": 93.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of PAONIA RESERVOIR",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G15",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 9640.0,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of FRUITA",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G16",
+      "geolocate": {
+        "error_m": 38,
+        "radius_m": null,
+        "score": 42.0,
+        "precision": "Low",
+        "parse_pattern": "CARIBOU HILL"
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": 3550
+      },
+      "hybrid": {
+        "error_m": 3550
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G18",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 45.0,
+        "precision": "Low",
+        "parse_pattern": "CATHEDRAL CREEK"
+      },
+      "rules": {
+        "error_m": 6564
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 6564
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G21",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 2640.0,
+        "score": 41.0,
+        "precision": "Low",
+        "parse_pattern": "CEDAREDGE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G22",
+      "geolocate": {
+        "error_m": 9707,
+        "radius_m": 22587.0,
+        "score": 85.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of LA JUNTA",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 9707
+      },
+      "llm": {
+        "error_m": 9707
+      },
+      "hybrid": {
+        "error_m": 9707
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G23",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 7434.0,
+        "score": 80.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of KIM",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 28134
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 28134
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G25",
+      "geolocate": {
+        "error_m": 8015,
+        "radius_m": 7559.0,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of LEADVILLE",
+        "contains_position": false
+      },
+      "rules": {
+        "error_m": 7992
+      },
+      "llm": {
+        "error_m": 7992
+      },
+      "hybrid": {
+        "error_m": 7992
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G26",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "SILVER LAKE"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G27",
+      "geolocate": {
+        "error_m": 1038,
+        "radius_m": 12038.0,
+        "score": 93.0,
+        "precision": "High",
+        "parse_pattern": "Distance NNE of GLENWOOD SPRINGS",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 926
+      },
+      "llm": {
+        "error_m": 926
+      },
+      "hybrid": {
+        "error_m": 926
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G29",
+      "geolocate": {
+        "error_m": 43,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "BANNER PEAK"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G30",
+      "geolocate": {
+        "error_m": 38246,
+        "radius_m": null,
+        "score": 90.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of SADDLE MOUNTAIN"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G33",
+      "geolocate": {
+        "error_m": 1566,
+        "radius_m": null,
+        "score": 81.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of ROSITA"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G34",
+      "geolocate": {
+        "error_m": 125,
+        "radius_m": 3841.0,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of LYONS",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G36",
+      "geolocate": {
+        "error_m": 1591,
+        "radius_m": null,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "Distance NorthWest of KREMMLING"
+      },
+      "rules": {
+        "error_m": 1572
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 1572
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G39",
+      "geolocate": {
+        "error_m": 1417,
+        "radius_m": null,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of PLATORO"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G41",
+      "geolocate": {
+        "error_m": 0,
+        "radius_m": 2334.0,
+        "score": 86.0,
+        "precision": "High",
+        "parse_pattern": "KREMMLING",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G43",
+      "geolocate": {
+        "error_m": 2825,
+        "radius_m": 7181.0,
+        "score": 82.0,
+        "precision": "High",
+        "parse_pattern": "Distance East of LYONS",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 2832
+      },
+      "llm": {
+        "error_m": 2832
+      },
+      "hybrid": {
+        "error_m": 2832
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G45",
+      "geolocate": {
+        "error_m": 8124,
+        "radius_m": null,
+        "score": 89.0,
+        "precision": "High",
+        "parse_pattern": "Distance South of VEGA RESERVOIR"
+      },
+      "rules": {
+        "error_m": 7539
+      },
+      "llm": {
+        "error_m": 7539
+      },
+      "hybrid": {
+        "error_m": 7539
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G46",
+      "geolocate": {
+        "error_m": 1357,
+        "radius_m": null,
+        "score": 83.0,
+        "precision": "High",
+        "parse_pattern": "Distance SouthWest of REDCLIFF"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G47",
+      "geolocate": {
+        "error_m": 3373,
+        "radius_m": 21731.0,
+        "score": 87.0,
+        "precision": "High",
+        "parse_pattern": "Distance North of GRAND LAKE",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": 4090
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 4090
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G48",
+      "geolocate": {
+        "error_m": 12710,
+        "radius_m": 42624.0,
+        "score": 58.0,
+        "precision": "Low",
+        "parse_pattern": "DINOSAUR NATIONAL MONUMENT",
+        "contains_position": true
+      },
+      "rules": {
+        "error_m": null
+      },
+      "llm": {
+        "error_m": null
+      },
+      "hybrid": {
+        "error_m": null
+      }
+    },
+    {
+      "sample": "dev-4",
+      "audit_id": "G50",
+      "geolocate": {
+        "error_m": 27,
+        "radius_m": null,
+        "score": 89.0,
+        "precision": "High",
+        "parse_pattern": "Distance West of COCHETOPA PASS"
+      },
+      "rules": {
+        "error_m": 0
+      },
+      "llm": {
+        "error_m": 0
+      },
+      "hybrid": {
+        "error_m": 0
+      }
+    }
+  ]
+}
