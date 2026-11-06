@@ -40,9 +40,10 @@ curator approves, corrects, or defers every result before it is exported as Darw
 > [!NOTE]
 > **Early development: Phase 1 (data & feasibility).** This README separates what exists
 > (✅) from what is planned (🔜). The first milestone has been measured on a locked test split
-> twice, and both results are published below: the LLM alone fell short
+> three times, and every result is published below: the LLM alone fell short
 > ([release 1](eval/reports/test-release-1.md)), and rules with an LLM fallback cleared the
-> target by a thin margin ([release 2](eval/reports/test-release-2.md)).
+> target by a thin margin, both with the first rules ([release 2](eval/reports/test-release-2.md))
+> and with the current ones ([release 3](eval/reports/test-release-3.md)).
 
 ## 🧭 How it works
 
@@ -559,14 +560,20 @@ against a blind annotation of every record ([worksheet](eval/audit/worksheet.csv
 > alone gives **15 of 56** correct proposal candidates against the rules' **19** (release 1,
 > −7 points). `hybrid-1` runs the rules and calls the LLM only where they reach no gazetteer
 > candidate. It gives **25 of 56: +10.7 points** (95% CI +3.6 to +19.6, p = 0.031), just over
-> the +10 point target ([release 2](eval/reports/test-release-2.md)).
+> the +10 point target ([release 2](eval/reports/test-release-2.md)). With the current rules
+> (rules-6) both gain 3: **hybrid-1 28 against rules 22 of 56, +10.7 points again** (same CI,
+> 6 gained, 0 lost; [release 3](eval/reports/test-release-3.md)).
 
 | Correct proposal candidates | Rules | LLM v2 alone | **hybrid-1** |
 |---|---|---|---|
-| **Locked test** (56 answerable) | 19 (34%) | 15 (27%) | **25 (45%)** |
+| **Locked test, release 3** (rules-6; 56 answerable) | 22 (39%) | 18 (32%) | **28 (50%)** |
+| Locked test, releases 1–2 (rules-1) | 19 (34%) | 15 (27%) | 25 (45%) |
 | Validation (held out, now read; 32) | 13 (41%) | 15 (47%) | 16 (50%) |
 | Audit (dev data; 31) | 14 (45%) | 12 (39%) | 14 (45%) |
 | dev-1 (v2 was written on it; 29) | 16 (55%) | 18 (62%) | 18 (62%) |
+
+The rows below the test are the release-2 configuration; the rules changes that follow led to
+release 3.
 
 **Since release 2: rules-2.** The rules now read "air mi", spelled-out numbers before a unit
 and a bare "ca" ([findings](eval/reports/rules-2-findings.md)). On the audit they gain 3
@@ -795,7 +802,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · candidate disambiguation · footprints · GeoJSON | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
-| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
+| **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
 <details>

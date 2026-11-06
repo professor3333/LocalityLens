@@ -48,6 +48,7 @@ uv run localitylens benchmark draw --seed benchmark/1    # --validation 60 --tes
 |---|---|---|
 | 1 | [`declaration-1.json`](declaration-1.json), pushed before the run | rules 19, LLM v2 15: −7 points (CI −23 to +7), milestone answer **no** ([result](../reports/test-release-1.md)) |
 | 2 | [`declaration-2.json`](declaration-2.json), pushed before the run | `hybrid-1` 25 against rules 19: +10.7 points (CI +3.6 to +19.6), answer **yes**, by one record ([result](../reports/test-release-2.md)) |
+| 3 | [`declaration-3.json`](declaration-3.json), pushed before the run | `hybrid-1` with rules-6: 28 against rules-6 22: +10.7 points (CI +3.6 to +19.6), answer **yes**, again by one record ([result](../reports/test-release-3.md)) |
 
 Per-record outputs of each test run stay in `test/reports/`, inside the locked folder, and are
 not read during development. Only the totals are published in [`../reports/`](../reports/).

@@ -1,0 +1,5 @@
+relation   named_feature=52  distance_and_direction=25  route_relative=12  between_features=10  orthogonal_offsets=8  other=5  direction_only=3  itinerary=3  no_locality=2
+retrieval  candidates_found=63  feature_absent_from_index=37  None=13  no_reference_feature=7
+proposal   needs_information=75  unsupported=32  invalid_extraction=13
+  report  eval/benchmark/test/reports/release-3/test-llm-x2g2-qwen3.5-4b-q4km.md
+  data    eval/benchmark/test/reports/release-3/test-llm-x2g2-qwen3.5-4b-q4km.json
