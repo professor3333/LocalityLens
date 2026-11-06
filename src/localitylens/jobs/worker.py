@@ -26,9 +26,10 @@ log = logging.getLogger(__name__)
 TRANSIENT: Final = frozenset({FailureCategory.MODEL_SERVER_UNAVAILABLE})
 INTERNAL_ERROR: Final = "internal_error"
 
-# process(record_id) runs the pipeline and returns a writer that stores its result. Raising
-# ModelCallError (or anything else) fails the attempt.
-Process = Callable[[str], Callable[[], None]]
+# process(record_id) runs the pipeline and returns a writer that stores its result and returns
+# the proposal ID. A writer may carry ``trace_fields`` (timings, counts, model use) for the
+# attempt's trace. Raising ModelCallError (or anything else) fails the attempt.
+Process = Callable[[str], Callable[[], str | None]]
 
 
 def work(
@@ -61,7 +62,8 @@ def work(
             _count(counts, queue.fail(job, INTERNAL_ERROR, retryable=True), job.attempts,
                    queue.max_attempts, True)  # fmt: skip
             continue
-        counts["done" if queue.complete(job, write) else "lost"] += 1
+        fields = getattr(write, "trace_fields", None)
+        counts["done" if queue.complete(job, write, fields) else "lost"] += 1
     return counts
 
 

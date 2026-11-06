@@ -56,6 +56,7 @@ DWC_COLUMNS: Final = (
     "localitylens_extractor",
     "localitylens_proposal_id",
     "localitylens_decision_id",
+    "localitylens_trace_id",
     "localitylens_human_edits",
 )
 UNRESOLVED_COLUMNS: Final = (
@@ -126,6 +127,8 @@ def export_approved(store: ReviewStore, out: Path) -> int:
             "localitylens_extractor": stored.extractor_version,
             "localitylens_proposal_id": stored.proposal_id,
             "localitylens_decision_id": decision.decision_id,
+            # the job attempt that produced the pipeline proposal (empty for pre-queue imports)
+            "localitylens_trace_id": store.trace_for_proposal(decision.proposal_id) or "",
             "localitylens_human_edits": json.dumps(decision.edits, sort_keys=True)
             if decision.edits
             else "",

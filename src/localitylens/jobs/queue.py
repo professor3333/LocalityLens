@@ -30,6 +30,7 @@ from typing import Final
 
 from localitylens.domain.status import RecordStatus
 from localitylens.review.store import ReviewStore
+from localitylens.telemetry.trace import RecordTrace, emit, input_sha256, new_trace_id, now_iso
 
 JOBS_VERSION: Final = "jobs-1"
 DEFAULT_LEASE_S: Final = 300.0  # an LLM call takes seconds to tens of seconds (p95 ~ 30 s)
@@ -216,9 +217,16 @@ class JobQueue:
                 ).fetchone()
                 if still["state"] != JobState.LEASED.value or still["lease_expires"] >= now:
                     continue  # completed or re-leased meanwhile
-                self._retry_or_fail(r["job_id"], r["record_id"], r["attempts"], "lease_expired",
-                                    retryable=True)  # fmt: skip
-                log.warning("lease expired: job %s, attempt %d", r["job_id"], r["attempts"])
+                trace = self._retry_or_fail(
+                    r["job_id"],
+                    r["record_id"],
+                    r["attempts"],
+                    "lease_expired",
+                    retryable=True,
+                    fields=None,
+                )
+            emit(trace)
+            log.warning("lease expired: job %s, attempt %d", r["job_id"], r["attempts"])
         return len(expired) + len(orphans)
 
     def claim(self, owner: str, batch_id: str | None = None) -> Job | None:
@@ -263,45 +271,96 @@ class JobQueue:
             and r["lease_expires"] >= self._clock()
         )
 
-    def complete(self, job: Job, write_result: Callable[[], None]) -> bool:
-        """Write the pipeline result and close the job, atomically. A worker whose lease has
-        expired (or was taken over) writes nothing and gets False."""
+    def complete(
+        self,
+        job: Job,
+        write_result: Callable[[], str | None],
+        fields: dict[str, object] | None = None,
+    ) -> bool:
+        """Write the pipeline result, close the job and store its trace, atomically. A worker
+        whose lease has expired (or was taken over) writes nothing and gets False."""
         with self.store.transaction():
             if not self.holds_lease(job):
                 return False
-            write_result()  # ReviewStore.add_pipeline_result: processing → outcome status
+            proposal_id = write_result()  # add_pipeline_result: processing → outcome status
             self._set_job(job.job_id, JobState.DONE)
+            outcome = self.store.status(job.record_id).value
+            trace = self._trace(job.job_id, job.batch_id, job.record_id, job.attempts, outcome,
+                                proposal_id, fields)  # fmt: skip
+        emit(trace)
         return True
 
-    def fail(self, job: Job, category: str, *, retryable: bool) -> bool:
+    def fail(
+        self, job: Job, category: str, *, retryable: bool, fields: dict[str, object] | None = None
+    ) -> bool:
         """A failed attempt. Transient failures go back to ``queued`` while attempts remain;
         the rest end ``failed`` with their category. False if the lease was already lost."""
         with self.store.transaction():
             if not self.holds_lease(job):
                 return False
-            self._retry_or_fail(job.job_id, job.record_id, job.attempts, category,
-                                retryable=retryable)  # fmt: skip
+            trace = self._retry_or_fail(job.job_id, job.record_id, job.attempts, category,
+                                        retryable=retryable, fields=fields)  # fmt: skip
+        emit(trace)
         return True
 
     # --- internals (inside a transaction) -----------------------------------------------------
 
     def _retry_or_fail(
-        self, job_id: str, record_id: str, attempts: int, category: str, *, retryable: bool
-    ) -> None:
+        self,
+        job_id: str,
+        record_id: str,
+        attempts: int,
+        category: str,
+        *,
+        retryable: bool,
+        fields: dict[str, object] | None,
+    ) -> RecordTrace:
+        batch_id = self._con.execute(
+            "SELECT batch_id FROM job WHERE job_id=?", (job_id,)
+        ).fetchone()["batch_id"]
         if retryable and attempts < self.max_attempts:
             self._set_job(job_id, JobState.PENDING, error=category)
             self.store.requeue(record_id)
-            return
+            return self._trace(job_id, batch_id, record_id, attempts, f"retry:{category}", None,
+                               fields)  # fmt: skip
         self._set_job(job_id, JobState.FAILED, error=category)
         row = self._con.execute(
             "SELECT b.system, b.release, b.gazetteer, b.extractor FROM job j JOIN batch b "
             "ON b.batch_id = j.batch_id WHERE j.job_id=?", (job_id,)
         ).fetchone()  # fmt: skip
-        self.store.add_pipeline_result(
+        proposal_id = self.store.add_pipeline_result(
             record_id, system=row["system"], extractor_version=row["extractor"],
             release=row["release"], gazetteer_snapshot=row["gazetteer"], interpretation=None,
             candidates=(), proposal=None, failure=category,
         )  # fmt: skip
+        return self._trace(job_id, batch_id, record_id, attempts, f"failed:{category}",
+                           proposal_id, fields)  # fmt: skip
+
+    def _trace(
+        self,
+        job_id: str,
+        batch_id: str,
+        record_id: str,
+        attempt: int,
+        outcome: str,
+        proposal_id: str | None,
+        fields: dict[str, object] | None,
+    ) -> RecordTrace:
+        """Build, validate and store one attempt's trace (inside the step's transaction)."""
+        b = self._con.execute("SELECT * FROM batch WHERE batch_id=?", (batch_id,)).fetchone()
+        rec = self.store.record(record_id)
+        base: dict[str, object] = {
+            "trace_id": new_trace_id(), "at": now_iso(), "job_id": job_id, "batch_id": batch_id,
+            "record_id": record_id, "attempt": attempt,
+            "input_sha256": input_sha256(rec["locality"], rec["county"] or None),
+            "system": b["system"], "extractor_version": b["extractor"],
+            "release": b["release"], "gazetteer_snapshot": b["gazetteer"],
+            "outcome": outcome, "proposal_id": proposal_id,
+        }  # fmt: skip
+        trace = RecordTrace.model_validate({**(fields or {}), **base})  # identity fields win
+        self.store.add_trace(trace.trace_id, job_id, record_id, proposal_id, trace.at, outcome,
+                             trace.model_dump_json(exclude_none=True))  # fmt: skip
+        return trace
 
     def _set_job(self, job_id: str, state: JobState, *, error: str | None = None) -> None:
         self._con.execute(

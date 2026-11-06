@@ -338,6 +338,7 @@ def _review_import(args: argparse.Namespace) -> int:
         return 2
     sample = load_sample(Path(args.sample))
     extents = _load_extents(args)
+    _log_json(args)
     with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
         rules, llm, release_id = _extractors(args, gaz, args.system)
         counts = import_records(
@@ -351,6 +352,14 @@ def _review_import(args: argparse.Namespace) -> int:
     for status, n in sorted(counts.items()):
         print(f"  {status:<18} {n}")
     return 0
+
+
+def _log_json(args: argparse.Namespace) -> None:
+    if getattr(args, "log_json", None):
+        from localitylens.telemetry.trace import json_lines_handler
+
+        Path(args.log_json).parent.mkdir(parents=True, exist_ok=True)
+        json_lines_handler(args.log_json)
 
 
 def _extractors(args: argparse.Namespace, gaz: Any, system: str) -> tuple[Any, Any, str]:
@@ -378,6 +387,7 @@ def _review_work(args: argparse.Namespace) -> int:
     from localitylens.review.store import ReviewStore
 
     extents = _load_extents(args)
+    _log_json(args)
     with Gazetteer(Path(args.index)) as gaz, ReviewStore(Path(args.db)) as store:
         queue = JobQueue(store, clock=time.time, lease_s=args.lease, max_attempts=args.attempts)
         batches = [queue.batch(args.batch)] if args.batch else queue.batches()
@@ -390,6 +400,42 @@ def _review_work(args: argparse.Namespace) -> int:
                                 extents=extents, max_jobs=args.max_jobs)  # fmt: skip
             print(f"{b.batch_id} ({b.system}): " + (", ".join(
                 f"{s} {n}" for s, n in sorted(counts.items())) or "nothing finished"))  # fmt: skip
+    return 0
+
+
+def _review_traces(args: argparse.Namespace) -> int:
+    """Telemetry summary from the stored traces: outcomes, latency, model use (no label text)."""
+    import json as _json
+    import statistics
+    from collections import Counter
+
+    from localitylens.review.store import ReviewStore
+
+    with ReviewStore(Path(args.db)) as store:
+        traces = [_json.loads(t) for t in store.traces(args.batch)]
+    print(f"{len(traces)} traces" + (f" (batch {args.batch})" if args.batch else ""))
+    if not traces:
+        return 0
+    outcomes = Counter(t["outcome"] for t in traces)
+    print("  outcomes  " + ", ".join(f"{k} {v}" for k, v in sorted(outcomes.items())))
+    for system in sorted({t["system"] for t in traces}):
+        ms = [
+            t["stages"]["total_ms"]
+            for t in traces
+            if t["system"] == system and t.get("stages", {}).get("total_ms") is not None
+        ]
+        if ms:
+            p95 = statistics.quantiles(ms, n=20)[18] if len(ms) >= 20 else max(ms)
+            print(f"  {system:<8} {len(ms)} completed  p50 {statistics.median(ms):,.1f} ms"
+                  f"  p95 {p95:,.1f} ms")  # fmt: skip
+    calls = [t["model"] for t in traces if t.get("model", {}).get("called")]
+    if calls:
+        print(f"  model     {len(calls)} calls, {sum(m['used'] for m in calls)} used, "
+              f"{sum(m['prompt_tokens'] for m in calls):,} prompt + "
+              f"{sum(m['completion_tokens'] for m in calls):,} completion tokens, "
+              f"{sum(m['cache_hits'] for m in calls)} cache hits")  # fmt: skip
+    retries = sum(1 for t in traces if t["outcome"].startswith("retry:"))
+    print(f"  retries   {retries}")
     return 0
 
 
@@ -1010,6 +1056,7 @@ def main(argv: list[str] | None = None) -> int:
     ri.add_argument("--extents", help=_EXTENTS_HELP)
     ri.add_argument("--url", default="http://127.0.0.1:8080")
     ri.add_argument("--release", default="release/manifest.json")
+    ri.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
     ri.add_argument(
         "--no-process",
         action="store_true",
@@ -1026,7 +1073,12 @@ def main(argv: list[str] | None = None) -> int:
     rw.add_argument("--extents", help=_EXTENTS_HELP)
     rw.add_argument("--url", default="http://127.0.0.1:8080")
     rw.add_argument("--release", default="release/manifest.json")
+    rw.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
     rw.set_defaults(func=_review_work)
+    rt = rv_sub.add_parser("traces", help="telemetry summary: outcomes, latency, model use")
+    rt.add_argument("--batch", help="only this batch")
+    rt.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rt.set_defaults(func=_review_traces)
     rj = rv_sub.add_parser("jobs", help="list batches and their job states")
     rj.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     rj.set_defaults(func=_review_jobs)

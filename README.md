@@ -225,6 +225,23 @@ b-eee06dc4d4ce9984  active    rules  2026-11-06T03:51:27+00:00  done 50
 The final statuses (36 needing information, 11 ready, 3 unsupported) are the same as an
 uninterrupted import's.
 
+**Every attempt leaves a trace**: IDs, a SHA-256 of the model input, the versions (extractor,
+release, gazetteer, uncertainty policy, validation), per-stage timings, the candidate count,
+validation issue codes, model tokens and cache hits when an LLM was called, and the outcome.
+The trace schema has no free-text field, so label text and coordinates cannot enter it (a
+property test feeds it random labels). Traces are stored with the job step, can be written as
+JSON lines (`--log-json`), and the export names the trace behind each approved record:
+
+```console
+$ uv run localitylens review import --sample eval/audit/audit-50.json --system rules \
+      --extents data/reviewed/extents.csv --log-json data/review/traces.jsonl
+$ uv run localitylens review traces
+50 traces
+  outcomes  needs_information 36, ready_for_review 11, unsupported 3
+  rules    50 completed  p50 1.2 ms  p95 2.3 ms
+  retries   0
+```
+
 **The review screen** shows the same store in a browser, on your own machine only:
 
 ```console
@@ -399,6 +416,7 @@ feature_absent_from_index
 | **Abstain rather than guess** | A bare `m` becomes "unit missing" plus a question. "Hwy 34" is not a distance. Route descriptions are labelled, not flattened. A name the gazetteer lacks is reported absent, not trimmed to a lookalike | ✅ |
 | **Humans approve before export** | A single checked status machine. Only `approved` records are exportable | ✅ |
 | **A crash never strands a record** | Each job step is one SQLite transaction that moves the job and its record together. Expired leases return records to `queued`; a late result from a lost lease is discarded; 5,000 random interleavings of claims, crashes, retries, cancels and resumes keep every record in a defined state | ✅ |
+| **No label text in telemetry** | Traces carry only IDs, hashes, versions, counts, timings and codes: the schema rejects prose and unknown fields, and property tests check that random labels and candidate coordinates never appear | ✅ |
 | **Label text stays data on screen** | The review screen binds to loopback only, autoescapes every label, refuses cross-site form posts, and makes no model calls | ✅ |
 | **A point is not a place** | Without a reviewed extent (or a published default such as a spring's 3 m), the radius stays unknown. The proposal reports a lower bound and asks for the extent | ✅ |
 | **Extents are measured, never guessed** | Each extent records its method, source, who measured it and the date, is checked against the snapshot's name and point, and is pinned by hash in every report that uses it | ✅ |
@@ -687,7 +705,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · candidate disambiguation · footprints · GeoJSON | 🚧 started |
-| **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · provenance store · telemetry | 🚧 started |
+| **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · job-status API · OpenTelemetry export · Docker Compose | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
 
@@ -723,11 +741,12 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `resolve/county.py` | Supplied county values (`COUNTY_CONTEXT_VERSION` 1): placeholders count as missing, two-county values match either county |
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules or LLM) |
 | `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
-| `review/store.py` · `review/importer.py` | Review store `review-2`: immutable originals, proposals, idempotent curator decisions, and batches and jobs, in SQLite (WAL); every status change through `domain/status.py`. A `review-1` store is upgraded in place |
+| `review/store.py` · `review/importer.py` | Review store `review-3`: immutable originals, proposals, idempotent curator decisions, batches, jobs and traces, in SQLite (WAL); every status change through `domain/status.py`. Older stores are upgraded in place |
+| `telemetry/trace.py` | Trace schema `telemetry-1`: one trace per job attempt, stored with the step and emitted as a JSON line; no free-text fields |
 | `jobs/queue.py` · `jobs/worker.py` | Persistent job queue `jobs-1`: idempotent batch and job keys, leases (300 s), 3 attempts for transient failures, cancellation and resume, recovery of expired leases and orphaned records |
 | `web/` | Local review screen: FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review work` · `review jobs` · `review cancel` · `review queue` · `review decide` · `review export` · `review serve` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -793,6 +812,7 @@ src/localitylens/
 ├── evaluation/   feasibility audit: sampling, worksheet checks, reports, scoring
 ├── review/       review store: originals, proposals, idempotent curator decisions
 ├── jobs/         persistent job queue: leases, retries, cancellation, recovery
+├── telemetry/    per-attempt traces (no label text)
 ├── export/       Darwin Core CSV of approved records + unresolved report
 ├── web/          local review screen (FastAPI, Jinja2 templates, vendored HTMX + Leaflet)
 └── cli.py        command-line entry point

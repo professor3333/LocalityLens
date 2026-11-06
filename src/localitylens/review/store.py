@@ -45,10 +45,11 @@ from localitylens.geo.georeference import (
 )
 from localitylens.ingest.specimens import SpecimenRecord
 
-# review-2 adds the batch and job tables (persistent jobs). A review-1 store is upgraded in place:
-# the new tables are created empty and nothing else changes.
-STORE_SCHEMA_VERSION: Final = "review-2"
-_UPGRADABLE: Final = frozenset({"review-1"})
+# review-2 adds the batch and job tables (persistent jobs); review-3 the trace table
+# (telemetry). Older stores are upgraded in place: the new tables are created empty and nothing
+# else changes.
+STORE_SCHEMA_VERSION: Final = "review-3"
+_UPGRADABLE: Final = frozenset({"review-1", "review-2"})
 
 _SCHEMA: Final = """
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -115,6 +116,17 @@ CREATE TABLE IF NOT EXISTS job (
     UNIQUE (batch_id, record_id)
 );
 CREATE INDEX IF NOT EXISTS job_state ON job(state, batch_id, seq);
+CREATE TABLE IF NOT EXISTS trace (
+    trace_id    TEXT PRIMARY KEY,
+    job_id      TEXT NOT NULL REFERENCES job(job_id),
+    record_id   TEXT NOT NULL REFERENCES record(record_id),
+    proposal_id TEXT REFERENCES proposal(proposal_id),
+    at          TEXT NOT NULL,
+    outcome     TEXT NOT NULL,
+    payload     TEXT NOT NULL                -- telemetry.trace.RecordTrace as JSON, no label text
+);
+CREATE INDEX IF NOT EXISTS trace_job ON trace(job_id);
+CREATE INDEX IF NOT EXISTS trace_proposal ON trace(proposal_id);
 CREATE INDEX IF NOT EXISTS proposal_record ON proposal(record_id);
 CREATE INDEX IF NOT EXISTS decision_record ON decision(record_id);
 """
@@ -221,6 +233,38 @@ class ReviewStore:
             self._con.execute("ROLLBACK")
             raise
         self._con.execute("COMMIT")
+
+    def add_trace(
+        self,
+        trace_id: str,
+        job_id: str,
+        record_id: str,
+        proposal_id: str | None,
+        at: str,
+        outcome: str,
+        payload: str,
+    ) -> None:
+        self._con.execute(
+            "INSERT INTO trace VALUES (?,?,?,?,?,?,?)",
+            (trace_id, job_id, record_id, proposal_id, at, outcome, payload),
+        )
+
+    def trace_for_proposal(self, proposal_id: str) -> str | None:
+        """The trace ID of the job attempt that produced a pipeline proposal, if any."""
+        r = self._con.execute(
+            "SELECT trace_id FROM trace WHERE proposal_id=? ORDER BY at DESC LIMIT 1",
+            (proposal_id,),
+        ).fetchone()
+        return r["trace_id"] if r else None
+
+    def traces(self, batch_id: str | None = None) -> list[str]:
+        """Trace payloads (JSON), oldest first, optionally for one batch."""
+        query = "SELECT t.payload FROM trace t"
+        args: tuple[str, ...] = ()
+        if batch_id is not None:
+            query += " JOIN job j ON j.job_id = t.job_id WHERE j.batch_id=?"
+            args = (batch_id,)
+        return [r["payload"] for r in self._con.execute(query + " ORDER BY t.at, t.rowid", args)]
 
     def start_processing(self, record_id: str) -> None:
         """``queued`` → ``processing``, when a worker leases the record's job."""
