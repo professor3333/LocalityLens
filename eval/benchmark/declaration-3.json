@@ -1,0 +1,97 @@
+{
+  "declaration": "test-release-3",
+  "declared": "2026-11-06",
+  "note": "Frozen before any system was run on the locked test split for this release. Committed and pushed before the run; the result is published whatever it is.",
+  "code_commit": "8542e0f1694823d1c385b267ea23f76e92e2a866",
+  "system": {
+    "id": "hybrid-1",
+    "rule": "Rules first. If the rules' interpretation is valid and retrieval returns at least one candidate, use it with no model call. Otherwise use the LLM's result if it is valid and returns at least one candidate. Otherwise keep the rules' result. Whole results only, never mixed by field.",
+    "components": {
+      "rules": "rules-6",
+      "llm": "llm-x2g2-qwen3.5-4b-q4km"
+    }
+  },
+  "what_changed_since_release_2": [
+    "Rules: rules-1 -> rules-6 (air mi, number words before a unit, 'ca' before a digit, place-before-offset reading, broad places keep the offset, ranges ask instead of guessing, 'or' joins a range).",
+    "Validation: VALIDATION_VERSION 2 -> 3.",
+    "Supplied county: COUNTY_CONTEXT_VERSION 1 ('Unknown*' treated as missing, two-county values as either).",
+    "Retrieval: unchanged (CORE_KEY_VERSION 1, as in release 2).",
+    "LLM prompt, grammar, model and decoding: unchanged."
+  ],
+  "how_it_runs": [
+    "Both components are rerun at the code commit above, because rules, validation and county handling changed since release 1's reports. The LLM runs with the completion cache OFF (every record calls the model).",
+    "Outputs go to a new locked folder, eval/benchmark/test/reports/release-3/, so release 1 and 2 files stay untouched.",
+    "Commands, in order (all with --sample eval/benchmark/test/test.json --out eval/benchmark/test/reports/release-3): `audit rules`; `audit llm --no-cache`; `audit hybrid`; `audit score --worksheet eval/benchmark/test/worksheet.csv --hybrid <out>/test-hybrid-1.json`. Standard output goes to log files in the same folder.",
+    "No reviewed extents are used (--extents is not passed): the reviewed-extent store holds no measurements made for test features, and test extents are the owner's to measure."
+  ],
+  "release_manifest_sha256": "9aeaccceb500a078f0a5d663d495ad98e8f7524d7bbd80fbdb3ec880713ee29a",
+  "llm": {
+    "prompt": "extraction-v2",
+    "prompt_sha256": "8074f1f8aed024f6bbb3e308939bf19552e2273012ef73babaf3fa5fdc64eba3",
+    "grammar_version": "2",
+    "validation_version": "3",
+    "core_key_version": "1",
+    "county_context_version": "1",
+    "model": "Qwen3.5-4B Q4_K_M (GGUF sha256 pinned in release/manifest.json)",
+    "server": "llama.cpp b11960-8642541b2, -c 4096 -np 1 --no-context-shift, 127.0.0.1:8080",
+    "decoding": "greedy, temperature 0, top_k 1, seed 20261101, max_tokens 512, thinking off"
+  },
+  "uncertainty_policy": "gbif-bp-2020/1",
+  "snapshots": {
+    "gazetteer": "gnis-co-2026-09-29",
+    "specimens": "gbif-cu-2026-11-01",
+    "gbif_manifest_sha256": "f64e919f274aabf249c88816d13a49e723998a9f165a76a52fded012fd5c9f9e",
+    "gnis_manifest_sha256": "31cc69749cb1dddcab6c8645d6b94da5897631053b1afe2ccbd37f3961dbc1ec"
+  },
+  "data": {
+    "splits_lock_sha256": "996a6e28e25727e44cef88b9737693dca0765e1aedc3bb4c8df414aa947aa85a",
+    "test_sample_sha256": "b097d112b38c7b5c5a2a250567f86c60bbd0d080fd5590aa761b8315dc9908a5",
+    "test_worksheet_sha256": "7f348e84cd2052520dbd9e313221e29e44cf4554b8eb5b7201741a28fa7bffb4",
+    "records": 120,
+    "annotator": "the owner, one annotator, blind to system output"
+  },
+  "primary_metric": {
+    "name": "correct_proposal_candidates",
+    "definition": "On answerable records: the critical interpretation (relation, distance, unit, direction, qualifiers) matches the annotation AND the top-ranked candidate is an acceptable GNIS ID.",
+    "comparison": "hybrid-1 minus rules-6 (the current rules baseline, run with the same code), paired by record, in percentage points of answerable records",
+    "target_pp": 10
+  },
+  "analysis": {
+    "interval": "paired bootstrap over records, 10,000 resamples, seed 20261101, 95% percentile interval",
+    "test": "exact two-sided sign test on discordant records",
+    "sensitivity": "the same, excluding rows with an unsure (?) annotation; reported, not decisive"
+  },
+  "decision_rule": {
+    "yes": "difference >= +10 pp AND the 95% interval lower bound > 0",
+    "no": "the 95% interval upper bound < +10 pp (the data rule the target out)",
+    "not_shown": "anything else"
+  },
+  "expectation_stated_in_advance": "About +5 pp. Owner-annotated read samples (audit, dev-1, validation) pooled at this code: rules-6 51, hybrid-1 56 of 92 (+5.4 pp). Claude-annotated dev-2 to dev-4: rules-6 39, hybrid-1 45 of 97 (+6.2 pp). As the rules improved they absorbed some of the LLM's wins, so the hybrid's margin over the rules is expected to be smaller than release 2's +10.7 pp. 'not_shown' or 'no' is the likely outcome; 'yes' is unlikely.",
+  "caveats": [
+    "This is the third scoring of the locked test. Release 1 and 2 published test totals (not per-record outputs). The rules changes since were designed on dev and validation data; some were in-sample on audit and validation (audit A03, A13, A23, A25; dev-1 D07; validation V006, V013, V016), and none used test outputs.",
+    "rules-2 to rules-6 did not show a gain on the place-before-offset labels they target in dev-3 and dev-4 (Claude-annotated); they are kept because they are the frozen baseline, not because they were shown to help.",
+    "The LLM component is the same model and prompt as releases 1 and 2. Its completions are deterministic, so its test outputs are expected to repeat release 1's, apart from changes in validation and county handling.",
+    "One annotator for the test split; the self-consistency re-annotation has not been done."
+  ],
+  "secondary_reported": [
+    "the same metrics and paired comparison for hybrid-1 against the LLM alone",
+    "totals against release 1 (rules-1) and release 2 (hybrid-1 with rules-1), unpaired, descriptive only",
+    "records gained and lost against the rules",
+    "LLM calls made and skipped",
+    "relation read correctly",
+    "extraction passed validation",
+    "critical interpretation exact",
+    "reference top-1 and top-5 acceptable",
+    "unsupported records flagged unsupported",
+    "references absent from GNIS reported absent",
+    "mean fields to correct per record",
+    "per annotated type",
+    "LLM latency p50/p95 (warm, Apple M1 8 GB)"
+  ],
+  "not_evaluable_for_this_release": "The section 7 targets that need computed proposals on the test split (proposal correctness of ready_for_review records, useful coverage, containment with region size, reviewer time). No reviewed extents exist for test features, so the systems compute no test regions.",
+  "run_rules": [
+    "Each component is run once and hybrid-1 is combined and scored once. A technical failure may be rerun with this declaration and is recorded; nothing is rerun because of its result.",
+    "Per-record outputs stay under eval/benchmark/test/reports/release-3/ and are never read during development. Only aggregate numbers are published in eval/reports/test-release-3.{md,json}.",
+    "Any later change is a new release and needs a new declaration before the test is scored again."
+  ]
+}
