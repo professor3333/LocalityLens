@@ -166,11 +166,12 @@ what blocks it:
 $ uv run localitylens review import --sample eval/audit/audit-50.json --system rules \
       --extents data/reviewed/extents.csv
 imported 50 records (rules)
-  needs_information  37
-  ready_for_review   10
+  needs_information  36
+  ready_for_review   11
   unsupported        3
 $ uv run localitylens review queue --status ready_for_review
 gbif:2573344610 ready_for_review   feature 178631, radius 2,039 m
+gbif:2573367322 ready_for_review   feature 178680, radius 18,006 m
 gbif:2573415079 ready_for_review   feature 202381, radius 4,139 m
 gbif:2573416221 ready_for_review   feature 170650, radius 1,342 m
 gbif:2573441754 ready_for_review   feature 186589, radius 2,957 m
@@ -180,17 +181,42 @@ gbif:2573528015 ready_for_review   feature 186534, radius 13,126 m
 gbif:2573543074 ready_for_review   feature 204755, radius 1,029 m
 gbif:2573548250 ready_for_review   feature 190391, radius 16,039 m
 gbif:4052836581 ready_for_review   feature 204691, radius 8,426 m
-10 records
+11 records
 $ uv run localitylens review decide gbif:2573441754 approve --reviewer <name> --rationale "…"
 $ uv run localitylens review export
 approved       1  -> data/review/export/occurrences.csv
-unresolved    40  -> data/review/export/unresolved.csv
+unresolved    39  -> data/review/export/unresolved.csv
 ```
 
 The approved row is "ca 5 air mi SSW of Paonia": a point 5 miles SSW of the GNIS point,
 `EPSG:4269`, uncertainty 2,957 m, with the GNIS feature and the measured extent named in
 `georeferenceSources`. Review is still needed: gbif:2573416221 reaches GNIS "Five Spring" from
-the label's "Five Springs" by a fuzzy match, which a curator should confirm.
+the label's "Five Springs" by a fuzzy match, which a curator should confirm, and gbif:2573367322
+is an offset from Boulder ("7 miles south of Boulder") where the annotation names a more
+specific place (Rocky Flats): a full region, and a wrong one.
+
+**The review screen** shows the same store in a browser, on your own machine only:
+
+```console
+$ LOCALITYLENS_REVIEWER="<your name>" uv run localitylens review serve --extents data/reviewed/extents.csv
+review screen on http://127.0.0.1:8000/  db data/review/review.sqlite  reviewer: <your name>
+```
+
+<p align="center">
+  <img src="docs/assets/review-screen.png" alt="Review screen: the label with the extracted place marked, the interpretation table with source spans, the GNIS candidates with selection evidence, a USGS Topo map with the proposed circle, and the uncertainty components with their rules" width="100%">
+</p>
+
+- **Queue:** counts by status, a filter, and for each record its region or the question that
+  blocks it, ready records first.
+- **Record page:** the original label with every extracted value marked at its span; each
+  field observed, missing or not stated; the retrieved candidates with the selection evidence;
+  and the region with each uncertainty component and its rule. Selection evidence and spatial
+  uncertainty are separate panels. The map draws a circle only for a full region.
+- **Decisions** go through the same store: approve, edit then approve, reject or request
+  research, each with a rationale. Approve is offered only when a retrieved candidate exists.
+- **Local only:** it binds to 127.0.0.1 and refuses other hosts, label text is always escaped,
+  and cross-site form posts are refused. HTMX and Leaflet are vendored, pinned copies; only the
+  USGS map tiles need the network.
 
 - **Approval needs a full region.** A curator can choose another retrieved candidate or give
   an extent (with a note on how it was measured). The proposal is then recomputed by the same
@@ -202,8 +228,8 @@ the label's "Five Springs" by a fuzzy match, which a curator should confirm.
   - `geodeticDatum` is the source datum's EPSG code (`EPSG:4269`, NAD83), not transformed
   - `coordinateUncertaintyInMeters` is rounded up and never 0
   - `georeferenceVerificationStatus` is `verified by data custodian`
-- **Not built yet:** GeoJSON (RFC 7946 requires WGS84, so it needs a datum transformation)
-  and the map review screen.
+- **Not built yet:** GeoJSON (RFC 7946 requires WGS84, so it needs a datum transformation),
+  an export button on the review screen, and an end-to-end browser test.
 
 **When the label is ambiguous, it asks instead of guessing.** A bare `m` might be miles or metres:
 
@@ -341,6 +367,7 @@ feature_absent_from_index
 | **Context ranks, never filters** | County, state and feature type order the candidates, and each candidate carries its evidence | ✅ |
 | **Abstain rather than guess** | A bare `m` becomes "unit missing" plus a question. "Hwy 34" is not a distance. Route descriptions are labelled, not flattened. A name the gazetteer lacks is reported absent, not trimmed to a lookalike | ✅ |
 | **Humans approve before export** | A single checked status machine. Only `approved` records are exportable | ✅ |
+| **Label text stays data on screen** | The review screen binds to loopback only, autoescapes every label, refuses cross-site form posts, and makes no model calls | ✅ |
 | **A point is not a place** | Without a reviewed extent (or a published default such as a spring's 3 m), the radius stays unknown. The proposal reports a lower bound and asks for the extent | ✅ |
 | **Extents are measured, never guessed** | Each extent records its method, source, who measured it and the date, is checked against the snapshot's name and point, and is pinned by hash in every report that uses it | ✅ |
 | **Every uncertainty number is cited** | Each component carries its rule and its source: GBIF Best Practices, the Quick Reference Guide, or the Georeferencing Calculator's reference code | ✅ |
@@ -627,7 +654,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | Phase | Scope | Status |
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
-| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · candidate disambiguation · footprints · map review UI · GeoJSON | 🚧 started |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions) · candidate disambiguation · footprints · export from the screen · GeoJSON | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
@@ -665,8 +692,9 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules or LLM) |
 | `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
 | `review/store.py` · `review/importer.py` | Review store `review-1`: immutable originals, proposals and idempotent curator decisions in SQLite (WAL); every status change through `domain/status.py` |
+| `web/` | Local review screen: FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review queue` · `review decide` · `review export` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` · `review queue` · `review decide` · `review export` · `review serve` · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -726,6 +754,9 @@ src/localitylens/
 ├── resolve/      candidate retrieval with admin context
 ├── pipeline/     per-record orchestration
 ├── evaluation/   feasibility audit: sampling, worksheet checks, reports, scoring
+├── review/       review store: originals, proposals, idempotent curator decisions
+├── export/       Darwin Core CSV of approved records + unresolved report
+├── web/          local review screen (FastAPI, Jinja2 templates, vendored HTMX + Leaflet)
 └── cli.py        command-line entry point
 tests/
 ├── unit/         behaviour tests (synthetic GNIS + DwC-A fixtures, no network)
@@ -735,7 +766,7 @@ data/manifests/   committed snapshot manifests (raw data is gitignored)
 data/reviewed/    measured feature extents, each saying who measured it, checked against GNIS
 release/          release manifest: model, prompt, settings and versions, all pinned
 eval/audit/       50-record audit sample + annotated worksheet (CC BY 4.0 records)
-eval/dev/         dev samples for prompt and rule development (dev-1)
+eval/dev/         dev samples for prompt and rule development (dev-1 to dev-4)
 eval/viewed-groups.json   every group read in development; excluded from held-out splits
 eval/benchmark/   held-out validation (60) and locked test (120) worksheets
 eval/splits.lock.json     frozen split assignment (group keys + digest)

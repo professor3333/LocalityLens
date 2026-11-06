@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}{{ v.record.record_id }}{% endblock %}
+{% block head %}
+  <script src="{{ url_for('static', path='vendor/leaflet-1.9.4.js') }}" defer></script>
+  <script src="{{ url_for('static', path='review.js') }}" defer></script>
+{% endblock %}
+{% macro region_table(r) %}
+  <table class="kv">
+    <tr><th>Outcome</th><td><span class="badge outcome-{{ r.outcome }}">{{ r.outcome.replace('_', ' ') }}</span></td></tr>
+    {% if r.point %}<tr><th>Point</th><td>{{ '%.5f'|format(r.point[0]) }}, {{ '%.5f'|format(r.point[1]) }} ({{ r.point[2] }}){% if r.feature_id %} · GNIS {{ r.feature_id }}{% endif %}</td></tr>{% endif %}
+    <tr><th>Radius</th><td>{% if r.radius_m %}<b>{{ '{:,.0f}'.format(r.radius_m) }} m</b>{% else %}<b>unknown</b>{% if r.radius_lower_bound_m %} (at least {{ '{:,.0f}'.format(r.radius_lower_bound_m) }} m from the known components){% endif %}{% endif %}</td></tr>
+    <tr><th>Policy</th><td><code>{{ r.policy_id }}</code></td></tr>
+  </table>
+  {% if r.components %}
+  <table class="components">
+    <thead><tr><th>Component</th><th>Metres</th><th>Rule</th></tr></thead>
+    <tbody>
+    {% for c in r.components %}
+      <tr><td>{{ c.name.replace('_', ' ') }}</td>
+          <td class="num">{% if c.metres is none %}<span class="unknown">unknown</span>{% else %}{{ '{:,.0f}'.format(c.metres) }}{% endif %}</td>
+          <td>{% if c.rule|length > 160 %}<details><summary>{{ c.rule[:150] }}…</summary>{{ c.rule }}</details>{% else %}{{ c.rule }}{% endif %} <span class="cite">{{ c.citation }}</span></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+  {% for q in r.questions %}<p class="question">Question: {{ q }}</p>{% endfor %}
+  {% for x in r.reasons %}<p class="question">Reason: {{ x }}</p>{% endfor %}
+  {% if r.assumptions %}<ul class="assumptions">{% for a in r.assumptions %}<li>Assumed: {{ a }}</li>{% endfor %}</ul>{% endif %}
+{% endmacro %}
+{% block content %}
+<p class="crumbs"><a href="/">Queue</a> / {{ v.record.record_id }}</p>
+<div class="head">
+  <h1>{{ v.record.record_id }}</h1>
+  <span class="badge status-{{ v.record.status }}">{{ v.record.status.replace('_', ' ') }}</span>
+</div>
+<p class="meta">Catalog {{ v.record.catalog_number or '—' }} · {{ v.record.county or 'no county' }}, {{ v.record.state_province }} · snapshot <code>{{ v.record.snapshot_id }}</code> · extractor <code>{{ v.proposal.extractor_version }}</code> ({{ v.proposal.system }})</p>
+
+<div class="grid">
+  <section class="left">
+    <h2>Label (original text)</h2>
+    <p class="label">{% for s in v.segments %}{% if s.label %}<mark class="m-{{ s.label }}" title="{{ s.label }}">{{ s.text }}</mark>{% else %}{{ s.text }}{% endif %}{% endfor %}</p>
+    <p class="legend"><mark class="m-feature">feature</mark> <mark class="m-distance">distance</mark> <mark class="m-unit">unit</mark> <mark class="m-direction">direction</mark> <mark class="m-qualifier">qualifier</mark> <mark class="m-admin">admin</mark></p>
+
+    <h2>Interpretation</h2>
+    {% if v.fields %}
+    <table class="fields">
+      <thead><tr><th>Field</th><th>Value</th><th>State</th><th>Source span</th></tr></thead>
+      <tbody>
+      {% for f in v.fields %}
+        <tr class="state-{{ f.state.replace(' ', '-') }}"><td>{{ f.name }}</td><td>{{ f.value }}</td><td>{{ f.state }}</td><td class="span">{{ f.span }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% for q in v.open_questions %}<p class="question">Open question: {{ q }}</p>{% endfor %}
+    {% else %}
+    <p class="question">The extraction failed validation ({{ v.proposal.outcome.replace('_', ' ') }}): there is no interpretation to review.</p>
+    {% endif %}
+
+    <h2>Candidates <span class="sub">selection evidence</span></h2>
+    {% for line in v.selection %}<p class="evidence">{{ line }}</p>{% endfor %}
+    {% if v.candidates %}
+    <table class="candidates">
+      <thead><tr><th>#</th><th>GNIS</th><th>Name</th><th>Class</th><th>County</th><th>Match</th><th>County / type</th></tr></thead>
+      <tbody>
+      {% for c in v.candidates %}
+        <tr{% if c.selected %} class="selected"{% endif %}><td>{{ c.rank }}</td><td>{{ c.feature_id }}</td>
+          <td>{{ c.official_name }}{% if c.matched_name != c.official_name %} <span class="sub">as “{{ c.matched_name }}”</span>{% endif %}{% if c.historical %} <span class="sub">historical</span>{% endif %}</td>
+          <td>{{ c.feature_class }}</td><td>{{ c.county }}</td><td>{{ c.match_kind }}</td>
+          <td>{{ {True: 'yes', False: 'no', None: '—'}[c.county_match] }} / {{ {True: 'yes', False: 'no', None: '—'}[c.type_match] }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </section>
+
+  <section class="right">
+    <div id="map" class="map" role="img" aria-label="Map of the candidates and the proposed region"></div>
+    <p class="mapnote">{% if v.candidates %}Points as given ({{ v.candidates[0].datum }}), drawn on a WGS 84 web map: the difference is about a metre here. A circle appears only for a full region.{% else %}No candidate to show.{% endif %} Basemap: USGS The National Map.</p>
+    <script type="application/json" id="map-data">{{ v.map_data | tojson }}</script>
+
+    <h2>Region <span class="sub">spatial uncertainty</span></h2>
+    {% if v.approved_region %}
+      <p class="sub">Approved region (exported):</p>
+      {{ region_table(v.approved_region) }}
+      <details><summary>Pipeline proposal</summary>{{ region_table(v.pipeline_region) }}</details>
+    {% elif v.pipeline_region %}
+      {{ region_table(v.pipeline_region) }}
+    {% else %}
+      <p class="question">No proposal: {{ v.proposal.outcome.replace('_', ' ') }}.</p>
+    {% endif %}
+
+    <h2>Decision</h2>
+    {% set computed = (v.pipeline_region and v.pipeline_region.outcome == 'computed') %}
+    {% set default_action = form.get('action') or ('approve' if can_approve and computed else 'request_research') %}
+    {% if v.decidable %}
+    <form method="post" action="/records/{{ v.record.record_id }}/decision" class="decision"
+          hx-post="/records/{{ v.record.record_id }}/decision" hx-target="#decision-error" hx-swap="innerHTML">
+      <fieldset class="actions">
+        <legend>Action</legend>
+        {% if can_approve %}<label><input type="radio" name="action" value="approve" {% if default_action == 'approve' %}checked{% endif %}> Approve</label>{% endif %}
+        <label><input type="radio" name="action" value="request_research" {% if default_action == 'request_research' %}checked{% endif %}> Request research</label>
+        <label><input type="radio" name="action" value="reject" {% if default_action == 'reject' %}checked{% endif %}> Reject</label>
+      </fieldset>
+      {% if can_approve and v.candidates %}
+      <fieldset class="edits">
+        <legend>Edits (only applied when approving)</legend>
+        <label>Reference feature
+          <select name="feature_id">
+            {% for c in v.candidates %}<option value="{{ c.feature_id }}" {% if (form.get('feature_id') or '') == c.feature_id|string or (not form.get('feature_id') and c.selected) %}selected{% endif %}>#{{ c.rank }} {{ c.official_name }} ({{ c.feature_class }}, {{ c.county }}) · GNIS {{ c.feature_id }}</option>{% endfor %}
+          </select>
+        </label>
+        <label>Reviewed extent, metres <input type="number" name="extent_m" min="1" step="any" value="{{ form.get('extent_m', '') }}"></label>
+        <label>How the extent was determined <input type="text" name="extent_note" value="{{ form.get('extent_note', '') }}" placeholder="e.g. measured on The National Map to the farthest boundary"></label>
+      </fieldset>
+      {% endif %}
+      {% if not reviewer %}
+      <label>Reviewer <input type="text" name="reviewer" required value="{{ form.get('reviewer', '') }}"></label>
+      {% else %}
+      <p class="sub">Reviewer: <b>{{ reviewer }}</b> (from LOCALITYLENS_REVIEWER)</p>
+      {% endif %}
+      <label>Rationale <textarea name="rationale" required rows="3">{{ form.get('rationale', '') }}</textarea></label>
+      <div id="decision-error">{% if error %}{% include "_error.html" %}{% endif %}</div>
+      <button type="submit">Record decision</button>
+    </form>
+    {% else %}
+    <p class="sub">This record is {{ v.record.status.replace('_', ' ') }}: no decision is possible.</p>
+    {% endif %}
+
+    {% if v.decisions %}
+    <h2>Decisions</h2>
+    <ol class="history">
+      {% for d in v.decisions %}
+      <li><b>{{ d.action.value.replace('_', ' ') }}</b> by {{ d.reviewer }} at <time>{{ d.decided_at }}</time>{% if d.edits %} · edits {% for k, pair in d.edits.items() %}{{ k }} {{ pair[0] }} → {{ pair[1] }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}<br><span class="rationale">{{ d.rationale }}</span></li>
+      {% endfor %}
+    </ol>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

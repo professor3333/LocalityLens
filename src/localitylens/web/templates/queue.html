@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Queue{% endblock %}
+{% block content %}
+<h1>Review queue</h1>
+<nav class="filters" aria-label="Filter by status">
+  <a href="/" class="chip{% if not q.status_filter %} on{% endif %}">all <b>{{ q.total }}</b></a>
+  {% for status, n in q.counts %}
+  <a href="/?status={{ status }}" class="chip status-{{ status }}{% if q.status_filter == status %} on{% endif %}">{{ status.replace('_', ' ') }} <b>{{ n }}</b></a>
+  {% endfor %}
+</nav>
+{% if q.rows %}
+<table class="queue">
+  <thead><tr><th>Record</th><th>Status</th><th>County</th><th>Locality</th><th>Proposal or blocking question</th></tr></thead>
+  <tbody>
+  {% for r in q.rows %}
+    <tr>
+      <td><a href="/records/{{ r.record_id }}">{{ r.record_id }}</a></td>
+      <td><span class="badge status-{{ r.status }}">{{ r.status.replace('_', ' ') }}</span></td>
+      <td>{{ r.county }}</td>
+      <td class="locality">{{ r.locality | truncate(110) }}</td>
+      <td>{{ r.summary }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty">No records{% if q.status_filter %} with status {{ q.status_filter.replace('_', ' ') }}{% endif %}. Import some with <code>localitylens review import</code>.</p>
+{% endif %}
+{% endblock %}

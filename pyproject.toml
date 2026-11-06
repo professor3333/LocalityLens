@@ -7,10 +7,14 @@ license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi>=0.115",
+    "jinja2>=3.1",
     "pydantic>=2.9",
     "pyproj>=3.7",
+    "python-multipart>=0.0.18",
     "rapidfuzz>=3.10",
     "shapely>=2.0",
+    "uvicorn>=0.32",
 ]
 
 [project.scripts]
@@ -22,6 +26,7 @@ dev = [
     "hypothesis>=6.120",
     "ruff>=0.8",
     "mypy>=1.13",
+    "httpx>=0.28",
 ]
 
 [build-system]
