@@ -80,8 +80,8 @@ def test_one_span_per_trace_with_stage_children(
         assert attrs["localitylens.outcome"] == t["outcome"]
         assert attrs["localitylens.input_sha256"] == t["input_sha256"]
         children = [c for c in finished if c.parent and c.parent.span_id == span.context.span_id]
-        assert [c.name for c in children] == ["localitylens.extract", "localitylens.validate",
-                                              "localitylens.retrieve", "localitylens.propose"]  # fmt: skip
+        stages = ["extract", "validate", "retrieve", "propose"]
+        assert [c.name for c in children] == [f"localitylens.{x}" for x in stages]
         assert span.start_time <= children[0].start_time
         assert children[-1].end_time <= span.end_time
         assert span.status.status_code is not StatusCode.ERROR
