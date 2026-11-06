@@ -131,7 +131,8 @@ cache (`extract/cache.py`) record 0 model seconds and are never used for latency
   quantizations, and the adversarial set. Qwen3.5-2B has been compared on dev and validation
   data only ([findings](../eval/reports/qwen3.5-2b-findings.md)).
 - **Review policy thresholds** (`configs/review_policy.yaml`, planned): no selection-confidence
-  thresholds are set yet, and nothing reaches `ready_for_review`.
+  thresholds are set yet. A record reaches `ready_for_review` whenever its region is computed,
+  whatever the selection evidence, so the curator still judges the choice of feature.
 - **Annotation self-consistency** (a repeat pass on a subset by the same annotator).
 
 ## Adversarial tests
