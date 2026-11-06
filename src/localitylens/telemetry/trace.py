@@ -1,6 +1,6 @@
 """Per-attempt traces: what ran, on which versions, how long it took and how it ended.
 
-Telemetry never carries label text or coordinates (CLAUDE.md §10). The trace schema has no
+Telemetry never carries label text or coordinates. The trace schema has no
 free-text field: only IDs, hashes, versions, counts, durations and enum-like codes. The input is
 represented by a SHA-256 of the model-input allowlist (normalized locality text and supplied
 county), so two runs on the same input can be matched without storing the input.

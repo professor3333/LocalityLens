@@ -17,7 +17,7 @@ not one known Colorado county. 1,305 are placeholders and 218 are empty. Nearly 
 are two-county values, and 10 are unknown names.
 
 County context only ranks candidates; it never removes one (current county lines are not
-proof for an old label, CLAUDE.md §4.3).
+proof for an old label).
 """
 
 from __future__ import annotations

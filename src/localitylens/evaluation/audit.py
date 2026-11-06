@@ -256,7 +256,7 @@ def _extent_source(proposal: Any) -> str | None:
 
 
 def _summary(interp: Interpretation) -> dict[str, Any]:
-    """The critical interpretation fields that scoring compares (CLAUDE.md §17)."""
+    """The critical interpretation fields that scoring compares (docs/evaluation.md)."""
     d = interp.distance
     return {
         "relation": interp.relation.value,

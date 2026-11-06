@@ -1,4 +1,4 @@
-"""LLM extraction with a FAKE model client: no model server is needed (CLAUDE.md §12)."""
+"""LLM extraction with a FAKE model client: no model server is needed."""
 
 import hashlib
 import json

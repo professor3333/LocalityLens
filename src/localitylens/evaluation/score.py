@@ -1,4 +1,4 @@
-"""Score system reports against a sample's annotations (CLAUDE.md §7, §17).
+"""Score system reports against a sample's annotations (definitions in docs/evaluation.md).
 
 Correctness follows the project definition: a proposal is correct only when the critical
 interpretation (relation, distance, unit, direction, qualifiers) matches the annotation **and**

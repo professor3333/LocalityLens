@@ -2,7 +2,7 @@
 
 Model revision and GGUF checksum, llama.cpp build, generation settings, prompt and schema
 versions, rules version, uncertainty policy, and source snapshots. Changing any of them is a
-version bump (CLAUDE.md §6); tests compare this file with the code's own constants.
+version bump; tests compare this file with the code's own constants.
 """
 
 from __future__ import annotations

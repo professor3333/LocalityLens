@@ -1,5 +1,5 @@
 """Persistent job queue over the review store: idempotent keys, leases, bounded retries,
-cancellation and resumable batches (CLAUDE.md §3, §10).
+cancellation and resumable batches.
 
 Every operation is one transaction that changes a job and its record together, so a crash at
 any point leaves both in a defined state:

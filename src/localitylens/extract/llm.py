@@ -27,7 +27,7 @@ from localitylens.extract.prompt import PromptFormatError, PromptTemplate, load_
 from localitylens.extract.schema import ExtractionOutput
 from localitylens.release import ReleaseManifest
 
-MAX_ATTEMPTS: Final = 2  # one bounded retry (CLAUDE.md §4.2)
+MAX_ATTEMPTS: Final = 2  # one bounded retry on malformed output
 
 # Decimal degrees with 3+ decimals, or a degree sign: never legitimate in a model's question.
 _COORDINATE: Final = re.compile(r"-?\b\d{1,3}\.\d{3,}\b|\d\s*°")

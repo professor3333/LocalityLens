@@ -1,4 +1,4 @@
-"""A local cache of model completions, keyed by everything that determines them (CLAUDE.md §6).
+"""A local cache of model completions, keyed by everything that determines them.
 
 Under the pinned greedy settings (temperature 0, top-k 1, fixed seed), llama-server returns the
 same completion for the same request on the same model file and build. Rerunning the LLM on a

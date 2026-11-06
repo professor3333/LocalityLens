@@ -1,6 +1,6 @@
 # Qwen3.5-2B against Qwen3.5-4B (dev and validation data)
 
-This is the lower-resource comparison planned in CLAUDE.md §6. The setup is identical to 4B:
+This is the planned lower-resource model comparison. The setup is identical to 4B:
 - prompt `extraction-v2`, grammar 2, validation 3, rules-2 for the hybrid
 - greedy decoding, the same llama.cpp build
 - only the model file differs

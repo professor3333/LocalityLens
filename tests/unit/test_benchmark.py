@@ -1,4 +1,4 @@
-"""Held-out split drawing (SYNTHETIC records). Never reads eval/benchmark/test (CLAUDE.md §7)."""
+"""Held-out split drawing (SYNTHETIC records). Never reads eval/benchmark/test."""
 
 import json
 from pathlib import Path

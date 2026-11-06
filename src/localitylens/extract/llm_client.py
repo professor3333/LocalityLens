@@ -2,7 +2,7 @@
 
 Every model call in the application goes through :class:`ModelClient`, so tests can use
 recorded or fake responses and CI never needs a running model. The server is reached on the
-loopback interface only (CLAUDE.md §6).
+loopback interface only.
 
 Requests use ``/apply-template`` (the model's own chat template renders the messages), then
 ``/tokenize`` (exact token count against the context budget), then ``/completion`` with a JSON

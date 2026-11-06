@@ -12,7 +12,7 @@
   retried request never duplicates a decision or an export row.
 * **Jobs are kept apart from records.** ``batch`` and ``job`` hold processing state (lease,
   attempts, cancellation) for :mod:`localitylens.jobs`; a record's status says only where the
-  record is in its lifecycle (CLAUDE.md §3). Both live in this file so a status change and its
+  record is in its lifecycle. Both live in this file so a status change and its
   job update commit together.
 * **Each decision records** the reviewer, a UTC timestamp, the rationale and the edits as a diff
   against the proposal (``{"feature_id": [old, new], ...}``). Edits are marked as human edits in

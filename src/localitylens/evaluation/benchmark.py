@@ -4,7 +4,7 @@ Leakage unit: a **component** of locality groups linked by shared collecting eve
 collector, same exact date). Specimens from one trip can describe one place in different words;
 grouping by wording alone would let such near-duplicates fall into different splits.
 
-Rules (CLAUDE.md §7):
+Rules (see the leakage controls in docs/dataset_card.md):
 
 * A component never spans two splits; each held-out split takes at most one group per
   component, so its records are as independent as the data allow.

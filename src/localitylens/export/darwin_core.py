@@ -1,4 +1,4 @@
-"""Darwin Core export of approved records, plus the unresolved-record report (CLAUDE.md §9).
+"""Darwin Core export of approved records, plus the unresolved-record report.
 
 Only ``approved`` records are exported. Term names and value conventions follow
 https://dwc.tdwg.org/terms/:
