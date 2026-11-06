@@ -53,9 +53,16 @@ def db(gnis_snapshot: tuple[Path, SnapshotManifest], tmp_path: Path) -> Path:
     return path
 
 
+def _config(db: Path, **kw: object) -> ReviewConfig:
+    out = db.parent / "export"
+    return ReviewConfig(
+        db=db, export_out=out / "occurrences.csv", unresolved_out=out / "unresolved.csv", **kw
+    )  # type: ignore[arg-type]
+
+
 @pytest.fixture
 def client(db: Path) -> TestClient:
-    return TestClient(create_app(ReviewConfig(db=db, reviewer="Curator A")))
+    return TestClient(create_app(_config(db, reviewer="Curator A")))
 
 
 def _status(db: Path, key: str) -> RecordStatus:
@@ -194,7 +201,7 @@ def test_cross_site_posts_are_refused(client: TestClient, db: Path) -> None:
 
 
 def test_reviewer_comes_from_the_form_when_not_configured(db: Path) -> None:
-    client = TestClient(create_app(ReviewConfig(db=db)))
+    client = TestClient(create_app(_config(db)))
     assert 'name="reviewer"' in client.get(f"/records/{_id('lake')}").text
     assert _decide(client, "lake", action="approve").status_code == 400  # type: ignore[attr-defined]
     ok = _decide(client, "lake", action="approve", reviewer="Curator B")
@@ -224,3 +231,32 @@ def test_approve_is_offered_only_when_it_can_succeed(client: TestClient) -> None
     assert 'value="request_research" checked' in peak
     lake = client.get(f"/records/{_id('lake')}").text
     assert 'value="approve" checked' in lake
+
+
+# --- export ---------------------------------------------------------------------------------
+
+
+def test_export_writes_approved_and_unresolved_and_serves_only_those(
+    client: TestClient, db: Path
+) -> None:
+    assert client.get("/export/occurrences.csv").status_code == 404  # nothing exported yet
+    _decide(client, "lake", action="approve", feature_id="3")
+    page = client.post("/export")
+    assert page.status_code == 200
+    assert "Exported 1 approved record(s)" in page.text
+    assert "3 unresolved record(s)" in page.text  # peak, route, absent (inject is still ready)
+    csv_text = client.get("/export/occurrences.csv")
+    assert csv_text.status_code == 200
+    assert csv_text.headers["content-type"].startswith("text/csv")
+    assert csv_text.text.splitlines()[0].startswith("occurrenceID")
+    assert len(csv_text.text.splitlines()) == 2  # header + the approved lake
+    assert client.get("/export/unresolved.csv").status_code == 200
+    assert client.get("/export/..%2Freview.sqlite").status_code == 404
+    assert client.get("/export/review.sqlite").status_code == 404
+    assert (db.parent / "export" / "occurrences.csv").is_file()
+
+
+def test_cross_site_export_is_refused(client: TestClient, db: Path) -> None:
+    r = client.post("/export", headers={"Origin": "https://evil.example"})
+    assert r.status_code == 403
+    assert not (db.parent / "export").exists()

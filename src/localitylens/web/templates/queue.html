@@ -8,6 +8,21 @@
   <a href="/?status={{ status }}" class="chip status-{{ status }}{% if q.status_filter == status %} on{% endif %}">{{ status.replace('_', ' ') }} <b>{{ n }}</b></a>
   {% endfor %}
 </nav>
+<section class="export">
+  <form method="post" action="/export">
+    <button type="submit">Export Darwin Core</button>
+    <span class="sub">approved records → Darwin Core CSV; every unresolved record → a report saying what blocks it</span>
+  </form>
+  {% if exported %}
+  <p class="done" role="status">Exported {{ exported.approved }} approved record(s) to <code>{{ exported.out }}</code> and {{ exported.unresolved }} unresolved record(s) to <code>{{ exported.unresolved_out }}</code>.</p>
+  {% endif %}
+  {% if files['occurrences.csv'] or files['unresolved.csv'] %}
+  <p class="sub">Download:
+    {% if files['occurrences.csv'] %}<a href="/export/occurrences.csv">occurrences.csv</a>{% endif %}
+    {% if files['unresolved.csv'] %}· <a href="/export/unresolved.csv">unresolved.csv</a>{% endif %}
+  </p>
+  {% endif %}
+</section>
 {% if q.rows %}
 <table class="queue">
   <thead><tr><th>Record</th><th>Status</th><th>County</th><th>Locality</th><th>Proposal or blocking question</th></tr></thead>

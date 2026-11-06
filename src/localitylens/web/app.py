@@ -8,12 +8,15 @@
   approval without a full region, and stores an identical retry only once.
 * **Label text is untrusted.** Templates autoescape everything; no route renders raw HTML from
   data.
+* **Export** writes the approved Darwin Core CSV and the unresolved report with the same
+  functions as ``localitylens review export``, to fixed paths, and serves only those two files.
 * **Forms work without JavaScript.** With HTMX a decision reports its error in place; without
   it the page is re-rendered with the error, and a success redirects to the record.
 """
 
 from __future__ import annotations
 
+import dataclasses
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -21,11 +24,12 @@ from typing import Annotated, Final
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI, Form, HTTPException, Request
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from localitylens.domain.status import RecordStatus
+from localitylens.export.darwin_core import export_approved, export_unresolved
 from localitylens.geo.extents import ExtentStore
 from localitylens.review.store import Action, ReviewError, ReviewStore
 from localitylens.web.views import queue_view, record_view
@@ -41,11 +45,23 @@ class ReviewConfig:
     db: Path
     extents: ExtentStore | None = None  # supplies a newly chosen feature's reviewed extent
     reviewer: str | None = None  # from LOCALITYLENS_REVIEWER; asked on the form when unset
+    export_out: Path = Path("data/review/export/occurrences.csv")
+    unresolved_out: Path = Path("data/review/export/unresolved.csv")
 
 
-def config_from_env(db: Path, extents: ExtentStore | None = None) -> ReviewConfig:
+def config_from_env(
+    db: Path,
+    extents: ExtentStore | None = None,
+    export_out: Path | None = None,
+    unresolved_out: Path | None = None,
+) -> ReviewConfig:
     reviewer = os.environ.get(REVIEWER_ENV, "").strip() or None
-    return ReviewConfig(db=db, extents=extents, reviewer=reviewer)
+    config = ReviewConfig(db=db, extents=extents, reviewer=reviewer)
+    if export_out is not None:
+        config = dataclasses.replace(config, export_out=export_out)
+    if unresolved_out is not None:
+        config = dataclasses.replace(config, unresolved_out=unresolved_out)
+    return config
 
 
 def _same_origin(request: Request) -> bool:
@@ -102,15 +118,48 @@ def create_app(config: ReviewConfig) -> FastAPI:
             status_code=status_code,
         )
 
-    @app.get("/", response_class=HTMLResponse)
-    def queue(request: Request, status: str | None = None) -> Response:
+    def render_queue(
+        request: Request, status: str | None, exported: dict[str, object] | None = None
+    ) -> Response:
         try:
             wanted = RecordStatus(status) if status else None
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=f"unknown status {status!r}") from exc
         with store() as s:
             view = queue_view(s, wanted)
-        return templates.TemplateResponse(request, "queue.html", {"q": view})
+        files = {name: path.is_file() for name, path in exports.items()}
+        return templates.TemplateResponse(
+            request, "queue.html", {"q": view, "exported": exported, "files": files}
+        )
+
+    exports = {"occurrences.csv": config.export_out, "unresolved.csv": config.unresolved_out}
+
+    @app.get("/", response_class=HTMLResponse)
+    def queue(request: Request, status: str | None = None) -> Response:
+        return render_queue(request, status)
+
+    @app.post("/export", response_class=HTMLResponse)
+    def export(request: Request) -> Response:
+        """Approved records as Darwin Core CSV, everything unresolved in its own report."""
+        if not _same_origin(request):
+            raise HTTPException(status_code=403, detail="cross-site form posts are refused")
+        with store() as s:
+            approved = export_approved(s, config.export_out)
+            unresolved = export_unresolved(s, config.unresolved_out)
+        result = {
+            "approved": approved,
+            "unresolved": unresolved,
+            "out": str(config.export_out),
+            "unresolved_out": str(config.unresolved_out),
+        }
+        return render_queue(request, None, exported=result)
+
+    @app.get("/export/{name}")
+    def download(name: str) -> Response:
+        path = exports.get(name)  # only the two export files, never an arbitrary path
+        if path is None or not path.is_file():
+            raise HTTPException(status_code=404, detail="no such export (export first)")
+        return FileResponse(path, media_type="text/csv", filename=name)
 
     @app.get("/records/{record_id}", response_class=HTMLResponse)
     def record(request: Request, record_id: str) -> Response:

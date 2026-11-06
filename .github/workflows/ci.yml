@@ -27,4 +27,8 @@ jobs:
       - name: Type check
         run: uv run mypy src/
       - name: Tests
-        run: uv run pytest -m "not slow"
+        run: uv run pytest -m "not slow and not e2e"
+      - name: Browser for end-to-end tests
+        run: uv run playwright install --with-deps chromium-headless-shell
+      - name: End-to-end tests (review screen)
+        run: uv run pytest -m e2e

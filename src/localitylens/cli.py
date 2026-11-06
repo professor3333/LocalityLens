@@ -419,7 +419,9 @@ def _review_export(args: argparse.Namespace) -> int:
 def _review_serve(args: argparse.Namespace) -> int:
     from localitylens.web.app import config_from_env, serve
 
-    config = config_from_env(Path(args.db), _load_extents(args))
+    config = config_from_env(
+        Path(args.db), _load_extents(args), Path(args.out), Path(args.unresolved)
+    )
     who = config.reviewer or "asked on each decision (set LOCALITYLENS_REVIEWER to fix it)"
     print(f"review screen on http://{args.host}:{args.port}/  db {args.db}  reviewer: {who}")
     serve(config, host=args.host, port=args.port)
@@ -974,6 +976,8 @@ def main(argv: list[str] | None = None) -> int:
     rs.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rs.add_argument("--host", default="127.0.0.1", help="loopback only")
     rs.add_argument("--port", type=int, default=8000)
+    rs.add_argument("--out", default="data/review/export/occurrences.csv")
+    rs.add_argument("--unresolved", default="data/review/export/unresolved.csv")
     rs.set_defaults(func=_review_serve)
 
     ex = sub.add_parser("extents", help="the reviewed-extent store (curator-measured radials)")

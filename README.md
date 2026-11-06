@@ -214,6 +214,8 @@ review screen on http://127.0.0.1:8000/  db data/review/review.sqlite  reviewer:
   uncertainty are separate panels. The map draws a circle only for a full region.
 - **Decisions** go through the same store: approve, edit then approve, reject or request
   research, each with a rationale. Approve is offered only when a retrieved candidate exists.
+- **Export** from the queue writes the same Darwin Core CSV and unresolved report as
+  `review export`, and offers both files for download.
 - **Local only:** it binds to 127.0.0.1 and refuses other hosts, label text is always escaped,
   and cross-site form posts are refused. HTMX and Leaflet are vendored, pinned copies; only the
   USGS map tiles need the network.
@@ -228,8 +230,7 @@ review screen on http://127.0.0.1:8000/  db data/review/review.sqlite  reviewer:
   - `geodeticDatum` is the source datum's EPSG code (`EPSG:4269`, NAD83), not transformed
   - `coordinateUncertaintyInMeters` is rounded up and never 0
   - `georeferenceVerificationStatus` is `verified by data custodian`
-- **Not built yet:** GeoJSON (RFC 7946 requires WGS84, so it needs a datum transformation),
-  an export button on the review screen, and an end-to-end browser test.
+- **Not built yet:** GeoJSON (RFC 7946 requires WGS84, so it needs a datum transformation).
 
 **When the label is ambiguous, it asks instead of guessing.** A bare `m` might be miles or metres:
 
@@ -654,7 +655,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | Phase | Scope | Status |
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
-| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions) · candidate disambiguation · footprints · export from the screen · GeoJSON | 🚧 started |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · candidate disambiguation · footprints · GeoJSON | 🚧 started |
 | **3 · Production engineering** | Persistent jobs, leases & recovery · provenance store · telemetry | 🔜 |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · rules vs LLM vs GEOLocate · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
@@ -734,9 +735,13 @@ uv run pytest                                               # all tests, no netw
 uv run ruff check . && uv run ruff format --check .         # lint + format
 uv run mypy src/                                            # strict type check
 HYPOTHESIS_PROFILE=thorough uv run pytest tests/property    # 5,000 examples per property
+uv run playwright install chromium-headless-shell           # once, for the browser test
+uv run pytest -m e2e                                        # review flow in a real browser
 ```
 
-CI runs lint, format, strict mypy and the full test suite on every push and pull request.
+CI runs lint, format, strict mypy, the full test suite and the browser test of the review flow
+(import, review, approve, edit, reject, request research, export) on every push and pull
+request.
 `main` is protected and only accepts commits that passed CI.
 
 <details>
@@ -760,6 +765,7 @@ src/localitylens/
 └── cli.py        command-line entry point
 tests/
 ├── unit/         behaviour tests (synthetic GNIS + DwC-A fixtures, no network)
+├── e2e/          the review flow in headless Chromium (Playwright)
 ├── property/     Hypothesis invariants
 └── support/      shared fixture builders
 data/manifests/   committed snapshot manifests (raw data is gitignored)
