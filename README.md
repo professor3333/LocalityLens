@@ -473,6 +473,10 @@ candidates of 32 answerable:
   then reverts one of rules-3's gains. The in-sample gains (rules 46 → 50) did not carry over.
 - **No full region is correct:** the 2 computed regions come from wrong readings.
 
+**Next on fresh data: dev-4,** 50 groups with 35 "place, offset" labels, drawn for the owner to
+annotate, so the place-or-offset rules get an independent test. The rules stay at rules-6 until
+it is scored ([dev samples](eval/dev/README.md#dev-4)).
+
 **A smaller model, Qwen3.5-2B,** is about 4× faster but misquotes labels: 51 of 160 extractions
 fail validation. On dev and validation data it gives 27 correct candidates of 92 on its own,
 against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
