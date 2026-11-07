@@ -13,11 +13,13 @@
   <img src="https://img.shields.io/badge/status-phase%201%20%C2%B7%20data%20%26%20feasibility-F4B860" alt="Status: Phase 1">
   <img src="https://img.shields.io/badge/gazetteer-USGS%20GNIS%202026--09--29-5FD3B5" alt="Gazetteer: USGS GNIS 2026-09-29">
   <img src="https://img.shields.io/badge/inference-local%20only-103A34" alt="Local inference only">
+  <a href="https://professor3333.github.io/LocalityLens/"><img src="https://img.shields.io/badge/demo-static%20replay-B45309" alt="Demo: static replay"></a>
 </p>
 
 <p align="center">
   <a href="#-how-it-works">How it works</a> ·
   <a href="#-try-it">Try it</a> ·
+  <a href="https://professor3333.github.io/LocalityLens/">Replay demo</a> ·
   <a href="#-design-guarantees">Design guarantees</a> ·
   <a href="#-roadmap">Roadmap</a> ·
   <a href="#-data--licences">Data</a> ·
@@ -73,6 +75,14 @@ correct by construction, and an invented quote fails validation.
 > modes) · [evaluation](docs/evaluation.md) (correctness, metrics, protocol, results).
 
 ## ⚡ Try it
+
+**Without installing anything:** the [static replay](https://professor3333.github.io/LocalityLens/)
+is the real review screen, frozen after the release pipeline (hybrid-1) ran on the 50 audit
+records. It is labelled as a replay on every page: nothing runs live, and decisions and export
+are disabled. Those records are development data, so the replay shows how the screen works and
+is not a measure of accuracy (see [demo/README.md](demo/README.md)).
+
+**Locally:**
 
 ```bash
 git clone https://github.com/professor3333/LocalityLens.git && cd LocalityLens
@@ -817,7 +827,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · ✅ GeoJSON export (WGS 84, EPSG:1188, +4 m) · candidate disambiguation · footprints | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · ✅ GEOLocate on the read samples: points within 5 km of the defensible position, GEOLocate 58 vs hybrid-1 61 of 85 (owner-annotated) · quantization study | 🚧 started |
-| **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
+| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · published results & model card · clean-install and restore check | 🚧 started |
 
 <details>
 <summary><b>What exists today, module by module</b></summary>
@@ -856,6 +866,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `ingest/csv_import.py` | CSV import `csv-1`: Darwin Core column mapping, the same screening as the GBIF snapshot (scope, sensitive records, placeholders), explicit refusals with reasons, answer-bearing columns never read |
 | `jobs/queue.py` · `jobs/worker.py` | Persistent job queue `jobs-1`: idempotent batch and job keys, leases (300 s), 3 attempts for transient failures, cancellation and resume, recovery of expired leases and orphaned records |
 | `web/` | Local review screen and JSON API (`api-1`): one FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
+| `web/replay.py` | Static replay `replay-1`: freezes the review screen's pages into `demo/site` with relative links and a replay banner, no forms; built by `scripts/build_replay.py`, published by the `pages` workflow |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
 | `export/geojson.py` | GeoJSON (RFC 7946) of the same approved records (`geojson-export-1`), converted to WGS 84 by `geo/datum.py` (`datum-1`: EPSG:1188, accuracy added to the radius) |
 | `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` (`--sample` or `--csv`) · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
@@ -927,7 +938,7 @@ src/localitylens/
 ├── jobs/         persistent job queue: leases, retries, cancellation, recovery
 ├── telemetry/    per-attempt traces (no label text)
 ├── export/       Darwin Core CSV + GeoJSON of approved records, unresolved report
-├── web/          local review screen (FastAPI, Jinja2 templates, vendored HTMX + Leaflet)
+├── web/          local review screen (FastAPI, Jinja2 templates, vendored HTMX + Leaflet), replay freezer
 └── cli.py        command-line entry point
 tests/
 ├── unit/         behaviour tests (synthetic GNIS + DwC-A fixtures, no network)
@@ -944,7 +955,8 @@ eval/viewed-groups.json   every group read in development; excluded from held-ou
 eval/benchmark/   held-out validation (60) and locked test (120) worksheets
 eval/splits.lock.json     frozen split assignment (group keys + digest)
 eval/reports/     system reports, kept even when results are poor
-scripts/          generators for the README banner and pipeline diagram
+demo/site/        the static replay published on GitHub Pages (built by scripts/build_replay.py)
+scripts/          README banner and pipeline diagram, replay build, evaluation helpers
 ```
 
 </details>

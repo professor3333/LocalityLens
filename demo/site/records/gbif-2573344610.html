@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gbif:2573344610 · LocalityLens</title>
+  <meta name="htmx-config" content='{"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"[45]..","swap":true,"error":true},{"code":"...","swap":false}],"allowEval":false,"includeIndicatorStyles":false}'>
+  <link rel="stylesheet" href="../static/vendor/leaflet-1.9.4.css">
+  <link rel="stylesheet" href="../static/app.css">
+  <script src="../static/vendor/htmx-2.0.4.min.js" defer></script>
+  
+  <script src="../static/vendor/leaflet-1.9.4.js" defer></script>
+  <script src="../static/review.js" defer></script>
+
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../index.html">LocalityLens <span>review</span></a>
+    
+    <span class="note">Static replay · proposals support curator review and are not authoritative georeferences</span>
+    
+  </header>
+  
+  <aside class="replay" role="note" aria-label="About this replay">
+    <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit 34b31ea, 2026-11-07</p>
+    <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
+  </aside>
+  
+  <main>
+    
+<p class="crumbs"><a href="../index.html">Queue</a> / gbif:2573344610</p>
+<div class="head">
+  <h1>gbif:2573344610</h1>
+  <span class="badge status-ready_for_review">ready for review</span>
+</div>
+<p class="meta">Catalog 00903690 · Boulder, Colorado · snapshot <code>gbif-cu-2026-11-01</code> · extractor <code>rules-6</code> (hybrid)</p>
+
+<div class="grid">
+  <section class="left">
+    <h2>Label (original text)</h2>
+    <p class="label">Head of canon on east slope of <mark class="m-feature" title="feature">Flagstaff Mountain</mark>, Boulder.</p>
+    <p class="legend"><mark class="m-feature">feature</mark> <mark class="m-distance">distance</mark> <mark class="m-unit">unit</mark> <mark class="m-direction">direction</mark> <mark class="m-qualifier">qualifier</mark> <mark class="m-admin">admin</mark></p>
+
+    <h2>Interpretation</h2>
+    
+    <table class="fields">
+      <thead><tr><th>Field</th><th>Value</th><th>State</th><th>Source span</th></tr></thead>
+      <tbody>
+      
+        <tr class="state-observed"><td>relation</td><td>named feature</td><td>observed</td><td class="span"></td></tr>
+      
+        <tr class="state-observed"><td>reference feature</td><td>Flagstaff Mountain</td><td>observed</td><td class="span">[31:49] Flagstaff Mountain</td></tr>
+      
+        <tr class="state-observed"><td>feature type</td><td>summit</td><td>observed</td><td class="span">[41:49] Mountain</td></tr>
+      
+        <tr class="state-not-stated"><td>distance</td><td></td><td>not stated</td><td class="span"></td></tr>
+      
+        <tr class="state-not-stated"><td>unit</td><td></td><td>not stated</td><td class="span"></td></tr>
+      
+        <tr class="state-not-stated"><td>direction</td><td></td><td>not stated</td><td class="span"></td></tr>
+      
+      </tbody>
+    </table>
+    <p class="question">Open question: Label names several places (Flagstaff Mountain, Boulder); which is the reference?</p>
+    
+
+    <h2>Candidates <span class="sub">selection evidence</span></h2>
+    <p class="evidence">2 candidate(s) retrieved; the proposal uses rank 1, Flagstaff Mountain (GNIS 178631).</p><p class="evidence">Name match: exact official (similarity 100).</p><p class="evidence">Context: county agrees, feature type agrees.</p><p class="evidence">1 other candidate(s) share the name: the text must decide.</p>
+    
+    <table class="candidates">
+      <thead><tr><th>#</th><th>GNIS</th><th>Name</th><th>Class</th><th>County</th><th>Match</th><th>County / type</th></tr></thead>
+      <tbody>
+      
+        <tr class="selected"><td>1</td><td>178631</td>
+          <td>Flagstaff Mountain</td>
+          <td>Summit</td><td>Boulder</td><td>exact official</td>
+          <td>yes / yes</td></tr>
+      
+        <tr><td>2</td><td>189905</td>
+          <td>Flagstaff Mountain</td>
+          <td>Summit</td><td>Saguache</td><td>exact official</td>
+          <td>no / yes</td></tr>
+      
+      </tbody>
+    </table>
+    
+  </section>
+
+  <section class="right">
+    <div id="map" class="map" role="img" aria-label="Map of the candidates and the proposed region"></div>
+    <p class="mapnote">Points as given (NAD83), drawn on a WGS 84 web map: the difference is about a metre here. A circle appears only for a full region. Basemap: USGS The National Map.</p>
+    <script type="application/json" id="map-data">{"candidates": [{"id": 178631, "lat": 40.0016789, "lon": -105.307524, "name": "Flagstaff Mountain", "rank": 1, "selected": true}, {"id": 189905, "lat": 38.2755915, "lon": -106.1996072, "name": "Flagstaff Mountain", "rank": 2, "selected": false}], "circle": {"lat": 40.0016789, "lon": -105.307524, "radius_m": 2038.9091717169986}}</script>
+
+    <h2>Region <span class="sub">spatial uncertainty</span></h2>
+    
+      
+  <table class="kv">
+    <tr><th>Outcome</th><td><span class="badge outcome-computed">computed</span></td></tr>
+    <tr><th>Point</th><td>40.00168, -105.30752 (NAD83) · GNIS 178631</td></tr>
+    <tr><th>Radius</th><td><b>2,039 m</b></td></tr>
+    <tr><th>Policy</th><td><code>gbif-bp-2020/1</code></td></tr>
+  </table>
+  
+  <table class="components">
+    <thead><tr><th>Component</th><th>Metres</th><th>Rule</th></tr></thead>
+    <tbody>
+    
+      <tr><td>extent</td>
+          <td class="num">2,000</td>
+          <td><details><summary>reviewed: radial of Flagstaff Mountain from the GNIS representative point (BP §3.4.1), USGS Topo basemap tiles stitched around the GNIS point with a p…</summary>reviewed: radial of Flagstaff Mountain from the GNIS representative point (BP §3.4.1), USGS Topo basemap tiles stitched around the GNIS point with a pixel grid and geodesic range rings; boundary traced by eye on the contours and hydrography. Mountain rule, QRG 2.1.2: boundary along the surrounding valleys, saddles and plains. Farthest boundary point picked as a pixel, converted to lon/lat by the tile geometry, at about -105.2917, 40.0145; GRS80 geodesic distance from the row&#39;s point; rounded outward to two significant figures.; source: USGS The National Map, USGS Topo basemap tile service (basemap.nationalmap.gov USGSTopo: 3DEP contours, GNIS names, NHD hydrography), data refreshed September 4, 2026; measured by Claude on 2026-11-04 (extents-1). Note: Boundary used: NE corner of the mountain, where Boulder Canyon (N boundary) opens onto the plains (E boundary); S boundary Gregory Canyon, W the saddle toward Green Mountain and gulches to Boulder Creek. Maximum readout: 1966 m. Rough boundary: a terrain edge, not a mapped limit.</details> <span class="cite">BP §3.4.1; QRG §2.1.2 Table 1</span></td></tr>
+    
+      <tr><td>datum</td>
+          <td class="num">0</td>
+          <td>recorded (NAD83), not transformed <span class="cite">BP §3.4.4</span></td></tr>
+    
+      <tr><td>coordinate source</td>
+          <td class="num">0</td>
+          <td>gazetteer coordinate, no map measurement <span class="cite">Calculator getMapScaleError (gazetteer source = 0)</span></td></tr>
+    
+      <tr><td>coordinate precision</td>
+          <td class="num">39</td>
+          <td>GNIS coordinates to the nearest second <span class="cite">Calculator getCoordPrecisionError</span></td></tr>
+    
+    </tbody>
+  </table>
+  
+  
+  
+  <ul class="assumptions"><li>Assumed: Reference point: GNIS feature 178631 (Flagstaff Mountain), representative point in NAD83.</li></ul>
+
+    
+
+    <h2>Decision</h2>
+    
+    
+    
+    <p class="sub">In the local app a curator approves, edits then approves, rejects or requests research here. Decisions are disabled in the replay.</p>
+    
+
+    
+  </section>
+</div>
+
+  </main>
+</body>
+</html>

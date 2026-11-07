@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Queue · LocalityLens</title>
+  <meta name="htmx-config" content='{"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"[45]..","swap":true,"error":true},{"code":"...","swap":false}],"allowEval":false,"includeIndicatorStyles":false}'>
+  <link rel="stylesheet" href="static/vendor/leaflet-1.9.4.css">
+  <link rel="stylesheet" href="static/app.css">
+  <script src="static/vendor/htmx-2.0.4.min.js" defer></script>
+  
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="index.html">LocalityLens <span>review</span></a>
+    
+    <span class="note">Static replay · proposals support curator review and are not authoritative georeferences</span>
+    
+  </header>
+  
+  <aside class="replay" role="note" aria-label="About this replay">
+    <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit 34b31ea, 2026-11-07</p>
+    <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
+  </aside>
+  
+  <main>
+    
+<h1>Review queue</h1>
+<nav class="filters" aria-label="Filter by status">
+  <a href="index.html" class="chip on">all <b>50</b></a>
+  
+  <a href="status-ready_for_review.html" class="chip status-ready_for_review">ready for review <b>11</b></a>
+  
+  <a href="status-needs_information.html" class="chip status-needs_information">needs information <b>37</b></a>
+  
+  <a href="status-unsupported.html" class="chip status-unsupported">unsupported <b>2</b></a>
+  
+</nav>
+<section class="export">
+  
+  <p class="sub">Export (Darwin Core CSV, GeoJSON and the unresolved report) is disabled in the replay: no record here has a curator's decision.</p>
+  
+</section>
+
+<table class="queue">
+  <thead><tr><th>Record</th><th>Status</th><th>County</th><th>Locality</th><th>Proposal or blocking question</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><a href="records/gbif-2573344610.html">gbif:2573344610</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Boulder</td>
+      <td class="locality">Head of canon on east slope of Flagstaff Mountain, Boulder.</td>
+      <td>Flagstaff Mountain, radius 2,039 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573367322.html">gbif:2573367322</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Jefferson</td>
+      <td class="locality">Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Along a 2-track road next to Woman...</td>
+      <td>Boulder, radius 18,006 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573415079.html">gbif:2573415079</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Dolores</td>
+      <td class="locality">Lone Cone.</td>
+      <td>Lone Cone, radius 4,139 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573416221.html">gbif:2573416221</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Moffat</td>
+      <td class="locality">Dinosaur National Monument. Douglas Mtn Boulevard, ca. 3 mi. WSW of Five Springs.</td>
+      <td>Five Spring, radius 1,342 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573441754.html">gbif:2573441754</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Delta</td>
+      <td class="locality">Northern Gunnison Basin: ca 5 air mi SSW of Paonia.</td>
+      <td>Paonia, radius 2,957 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573446625.html">gbif:2573446625</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Pueblo</td>
+      <td class="locality">Shale 15 miles east of Pueblo.</td>
+      <td>Pueblo, radius 27,786 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573488436.html">gbif:2573488436</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Grand</td>
+      <td class="locality">Rocky Mountain National Park. Neversummer Range. About halfway up south slope of Thunder Mt., 16 miles N...</td>
+      <td>Thunder Mountain, radius 1,639 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573528015.html">gbif:2573528015</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Delta</td>
+      <td class="locality">Nine miles north of Hotchkiss on Oak Mesa.</td>
+      <td>Hotchkiss, radius 13,126 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573543074.html">gbif:2573543074</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Gunnison</td>
+      <td class="locality">Pitkin.</td>
+      <td>Pitkin, radius 1,029 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573548250.html">gbif:2573548250</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Rio Grande</td>
+      <td class="locality">Dry Creek drainage.</td>
+      <td>Dry Creek, radius 16,039 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-4052836581.html">gbif:4052836581</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Weld</td>
+      <td class="locality">5 mi. E. of Eaton towards Cornish.</td>
+      <td>Eaton, radius 8,426 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573325284.html">gbif:2573325284</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Lake</td>
+      <td class="locality">Gravelly bench along highway below Fremont Pass.</td>
+      <td>What is the extent of Fremont Pass (Gap)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573325377.html">gbif:2573325377</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Gilpin</td>
+      <td class="locality">Tolland. James Peak.</td>
+      <td>What is the extent of Tolland (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573325740.html">gbif:2573325740</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Pueblo</td>
+      <td class="locality">Chico Basin Ranch, ca. 28 miles SE of Colorado Springs. Dry uplands above Black Squirrel Creek.</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573326360.html">gbif:2573326360</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Moffat</td>
+      <td class="locality">North-central Colorado: Elkhead Mountains: rim of Black Mountain, ca 20-21 air mi NE of Craig.</td>
+      <td>What is the extent of Black Mountain (Summit)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573327740.html">gbif:2573327740</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Mesa</td>
+      <td class="locality">Grand Mesa National Forest. Old road on N slope of plateau E of Mesa Creek.</td>
+      <td>Heading without a distance has no defensible bound (QRG §2.2.2).</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573330473.html">gbif:2573330473</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Larimer</td>
+      <td class="locality">Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake,...</td>
+      <td>What is the extent of Fort Collins (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573332102.html">gbif:2573332102</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Boulder</td>
+      <td class="locality">Above Rainbow Lake.</td>
+      <td>&#39;near&#39;/&#39;vicinity&#39; has no defensible default buffer (QRG §2.1.3.8); how far around Rainbow Lake should the region extend?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573332538.html">gbif:2573332538</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Unknown</td>
+      <td class="locality">South Park area.</td>
+      <td>What is the extent of South Park (Flat)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573332806.html">gbif:2573332806</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Eagle</td>
+      <td class="locality">Gore Range, Eagles Nest Wilderness Area, central Colorado. 1km west of Lower Piney Lake.</td>
+      <td>Heading without a distance has no defensible bound (QRG §2.2.2).</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573334237.html">gbif:2573334237</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Garfield</td>
+      <td class="locality">Silt Mesa (right-of-way).</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573342182.html">gbif:2573342182</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Dolores</td>
+      <td class="locality">Rico Mts.; northern ridge of Sockrider Mt.</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573342782.html">gbif:2573342782</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Pitkin</td>
+      <td class="locality">Lost Man Campground, upper Roaring Fork Valley east of Aspen.</td>
+      <td>Heading without a distance has no defensible bound (QRG §2.2.2).</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573342876.html">gbif:2573342876</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Garfield</td>
+      <td class="locality">White River Plateau. Coffee Pot Road, 8 mi W of Hwy 301.</td>
+      <td>What is the extent of White River Plateau (Summit)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573344696.html">gbif:2573344696</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Saguache</td>
+      <td class="locality">Baca National Wildlife Refuge, San Luis Valley. Ca. 2 air miles WSW of Crestone. Ca. ½ mile S of County...</td>
+      <td>&#39;near&#39;/&#39;vicinity&#39; has no defensible default buffer (QRG §2.1.3.8); how far around Crestone should the region extend?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573371152.html">gbif:2573371152</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Moffat</td>
+      <td class="locality">S slope of Mt. Zenobia.</td>
+      <td>What is the extent of Zenobia Peak (Summit)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573372924.html">gbif:2573372924</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Mesa</td>
+      <td class="locality">Colorado National Monument, S of E entrance.</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573373571.html">gbif:2573373571</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Lake</td>
+      <td class="locality">Mosquito Range, San Isabel National Forest, Weston Pass Rd (FS Rd 7), E from Rte 24, about 1 mi. past USFS...</td>
+      <td>Heading without a distance has no defensible bound (QRG §2.2.2).</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573383796.html">gbif:2573383796</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Moffat</td>
+      <td class="locality">Chokecherry Draw, NW part of Moffat County.</td>
+      <td>What is the extent of Chokecherry Draw (Valley)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573383912.html">gbif:2573383912</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Alamosa</td>
+      <td class="locality">Great Sand Dunes Natl. Mon. Morris Gulch just below horse trap.</td>
+      <td>&#39;near&#39;/&#39;vicinity&#39; has no defensible default buffer (QRG §2.1.3.8); how far around Morris Gulch should the region extend?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573407968.html">gbif:2573407968</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Custer</td>
+      <td class="locality">Wet Mountain Range. Roadside along State Hwy. 96, approx. 5 miles SW of Wetmore.</td>
+      <td>What is the extent of Wetmore (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573436083.html">gbif:2573436083</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Dolores</td>
+      <td class="locality">Lone Mesa State Park, 3.5 miles west of entrance at FR 526; west-facing slope.</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573441392.html">gbif:2573441392</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Gunnison</td>
+      <td class="locality">&#34;Hattie Sammon&#39;s Pasture&#34;, Powderhorn.</td>
+      <td>What is the extent of Powderhorn (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573442604.html">gbif:2573442604</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Jefferson</td>
+      <td class="locality">Near Deer Creek, Chatfield Arboretum site, Denver Botanic Gardens, located at junction of Highway 75 and...</td>
+      <td>&#39;near&#39;/&#39;vicinity&#39; has no defensible default buffer (QRG §2.1.3.8); how far around East Deer Creek should the region extend?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573450094.html">gbif:2573450094</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Teller</td>
+      <td class="locality">1.5 mi N of CO24 off tranquil Acres Rd along Rule Cr.</td>
+      <td>What is the extent of Rule Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573469672.html">gbif:2573469672</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Montezuma</td>
+      <td class="locality">Trail from Soda Tipoff to Mancos River, south rim of Mesa Verde.</td>
+      <td>What is the extent of Mancos River (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573470344.html">gbif:2573470344</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Larimer</td>
+      <td class="locality">Rocky Mountain National Park, along Old Fall River Rd., ca. 6 mi. from Fall River entrance to Park.</td>
+      <td>What is the extent of Fall River (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573470953.html">gbif:2573470953</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Chaffee</td>
+      <td class="locality">Collegiate Peaks Overlook, Arkansas Headwaters State Recreation Area, approx. 1 mile east of Johnson...</td>
+      <td>What is the extent of Johnson Village (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573517762.html">gbif:2573517762</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Las Animas</td>
+      <td class="locality">Mesa de Maya Region of southeastern CO. Gotera Canyon.</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573519521.html">gbif:2573519521</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>San Juan</td>
+      <td class="locality">Eastern San Miguel Mts. Seep 0.2 mi. southeast from Graysill Mine. By FR 578.</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573525930.html">gbif:2573525930</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Baca</td>
+      <td class="locality">Co Rd PP ca 3.2 mi W jct Co Rd 5. Immediately E of dry tributary of Two Buttes Creek.</td>
+      <td>What is the extent of Two Butte Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573526866.html">gbif:2573526866</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Montrose</td>
+      <td class="locality">Gunnison Canon.</td>
+      <td>Which gazetteer feature is the reference?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573529747.html">gbif:2573529747</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>La Plata</td>
+      <td class="locality">2 mi. W of Hesperus.</td>
+      <td>What is the extent of Hesperus (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573542019.html">gbif:2573542019</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>La Plata</td>
+      <td class="locality">San Juan Nat. Forest: Chicago Basin. Animas River drainage ca. 18 mi. S.E. of Silverton. Near the top of Eolus.</td>
+      <td>&#39;near&#39;/&#39;vicinity&#39; has no defensible default buffer (QRG §2.1.3.8); how far around Silverton should the region extend?</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573544280.html">gbif:2573544280</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Gunnison</td>
+      <td class="locality">Northern Gunnison Basin: ca 6 air mi NE of Almont.</td>
+      <td>What is the extent of Almont (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573550324.html">gbif:2573550324</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>La Plata</td>
+      <td class="locality">West of Hesperus. West slope of La Plata Mts.</td>
+      <td>Heading without a distance has no defensible bound (QRG §2.2.2).</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573551288.html">gbif:2573551288</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Fremont</td>
+      <td class="locality">Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: San...</td>
+      <td>What is the extent of Wet Mountains (Range)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-4172815389.html">gbif:4172815389</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Jefferson</td>
+      <td class="locality">Morrison Creek. Buffalo Creek Recreation Area, along Morrison Creek and former National Forest Road 547,...</td>
+      <td>What is the extent of Morrison Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573328433.html">gbif:2573328433</a></td>
+      <td><span class="badge status-unsupported">unsupported</span></td>
+      <td>Alamosa</td>
+      <td class="locality">Medano Ranch, east part of valley.</td>
+      <td>Locality type &#39;other&#39; is not supported.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573488212.html">gbif:2573488212</a></td>
+      <td><span class="badge status-unsupported">unsupported</span></td>
+      <td>Mineral</td>
+      <td class="locality">1.9 miles up Pool Table Road approx. 1/8 mile west of road.</td>
+      <td>Distance along a route needs the route geometry.</td>
+    </tr>
+  
+  </tbody>
+</table>
+
+
+  </main>
+</body>
+</html>

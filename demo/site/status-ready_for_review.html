@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Queue · LocalityLens</title>
+  <meta name="htmx-config" content='{"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"[45]..","swap":true,"error":true},{"code":"...","swap":false}],"allowEval":false,"includeIndicatorStyles":false}'>
+  <link rel="stylesheet" href="static/vendor/leaflet-1.9.4.css">
+  <link rel="stylesheet" href="static/app.css">
+  <script src="static/vendor/htmx-2.0.4.min.js" defer></script>
+  
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="index.html">LocalityLens <span>review</span></a>
+    
+    <span class="note">Static replay · proposals support curator review and are not authoritative georeferences</span>
+    
+  </header>
+  
+  <aside class="replay" role="note" aria-label="About this replay">
+    <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit 34b31ea, 2026-11-07</p>
+    <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
+  </aside>
+  
+  <main>
+    
+<h1>Review queue</h1>
+<nav class="filters" aria-label="Filter by status">
+  <a href="index.html" class="chip">all <b>50</b></a>
+  
+  <a href="status-ready_for_review.html" class="chip status-ready_for_review on">ready for review <b>11</b></a>
+  
+  <a href="status-needs_information.html" class="chip status-needs_information">needs information <b>37</b></a>
+  
+  <a href="status-unsupported.html" class="chip status-unsupported">unsupported <b>2</b></a>
+  
+</nav>
+<section class="export">
+  
+  <p class="sub">Export (Darwin Core CSV, GeoJSON and the unresolved report) is disabled in the replay: no record here has a curator's decision.</p>
+  
+</section>
+
+<table class="queue">
+  <thead><tr><th>Record</th><th>Status</th><th>County</th><th>Locality</th><th>Proposal or blocking question</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><a href="records/gbif-2573344610.html">gbif:2573344610</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Boulder</td>
+      <td class="locality">Head of canon on east slope of Flagstaff Mountain, Boulder.</td>
+      <td>Flagstaff Mountain, radius 2,039 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573367322.html">gbif:2573367322</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Jefferson</td>
+      <td class="locality">Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Along a 2-track road next to Woman...</td>
+      <td>Boulder, radius 18,006 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573415079.html">gbif:2573415079</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Dolores</td>
+      <td class="locality">Lone Cone.</td>
+      <td>Lone Cone, radius 4,139 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573416221.html">gbif:2573416221</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Moffat</td>
+      <td class="locality">Dinosaur National Monument. Douglas Mtn Boulevard, ca. 3 mi. WSW of Five Springs.</td>
+      <td>Five Spring, radius 1,342 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573441754.html">gbif:2573441754</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Delta</td>
+      <td class="locality">Northern Gunnison Basin: ca 5 air mi SSW of Paonia.</td>
+      <td>Paonia, radius 2,957 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573446625.html">gbif:2573446625</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Pueblo</td>
+      <td class="locality">Shale 15 miles east of Pueblo.</td>
+      <td>Pueblo, radius 27,786 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573488436.html">gbif:2573488436</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Grand</td>
+      <td class="locality">Rocky Mountain National Park. Neversummer Range. About halfway up south slope of Thunder Mt., 16 miles N...</td>
+      <td>Thunder Mountain, radius 1,639 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573528015.html">gbif:2573528015</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Delta</td>
+      <td class="locality">Nine miles north of Hotchkiss on Oak Mesa.</td>
+      <td>Hotchkiss, radius 13,126 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573543074.html">gbif:2573543074</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Gunnison</td>
+      <td class="locality">Pitkin.</td>
+      <td>Pitkin, radius 1,029 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573548250.html">gbif:2573548250</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Rio Grande</td>
+      <td class="locality">Dry Creek drainage.</td>
+      <td>Dry Creek, radius 16,039 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-4052836581.html">gbif:4052836581</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Weld</td>
+      <td class="locality">5 mi. E. of Eaton towards Cornish.</td>
+      <td>Eaton, radius 8,426 m</td>
+    </tr>
+  
+  </tbody>
+</table>
+
+
+  </main>
+</body>
+</html>

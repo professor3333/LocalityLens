@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>gbif:2573551288 · LocalityLens</title>
+  <meta name="htmx-config" content='{"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"[45]..","swap":true,"error":true},{"code":"...","swap":false}],"allowEval":false,"includeIndicatorStyles":false}'>
+  <link rel="stylesheet" href="../static/vendor/leaflet-1.9.4.css">
+  <link rel="stylesheet" href="../static/app.css">
+  <script src="../static/vendor/htmx-2.0.4.min.js" defer></script>
+  
+  <script src="../static/vendor/leaflet-1.9.4.js" defer></script>
+  <script src="../static/review.js" defer></script>
+
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="../index.html">LocalityLens <span>review</span></a>
+    
+    <span class="note">Static replay · proposals support curator review and are not authoritative georeferences</span>
+    
+  </header>
+  
+  <aside class="replay" role="note" aria-label="About this replay">
+    <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit 34b31ea, 2026-11-07</p>
+    <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
+  </aside>
+  
+  <main>
+    
+<p class="crumbs"><a href="../index.html">Queue</a> / gbif:2573551288</p>
+<div class="head">
+  <h1>gbif:2573551288</h1>
+  <span class="badge status-needs_information">needs information</span>
+</div>
+<p class="meta">Catalog 00937706 · Fremont, Colorado · snapshot <code>gbif-cu-2026-11-01</code> · extractor <code>rules-6</code> (hybrid)</p>
+
+<div class="grid">
+  <section class="left">
+    <h2>Label (original text)</h2>
+    <p class="label"><mark class="m-feature" title="feature">Wet Mountains</mark>, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: San Isabel National Forest: <mark class="m-qualifier" title="qualifier">ca</mark> 3.4 road mi on Forest 101 from U.S. Hwy 50.</p>
+    <p class="legend"><mark class="m-feature">feature</mark> <mark class="m-distance">distance</mark> <mark class="m-unit">unit</mark> <mark class="m-direction">direction</mark> <mark class="m-qualifier">qualifier</mark> <mark class="m-admin">admin</mark></p>
+
+    <h2>Interpretation</h2>
+    
+    <table class="fields">
+      <thead><tr><th>Field</th><th>Value</th><th>State</th><th>Source span</th></tr></thead>
+      <tbody>
+      
+        <tr class="state-observed"><td>relation</td><td>named feature</td><td>observed</td><td class="span"></td></tr>
+      
+        <tr class="state-observed"><td>reference feature</td><td>Wet Mountains</td><td>observed</td><td class="span">[0:13] Wet Mountains</td></tr>
+      
+        <tr class="state-not-stated"><td>feature type</td><td></td><td>not stated</td><td class="span"></td></tr>
+      
+        <tr class="state-not-stated"><td>distance</td><td></td><td>not stated</td><td class="span"></td></tr>
+      
+        <tr class="state-not-stated"><td>unit</td><td></td><td>not stated</td><td class="span"></td></tr>
+      
+        <tr class="state-not-stated"><td>direction</td><td></td><td>not stated</td><td class="span"></td></tr>
+      
+        <tr class="state-observed"><td>qualifier</td><td>approximate</td><td>observed</td><td class="span">[126:128] ca</td></tr>
+      
+      </tbody>
+    </table>
+    <p class="question">Open question: Label names several places (Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, San Isabel National Forest); which is the reference?</p>
+    
+
+    <h2>Candidates <span class="sub">selection evidence</span></h2>
+    <p class="evidence">4 candidate(s) retrieved; the proposal uses rank 1, Wet Mountains (GNIS 204777).</p><p class="evidence">Name match: exact official (similarity 100).</p><p class="evidence">Context: county differs.</p>
+    
+    <table class="candidates">
+      <thead><tr><th>#</th><th>GNIS</th><th>Name</th><th>Class</th><th>County</th><th>Match</th><th>County / type</th></tr></thead>
+      <tbody>
+      
+        <tr class="selected"><td>1</td><td>204777</td>
+          <td>Wet Mountains</td>
+          <td>Range</td><td>Custer</td><td>exact official</td>
+          <td>no / —</td></tr>
+      
+        <tr><td>2</td><td>184024</td>
+          <td>West Mountain</td>
+          <td>Summit</td><td>La Plata</td><td>fuzzy official</td>
+          <td>no / —</td></tr>
+      
+        <tr><td>3</td><td>189068</td>
+          <td>West Mountain</td>
+          <td>Summit</td><td>Gunnison</td><td>fuzzy official</td>
+          <td>no / —</td></tr>
+      
+        <tr><td>4</td><td>173676</td>
+          <td>W Mountain</td>
+          <td>Summit</td><td>Garfield</td><td>fuzzy official</td>
+          <td>no / —</td></tr>
+      
+      </tbody>
+    </table>
+    
+  </section>
+
+  <section class="right">
+    <div id="map" class="map" role="img" aria-label="Map of the candidates and the proposed region"></div>
+    <p class="mapnote">Points as given (NAD83), drawn on a WGS 84 web map: the difference is about a metre here. A circle appears only for a full region. Basemap: USGS The National Map.</p>
+    <script type="application/json" id="map-data">{"candidates": [{"id": 204777, "lat": 38.0933359, "lon": -105.2602743, "name": "Wet Mountains", "rank": 1, "selected": true}, {"id": 184024, "lat": 37.4499837, "lon": -107.5999855, "name": "West Mountain", "rank": 2, "selected": false}, {"id": 189068, "lat": 38.6124211, "lon": -106.5432885, "name": "West Mountain", "rank": 3, "selected": false}, {"id": 173676, "lat": 39.8741445, "lon": -107.1372631, "name": "W Mountain", "rank": 4, "selected": false}], "circle": null}</script>
+
+    <h2>Region <span class="sub">spatial uncertainty</span></h2>
+    
+      
+  <table class="kv">
+    <tr><th>Outcome</th><td><span class="badge outcome-needs_information">needs information</span></td></tr>
+    <tr><th>Point</th><td>38.09334, -105.26027 (NAD83) · GNIS 204777</td></tr>
+    <tr><th>Radius</th><td><b>unknown</b> (at least 39 m from the known components)</td></tr>
+    <tr><th>Policy</th><td><code>gbif-bp-2020/1</code></td></tr>
+  </table>
+  
+  <table class="components">
+    <thead><tr><th>Component</th><th>Metres</th><th>Rule</th></tr></thead>
+    <tbody>
+    
+      <tr><td>extent</td>
+          <td class="num"><span class="unknown">unknown</span></td>
+          <td>unknown <span class="cite">BP §3.4.1; QRG §2.1.2 Table 1</span></td></tr>
+    
+      <tr><td>datum</td>
+          <td class="num">0</td>
+          <td>recorded (NAD83), not transformed <span class="cite">BP §3.4.4</span></td></tr>
+    
+      <tr><td>coordinate source</td>
+          <td class="num">0</td>
+          <td>gazetteer coordinate, no map measurement <span class="cite">Calculator getMapScaleError (gazetteer source = 0)</span></td></tr>
+    
+      <tr><td>coordinate precision</td>
+          <td class="num">39</td>
+          <td>GNIS coordinates to the nearest second <span class="cite">Calculator getCoordPrecisionError</span></td></tr>
+    
+    </tbody>
+  </table>
+  
+  <p class="question">Question: What is the extent of Wet Mountains (Range)? GNIS gives only a representative point, which is not the feature&#39;s extent.</p>
+  
+  <ul class="assumptions"><li>Assumed: Reference point: GNIS feature 204777 (Wet Mountains), representative point in NAD83.</li><li>Assumed: &#39;about&#39;/&#39;ca.&#39; does not change coordinates or uncertainty (BP §2.2 (adverbial modifiers such as &#39;about&#39;)).</li></ul>
+
+    
+
+    <h2>Decision</h2>
+    
+    
+    
+    <p class="sub">In the local app a curator approves, edits then approves, rejects or requests research here. Decisions are disabled in the replay.</p>
+    
+
+    
+  </section>
+</div>
+
+  </main>
+</body>
+</html>
