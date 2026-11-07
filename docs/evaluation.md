@@ -133,7 +133,10 @@ cache (`extract/cache.py`) record 0 model seconds and are never used for latency
 - **Proposal precision and useful coverage on the locked test.** The test references have no
   measured extents. On dev and validation they are measured with a partly filled store.
 - **Containment with region size, and reviewer time.**
-- **GEOLocate comparison**, the second LLM call (candidate comparison), other
+- **GEOLocate on held-out data.** On the read samples only, within 5 km of the defensible
+  position: GEOLocate 58, rules 54, LLM 59, hybrid-1 61 of 85 owner-annotated records
+  ([findings](../eval/reports/geolocate-findings.md)).
+- **The second LLM call** (candidate comparison), other
   quantizations, and the adversarial set. Qwen3.5-2B has been compared on dev and validation
   data only ([findings](../eval/reports/qwen3.5-2b-findings.md)).
 - **Review policy thresholds** (`configs/review_policy.yaml`, planned): no selection-confidence
