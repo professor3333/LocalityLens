@@ -4,7 +4,8 @@ invented test input for a synthetic feature."""
 import csv
 import json
 import math
-from datetime import date
+import sqlite3
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 import pytest
@@ -18,6 +19,7 @@ from localitylens.export.geojson import GEOJSON_EXPORT_VERSION, export_geojson
 from localitylens.gazetteer.index import Gazetteer, build_index
 from localitylens.geo.extents import ExtentStore, ReviewedExtent
 from localitylens.ingest.specimens import to_record
+from localitylens.review.backup import BACKUP_VERSION, backup, inspect, restore
 from localitylens.review.importer import import_records
 from localitylens.review.store import Action, ReviewError, ReviewStore
 
@@ -245,3 +247,95 @@ def test_review_cli_end_to_end(
     assert "approved       1" in printed
     assert "geojson        1" in printed
     assert (tmp_path / "o.geojson").is_file()  # next to --out by default
+
+
+# --- backup, restore, rollback -------------------------------------------------------------
+
+FIXED = datetime(2026, 11, 7, 3, 0, tzinfo=UTC)
+
+
+def test_backup_is_one_checked_file_and_never_overwrites(
+    store: ReviewStore, tmp_path: Path
+) -> None:
+    store.decide(_id("lake"), Action.APPROVE, reviewer="r", rationale="ok")
+    out = tmp_path / "backups" / "b.sqlite"
+    info = backup(tmp_path / "review.sqlite", out)
+    assert BACKUP_VERSION == "backup-1"
+    assert info.schema == "review-3"
+    assert info.counts == {"record": 4, "proposal": 4, "decision": 1}
+    assert sorted(p.name for p in out.parent.iterdir()) == ["b.sqlite"]  # no -wal / -shm
+    with pytest.raises(ReviewError, match="never overwrites"):
+        backup(tmp_path / "review.sqlite", out)
+
+
+def test_restore_brings_back_the_decisions_and_keeps_the_old_store(
+    store: ReviewStore, tmp_path: Path
+) -> None:
+    db = tmp_path / "review.sqlite"
+    store.decide(_id("lake"), Action.APPROVE, reviewer="r", rationale="ok")
+    backup(db, tmp_path / "b.sqlite")
+    store.decide(_id("route"), Action.REJECT, reviewer="r", rationale="out of scope")  # after
+    store.close()
+    with pytest.raises(ReviewError, match="--replace"):
+        restore(tmp_path / "b.sqlite", db)
+    info, moved = restore(tmp_path / "b.sqlite", db, replace=True, now=lambda: FIXED)
+    assert info.counts["decision"] == 1
+    assert moved == tmp_path / "review.sqlite.before-restore-20261107T030000Z"
+    assert inspect(moved).counts["decision"] == 2  # the replaced store is kept, not deleted
+    with ReviewStore(db) as s:
+        assert s.status(_id("lake")) is RecordStatus.APPROVED
+        assert s.status(_id("route")) is RecordStatus.UNSUPPORTED  # the later reject is undone
+        assert [d.rationale for d in s.decisions(_id("lake"))] == ["ok"]
+
+
+def test_restore_refuses_a_busy_store(store: ReviewStore, tmp_path: Path) -> None:
+    db = tmp_path / "review.sqlite"
+    backup(db, tmp_path / "b.sqlite")
+    other = sqlite3.connect(db, isolation_level=None)
+    other.execute("BEGIN IMMEDIATE")  # another process in the middle of a write
+    try:
+        with pytest.raises(ReviewError, match="in use"):
+            restore(tmp_path / "b.sqlite", db, replace=True)
+    finally:
+        other.execute("ROLLBACK")
+        other.close()
+    assert inspect(db).counts["record"] == 4  # untouched
+
+
+def test_restore_refuses_damaged_foreign_and_newer_files(
+    store: ReviewStore, tmp_path: Path
+) -> None:
+    junk = tmp_path / "junk.sqlite"
+    junk.write_bytes(b"not a database at all" * 100)
+    with pytest.raises(ReviewError):
+        restore(junk, tmp_path / "new.sqlite")
+    foreign = tmp_path / "foreign.sqlite"
+    sqlite3.connect(foreign).execute("CREATE TABLE t (x)").connection.close()
+    with pytest.raises(ReviewError, match="not a review store"):
+        restore(foreign, tmp_path / "new.sqlite")
+    newer = tmp_path / "newer.sqlite"
+    backup(tmp_path / "review.sqlite", newer)
+    con = sqlite3.connect(newer)
+    con.execute("UPDATE meta SET value='review-99' WHERE key='schema'")
+    con.commit()
+    con.close()
+    with pytest.raises(ReviewError, match="cannot read"):
+        restore(newer, tmp_path / "new.sqlite")
+    assert not (tmp_path / "new.sqlite").exists()
+
+
+def test_backup_and_restore_from_the_command_line(
+    store: ReviewStore, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from localitylens.cli import main
+
+    db, out = str(tmp_path / "review.sqlite"), str(tmp_path / "b.sqlite")
+    store.close()
+    assert main(["review", "backup", "--db", db, "--out", out]) == 0
+    assert "4 records, 4 proposals, 0 decisions, integrity ok" in capsys.readouterr().out
+    assert main(["review", "restore", "--from", out, "--db", db]) == 2
+    assert "--replace" in capsys.readouterr().err
+    assert main(["review", "restore", "--from", out, "--db", db, "--replace"]) == 0
+    printed = capsys.readouterr().out
+    assert "moved the previous store to" in printed
+    assert "restored" in printed

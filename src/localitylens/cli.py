@@ -632,6 +632,34 @@ def _review_decide(args: argparse.Namespace) -> int:
     return 0
 
 
+def _review_backup(args: argparse.Namespace) -> int:
+    from localitylens.review.backup import backup
+    from localitylens.review.store import ReviewError
+
+    try:
+        info = backup(Path(args.db), Path(args.out))
+    except ReviewError as exc:
+        print(f"refused: {exc}", file=sys.stderr)
+        return 2
+    print(f"backup {args.out}: {info.summary()}, integrity ok")
+    return 0
+
+
+def _review_restore(args: argparse.Namespace) -> int:
+    from localitylens.review.backup import restore
+    from localitylens.review.store import ReviewError
+
+    try:
+        info, moved = restore(Path(args.source), Path(args.db), replace=args.replace)
+    except ReviewError as exc:
+        print(f"refused: {exc}", file=sys.stderr)
+        return 2
+    if moved is not None:
+        print(f"moved the previous store to {moved}")
+    print(f"restored {args.db}: {info.summary()}, integrity ok")
+    return 0
+
+
 def _review_export(args: argparse.Namespace) -> int:
     from localitylens.export.darwin_core import export_approved, export_unresolved
     from localitylens.export.geojson import export_geojson
@@ -1284,6 +1312,21 @@ def main(argv: list[str] | None = None) -> int:
                      "records (default: --out with the suffix .geojson)")  # fmt: skip
     re_.add_argument("--unresolved", default="data/review/export/unresolved.csv")
     re_.set_defaults(func=_review_export)
+    rb = rv_sub.add_parser(
+        "backup", help="consistent copy of the review store (safe while running)"
+    )
+    rb.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rb.add_argument("--out", required=True, help="new file; never overwritten")
+    rb.set_defaults(func=_review_backup)
+    rr = rv_sub.add_parser(
+        "restore", help="restore a backup into a stopped deployment (the old store is kept)"
+    )
+    rr.add_argument("--from", dest="source", required=True, help="a file made by review backup")
+    rr.add_argument("--db", default="data/review/review.sqlite", help=db_help)
+    rr.add_argument(
+        "--replace", action="store_true", help="move an existing store aside, then restore"
+    )
+    rr.set_defaults(func=_review_restore)
     rs = rv_sub.add_parser("serve", help="the local review screen (queue, map, decisions)")
     rs.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     rs.add_argument("--extents", help=_EXTENTS_HELP)
