@@ -54,6 +54,8 @@ to recover a location a publisher withheld or generalized.
 |---|---|---|---|
 | Audit | 50 | seed `audit-50/1`, uniform over groups | Dev data: first comparison, then development |
 | dev-1 | 50 | seed `dev-1/1`, stratified by label shape: 15 bare names, 15 offsets, 20 other | Dev data: prompt v2 was written on it |
+| dev-2 | 50 | seed `dev-2/1`, same strata as dev-1 | Dev data: scored once by a pinned plan, then read |
+| dev-3, dev-4 | 50 each | seeds `dev-3/1`, `dev-4/1`: 35 "place, offset" labels, 5 offsets, 5 bare names, 5 other | Dev data: checks of the place-or-offset rules, each scored once by a pinned plan |
 | Validation | 60 | seed `benchmark/1`, uniform | Held out, then read when scored with frozen systems |
 | Locked test | 120 | seed `benchmark/1`, uniform | Scored only under declared releases. Per-record outputs are never read |
 
@@ -72,7 +74,7 @@ to recover a location a publisher withheld or generalized.
 ## Annotation
 
 The project owner annotated the audit, dev-1, validation and test sets. Claude, the AI assistant
-used on this project, annotated dev-2 and dev-3 at the owner's request. Each set was annotated
+used on this project, annotated dev-2, dev-3 and dev-4 at the owner's request. Each set was annotated
 **before any system output for it was seen**, following
 [`eval/annotation_guide.md`](../eval/annotation_guide.md):
 
@@ -121,7 +123,8 @@ has none for passes.
 - **One herbarium, one state, English labels.** Nothing here measures other collections,
   regions or languages.
 - **One annotator per set.** No second reviewer yet, and no repeat-annotation self-consistency
-  check yet. Claude also wrote the rules, so dev-2 and dev-3 are not independent checks of them.
+  check yet. Claude also wrote the rules, so dev-2, dev-3 and dev-4 are not independent checks
+  of them.
 - **Small sets.** 56 answerable test records give wide intervals: one record is 1.8 points.
 - **Grouping is not independence.** Grouping removes identical wordings and known shared
   events, but different wordings of one place by different collectors can still fall in
@@ -130,3 +133,10 @@ has none for passes.
   county lines may be missing or misleading. GNIS lists one primary county per feature.
 - **GNIS gives points, not shapes.** Feature extent is unknown until measured.
 - **Existing specimen coordinates are not ground truth** and are not used.
+
+## Published examples
+
+The [static replay](https://professor3333.github.io/LocalityLens/) shows the 50 audit records
+only: committed, CC BY 4.0, and screened (none carries `informationWithheld` or
+`dataGeneralizations`). A test fails if any other record is published there. No validation or
+locked-test record, and no withheld or generalised location, appears in a public page.

@@ -22,7 +22,8 @@ This card describes the model as used in release `0.1.0-dev`.
 - treating `needs_information` or `unsupported` as "cannot be located"
 - inferring places, distances or directions the label does not state
 - other regions, non-English labels, OCR output, or route-relative descriptions
-- claiming general georeferencing quality: no GEOLocate comparison has been run yet
+- claiming general georeferencing quality: GEOLocate was compared on read samples only, for
+  point placement only ([findings](../eval/reports/geolocate-findings.md))
 
 ## Provenance
 
@@ -55,9 +56,14 @@ budget.
 - **No fine-tuning.** The model is used as published.
 - **Few-shot examples** use invented names (Brindle Peak, Osgood, Tamsin Lake and others), so
   no evaluation label appears in the prompt.
-- **Dev data:** the audit (50) and dev-1 (50) were used for prompt and rule iteration.
-- **Held out:** validation (60) was scored with frozen systems. The locked test (120) is
-  scored only under declared releases.
+- **Dev data:** the audit (50) and dev-1 (50) were used for prompt and rule iteration; dev-2,
+  dev-3 and dev-4 (50 each, annotated by Claude) checked rules changes.
+- **Held out:** validation (60) was scored with frozen systems and has since been read. The
+  locked test (120) is scored only under declared releases (three so far).
+- **The few-shot examples matter most:** without them, the same model and settings give 11
+  correct proposal candidates of 92 owner-annotated dev and validation records instead of 46,
+  and invalid extractions rise from 7 to 57 of 160
+  ([ablation](../eval/reports/ablation-fewshot-findings.md)).
 - Splits are grouped by wording and by collecting event. See the
   [dataset card](dataset_card.md) and [evaluation](evaluation.md).
 
@@ -65,25 +71,27 @@ budget.
 
 On the locked test, correct proposal candidates of 56 answerable records:
 
-| System | Correct | vs rules |
-|---|---|---|
-| Rules `rules-1` | 19 | – |
-| LLM v2 alone | 15 | −7 points (CI −23 to +7) |
-| **hybrid-1** (rules first, LLM fallback) | **25** | **+10.7 points (CI +3.6 to +19.6)** |
+| System | Release 1–2 (rules-1) | Release 3 (rules-6) | vs rules, release 3 |
+|---|---|---|---|
+| Rules | 19 | 22 | – |
+| LLM v2 alone | 15 | 18 | −7.1 points (CI −21 to +7) |
+| **hybrid-1** (rules first, LLM fallback) | **25** | **28** | **+10.7 points (CI +3.6 to +19.6)** |
 
 **Other test figures for the LLM alone** (of 120 unless stated):
 
-| Measure | Value |
-|---|---|
-| Critical interpretation exact | 47 |
-| Relation read correctly | 66 |
-| Qualifiers right | 85 |
-| Extraction passed validation | 105 |
-| Unsupported records flagged (of 16) | 9 |
-| References absent from GNIS reported absent (of 48) | 26 |
-| Latency, warm | p50 11.7 s, p95 20.9 s |
+| Measure | Release 1 | Release 3 |
+|---|---|---|
+| Critical interpretation exact | 47 | 50 |
+| Relation read correctly | 66 | 67 |
+| Qualifiers right | 85 | 87 |
+| Extraction passed validation | 105 | 107 |
+| Unsupported records flagged (of 16) | 9 | 9 |
+| References absent from GNIS reported absent (of 48) | 26 | 26 |
+| Latency, warm | p50 11.7 s, p95 20.9 s | p50 9.9 s, p95 16.4 s |
 
-For hybrid-1, the model is called on 39% of records.
+The model and prompt are the same in every release; the gains come from validation version 3
+and supplied-county handling. hybrid-1 calls the model on 39% (release 2) and 38% (release 3)
+of test records. All test measures are in [evaluation](evaluation.md#locked-test-the-milestone-answer).
 
 With 67 measured extents and rules-6, on the read dev and validation data (160 records), hybrid-1
 computes 35 full regions, 32 of them correct (91%; target ≥ 95%), a useful coverage of 35%
@@ -95,12 +103,13 @@ Containment, and these measures on the locked test, are not measured yet. See
 ## Known failure modes
 
 **Observed** in the reports:
-- **Direction-only labels.** The model read only 2 of 15 test labels as `direction_only`,
-  and got 0 of the 7 answerable ones right.
-- **Qualifiers dropped or mis-scoped:** 71% right on the test, against the rules' 86%.
+- **Direction-only labels.** In release 1 the model read only 2 of 15 test labels as
+  `direction_only`, and got 0 of the 7 answerable ones right (1 of 7 in release 3).
+- **Qualifiers dropped or mis-scoped:** 87 of 120 right on the test (release 3), against the
+  rules' 106.
   Scope also goes wrong: in "Along X, near Town", "near" belongs to the town.
-- **Schema-valid but semantically wrong output.** 15 of 120 test extractions passed the
-  JSON schema but failed deterministic validation. Their reasons were not examined, so the
+- **Schema-valid but semantically wrong output.** 13 of 120 test extractions (release 3; 15
+  in release 1) passed the JSON schema but failed deterministic validation. Their reasons were not examined, so the
   test stays unread. On dev data the causes included quotes not found in the text.
 - **Bare place names read as "no locality":** 7 of 50 under prompt v1, and 2 of 120 under v2
   on the test.
@@ -111,14 +120,15 @@ Containment, and these measures on the locked test, are not measured yet. See
 - **A wrong candidate where the rules correctly found none.** The hybrid inherits this:
   absent-reported drops from 17 to 14 of 48 on the test.
 
-**Listed in the project plan but not yet tested systematically** (adversarial set to come):
-- direction reversal and compound bearings
-- "m" read as miles against metres
-- elevations read as distances
-- multi-offset descriptions collapsed into one
-- injected instructions in label text (label text is fenced as data, and the model has no
-  tools)
-- historical names and changed county boundaries
+**Covered by behaviour tests on synthetic data, not measured on real labels**
+([adversarial tests](../tests/adversarial/test_adversarial.py)): swapped directions, missing or
+ambiguous units ("m" as miles or metres), repeated place names, conflicting counties, injected
+instructions (label text is fenced as data, the model has no tools, and coordinates in its output
+are rejected), unknown landmarks and malformed output. The system abstains, flags or refuses in
+each case; how often the model itself errs on such labels is not measured.
+
+**Not tested:** elevations read as distances, multi-offset descriptions collapsed into one, and
+historical names or changed county boundaries beyond what the read samples contain.
 
 ## Release process
 
@@ -126,8 +136,8 @@ Containment, and these measures on the locked test, are not measured yet. See
   No selection-confidence thresholds are set yet.
 - **A release candidate** is a new release manifest. Before the test is scored, a declaration
   pins the code commit, manifest hash, data hashes, metric, target and decision rule. It is
-  committed and pushed first, and its result is published whatever it shows. Releases 1 and 2
+  committed and pushed first, and its result is published whatever it shows. Releases 1 to 3
   are in [`eval/benchmark/`](../eval/benchmark/).
 - **Rollback** means restoring the complete previous bundle (model file, prompt, schema,
-  generation settings, gazetteer snapshot, policies). Deployment and a tested rollback are not
-  built yet.
+  generation settings, gazetteer snapshot, policies). The Docker Compose deployment is built
+  (see the README); the rollback procedure has not been tested yet.

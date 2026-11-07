@@ -68,12 +68,101 @@ interpretation and the reference, not the size of the radius.
 - **no:** the interval's upper bound is below +10
 - **not shown:** anything else
 
-## Results so far
+## Results
 
-**Locked test, release 3** (current rules `rules-6`, validation 3; 56 answerable): rules 22,
-LLM v2 alone 18, **hybrid-1 28**. hybrid-1 − rules: +10.7 points (CI +3.6 to +19.6, p = 0.031),
-6 gained and 0 lost: **yes**, again by one record
-([release 3](../eval/reports/test-release-3.md)).
+Everything below was measured; nothing is extrapolated. Results on dev data are in-sample
+wherever the system was changed from that sample's misses, and they say so.
+
+- **LLM v2:** Qwen3.5-4B Q4_K_M, prompt `extraction-v2`, greedy decoding.
+- **hybrid-1:** runs the rules first, and the LLM only where the rules reach no gazetteer
+  candidate. It is the release system.
+
+### Locked test: the milestone answer
+
+Correct proposal candidates of 56 answerable records, each release under its own declaration
+pushed before the run:
+
+| Release | Rules | LLM v2 alone | hybrid-1 | Primary comparison | Answer |
+|---|---|---|---|---|---|
+| [1](../eval/reports/test-release-1.md) (rules-1, validation 2) | 19 | 15 | – | LLM − rules: −7 points (CI −23 to +7) | **no** |
+| [2](../eval/reports/test-release-2.md) (same components) | 19 | 15 | 25 | hybrid − rules: +10.7 points (CI +3.6 to +19.6, p = 0.031) | **yes** |
+| [3](../eval/reports/test-release-3.md) (rules-6, validation 3) | 22 | 18 | **28** | hybrid − rules: +10.7 points (CI +3.6 to +19.6, p = 0.031) | **yes** |
+
+- **The margin is the smallest that clears +10 points, twice:** 6 records gained and none lost.
+  One record fewer would have been "not shown".
+- **The interval runs from about +4 to +20.** The hybrid is better than the rules, but a true
+  gain below 10 points is not ruled out.
+- **The test has been scored three times.** Changes between releases were designed on dev and
+  validation data. No per-record test output has been read.
+
+**Every measure on the test, release 3** (of 120 records unless stated):
+
+| Measure | Rules (rules-6) | LLM v2 alone | **hybrid-1** |
+|---|---|---|---|
+| Correct proposal candidates (of 56) | 22 | 18 | **28** |
+| Critical interpretation exact | 62 | 50 | 63 |
+| Relation read correctly | 75 | 67 | 76 |
+| Distance right | 89 | 95 | 90 |
+| Unit right | 93 | 98 | 94 |
+| Direction right | 84 | 83 | 83 |
+| Qualifiers right | 106 | 87 | 106 |
+| Extraction passed validation (quotes resolve to spans) | 120 | 107 | 120 |
+| Acceptable reference ranked first (of 56) | 24 | 27 | 32 |
+| Candidate recall@5 (of 56) | 25 | 28 | 34 |
+| Unsupported flagged unsupported (of 16) | 7 | 9 | 7 |
+| References absent from GNIS reported absent (of 48) | 17 | 26 | 14 |
+| Place names read as "no locality" | 0 | 2 | 0 |
+| Mean fields a curator must correct | 1.54 | 1.66 | 1.46 |
+
+- **Where the hybrid gains, it gains through retrieval:** the LLM's quote reaches GNIS where the
+  rules' name does not (top-1 32 against 24).
+- **What it costs:** fewer absent references reported as absent (14 against 17).
+- **The model is called on 45 of 120 records (38%).** Model time is 479 s against 1,285 s for the
+  LLM alone on all 120. Latency per call: p50 9.9 s, p95 16.4 s (Apple M1, 8 GB, warm server,
+  completion cache off).
+- MRR is not computed: the score reports top-1 and top-5 only.
+
+### Ablations and model comparisons (read samples only)
+
+- **Few-shot examples** ([findings](../eval/reports/ablation-fewshot-findings.md)): without its 11
+  invented examples, prompt v2 falls from 46 to 11 correct proposal candidates of 92
+  owner-annotated records (−38 points, CI −49 to −27). Invalid extractions rise from 7 to 57 of
+  160. The examples carry most of the LLM's result.
+- **Qwen3.5-2B against 4B** ([findings](../eval/reports/qwen3.5-2b-findings.md)): alone, 27
+  against 46 of 92. As hybrid-1's fallback, 49 against 51, at a quarter of the model time.
+- **Not run:** the second LLM call (candidate comparison: not built), admin context removed from
+  the prompt, and other quantizations.
+
+### Against GEOLocate (read samples only)
+
+Plan pinned before any query; 310 read-sample labels, no locked-test label
+([findings](../eval/reports/geolocate-findings.md)). Points within 5 km / 1 km of the position the
+annotation supports:
+
+| Annotations | GEOLocate | rules-6 | LLM v2 | hybrid-1 |
+|---|---|---|---|---|
+| Owner (85 records) | **58** / 44 | 54 / 51 | 59 / 53 | **61** / 58 |
+| Claude (91 records) | **63** / 44 | 54 / 47 | 51 / 47 | **62** / 54 |
+
+- **At 5 km the two are level,** and both are ahead of the rules alone.
+- **GEOLocate gives a point almost always** (82 of 85). Ours give fewer (hybrid 71) and abstain
+  where GEOLocate guesses.
+- **The 1 km gap is mostly a bias of the method:** positions come from GNIS, where our correct
+  picks land exactly.
+- **This compares point placement only.** GEOLocate ran with default settings and no curator,
+  and our systems are partly tuned on these samples.
+
+### Regions and uncertainty (dev and validation only)
+
+With 67 of 115 reference features measured in the [extent store](../data/reviewed/), hybrid-1
+computes 35 full regions on the 160 read records, 32 with the right interpretation and reference
+(91%; target ≥ 95%). That is a useful coverage of 32 of 92 answerable (35%; target ≥ 70%). On
+dev-2's labels: 11 regions, 10 correct (91%), coverage 10 of 36 (28%)
+([findings](../eval/reports/extents-findings.md), [batch 4](../eval/reports/extents-batch-4-findings.md)).
+No test feature has a measured extent, so no system computes test regions.
+
+<details>
+<summary><b>Development history: dev and validation scores by rules version</b></summary>
 
 Correct proposal candidates, against the rules baseline `rules-1`:
 
@@ -109,9 +198,7 @@ Claude-annotated, plan pushed before any run) gives rules-6 9, LLM 14, hybrid-1 
 labels whose wording repeats a read or reserved group under another county (exclusion version
 2, [dev samples](../eval/dev/README.md)).
 
-- **LLM v2:** Qwen3.5-4B Q4_K_M, prompt `extraction-v2`, greedy decoding.
-- **hybrid-1:** runs the rules first, and the LLM only where the rules reach no gazetteer
-  candidate.
+</details>
 
 **Full reports:**
 - [release 1](../eval/reports/test-release-1.md) · [release 2](../eval/reports/test-release-2.md)
@@ -122,23 +209,17 @@ labels whose wording repeats a read or reserved group under another county (excl
   [prompt v2](../eval/reports/prompt-v2-findings.md) ·
   [core retrieval](../eval/reports/retrieval-core-findings.md)
 
-Failed and superseded experiments stay in [`eval/reports/`](../eval/reports/).
-
-**LLM latency** on the locked test (Apple M1, 8 GB, warm, no retries): p50 11.7 s, p95 20.9 s per
-record. hybrid-1 calls the model on 39% of test records. Runs answered from the completion
-cache (`extract/cache.py`) record 0 model seconds and are never used for latency.
+Failed and superseded experiments stay in [`eval/reports/`](../eval/reports/). Runs answered from
+the completion cache (`extract/cache.py`) record 0 model seconds and are never used for latency.
 
 ## Not measured yet
 
 - **Proposal precision and useful coverage on the locked test.** The test references have no
   measured extents. On dev and validation they are measured with a partly filled store.
 - **Containment with region size, and reviewer time.**
-- **GEOLocate on held-out data.** On the read samples only, within 5 km of the defensible
-  position: GEOLocate 58, rules 54, LLM 59, hybrid-1 61 of 85 owner-annotated records
-  ([findings](../eval/reports/geolocate-findings.md)).
-- **The second LLM call** (candidate comparison), other
-  quantizations, and the adversarial set. Qwen3.5-2B has been compared on dev and validation
-  data only ([findings](../eval/reports/qwen3.5-2b-findings.md)).
+- **GEOLocate on held-out data.** It has been compared on read samples only (above).
+- **The second LLM call** (candidate comparison: not built), other quantizations, and a scored
+  adversarial set on real labels. The adversarial behaviour tests below use synthetic data.
 - **Review policy thresholds** (`configs/review_policy.yaml`, planned): no selection-confidence
   thresholds are set yet. A record reaches `ready_for_review` whenever its region is computed,
   whatever the selection evidence, so the curator still judges the choice of feature.

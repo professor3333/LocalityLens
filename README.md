@@ -21,6 +21,7 @@
   <a href="#-try-it">Try it</a> ·
   <a href="https://professor3333.github.io/LocalityLens/">Replay demo</a> ·
   <a href="#-design-guarantees">Design guarantees</a> ·
+  <a href="#-limitations">Limitations</a> ·
   <a href="#-roadmap">Roadmap</a> ·
   <a href="#-data--licences">Data</a> ·
   <a href="#-development">Development</a>
@@ -82,7 +83,15 @@ records. It is labelled as a replay on every page: nothing runs live, and decisi
 are disabled. Those records are development data, so the replay shows how the screen works and
 is not a measure of accuracy (see [demo/README.md](demo/README.md)).
 
-**Locally:**
+**Locally.** Requirements, as measured on the development machine (Apple M1, 8 GB RAM):
+
+| For | Needs |
+|---|---|
+| Rules baseline, gazetteer, review screen, export | Python 3.12+ and [uv](https://github.com/astral-sh/uv); about 30 MB of disk (GNIS snapshot 22 MB, gazetteer index 6.3 MB). No GPU, no network after the downloads |
+| The LLM (Qwen3.5-4B Q4_K_M) | llama.cpp (build `b11960` pinned), 2.74 GB for the model file; llama-server uses 629 MB on top of the memory-mapped model. Warm latency p50 9.9 s, p95 16.4 s per call on the test |
+| The lower-resource model (Qwen3.5-2B Q4_K_M) | 1.28 GB model file, about a quarter of 4B's model time on dev data; its process memory was not measured |
+| Your own specimens from GBIF (optional) | a free GBIF account; 157 MB for the Darwin Core Archive |
+| Docker (optional) | Docker Compose; see below |
 
 ```bash
 git clone https://github.com/professor3333/LocalityLens.git && cd LocalityLens
@@ -818,6 +827,32 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
   validation samples.
 
 </details>
+
+## ⚠️ Limitations
+
+- **One herbarium, Colorado, English.** Every number here comes from University of Colorado
+  Herbarium labels. Nothing is claimed for other collections, regions, languages or OCR text.
+- **Small, thin margins.** The locked test has 56 answerable records; one record is 1.8 points.
+  hybrid-1 cleared the +10 point target by the smallest possible margin, and its interval
+  (+4 to +20) does not rule out a smaller true gain.
+- **Repeated text.** Grouping removes identical wordings and shared collecting events before
+  splitting, but different wordings of the same place can still fall in different splits.
+- **One annotator per set.** The owner annotated the audit, dev-1, validation and test; Claude
+  annotated dev-2 to dev-4, and also wrote the rules they check. There is no second reviewer
+  and no self-consistency pass yet.
+- **GNIS is current; labels are historical.** Old names, vanished places and changed counties may
+  be missing or misleading. Mines and other cultural features without a GNIS class cannot be
+  matched.
+- **GNIS gives points, not shapes.** A region is computed only when the feature's extent has been
+  measured (67 of 115 dev and validation references so far); otherwise the record asks for it.
+- **Existing specimen coordinates are not ground truth** and are not used.
+- **Route-relative, itinerary and multi-leg descriptions are out of scope.** They are reported
+  as unsupported, with the evidence that would make them supportable.
+- **No proposal does not mean unlocatable.** `needs_information` and `unsupported` mean this
+  release could not propose a region, not that a curator cannot.
+- **Not measured yet:** regions on the locked test, containment with region size, reviewer time,
+  GEOLocate on held-out data, and the second model call. See
+  [evaluation](docs/evaluation.md#not-measured-yet).
 
 ## 🗺️ Roadmap
 
