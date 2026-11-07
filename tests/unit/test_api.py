@@ -301,6 +301,7 @@ def test_export_through_the_api(processed: tuple[TestClient, Path, str]) -> None
     assert r.status_code == 200
     assert (r.json()["approved"], r.json()["unresolved"]) == (1, 2)
     assert Path(r.json()["files"]["occurrences.csv"]).is_file()
+    assert Path(r.json()["files"]["occurrences.geojson"]).is_file()
     again = client.post("/api/exports", json={})  # a retry rewrites the same rows
     assert again.json()["approved"] == 1
     lines = (db.parent / "export" / "occurrences.csv").read_text(encoding="utf-8").splitlines()

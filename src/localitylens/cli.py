@@ -634,12 +634,16 @@ def _review_decide(args: argparse.Namespace) -> int:
 
 def _review_export(args: argparse.Namespace) -> int:
     from localitylens.export.darwin_core import export_approved, export_unresolved
+    from localitylens.export.geojson import export_geojson
     from localitylens.review.store import ReviewStore
 
+    geojson = Path(args.geojson) if args.geojson else Path(args.out).with_suffix(".geojson")
     with ReviewStore(Path(args.db)) as store:
         n = export_approved(store, Path(args.out))
+        g = export_geojson(store, geojson)
         u = export_unresolved(store, Path(args.unresolved))
     print(f"approved   {n:>5}  -> {args.out}")
+    print(f"geojson    {g:>5}  -> {geojson}")
     print(f"unresolved {u:>5}  -> {args.unresolved}")
     return 0
 
@@ -656,7 +660,13 @@ def _review_serve(args: argparse.Namespace) -> int:
     except ExtentStoreError as exc:  # e.g. a gazetteer built from another snapshot
         extents, problem = None, str(exc)
         print(f"warning: extent store not loaded, /readyz reports it: {problem[:200]}")
-    config = config_from_env(Path(args.db), extents, Path(args.out), Path(args.unresolved))
+    config = config_from_env(
+        Path(args.db),
+        extents,
+        Path(args.out),
+        Path(args.unresolved),
+        Path(args.geojson) if args.geojson else None,
+    )
     config = dataclasses.replace(config, extents_problem=problem)
     config = dataclasses.replace(config, release=Path(args.release), index=Path(args.index))
     who = config.reviewer or "asked on each decision (set LOCALITYLENS_REVIEWER to fix it)"
@@ -1265,9 +1275,13 @@ def main(argv: list[str] | None = None) -> int:
     rd.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rd.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     rd.set_defaults(func=_review_decide)
-    re_ = rv_sub.add_parser("export", help="Darwin Core CSV of approved records + unresolved")
+    re_ = rv_sub.add_parser(
+        "export", help="Darwin Core CSV + GeoJSON of approved records, and the unresolved report"
+    )
     re_.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     re_.add_argument("--out", default="data/review/export/occurrences.csv")
+    re_.add_argument("--geojson", help="GeoJSON (RFC 7946, WGS 84) of the same approved "
+                     "records (default: --out with the suffix .geojson)")  # fmt: skip
     re_.add_argument("--unresolved", default="data/review/export/unresolved.csv")
     re_.set_defaults(func=_review_export)
     rs = rv_sub.add_parser("serve", help="the local review screen (queue, map, decisions)")
@@ -1278,6 +1292,7 @@ def main(argv: list[str] | None = None) -> int:
     rs.add_argument("--port", type=int, default=8000)
     rs.add_argument("--release", default="release/manifest.json")
     rs.add_argument("--out", default="data/review/export/occurrences.csv")
+    rs.add_argument("--geojson", help="default: --out with the suffix .geojson")
     rs.add_argument("--unresolved", default="data/review/export/unresolved.csv")
     rs.set_defaults(func=_review_serve)
 

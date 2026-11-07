@@ -15,8 +15,9 @@
   data.
 * **A JSON API** under ``/api`` (:mod:`localitylens.web.api`) serves the same store: batch
   status, streamed progress, cancel/resume, records, decisions and export.
-* **Export** writes the approved Darwin Core CSV and the unresolved report with the same
-  functions as ``localitylens review export``, to fixed paths, and serves only those two files.
+* **Export** writes the approved Darwin Core CSV, its GeoJSON and the unresolved report with
+  the same functions as ``localitylens review export``, to fixed paths, and serves only those
+  three files.
 * **Forms work without JavaScript.** With HTMX a decision reports its error in place; without
   it the page is re-rendered with the error, and a success redirects to the record.
 """
@@ -37,6 +38,8 @@ from fastapi.templating import Jinja2Templates
 
 from localitylens.domain.status import RecordStatus
 from localitylens.export.darwin_core import export_approved, export_unresolved
+from localitylens.export.geojson import MEDIA_TYPE as GEOJSON_MEDIA_TYPE
+from localitylens.export.geojson import export_geojson
 from localitylens.geo.extents import ExtentStore
 from localitylens.review.store import Action, ReviewError, ReviewStore
 from localitylens.web.api import build_router
@@ -56,6 +59,7 @@ class ReviewConfig:
     extents: ExtentStore | None = None  # supplies a newly chosen feature's reviewed extent
     reviewer: str | None = None  # from LOCALITYLENS_REVIEWER; asked on the form when unset
     export_out: Path = Path("data/review/export/occurrences.csv")
+    geojson_out: Path | None = None  # default: export_out with the suffix .geojson
     unresolved_out: Path = Path("data/review/export/unresolved.csv")
     release: Path = Path("release/manifest.json")
     index: Path = Path("data/derived/gazetteer.sqlite")  # for imports (gazetteer snapshot)
@@ -67,6 +71,7 @@ def config_from_env(
     extents: ExtentStore | None = None,
     export_out: Path | None = None,
     unresolved_out: Path | None = None,
+    geojson_out: Path | None = None,
 ) -> ReviewConfig:
     reviewer = os.environ.get(REVIEWER_ENV, "").strip() or None
     config = ReviewConfig(db=db, extents=extents, reviewer=reviewer)
@@ -74,6 +79,8 @@ def config_from_env(
         config = dataclasses.replace(config, export_out=export_out)
     if unresolved_out is not None:
         config = dataclasses.replace(config, unresolved_out=unresolved_out)
+    if geojson_out is not None:
+        config = dataclasses.replace(config, geojson_out=geojson_out)
     return config
 
 
@@ -143,7 +150,12 @@ def create_app(config: ReviewConfig) -> FastAPI:
             request, "queue.html", {"q": view, "exported": exported, "files": files}
         )
 
-    exports = {"occurrences.csv": config.export_out, "unresolved.csv": config.unresolved_out}
+    geojson_out = config.geojson_out or config.export_out.with_suffix(".geojson")
+    exports = {
+        "occurrences.csv": config.export_out,
+        "occurrences.geojson": geojson_out,
+        "unresolved.csv": config.unresolved_out,
+    }
     app.include_router(
         build_router(
             store,
@@ -176,21 +188,24 @@ def create_app(config: ReviewConfig) -> FastAPI:
             raise HTTPException(status_code=403, detail="cross-site form posts are refused")
         with store() as s:
             approved = export_approved(s, config.export_out)
+            export_geojson(s, geojson_out)
             unresolved = export_unresolved(s, config.unresolved_out)
         result = {
             "approved": approved,
             "unresolved": unresolved,
             "out": str(config.export_out),
+            "geojson_out": str(geojson_out),
             "unresolved_out": str(config.unresolved_out),
         }
         return render_queue(request, None, exported=result)
 
     @app.get("/export/{name}")
     def download(name: str) -> Response:
-        path = exports.get(name)  # only the two export files, never an arbitrary path
+        path = exports.get(name)  # only the export files, never an arbitrary path
         if path is None or not path.is_file():
             raise HTTPException(status_code=404, detail="no such export (export first)")
-        return FileResponse(path, media_type="text/csv", filename=name)
+        media = GEOJSON_MEDIA_TYPE if name.endswith(".geojson") else "text/csv"
+        return FileResponse(path, media_type=media, filename=name)
 
     @app.get("/records/{record_id}", response_class=HTMLResponse)
     def record(request: Request, record_id: str) -> Response:

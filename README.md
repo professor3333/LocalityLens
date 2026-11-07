@@ -168,8 +168,8 @@ proposal    computed  [point-radius, policy gbif-bp-2020/1]
 **Review and export.** Proposals go into a local review store (SQLite). Each record's original
 text, its proposals and the curator's decisions are kept in separate tables. A curator
 approves, edits then approves, rejects, or requests research. Only approved records are
-exported, as Darwin Core CSV, and everything else goes into an unresolved report that says
-what blocks it:
+exported, as Darwin Core CSV and as GeoJSON, and everything else goes into an unresolved report
+that says what blocks it:
 
 ```console
 $ uv run localitylens review import --sample eval/audit/audit-50.json --system rules \
@@ -194,6 +194,7 @@ gbif:4052836581 ready_for_review   feature 204691, radius 8,426 m
 $ uv run localitylens review decide gbif:2573441754 approve --reviewer <name> --rationale "…"
 $ uv run localitylens review export
 approved       1  -> data/review/export/occurrences.csv
+geojson        1  -> data/review/export/occurrences.geojson
 unresolved    39  -> data/review/export/unresolved.csv
 ```
 
@@ -299,8 +300,8 @@ review screen on http://127.0.0.1:8000/  db data/review/review.sqlite  reviewer:
   uncertainty are separate panels. The map draws a circle only for a full region.
 - **Decisions** go through the same store: approve, edit then approve, reject or request
   research, each with a rationale. Approve is offered only when a retrieved candidate exists.
-- **Export** from the queue writes the same Darwin Core CSV and unresolved report as
-  `review export`, and offers both files for download.
+- **Export** from the queue writes the same Darwin Core CSV, GeoJSON and unresolved report as
+  `review export`, and offers the three files for download.
 - **A JSON API** on the same server (`/api`): batch status and a Server-Sent Events progress
   stream, cancel and resume, records, idempotent decisions (201 when created, 200 for a
   retry) and export. The worker stays a separate process (`review work`), so the API never
@@ -329,10 +330,17 @@ review screen on http://127.0.0.1:8000/  db data/review/review.sqlite  reviewer:
 - **Each decision records** the reviewer, the time, the rationale and the edits as a diff.
 - **Edits are marked as human edits** in the export.
 - **Export conventions:**
-  - `geodeticDatum` is the source datum's EPSG code (`EPSG:4269`, NAD83), not transformed
+  - CSV: `geodeticDatum` is the source datum's EPSG code (`EPSG:4269`, NAD83), not transformed
   - `coordinateUncertaintyInMeters` is rounded up and never 0
   - `georeferenceVerificationStatus` is `verified by data custodian`
-- **Not built yet:** GeoJSON (RFC 7946 requires WGS84, so it needs a datum transformation).
+  - GeoJSON (RFC 7946) must be WGS 84, so its points are converted by one named operation:
+    EPSG:1188, NAD83 to WGS 84 (1). It is a null transformation, so the numbers do not move, and
+    EPSG states its accuracy as 4 m. Those 4 m are added to `coordinateUncertaintyInMeters`, so
+    the GeoJSON circle is never smaller than the CSV's. The source point and datum stay in
+    `localitylens_source_*` properties.
+    - A better, grid-based route exists for Colorado (via NAD83(HARN)). Its grid is not
+      installed and is not downloaded at runtime.
+- **Not built yet:** footprint polygons (`footprintWKT` is empty in both files).
 
 **When the label is ambiguous, it asks instead of guessing.** A bare `m` might be miles or metres:
 
@@ -806,7 +814,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | Phase | Scope | Status |
 |---|---|---|
 | **1 · Data & feasibility** | ✅ core contract & validation · ✅ GNIS gazetteer · ✅ rules baseline · ✅ uncertainty policy · ✅ specimen snapshot (DOI) · ✅ ingest & screening · ✅ 50-record audit, scored: rules 13/31, LLM 9/31 correct candidates · ✅ prompt v2 (dev-1: 18/29 vs rules 16; audit: 10/31 vs rules 13) · ✅ core-match retrieval (audit: rules 14, v2 12; no change on dev-1) | 🚧 in progress |
-| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · candidate disambiguation · footprints · GeoJSON | 🚧 started |
+| **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · ✅ GeoJSON export (WGS 84, EPSG:1188, +4 m) · candidate disambiguation · footprints | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · ✅ GEOLocate on the read samples: points within 5 km of the defensible position, GEOLocate 58 vs hybrid-1 61 of 85 (owner-annotated) · quantization study | 🚧 started |
 | **5 · Release** | Docker Compose · static replay demo · published results & model card | 🔜 |
@@ -849,6 +857,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `jobs/queue.py` · `jobs/worker.py` | Persistent job queue `jobs-1`: idempotent batch and job keys, leases (300 s), 3 attempts for transient failures, cancellation and resume, recovery of expired leases and orphaned records |
 | `web/` | Local review screen and JSON API (`api-1`): one FastAPI app, Jinja2 templates, vendored HTMX 2.0.4 and Leaflet 1.9.4 (`static/vendor/VENDOR.md`), loopback only |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
+| `export/geojson.py` | GeoJSON (RFC 7946) of the same approved records (`geojson-export-1`), converted to WGS 84 by `geo/datum.py` (`datum-1`: EPSG:1188, accuracy added to the radius) |
 | `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` (`--sample` or `--csv`) · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
@@ -917,7 +926,7 @@ src/localitylens/
 ├── review/       review store: originals, proposals, idempotent curator decisions
 ├── jobs/         persistent job queue: leases, retries, cancellation, recovery
 ├── telemetry/    per-attempt traces (no label text)
-├── export/       Darwin Core CSV of approved records + unresolved report
+├── export/       Darwin Core CSV + GeoJSON of approved records, unresolved report
 ├── web/          local review screen (FastAPI, Jinja2 templates, vendored HTMX + Leaflet)
 └── cli.py        command-line entry point
 tests/

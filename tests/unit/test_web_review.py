@@ -250,6 +250,11 @@ def test_export_writes_approved_and_unresolved_and_serves_only_those(
     assert csv_text.text.splitlines()[0].startswith("occurrenceID")
     assert len(csv_text.text.splitlines()) == 2  # header + the approved lake
     assert client.get("/export/unresolved.csv").status_code == 200
+    geo = client.get("/export/occurrences.geojson")
+    assert geo.status_code == 200
+    assert geo.headers["content-type"].startswith("application/geo+json")
+    assert len(geo.json()["features"]) == 1
+    assert 'href="/export/occurrences.geojson"' in client.get("/").text
     assert client.get("/export/..%2Freview.sqlite").status_code == 404
     assert client.get("/export/review.sqlite").status_code == 404
     assert (db.parent / "export" / "occurrences.csv").is_file()

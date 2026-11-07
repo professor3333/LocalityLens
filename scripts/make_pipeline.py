@@ -18,7 +18,7 @@ STAGES = [
     ("Retrieval", "GNIS candidates", "with evidence", "built", "code"),
     ("Disambiguation", "optional second", "LLM call", "planned", "llm"),
     ("Geometry", "point-radius +", "cited uncertainty", "built", "code"),
-    ("Review & export", "curator decision", "→ Darwin Core", "partial", "code"),
+    ("Review & export", "curator decision", "→ Darwin Core", "built", "code"),
 ]
 if len(sys.argv) > 2:
     for item in sys.argv[2].split(","):

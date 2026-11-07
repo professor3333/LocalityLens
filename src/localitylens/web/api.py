@@ -31,6 +31,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from localitylens.baseline.rules import RULES_VERSION
 from localitylens.domain.status import RecordStatus
 from localitylens.export.darwin_core import export_approved, export_unresolved
+from localitylens.export.geojson import export_geojson
 from localitylens.gazetteer.index import Gazetteer
 from localitylens.ingest.csv_import import MappingError, read_csv
 from localitylens.jobs.queue import Batch, JobQueue
@@ -299,6 +300,7 @@ def build_router(
     def export() -> dict[str, Any]:
         with store() as s:
             approved = export_approved(s, exports["occurrences.csv"])
+            export_geojson(s, exports["occurrences.geojson"])
             unresolved = export_unresolved(s, exports["unresolved.csv"])
         return {"approved": approved, "unresolved": unresolved,
                 "files": {k: str(v) for k, v in exports.items()}}  # fmt: skip

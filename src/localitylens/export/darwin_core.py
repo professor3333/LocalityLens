@@ -15,9 +15,8 @@ https://dwc.tdwg.org/terms/:
   A point-radius georeference is complete without them.
 
 Curator edits are marked: ``georeferenceRemarks`` says what the curator changed, and the
-``localitylens_human_edits`` column holds the diff. GeoJSON is not written yet: RFC 7946
-requires WGS84 coordinates, and these are NAD83. Converting them would need a datum
-transformation, which this release does not do.
+``localitylens_human_edits`` column holds the diff. The same approved rows go to GeoJSON
+(:mod:`localitylens.export.geojson`), converted to WGS 84 as RFC 7946 requires.
 """
 
 from __future__ import annotations
@@ -25,12 +24,13 @@ from __future__ import annotations
 import csv
 import json
 import math
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
 
 from localitylens.domain.status import EXPORTABLE, RecordStatus
 from localitylens.geo import uncertainty as policy
-from localitylens.geo.geodesy import EPSG_CODE
+from localitylens.geo.geodesy import EPSG_CODE, Coordinate
 from localitylens.review.store import Action, ReviewStore
 
 EXPORT_VERSION: Final = "dwc-export-1"
@@ -84,9 +84,18 @@ def _edits_text(edits: dict[str, list[object]]) -> str:
     return "; ".join(parts)
 
 
-def export_approved(store: ReviewStore, out: Path) -> int:
-    """Write every approved record as one Darwin Core row. Returns the number written."""
-    rows: list[dict[str, str]] = []
+@dataclass(frozen=True, slots=True)
+class Approved:
+    """One approved record: its Darwin Core row plus the unformatted region it came from."""
+
+    row: dict[str, str]
+    point: Coordinate
+    radius_m: float
+
+
+def approved_georeferences(store: ReviewStore) -> list[Approved]:
+    """Every approved record as a Darwin Core row, in the source datum (shared by all formats)."""
+    out: list[Approved] = []
     for rec in store.records(RecordStatus.APPROVED):
         assert RecordStatus(rec["status"]) in EXPORTABLE
         approvals = [d for d in store.decisions(rec["record_id"]) if d.action is Action.APPROVE]
@@ -106,7 +115,7 @@ def export_approved(store: ReviewStore, out: Path) -> int:
         if decision.edits:
             remarks.append(_edits_text(decision.edits))
         remarks.append(f"curator rationale: {decision.rationale}")
-        rows.append({
+        row = {
             "occurrenceID": rec["occurrence_id"],
             "catalogNumber": rec["catalog_number"],
             "locality": rec["locality"],  # the original string, unchanged
@@ -132,7 +141,14 @@ def export_approved(store: ReviewStore, out: Path) -> int:
             "localitylens_human_edits": json.dumps(decision.edits, sort_keys=True)
             if decision.edits
             else "",
-        })  # fmt: skip
+        }  # fmt: skip
+        out.append(Approved(row, p.point, p.radius_m))
+    return out
+
+
+def export_approved(store: ReviewStore, out: Path) -> int:
+    """Write every approved record as one Darwin Core row. Returns the number written."""
+    rows = [a.row for a in approved_georeferences(store)]
     _write(out, DWC_COLUMNS, rows)
     return len(rows)
 

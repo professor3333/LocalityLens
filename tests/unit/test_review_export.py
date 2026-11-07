@@ -2,6 +2,7 @@
 invented test input for a synthetic feature."""
 
 import csv
+import json
 import math
 from datetime import date
 from pathlib import Path
@@ -13,6 +14,7 @@ from localitylens.baseline.rules import Lexicon, RulesExtractor
 from localitylens.data.manifest import SnapshotManifest, write_manifest
 from localitylens.domain.status import RecordStatus
 from localitylens.export.darwin_core import DWC_COLUMNS, export_approved, export_unresolved
+from localitylens.export.geojson import GEOJSON_EXPORT_VERSION, export_geojson
 from localitylens.gazetteer.index import Gazetteer, build_index
 from localitylens.geo.extents import ExtentStore, ReviewedExtent
 from localitylens.ingest.specimens import to_record
@@ -161,6 +163,59 @@ def test_export_writes_approved_records_only(store: ReviewStore, tmp_path: Path)
     assert by_id["3"]["blocking"]
 
 
+def _no_nan(name: str) -> object:
+    raise AssertionError(f"GeoJSON must not contain {name}")
+
+
+def test_geojson_holds_the_same_approved_records_in_wgs84(
+    store: ReviewStore, tmp_path: Path
+) -> None:
+    store.decide(_id("lake"), Action.APPROVE, reviewer="Curator A", rationale="as proposed")
+    store.decide(_id("peak"), Action.APPROVE, reviewer="Curator B", rationale="edited",
+                 extent_m=900, extent_note="measured")  # fmt: skip
+    store.decide(_id("route"), Action.REJECT, reviewer="Curator A", rationale="route")
+    out_csv, out_geo = tmp_path / "dwc.csv", tmp_path / "dwc.geojson"
+    assert export_approved(store, out_csv) == 2
+    assert export_geojson(store, out_geo) == 2
+    with out_csv.open(encoding="utf-8", newline="") as fh:
+        rows = {r["localitylens_decision_id"]: r for r in csv.DictReader(fh)}
+    fc = json.loads(out_geo.read_text(encoding="utf-8"), parse_constant=_no_nan)
+
+    assert fc["type"] == "FeatureCollection"
+    assert "crs" not in fc  # RFC 7946 section 4: WGS 84 only, no crs member
+    assert fc["localitylens"]["export_version"] == GEOJSON_EXPORT_VERSION
+    assert {f["id"] for f in fc["features"]} == set(rows)  # approved records only, once each
+    for f in fc["features"]:
+        row, props = rows[f["id"]], f["properties"]
+        lon, lat = f["geometry"]["coordinates"]
+        assert f["type"] == "Feature"
+        assert f["geometry"]["type"] == "Point"
+        # EPSG:1188 is a null transformation: the numbers stay, the datum label changes
+        assert (lat, lon) == (float(row["decimalLatitude"]), float(row["decimalLongitude"]))
+        assert (props["decimalLatitude"], props["decimalLongitude"]) == (lat, lon)
+        assert props["geodeticDatum"] == "EPSG:4326"
+        assert props["localitylens_source_datum"] == row["geodeticDatum"] == "EPSG:4269"
+        assert props["localitylens_datum_transform"] == "EPSG:1188"
+        # the transformation's 4 m accuracy is added, so the circle never shrinks
+        assert (
+            props["coordinateUncertaintyInMeters"] == int(row["coordinateUncertaintyInMeters"]) + 4
+        )
+        assert props["georeferenceRemarks"].startswith(row["georeferenceRemarks"])
+        assert "EPSG:1188" in props["georeferenceRemarks"]
+        assert props["locality"] == row["locality"]  # the original string, unchanged
+        assert props["footprintWKT"] is None
+    peak = next(f["properties"] for f in fc["features"] if f["properties"]["gbifID"] == "2")
+    assert peak["localitylens_human_edits"] == {"extent_m": [None, 900.0]}
+
+
+def test_geojson_of_an_empty_store_is_an_empty_collection(
+    store: ReviewStore, tmp_path: Path
+) -> None:
+    out = tmp_path / "none.geojson"
+    assert export_geojson(store, out) == 0
+    assert json.loads(out.read_text(encoding="utf-8"))["features"] == []
+
+
 def test_review_cli_end_to_end(
     index_path: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -186,4 +241,7 @@ def test_review_cli_end_to_end(
     out_csv, unres = tmp_path / "o.csv", tmp_path / "u.csv"
     assert main(["review", "export", "--out", str(out_csv), "--unresolved", str(unres),
                  *common]) == 0  # fmt: skip
-    assert "approved       1" in capsys.readouterr().out
+    printed = capsys.readouterr().out
+    assert "approved       1" in printed
+    assert "geojson        1" in printed
+    assert (tmp_path / "o.geojson").is_file()  # next to --out by default
