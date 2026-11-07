@@ -139,5 +139,6 @@ historical names or changed county boundaries beyond what the read samples conta
   committed and pushed first, and its result is published whatever it shows. Releases 1 to 3
   are in [`eval/benchmark/`](../eval/benchmark/).
 - **Rollback** means restoring the complete previous bundle (model file, prompt, schema,
-  generation settings, gazetteer snapshot, policies). The Docker Compose deployment is built
-  (see the README); the rollback procedure has not been tested yet.
+  generation settings, gazetteer snapshot, policies) from git and the pinned downloads, and
+  the review-store backup taken before the upgrade. The procedure is in
+  [deployment](deployment.md); it was rehearsed on a fresh clone on 2026-11-07.

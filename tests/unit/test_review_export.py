@@ -339,3 +339,20 @@ def test_backup_and_restore_from_the_command_line(
     printed = capsys.readouterr().out
     assert "moved the previous store to" in printed
     assert "restored" in printed
+
+
+def test_backup_runs_during_a_write_and_copies_only_committed_rows(
+    store: ReviewStore, tmp_path: Path
+) -> None:
+    db = tmp_path / "review.sqlite"
+    store.decide(_id("lake"), Action.APPROVE, reviewer="r", rationale="ok")  # committed
+    writer = sqlite3.connect(db, isolation_level=None)
+    writer.execute("BEGIN IMMEDIATE")  # a write in progress, as from a running worker
+    writer.execute("UPDATE meta SET value='uncommitted' WHERE key='schema'")
+    try:
+        info = backup(db, tmp_path / "b.sqlite")  # does not wait for the writer
+    finally:
+        writer.execute("ROLLBACK")
+        writer.close()
+    assert info.schema == "review-3"  # the uncommitted change is not in the copy
+    assert info.counts["decision"] == 1

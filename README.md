@@ -521,6 +521,11 @@ $ curl -s http://127.0.0.1:8000/readyz | jq -c '{ready, release: .release.releas
   `LOCALITYLENS_UID=$(id -u) LOCALITYLENS_GID=$(id -g) docker compose up -d`.
 - Images are pinned by digest: Python 3.12 slim, uv 0.12.5, llama.cpp `server-b11960`.
 
+**Backup, upgrade and rollback** are in [docs/deployment.md](docs/deployment.md). The review
+store is the only state that cannot be rebuilt: `review backup` copies it safely while
+everything runs, and `review restore` puts a backup back after a rollback, keeping the replaced
+store. A rollback was rehearsed on a fresh clone, natively and in Docker Compose.
+
 ## 🛡️ Design guarantees
 
 | Guarantee | How it is enforced today | |
@@ -862,7 +867,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · ✅ GeoJSON export (WGS 84, EPSG:1188, +4 m) · candidate disambiguation · footprints | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · ✅ GEOLocate on the read samples: points within 5 km of the defensible position, GEOLocate 58 vs hybrid-1 61 of 85 (owner-annotated) · quantization study | 🚧 started |
-| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · published results & model card · clean-install and restore check | 🚧 started |
+| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · versioned release tag | 🚧 started |
 
 <details>
 <summary><b>What exists today, module by module</b></summary>
@@ -897,6 +902,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `pipeline/interpret.py` | normalize → extract → validate → retrieve for any extractor (rules or LLM) |
 | `pipeline/hybrid.py` · `evaluation/hybrid.py` | `hybrid-1`: rules first, LLM only where the rules reach no candidate; the same rule applied to two existing reports |
 | `review/store.py` · `review/importer.py` | Review store `review-3`: immutable originals, proposals, idempotent curator decisions, batches, jobs and traces, in SQLite (WAL); every status change through `domain/status.py`. Older stores are upgraded in place |
+| `review/backup.py` | Backup `backup-1`: consistent online copy of the review store, integrity-checked; restore moves the old store aside and refuses damaged, foreign, newer-schema or busy stores |
 | `telemetry/trace.py` · `telemetry/otel.py` | Trace schema `telemetry-1`: one trace per job attempt, stored with the step, emitted as a JSON line and (opt-in) as an OpenTelemetry span with stage children; no free-text fields |
 | `ingest/csv_import.py` | CSV import `csv-1`: Darwin Core column mapping, the same screening as the GBIF snapshot (scope, sensitive records, placeholders), explicit refusals with reasons, answer-bearing columns never read |
 | `jobs/queue.py` · `jobs/worker.py` | Persistent job queue `jobs-1`: idempotent batch and job keys, leases (300 s), 3 attempts for transient failures, cancellation and resume, recovery of expired leases and orphaned records |
@@ -904,7 +910,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `web/replay.py` | Static replay `replay-1`: freezes the review screen's pages into `demo/site` with relative links and a replay banner, no forms; built by `scripts/build_replay.py`, published by the `pages` workflow |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
 | `export/geojson.py` | GeoJSON (RFC 7946) of the same approved records (`geojson-export-1`), converted to WGS 84 by `geo/datum.py` (`datum-1`: EPSG:1188, accuracy added to the radius) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` (`--sample` or `--csv`) · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` (`--sample` or `--csv`) · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review backup` · `review restore` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
