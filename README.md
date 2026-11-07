@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/types-mypy%20strict-2A6DB2" alt="mypy strict">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3DA639" alt="MIT licence"></a>
   <br>
-  <img src="https://img.shields.io/badge/status-phase%201%20%C2%B7%20data%20%26%20feasibility-F4B860" alt="Status: Phase 1">
+  <img src="https://img.shields.io/badge/release-v0.1.0-F4B860" alt="Release v0.1.0">
   <img src="https://img.shields.io/badge/gazetteer-USGS%20GNIS%202026--09--29-5FD3B5" alt="Gazetteer: USGS GNIS 2026-09-29">
   <img src="https://img.shields.io/badge/inference-local%20only-103A34" alt="Local inference only">
   <a href="https://professor3333.github.io/LocalityLens/"><img src="https://img.shields.io/badge/demo-static%20replay-B45309" alt="Demo: static replay"></a>
@@ -41,8 +41,8 @@ result is. **LocalityLens** is a review workbench for that job. A small, local l
 curator approves, corrects, or defers every result before it is exported as Darwin Core.
 
 > [!NOTE]
-> **Early development: Phase 1 (data & feasibility).** This README separates what exists
-> (✅) from what is planned (🔜). The first milestone has been measured on a locked test split
+> **Release v0.1.0: a research prototype, not a production georeferencing service.** This
+> README separates what exists (✅) from what is planned (🔜). The first milestone has been measured on a locked test split
 > three times, and every result is published below: the LLM alone fell short
 > ([release 1](eval/reports/test-release-1.md)), and rules with an LLM fallback cleared the
 > target by a thin margin, both with the first rules ([release 2](eval/reports/test-release-2.md))
@@ -90,7 +90,7 @@ is not a measure of accuracy (see [demo/README.md](demo/README.md)).
 | Rules baseline, gazetteer, review screen, export | Python 3.12+ and [uv](https://github.com/astral-sh/uv); about 30 MB of disk (GNIS snapshot 22 MB, gazetteer index 6.3 MB). No GPU, no network after the downloads |
 | The LLM (Qwen3.5-4B Q4_K_M) | llama.cpp (build `b11960` pinned), 2.74 GB for the model file; llama-server uses 629 MB on top of the memory-mapped model. Warm latency p50 9.9 s, p95 16.4 s per call on the test |
 | The lower-resource model (Qwen3.5-2B Q4_K_M) | 1.28 GB model file, about a quarter of 4B's model time on dev data; its process memory was not measured |
-| Your own specimens from GBIF (optional) | a free GBIF account; 157 MB for the Darwin Core Archive |
+| The specimen snapshot (optional: only to re-run the audit, sampling or benchmark draw) | 157 MB for the Darwin Core Archive; no account |
 | Docker (optional) | Docker Compose; see below |
 
 ```bash
@@ -98,8 +98,7 @@ git clone https://github.com/professor3333/LocalityLens.git && cd LocalityLens
 uv sync
 uv run localitylens data fetch-gnis                        # the pinned GNIS snapshot, ~23 MB, checksummed
 uv run localitylens gazetteer build                        # SQLite index from that snapshot
-# optional, needs a free GBIF account (GBIF_USER, GBIF_PWD, GBIF_EMAIL in .env):
-uv run localitylens data fetch-gbif                        # ~165 MB Darwin Core Archive + DOI
+uv run localitylens data fetch-gbif                        # optional: the pinned 165 MB specimen archive (DOI), checksummed
 ```
 
 **The GNIS snapshot is pinned.** USGS serves only its current files, so `data fetch-gnis`
@@ -109,6 +108,15 @@ repository's [data release](https://github.com/professor3333/LocalityLens/releas
 against the committed manifest. The reviewed extents and all results refer to this snapshot.
 `data fetch-gnis --latest` gets the current USGS files instead, as a new snapshot with its own
 manifest.
+
+**The specimen snapshot is pinned the same way.** GBIF may erase the download file after
+2027-05-01, so `data fetch-gbif` downloads GBIF's archive, unchanged, from this repository's
+[data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)
+(CC BY 4.0; cite *GBIF.org (01 November 2026) GBIF Occurrence Download
+https://doi.org/10.15468/dl.hqxjjf*). It falls back to GBIF and keeps a file only if its
+SHA-256 matches the committed manifest. No GBIF account is needed. `data fetch-gbif --request`
+asks GBIF for a new download instead (account details `GBIF_USER`, `GBIF_PWD`, `GBIF_EMAIL` in
+`.env`).
 
 **Interpret a whole label** with the rules baseline: extraction, validation and retrieval in one
 command. Every value carries its `[start, end)` span in the original text:
@@ -511,7 +519,7 @@ sample: the containerized worker processed all 50 records (36 needing informatio
 
 ```console
 $ curl -s http://127.0.0.1:8000/readyz | jq -c '{ready, release: .release.release, model: .release.model.id, llama_cpp: .release.llama_cpp.build, store: .store_schema}'
-{"ready":true,"release":"0.1.0-dev","model":"Qwen/Qwen3.5-4B","llama_cpp":"b11960-8642541b2","store":"review-3"}
+{"ready":true,"release":"0.1.0","model":"Qwen/Qwen3.5-4B","llama_cpp":"b11960-8642541b2","store":"review-3"}
 ```
 
 - **llama-server never gets a network address:** it shares the worker's network namespace and
@@ -867,7 +875,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · ✅ GeoJSON export (WGS 84, EPSG:1188, +4 m) · candidate disambiguation · footprints | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · ✅ GEOLocate on the read samples: points within 5 km of the defensible position, GEOLocate 58 vs hybrid-1 61 of 85 (owner-annotated) · quantization study | 🚧 started |
-| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · versioned release tag | 🚧 started |
+| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · ✅ specimen snapshot archived ([data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)) · ✅ [v0.1.0](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.0) | ✅ v0.1.0 |
 
 <details>
 <summary><b>What exists today, module by module</b></summary>

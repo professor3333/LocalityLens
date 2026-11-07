@@ -128,3 +128,27 @@ def test_readyz_reports_an_unusable_extent_store(tmp_path: Path) -> None:
     assert r.status_code == 503
     assert "extent store: row 1 does not match" in r.json()["problems"]
     assert client.get("/").status_code == 200  # the screen still serves
+
+
+def test_the_pinned_gbif_snapshot_uses_the_same_rules(
+    gnis_snapshot: tuple[Path, SnapshotManifest], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Synthetic files stand in for the archive; only the checksums and paths matter here."""
+    from localitylens.data.gbif_fetch import fetch_pinned_gbif
+
+    source, manifest = gnis_snapshot
+    snapshot = "gbif-cu-2026-01-15"
+    manifests = tmp_path / "manifests"
+    write_manifest(manifests / f"{snapshot}.json",
+                   manifest.model_copy(update={"snapshot_id": snapshot}))  # fmt: skip
+    calls = _serve(monkeypatch, source, mirror_down=True, usgs_bad=True)
+    with pytest.raises(ChecksumMismatchError):  # original URL serves other bytes: nothing kept
+        fetch_pinned_gbif(snapshot, tmp_path / "gbif", manifests)
+    assert not (tmp_path / "gbif" / "2026-01-15").exists()
+    calls = _serve(monkeypatch, source)
+    path, _m, sources = fetch_pinned_gbif(snapshot, tmp_path / "gbif", manifests)
+    assert path == tmp_path / "gbif" / "2026-01-15"
+    assert all(s.startswith(f"{gnis_fetch.MIRROR}/data-{snapshot}/") for s in sources)
+    assert len(calls) == len(manifest.files)
+    with pytest.raises(ValueError, match="not a GBIF snapshot"):
+        fetch_pinned_gbif("gnis-co-2026-01-15", tmp_path / "gbif", manifests)

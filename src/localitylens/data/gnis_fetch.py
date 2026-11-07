@@ -159,11 +159,21 @@ def fetch_pinned_gnis(
     Returns (directory, manifest, the source of each file). An existing, verified copy is
     reused. A file that matches neither the mirror nor USGS byte for byte is never kept.
     """
+    return fetch_pinned_snapshot(
+        snapshot_id, snapshot_directory(raw_root, snapshot_id), raw_root, manifest_dir
+    )
+
+
+def fetch_pinned_snapshot(
+    snapshot_id: str, final: Path, raw_root: Path, manifest_dir: Path
+) -> tuple[Path, SnapshotManifest, list[str]]:
+    """Any pinned snapshot (GNIS or GBIF): the project's data release ``data-<snapshot_id>``
+    first, then each file's original URL; a file is kept only if its size and SHA-256 match the
+    committed manifest. The snapshot lands in ``final``; an existing verified copy is reused."""
     manifest_path = manifest_dir / f"{snapshot_id}.json"
     if not manifest_path.is_file():
         raise FileNotFoundError(f"no committed manifest {manifest_path}")
     manifest = load_manifest(manifest_path)
-    final = snapshot_directory(raw_root, snapshot_id)
     if (final / "manifest.json").is_file():
         verify_snapshot(final, manifest)  # raises if a local copy was altered
         return final, manifest, ["already present"] * len(manifest.files)
@@ -183,7 +193,7 @@ def fetch_pinned_gnis(
                 if dest.stat().st_size == f.size_bytes and sha256_file(dest) == f.sha256:
                     sources.append(url)
                     break
-                dest.unlink()  # e.g. USGS has republished: never keep a different file
+                dest.unlink()  # e.g. a republished file: never keep a different one
             else:
                 raise ChecksumMismatchError(
                     f"{f.name}: no source matches the manifest's SHA-256 {f.sha256[:12]}…"

@@ -49,8 +49,24 @@ def _fetch_gnis(args: argparse.Namespace) -> int:
 
 
 def _fetch_gbif(args: argparse.Namespace) -> int:
-    from localitylens.data.gbif_fetch import fetch_gbif, read_credentials
+    from localitylens.data.gbif_fetch import fetch_gbif, fetch_pinned_gbif, read_credentials
+    from localitylens.data.manifest import ChecksumMismatchError
+    from localitylens.release import load_release
 
+    if not (args.request or args.key):
+        snapshot_id = args.snapshot or load_release(Path(args.release)).specimen_snapshot
+        try:
+            path, pinned, sources = fetch_pinned_gbif(
+                snapshot_id, Path(args.raw_root), Path(args.manifest_dir)
+            )
+        except (FileNotFoundError, ChecksumMismatchError) as exc:
+            print(f"refused: {exc}", file=sys.stderr)
+            return 2
+        print(f"{pinned.snapshot_id} (pinned) -> {path}")
+        print(f"  doi        https://doi.org/{pinned.doi}")
+        for f, source in zip(pinned.files, sources, strict=True):
+            print(f"  {f.name}  {f.size_bytes:>11,} bytes  sha256={f.sha256[:16]}…  from {source}")
+        return 0
     credentials = None if args.key else read_credentials(Path(args.env))
     path, manifest = fetch_gbif(
         Path(args.raw_root),
@@ -1059,7 +1075,12 @@ def main(argv: list[str] | None = None) -> int:
     fg.add_argument("--release", default="release/manifest.json")
     fg.set_defaults(func=_fetch_gnis)
     fb = data.add_parser(
-        "fetch-gbif", help="request + download the CU Herbarium GBIF snapshot (DOI) + manifest"
+        "fetch-gbif", help="download the pinned CU Herbarium snapshot (or --request a new one)"
+    )
+    fb.add_argument("--snapshot", help="a committed snapshot ID (default: the release's pin)")
+    fb.add_argument("--release", default="release/manifest.json")
+    fb.add_argument(
+        "--request", action="store_true", help="request a new GBIF download (needs an account)"
     )
     fb.add_argument("--env", default=".env", help="file with GBIF_USER, GBIF_PWD, GBIF_EMAIL")
     fb.add_argument("--key", help="resume an existing GBIF download key instead of requesting")

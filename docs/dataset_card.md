@@ -17,10 +17,15 @@ sampled, split and annotated, and what that means for the results.
   products.
 
 **Snapshot handling:**
-- Raw files are never committed. Each manifest holds URLs, hashes, sizes and dates, so a
-  snapshot can be downloaded again and checked byte for byte.
-- GBIF may erase the archive after 2027-05-01. The DOI stays resolvable, and the manifest
-  stores the exact query so it can be reissued.
+- Raw files are never committed to git. Each manifest holds URLs, hashes, sizes and dates, so
+  a snapshot can be downloaded again and checked byte for byte.
+- Both snapshots are also archived, unchanged, as this repository's data releases
+  ([GNIS](https://github.com/professor3333/LocalityLens/releases/tag/data-gnis-co-2026-09-29),
+  [GBIF](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)).
+  The fetch commands try the archive first and the original source second, and keep a file
+  only if its checksum matches.
+- GBIF may erase its own copy of the archive after 2027-05-01. The DOI stays resolvable, and
+  the manifest stores the exact query, so the download can be reissued.
 - GNIS coordinates are NAD83 (GRS80 ellipsoid), as stated in its metadata.
 
 ## Filtering: every record accounted for

@@ -399,3 +399,21 @@ def fetch_gbif(
     finally:
         if incoming.exists():
             shutil.rmtree(incoming)
+
+
+def fetch_pinned_gbif(
+    snapshot_id: str, raw_root: Path, manifest_dir: Path
+) -> tuple[Path, SnapshotManifest, list[str]]:
+    """The pinned specimen snapshot, without a GBIF account: the archive in the project's data
+    release ``data-<snapshot_id>`` (CC BY 4.0, the download DOI in its manifest), else GBIF's own
+    download URL while GBIF keeps it. Checksums from the committed manifest decide.
+
+    The archived ``download-status.json`` is GBIF's status response with account details removed,
+    so only the release copy matches; GBIF's live status page never does.
+    """
+    from localitylens.data import gnis_fetch
+
+    if not snapshot_id.startswith("gbif-cu-"):
+        raise ValueError(f"not a GBIF snapshot ID: {snapshot_id!r}")
+    final = raw_root / snapshot_id.removeprefix("gbif-cu-")
+    return gnis_fetch.fetch_pinned_snapshot(snapshot_id, final, raw_root, manifest_dir)
