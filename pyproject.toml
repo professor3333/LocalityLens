@@ -73,4 +73,5 @@ addopts = "-ra --strict-markers"
 markers = [
     "slow: long-running tests excluded from the default CI run",
     "e2e: browser tests (Playwright); CI runs them in their own step",
+    "llama_smoke: a tiny model through the pinned llama.cpp server; CI runs it in its own step",
 ]

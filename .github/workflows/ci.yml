@@ -27,7 +27,24 @@ jobs:
       - name: Type check
         run: uv run mypy src/
       - name: Tests
-        run: uv run pytest -m "not slow and not e2e"
+        run: uv run pytest -m "not slow and not e2e and not llama_smoke"
+      - name: Tiny model for the llama.cpp smoke test (pinned revision and SHA-256)
+        run: |
+          mkdir -p .smoke
+          curl -sSfL -o .smoke/tinygemma3-Q8_0.gguf \
+            "https://huggingface.co/ggml-org/tinygemma3-GGUF/resolve/c287502cd9e278dac8eed805c112cce5d0081e0b/tinygemma3-Q8_0.gguf"
+          echo "7566ae7219c93ea2ecc692a931ee122d30c55261d0e2c3347acb8b939d2e9abd  .smoke/tinygemma3-Q8_0.gguf" | sha256sum -c
+      - name: llama.cpp server, the build pinned in release/manifest.json
+        run: |
+          docker run -d --name llama-smoke -p 127.0.0.1:8080:8080 -v "$PWD/.smoke:/models:ro" \
+            ghcr.io/ggml-org/llama.cpp:server-b11960@sha256:8052c13edd987de8858f8150031e025ac3d66823f09cf3ec8220899c4abce220 \
+            -m /models/tinygemma3-Q8_0.gguf --host 0.0.0.0 --port 8080 -c 4096 -np 1 --no-context-shift
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:8080/health && exit 0; sleep 2; done
+          docker logs llama-smoke; exit 1
+      - name: llama.cpp smoke test (client, prompt, grammar, validation)
+        env:
+          LOCALITYLENS_SMOKE_URL: http://127.0.0.1:8080
+        run: uv run pytest -m llama_smoke
       - name: Browser for end-to-end tests
         run: uv run playwright install --with-deps chromium-headless-shell
       - name: End-to-end tests (review screen)

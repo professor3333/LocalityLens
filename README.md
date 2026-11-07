@@ -523,8 +523,11 @@ $ curl -s http://127.0.0.1:8000/readyz | jq -c '{ready, release: .release.releas
 ```
 
 - **llama-server never gets a network address:** it shares the worker's network namespace and
-  keeps the manifest's `--host 127.0.0.1`. The `llm` profile is configured but was not run on
-  the 8 GB development machine.
+  keeps the manifest's `--host 127.0.0.1`.
+- **The `llm` profile runs, but slowly on a small machine.** On the 8 GB M1 (Docker Desktop, 4 GB
+  VM, CPU only) one hybrid record took 540 s, against about 10 s for native llama-server with
+  Metal. Run llama-server natively there. Raise the worker's job lease with `LOCALITYLENS_LEASE`
+  (default 300 s) on hosts where a call can take longer.
 - **On Linux,** run as your own user so the container can write `./data`:
   `LOCALITYLENS_UID=$(id -u) LOCALITYLENS_GID=$(id -g) docker compose up -d`.
 - Images are pinned by digest: Python 3.12 slim, uv 0.12.5, llama.cpp `server-b11960`.
@@ -963,9 +966,13 @@ uv run pytest -m e2e                                        # review flow in a r
 uv run pytest tests/adversarial                              # abstain, flag or refuse: never guess
 ```
 
-CI runs lint, format, strict mypy, the full test suite and the browser test of the review flow
-(import, review, approve, edit, reject, request research, export) on every push and pull
-request.
+CI runs lint, format, strict mypy, the full test suite, a llama.cpp smoke test and the browser
+test of the review flow (import, review, approve, edit, reject, request research, export) on
+every push and pull request. The smoke test starts the pinned llama-server image (build
+`b11960`) with a tiny test model (`ggml-org/tinygemma3-GGUF`, 47 MB, pinned revision and SHA-256).
+It sends a real audit label through the release prompt, grammar and validation, and checks the
+result is a valid extraction or a categorized failure after at most one retry. The tiny model
+cannot read labels: the test checks the plumbing, not quality.
 `main` is protected and only accepts commits that passed CI.
 
 <details>

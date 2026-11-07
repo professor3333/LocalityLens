@@ -39,7 +39,8 @@ services:
               "--db", "/app/data/review/review.sqlite",
               "--index", "/app/data/derived/gazetteer.sqlite",
               "--extents", "/app/data/reviewed/extents.csv",
-              "--url", "http://127.0.0.1:8080"]
+              "--url", "http://127.0.0.1:8080",
+              "--lease", "${LOCALITYLENS_LEASE:-300}"]   # seconds per job; raise on slow hosts
     stop_grace_period: 2m   # SIGTERM finishes the current job
     healthcheck:
       disable: true   # the image's check probes /readyz, which only the review service serves

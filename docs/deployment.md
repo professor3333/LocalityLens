@@ -119,5 +119,24 @@ from step 1 instead of reusing the upgraded store.
 - During that backup the worker had no jobs. Copying during an in-progress write is covered by
   a unit test.
 
-**Not verified:** a rollback across a store-schema change (the refusal is unit-tested), the
-`llm` Compose profile, and a deployment on Linux.
+**Rollback across a store-schema change**, on the same clone, with v0.1.0's `review backup` and
+`review restore`:
+- An older release (`2e03e8c`, store schema `review-2`) imported the audit sample (36 / 11 / 3)
+  and approved one record.
+- `review backup` copied that store without changing it: schema `review-2`, 1 decision.
+- v0.1.0 opened the store, which upgraded it to `review-3`, and recorded a second decision.
+- The older release then refused the upgraded store: `store schema review-3, expected review-2`.
+- `review restore --replace` brought back the `review-2` backup. The older release opened it
+  again: the approved record is there, and the later decision is not.
+
+**The `llm` Compose profile** on the same machine (Docker Desktop, a 4 GB Linux VM, CPU only):
+- llama-server loaded the pinned model in about a minute, at 2.8 GB of the VM's 3.9 GB. `model
+  check` passed from the worker.
+- One hybrid record took 540 s: prompt 37 tokens/s, generation 0.23 tokens/s, against p50 9.9 s
+  for native llama-server with Metal on the same machine.
+- That is longer than the worker's 300 s job lease, so the job was leased again. **On a machine
+  like this one, run llama-server natively** and point the worker at it. On a larger Linux
+  host, raise the lease with `LOCALITYLENS_LEASE` (seconds) if a call can take longer than 300 s.
+
+**Not verified:** a deployment on a Linux host. CI builds the image on Linux on every push, and
+runs the pinned llama-server image with a tiny test model (see the README's testing section).

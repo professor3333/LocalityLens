@@ -52,3 +52,6 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+
+# CI smoke-test model download
+.smoke/
