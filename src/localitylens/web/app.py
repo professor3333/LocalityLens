@@ -64,6 +64,17 @@ class ReviewConfig:
     release: Path = Path("release/manifest.json")
     index: Path = Path("data/derived/gazetteer.sqlite")  # for imports (gazetteer snapshot)
     extents_problem: str | None = None  # an extent store that failed its check (not ready)
+    replay: Replay | None = None  # set only when freezing the screen into the static replay
+
+
+@dataclass(frozen=True, slots=True)
+class Replay:
+    """What the static replay banner says: which run is shown, and that nothing runs live."""
+
+    system: str  # e.g. "hybrid-1: rules-6, then llm-x2g2-qwen3.5-4b-q4km where rules find nothing"
+    records: str  # which records, and where they come from
+    built: str  # commit and date of the run that produced the pages
+    attribution: str  # data citation (CC BY 4.0 needs it on every page)
 
 
 def config_from_env(
@@ -105,6 +116,7 @@ def create_app(config: ReviewConfig) -> FastAPI:
     app = FastAPI(title="LocalityLens review", docs_url=None, redoc_url=None, openapi_url=None)
     app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
     templates = Jinja2Templates(directory=HERE / "templates")
+    templates.env.globals["replay"] = config.replay
 
     def store() -> ReviewStore:
         return ReviewStore(config.db)  # one connection per request: SQLite stays in one thread

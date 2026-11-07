@@ -92,7 +92,9 @@
     <h2>Decision</h2>
     {% set computed = (v.pipeline_region and v.pipeline_region.outcome == 'computed') %}
     {% set default_action = form.get('action') or ('approve' if can_approve and computed else 'request_research') %}
-    {% if v.decidable %}
+    {% if v.decidable and replay %}
+    <p class="sub">In the local app a curator approves, edits then approves, rejects or requests research here. Decisions are disabled in the replay.</p>
+    {% elif v.decidable %}
     <form method="post" action="/records/{{ v.record.record_id }}/decision" class="decision"
           hx-post="/records/{{ v.record.record_id }}/decision" hx-target="#decision-error" hx-swap="innerHTML">
       <fieldset class="actions">

@@ -9,6 +9,9 @@
   {% endfor %}
 </nav>
 <section class="export">
+  {% if replay %}
+  <p class="sub">Export (Darwin Core CSV, GeoJSON and the unresolved report) is disabled in the replay: no record here has a curator's decision.</p>
+  {% else %}
   <form method="post" action="/export">
     <button type="submit">Export Darwin Core</button>
     <span class="sub">approved records → Darwin Core CSV and GeoJSON (WGS 84); every unresolved record → a report saying what blocks it</span>
@@ -22,6 +25,7 @@
     {% if files['occurrences.geojson'] %}· <a href="/export/occurrences.geojson">occurrences.geojson</a>{% endif %}
     {% if files['unresolved.csv'] %}· <a href="/export/unresolved.csv">unresolved.csv</a>{% endif %}
   </p>
+  {% endif %}
   {% endif %}
 </section>
 {% if q.rows %}

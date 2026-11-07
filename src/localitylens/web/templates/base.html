@@ -13,8 +13,19 @@
 <body>
   <header class="top">
     <a class="brand" href="/">LocalityLens <span>review</span></a>
+    {% if replay %}
+    <span class="note">Static replay · proposals support curator review and are not authoritative georeferences</span>
+    {% else %}
     <span class="note">Local review screen · proposals support curator review and are not authoritative georeferences</span>
+    {% endif %}
   </header>
+  {% if replay %}
+  <aside class="replay" role="note" aria-label="About this replay">
+    <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
+    <p>System: {{ replay.system }} · Records: {{ replay.records }} · Built: {{ replay.built }}</p>
+    <p class="sub">{{ replay.attribution }} · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
+  </aside>
+  {% endif %}
   <main>
     {% block content %}{% endblock %}
   </main>

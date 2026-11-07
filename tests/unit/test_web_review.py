@@ -264,3 +264,37 @@ def test_cross_site_export_is_refused(client: TestClient, db: Path) -> None:
     r = client.post("/export", headers={"Origin": "https://evil.example"})
     assert r.status_code == 403
     assert not (db.parent / "export").exists()
+
+
+# --- static replay --------------------------------------------------------------------------
+
+
+def test_the_replay_freezes_every_page_with_relative_links(db: Path, tmp_path: Path) -> None:
+    import re
+
+    from localitylens.web.app import Replay
+    from localitylens.web.replay import freeze, record_file
+
+    info = Replay(system="rules-6 (test)", records="synthetic", built="now", attribution="none")
+    site = tmp_path / "site"
+    counts = freeze(_config(db), info, site)
+    assert counts["records"] == len(TEXTS)
+    pages = sorted(site.rglob("*.html"))
+    assert len(pages) == counts["pages"]
+    assert (site / record_file(_id("lake"))).is_file()
+    assert (site / "static" / "review.js").is_file()
+    for page in pages:
+        html = page.read_text(encoding="utf-8")
+        assert "Replay, not live inference." in html  # every page says what it is
+        assert "<form" not in html  # nothing on the site posts anywhere
+        assert "testserver" not in html
+        for url in re.findall(r'(?:href|src|action)="([^"]*)"', html):
+            if url.startswith("https://"):
+                continue  # the source link; tiles are requested by review.js
+            assert not url.startswith("/"), (page, url)  # works under /<repo>/ on Pages
+            assert (page.parent / url).resolve().is_file(), (page, url)
+    inject = (site / record_file(_id("inject"))).read_text(encoding="utf-8")
+    assert "<script>alert(1)</script>" not in inject  # label text stays escaped
+    assert "Decisions are disabled in the replay" in inject
+    with pytest.raises(FileExistsError):
+        freeze(_config(db), info, site)  # never written over
