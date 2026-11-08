@@ -1,141 +1,141 @@
 audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
-H001,2573337547,Larimer,"Along County Road 27, ~2 mi. N of US 34."
-H002,2573463120,Conejos,Rio Grande National Forest; ~4 miles NW of Platoro; E ridge of Lookout Mountain
-H003,2573443650,Montezuma,"Along Hwy 160 between Mancos and Cortez, west of Mesa Verde Nat. Park exit and ca. 1 mi. W of hwy rest area."
-H004,5082174348,Huerfano,"Roadside cut, ca 24.5 road-km up Forest Service Rd 369 from junct with Forest Service Rd 360, Wet Mountains, San Isabel National Forest, ca 11 air-km W of Rye, CO. NW-facing roadcut, E side of rd."
-H005,2573327713,Mesa,Colorado National Monument. Between Glade Park road and rim of No Thoroughfare canyon.
-H006,2573470579,Clear Creek,Clear Creek Valley 1 mile east of Georgetown.
-H007,2573331665,Douglas,8 miles southwest of Sedalia.
-H008,2573441983,Larimer,Range beyond Windy Gulch.
-H009,2573326043,Fremont,River bench 2 mi. w. of Florence.
-H010,2573337289,Boulder,Wild Basin; Ouzel Burn. Rocky Mountain National Park.
-H011,2573338177,Montezuma,"National Park Service. Yucca House National Monument, near spring."
-H012,2573536721,Jefferson,"Rocky Flats Site, 7 mi S of Boulder. West Entrance road by Woman Creek."
-H013,2573534173,Montrose,"Gunnison Gorge, N of the Black Canyon."
-H014,2573330041,Montrose,Black Canyon of the Gunnison National Park. Sunset Overlook; west end of South Rim road. GPS waypoint: AB21.
-H015,2573469473,Yuma,"Fox Ranch, ca. ten miles NE of Kirk, and six miles N of Hwy. 36. East of County Road P. North bank of the Arickaree River."
-H016,2573340249,Lake/Pitkin,"Independence Pass, top of Continental Divide."
-H017,2573328581,El Paso,"Near Windy Point, s.e. slope of Pike's Peak."
-H018,2573539985,Lincoln,"Limon, 5 mi. N, 0.5 mi. E. S-facing slope of Foncanyon Hill."
-H019,2573473349,Moffat,"In Conway Draw along Ladore Road, 17.45 mi. from Greystone."
-H020,2573324294,Larimer,Approx. 1.2 mi. W of Horsetooth Res.
-H021,2573489391,Boulder,"Bluebell Canyon, south edge of Boulder."
-H022,2573540940,Unknown,"Along Cherry Creek, Denver."
-H023,2573328570,Gunnison,"Trail to Queens Basin, n.e. of Gothic."
-H024,2573437324,Jackson,"Arapahoe National Wildlife Refuge, ca. 10 mi. S of Walden."
-H025,2573467035,Montezuma,5 miles SW Cortez.
-H026,2573544015,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: Goodman Point at Hovenweep National Monument, ca 18 air mi NW of Cortez, County Road P, between County roads 17 and 18."
-H027,2573342922,Custer,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Sangre de Cristo Range, Rainbow Trail between Alvarado and Hiltman creeks, ca 2.8 air mi NE of Horn Peak, ca 6.5 air mi SW of Westcliffe."
-H028,2573344607,Las Animas,"Mesa de Maya Region of southeastern Colorado, Pine Canyon Quad., growing at the far western end of the Mesa de Maya."
-H029,2573536482,Routt,"Park Range; Mad Creek Drainage, ca. 7 air mi NNW of Steamboat Springs; gravel bars of Mad Creek."
-H030,2573331807,Garfield,White River Plateau above Broken Rib Creek.
-H031,2573333967,Montezuma,"Just west of Far Veiw Ruin, Mesa Verde National Park."
-H032,2573539732,Boulder,"Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. North side of road near gate at the park entrance."
-H033,2573471587,Jefferson,"Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment, north of TR08, south of power poles."
-H034,2573470045,Boulder,"Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. Sunny hillside 200 ft. above north side of the creek by Red Garden Wall."
-H035,2573374447,Park,Mosquito Range. Pike National Forest. 1/8 mile SW of Weston Pass on S-facing slope.
-H036,2573529764,Jackson,"North Park, sagebrush flats northwest of Cowdrey."
-H037,2573323962,Moffat,"Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table."
-H038,2573333394,Delta,Along road to Bowie Mine.
-H039,2573472218,Mesa,Found 5 mi. up Jacob's Ladder Road.
-H040,2573528921,La Plata,"Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station."
-H041,2573534785,Routt,"Trail from Slavonia to Gilpin Lake, ca. 30 mi. n. of Steamboat Springs."
-H042,2573353695,Huerfano,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Black Hawk State Trust Lands off County Road 312, ca 10 air mi S of Walsenberg."
-H043,2573475112,Montezuma,Head of Navajo Canyon. Mesa Verde National Park.
-H044,2573478723,Park,"South Park, about 1 mile E of HW 285 on Lost Park Road, NE of Jefferson."
-H045,2573338484,El Paso,North Cheyenne Creek.
-H046,2573472860,Boulder,Along Jasper Rd 2 mi W of Erie.
-H047,2573497996,Jefferson,"Golden; Tin Cup Ridge. Along the top of “Tin Cup Ridge,” the northward extension of Dinosaur Ridge into Golden, 5.2 km. south of the GNIS location of Golden.; 39.71099831 -105.2037943"
-H048,2573445140,Moffat,"North-central Colorado: Elkhead Mountains: Sand Point above the head of Fourmile Creek, ca 7.5 air mi E of Fortification; ca 22.5 air mi NNE of Craig."
-H049,2573444346,Moffat,At Ferndale Ranch on Baggs-Great Divide Road; about 20 mi. sw. of Baggs.
-H050,2573342668,Boulder,"Half mile E of Hiway Nine, 3 mi. S of LaFayette."
-H051,2573418149,Larimer,"Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins."
-H052,2573328530,Gunnison,3.8 mi. W of Sapinero Bridge above Curecanti Reservoir just W of Dry Gulch and W of Lake City Turnoff.
-H053,2573328523,Ouray,Top of Red Mountain Pass.
-H054,4466523536,Boulder,On North side of Four mile canyon road (118) about 1/2 miles Southeast of Salina.
-H055,2573432138,Moffat,Dinosaur National Monument; east of Snow Cabin Harper's Corner.
-H056,2573485127,Larimer,Fork of Poudre and Big South.
-H057,2573339456,Park/Summit,Hoosier Pass.
-H058,2573330273,Costilla,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Culebra Range: southwestern ridge of Trinchera Peak, SE of Fort Garland."
-H059,2573471810,Mesa,Grand Mesa Nat. Forest. Lily Lake. Above lake.
-H060,2573440789,Otero,"John Rideo Hill, 1 mi. E. of Hwy 109."
-H061,2573435343,Dolores,"Lone Mesa State Park, 7.5 miles north of southern entrance at FR 514."
-H062,2573342645,Boulder,"Spenser Mt., Eldora."
-H063,4435941311,LAS ANIMAS,"Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa."
-H064,2573533632,Larimer,Neota Wilderness. 7 miles south of Hwy. 14 on Long draw Rd. 1 mile west of road in wilderness.
-H065,2573394519,Conejos,Dry flood channel of Conejos river; Spectacle Lake campground.
-H066,2573525778,Unknown-W,San Juan Mts.
-H067,2573335603,Las Animas,Just north of Colorado-New Mexico state line above Lake Maloya.
-H068,2573345683,Gunnison,"Northern Gunnison Basin: West Elk Wilderness: Middle Baldy and Middle Baldy Mountain, ca 13.5 air mi N of Blue Mesa Reservoir."
-H069,2573550286,Rio Blanco,Overlooking Hwy 64 ca. 5 mi E of Rangely.
-H070,2573520066,Gunnison,Cement Creek Hot Springs. SE of Crested Butte.
-H071,2573328054,Boulder,"Just west of Marshall Lake, along Boulder-Golden Highway."
-H072,2573471302,Pitkin,Along Maroon Creek near Aspen.
-H073,2573374342,Pueblo,Along Hwy. 78.
-H074,2573443543,Lake,Mosquito Range. San Isabel National Forest. Buffalo Peaks Wilderness Area. Just SE and below of South Peak.
-H075,2573477879,Weld,I-76 frontage road between Roggen and Keensburg.
-H076,2573324382,Mesa,"Grand Mesa, Bull Basin."
-H077,2573480541,Boulder,"1 mile southwest of Eldorado Springs; along railroad tracks at head of Rattlesnake Gulch, just east of tunnel."
-H078,2573551409,Boulder,Near Albion Lake.
-H079,2573493646,Larimer,"Rocky Mountain National Park. Glacier Basin, Boulder Brook, ~.5 mi. above Sprague Lake."
-H080,2573332057,Pitkin,"Taylor Peak, above the Iron Mine Road."
-H081,2573483815,Douglas,Along Horse Creek -South Platte tributary; directly southeast of Deckers on Hwy. 67.
-H082,2573326265,Custer,Watson's Gulch at Florence Picnic grounds.
-H083,2573329557,Dolores,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: ca 2.5 air mi E of Rico, along the Colorado Trail at Black Hawk Basin."
-H084,2573325687,La Plata,"La Plata Mts., Tomahawk Basin. Slope down toward Little Kate from saddle to 1/2 way down. Diorite Peak."
-H085,2573329135,Douglas,Pike National Forest near Indian Creek Campground.
-H086,2573502145,Unknown,Rocky Mtountain Flora. 39°-41°
-H087,2573527447,Yuma,Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird.
-H088,2573533101,Montezuma,Near the junction of McElmo and Yellow Jacket Canyons (G Rd). SW-facing slopes just E of the Ismay Trading Post.
-H089,2573448333,Larimer,Junction of Hagues Creek and Paudre [sic] River.
-H090,2573519027,Montrose,"9 mi. n.e. of Nucla, on road to Columbine Pass, Uncompahgre Plateau."
-H091,2573455677,Las Animas,"Luning Arroyo, approx. 20 miles ESE of Earl and 2 miles west of Purgatoire Canyon. South side of arroyo."
-H092,2573527150,Pueblo,"Start of Stone City Road (road 111), between Pueblo and Penrose 1-2 mi. north of Hwy 50."
-H093,2573439963,Pitkin,"Vicinity of Aspen. Along forest trail 1994, about one city block east of trailhead on rockfall on south side of trail. (Woody Creek Road.)."
-H094,4172797501,Garfield,5 mi. n. of Rifle along Government Creek.; 39.6055368 -107.803777
-H095,4052836701,Boulder,"Boulder quad: 13TDQ 751 306. Silver Lake ditch at 2839, 3rd, Boulder."
-H096,2573518155,Boulder,"Shore of Cowdrey Reservoir, 3½ mi. E of Marshall."
-H097,2573478141,Lake,"Hagerman Pass, ca. 10.5 miles northwest of Turquoise Lake, San Isabel National Forest."
-H098,2573339349,Gunnison,Ridge E of Cumberland Pass. Gunnison National Forest.
-H099,2573339424,Montezuma,"Mesa Verde National Park and vicinity. Gravel pits, S end of Chapin Mesa."
-H100,2573499127,Summit,Boulder Creeek Road. Willow Lakes Quadrangle.
-H101,2573477091,Jackson,Inlet to north end of Lake John.
-H102,2573528603,Garfield,Ranch at the Roaring Fork. On the floodplain of the Roaring Fork River.
-H103,2573447079,Montezuma,"Pastures along Mud Creek, south and west of Mancos."
-H104,2573373642,Boulder,"Boulder Mountain Parks. West side of Bear Pk. & S. Boulder Pk, in rich ravine below the W. ridge of Bear Pk."
-H105,2573344361,Denver,Capitol Hill.
-H106,2573334870,Montrose,"Black Canyon of the Gunnison National Park. Gunnison River, at base of "" Warner Route"". GPS waypoint: AB29."
-H107,2573474898,Unknown-W,Uncompahgre.
-H108,2573530532,Park,"South Park, Twelve Mile Club, up Sheep Creek along salt flat."
-H109,2573345562,Montrose,On hill above Junc. of Dolores River.
-H110,2573442216,El Paso,Near Ellicott.
-H111,2573334732,Grand,Fraser Experimental Forest. Bottle Pass treeline.
-H112,2573465664,Gunnison,5.5 mi. s.e. of Gothic.
-H113,2573469169,Eagle,E. Thomasville - Fryingpan Creek.
-H114,2573431569,Gunnison,"Northern Gunnison Basin: Raggeds Wilderness: Dark Canyon, ca 8.5 air mi NW of Kebler Pass."
-H115,2573326194,Mesa,"2.2 mi S, 17.2 mi W DeBeque. (Take X.50/222 Road [to Wild Horse Area] 11.5 roadmi E from junction with 204/45 Road, then O.90 Road 6.5 roadmi SE. Site on N side of O.90 Road.) Just E Corcoran Peak."
-H116,2573489531,Archuleta,Material from near Chimney Rock.
-H117,2573333107,Delta,Paonia.
-H118,2573472542,La Plata,Needle Creek.
-H119,2573326512,Douglas,"Castlewood Canyon State Park, 4.5 miles southeast of Castle Rock."
-H120,2573330800,Pitkin,"Lost Man Creek, west of Indepdence Pass."
-H121,2573338953,Mesa,"West Mesa County, near Loma."
-H122,2573541981,Weld,3 miles east of Roggen on the Painter Hereford Ranch.
-H123,2573325935,Bent,Northeast of John Martin Reservoir; along two-track service road.
-H124,2573472523,El Paso,"Pike-San Isabel National Forest, Pikes Peak, Boemer Creek headwaters, Windy Point, ca. 0.75 SW of Sachett Mt. Below saddle between uppermost knob and knob 11848 at head of 1st ridge W of Windy Point ridge below cog railway."
-H125,2573438529,Grand,Rocky Mountain National Park. 1.5 mi W of Grand Lake Village.
-H126,2573467115,Grand,Fraser Experimental Forest: upper basin of St. Louis Lake trail.
-H127,2573327401,Eagle,"Gore Range, Eagles Nest Wilderness Area, central Colorado. Alpine basin west of Booth Lake."
-H128,2573394504,Grand,"One half mile south of Willow Creek Pass, along small drainage on east side of highway."
-H129,2573341854,Gunnison,One-half mile above Gothic.
-H130,2573327334,Rio Blanco,Between Buford and Trappers Lake.
-H131,2573332725,Otero,Edge of pond on the north side of the Arkansas River.
-H132,2573385738,Gunnison,Gunnison National Forest. Saddle S of Italian Mtn.
-H133,2573468155,Boulder,Adventive along right-of-way of Boulder-Denver Toll Road just east of Superior.
-H134,3462359323,Jefferson,"Tin Cup Ridge. East base of the hogback locally called Tin Cup Rudge, the northward extension of Dinosaur Rudge into Golden, 6.4 km. south southeast of the GNIS location of Golden."
-H135,2573326811,Grand,Upper part of Wheeler Basin.
-H136,2573448208,Jackson,"9 miles E of Rand, North Park; drainage gully on hillside below road."
-H137,2573447941,Larimer,"Rist Canyon, 5 miles W of Bellevue, 10 miles N of Fort Collins."
-H138,2573337040,Boulder,"Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel."
-H139,3462353323,Jefferson,"Apex Park. East-central Apex Park, part-way up the initial Rocky Mountain Front Range scarp, along a social trail in a small canyon, 5.21 km. south of the GNIS location of Golden."
-H140,2573404377,Jefferson,Turkey Creek side canyon. Geneva Glen Camp.
+H001,2573337547,Larimer,"Along County Road 27, ~2 mi. N of US 34.",route_relative,no,US 34,absent,2,mile,N,~,extent;route_geometry;feature_not_in_gnis,Along County Road 27 from US 34. A highway is not a GNIS feature here.
+H002,2573463120,Conejos,Rio Grande National Forest; ~4 miles NW of Platoro; E ridge of Lookout Mountain,named_feature,yes,Lookout Mountain,190598,,,,,extent,"Position: E ridge. multi: Rio Grande National Forest; ~4 miles NW of Platoro (190731). GNIS: Lookout Mountain, Summit, Conejos County."
+H003,2573443650,Montezuma,"Along Hwy 160 between Mancos and Cortez, west of Mesa Verde Nat. Park exit and ca. 1 mi. W of hwy rest area.",distance_and_direction,yes,hwy rest area,absent,1,mile,W,ca.,extent;feature_not_in_gnis,multi: along Hwy 160 between Mancos and Cortez; west of Mesa Verde Nat. Park exit. GNIS: no rest area entry; Mancos and Cortez are not substituted.
+H004,5082174348,Huerfano,"Roadside cut, ca 24.5 road-km up Forest Service Rd 369 from junct with Forest Service Rd 360, Wet Mountains, San Isabel National Forest, ca 11 air-km W of Rye, CO. NW-facing roadcut, E side of rd.",route_relative,no,junct with Forest Service Rd 360,absent,24.5,kilometre,,ca,extent;route_geometry;feature_not_in_gnis,"Road-km up Forest Service Rd 369. multi: Wet Mountains; San Isabel National Forest; ca 11 air-km W of Rye (193917), which is the measurable alternative; NW-facing roadcut, E side of rd."
+H005,2573327713,Mesa,Colorado National Monument. Between Glade Park road and rim of No Thoroughfare canyon.,between_features,no,Glade Park road;No Thoroughfare canyon,174526,,,,,extent;route_geometry,"Between the road and the canyon rim. multi: Colorado National Monument. GNIS: No Thoroughfare Canyon, Valley, Mesa County; the road is not a GNIS feature."
+H006,2573470579,Clear Creek,Clear Creek Valley 1 mile east of Georgetown.,distance_and_direction,yes,Georgetown,181892,1,mile,E,,extent,"multi: Clear Creek Valley. GNIS: Georgetown, Populated Place, Clear Creek County."
+H007,2573331665,Douglas,8 miles southwest of Sedalia.,distance_and_direction,yes,Sedalia,204740,8,mile,SW,,extent,"GNIS: Sedalia, Populated Place, Douglas County."
+H008,2573441983,Larimer,Range beyond Windy Gulch.,direction_only?,yes,Windy Gulch,177799,,,,,extent;direction;distance,"""Range beyond Windy Gulch"": the side is not stated. GNIS: Windy Gulch, Valley, Larimer County."
+H009,2573326043,Fremont,River bench 2 mi. w. of Florence.,distance_and_direction,yes,Florence,204775,2,mile,W,,extent,"multi: river bench. GNIS: Florence, Populated Place, Fremont County."
+H010,2573337289,Boulder,Wild Basin; Ouzel Burn. Rocky Mountain National Park.,named_feature,yes,Ouzel Burn,absent,,,,,extent;feature_not_in_gnis,multi: Wild Basin (205002); Rocky Mountain National Park. GNIS: no Ouzel Burn entry; Wild Basin is broader and is not substituted.
+H011,2573338177,Montezuma,"National Park Service. Yucca House National Monument, near spring.",named_feature,yes,Yucca House National Monument,absent,,,,,extent;feature_not_in_gnis,multi: near spring; near describes the spring. GNIS: no Yucca House entry.
+H012,2573536721,Jefferson,"Rocky Flats Site, 7 mi S of Boulder. West Entrance road by Woman Creek.",named_feature?,yes,Woman Creek,181233,,,,,extent,"West Entrance road by Woman Creek. multi: Rocky Flats Site; 7 mi S of Boulder. Alternative: distance_and_direction, Boulder, 7 mile, S. GNIS: Woman Creek, Stream, Jefferson County."
+H013,2573534173,Montrose,"Gunnison Gorge, N of the Black Canyon.",named_feature,yes,Gunnison Gorge,absent,,,,,extent;feature_not_in_gnis,multi: N of the Black Canyon. GNIS: no Gunnison Gorge entry; Black Canyon of the Gunnison (186506) is not substituted.
+H014,2573330041,Montrose,Black Canyon of the Gunnison National Park. Sunset Overlook; west end of South Rim road. GPS waypoint: AB21.,named_feature,yes,Sunset Overlook,absent,,,,,extent;feature_not_in_gnis,"multi: Black Canyon of the Gunnison National Park; west end of South Rim road; GPS waypoint AB21, not used. GNIS: no overlook entry."
+H015,2573469473,Yuma,"Fox Ranch, ca. ten miles NE of Kirk, and six miles N of Hwy. 36. East of County Road P. North bank of the Arickaree River.",distance_and_direction,yes,Kirk,195064,ten,mile,NE,ca.,extent,"multi: Fox Ranch (no GNIS entry); six miles N of Hwy. 36; East of County Road P; north bank of the Arickaree River. GNIS: Kirk, Populated Place, Yuma County."
+H016,2573340249,Lake/Pitkin,"Independence Pass, top of Continental Divide.",named_feature,yes,Independence Pass,180339,,,,,extent,"Position: top of the Continental Divide. Supplied county Lake/Pitkin. GNIS: Independence Pass, Gap, primary county Lake."
+H017,2573328581,El Paso,"Near Windy Point, s.e. slope of Pike's Peak.",named_feature,yes,Windy Point,191235,,,,near,extent,"multi: s.e. slope of Pike's Peak. GNIS: Windy Point, Cliff, El Paso County."
+H018,2573539985,Lincoln,"Limon, 5 mi. N, 0.5 mi. E. S-facing slope of Foncanyon Hill.",named_feature?,yes,Foncanyon Hill,absent,,,,,extent;feature_not_in_gnis,"Position: S-facing slope. multi: Limon, 5 mi. N, 0.5 mi. E (orthogonal offsets from Limon, 204819), the alternative. GNIS: no Foncanyon Hill entry."
+H019,2573473349,Moffat,"In Conway Draw along Ladore Road, 17.45 mi. from Greystone.",named_feature,yes,Conway Draw,170555,,,,,extent,"multi: along Ladore Road, 17.45 mi. from Greystone (170638), a road distance. GNIS: Conway Draw, Valley, Moffat County."
+H020,2573324294,Larimer,Approx. 1.2 mi. W of Horsetooth Res.,distance_and_direction,yes,Horsetooth Res.,177416,1.2,mile,W,approx.,extent,"GNIS: Horsetooth Reservoir, Reservoir, Larimer County; the Dolores County one is excluded by county."
+H021,2573489391,Boulder,"Bluebell Canyon, south edge of Boulder.",named_feature,yes,Bluebell Canyon,181223,,,,,extent,"multi: south edge of Boulder. GNIS: Bluebell Canyon, Valley, Boulder County."
+H022,2573540940,Unknown,"Along Cherry Creek, Denver.",named_feature?,yes,Denver,201738,,,,,extent,"multi: along Cherry Creek (181657), a stream far longer than the city; the city is taken as the smaller area. Supplied county Unknown. GNIS: Denver, Populated Place, Denver County."
+H023,2573328570,Gunnison,"Trail to Queens Basin, n.e. of Gothic.",route_relative?,no,Queens Basin,188773?,,,,,extent;route_geometry;distance,"Trail to Queens Basin. multi: n.e. of Gothic (188777). GNIS: Queen Basin, Basin, Gunnison County, flagged for the spelling."
+H024,2573437324,Jackson,"Arapahoe National Wildlife Refuge, ca. 10 mi. S of Walden.",distance_and_direction?,yes,Walden,204654,10,mile,S,ca.,extent,"multi: Arapahoe National Wildlife Refuge (no GNIS entry), the alternative clause. GNIS: Walden, Populated Place, Jackson County."
+H025,2573467035,Montezuma,5 miles SW Cortez.,distance_and_direction,yes,Cortez,179044,5,mile,SW,,extent,"GNIS: Cortez, Populated Place, Montezuma County."
+H026,2573544015,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: Goodman Point at Hovenweep National Monument, ca 18 air mi NW of Cortez, County Road P, between County roads 17 and 18.",named_feature,yes,Goodman Point,202601,,,,,extent,"multi: Upper Dolores River Drainage and Adjacent Areas; Hovenweep National Monument; ca 18 air mi NW of Cortez; County Road P, between County roads 17 and 18. GNIS: Goodman Point, Cliff, Montezuma County."
+H027,2573342922,Custer,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Sangre de Cristo Range, Rainbow Trail between Alvarado and Hiltman creeks, ca 2.8 air mi NE of Horn Peak, ca 6.5 air mi SW of Westcliffe.",distance_and_direction,yes,Horn Peak,192284,2.8,mile,NE,ca,extent,"air mi. multi: Wet Mountains region heading; Sangre de Cristo Range; Rainbow Trail between Alvarado and Hiltman creeks; ca 6.5 air mi SW of Westcliffe. GNIS: Horn Peak, Summit, Custer County."
+H028,2573344607,Las Animas,"Mesa de Maya Region of southeastern Colorado, Pine Canyon Quad., growing at the far western end of the Mesa de Maya.",named_feature,yes,Mesa de Maya,196243,,,,,extent,"Position: far western end. multi: Mesa de Maya Region; Pine Canyon Quad. GNIS: Mesa de Maya, Summit, Las Animas County."
+H029,2573536482,Routt,"Park Range; Mad Creek Drainage, ca. 7 air mi NNW of Steamboat Springs; gravel bars of Mad Creek.",distance_and_direction,yes,Steamboat Springs,172749,7,mile,NNW,ca.,extent,"air mi. multi: Park Range; Mad Creek Drainage; gravel bars of Mad Creek (172302). Alternative: named_feature, Mad Creek. GNIS: Steamboat Springs, Populated Place, Routt County."
+H030,2573331807,Garfield,White River Plateau above Broken Rib Creek.,named_feature,yes,Broken Rib Creek,173954,,,,,extent,"Position: above the creek. multi: White River Plateau. GNIS: Broken Rib Creek, Stream, Garfield County."
+H031,2573333967,Montezuma,"Just west of Far Veiw Ruin, Mesa Verde National Park.",direction_only,yes,Far Veiw Ruin,absent,,,W,,extent;distance;feature_not_in_gnis,"""Just"" W: close, no stated distance. Spelled as on the label. multi: Mesa Verde National Park. GNIS: no Far View Ruin entry."
+H032,2573539732,Boulder,"Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. North side of road near gate at the park entrance.",named_feature?,yes,Eldorado Springs State Park,absent,,,,,extent;feature_not_in_gnis,"South Boulder Creek at emergence from the canyon; north side of road near gate at the park entrance. GNIS: no state park entry. Eldorado Springs (181177), Populated Place, is not substituted."
+H033,2573471587,Jefferson,"Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment, north of TR08, south of power poles.",named_feature?,yes,Rocky Flats Pediment,absent,,,,,extent;feature_not_in_gnis,"multi: Rocky Flats Site; 7 miles south of Boulder; north of TR08; south of power poles. Alternative: distance_and_direction, Boulder, 7 mile, S. GNIS: no pediment entry."
+H034,2573470045,Boulder,"Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. Sunny hillside 200 ft. above north side of the creek by Red Garden Wall.",named_feature,yes,Red Garden Wall,absent,,,,,extent;feature_not_in_gnis,"Sunny hillside 200 ft above the north side of the creek, by the wall; 200 ft is a height, not a distance. multi: Eldorado Springs State Park; South Boulder Creek at emergence from the canyon. GNIS: no Red Garden Wall entry."
+H035,2573374447,Park,Mosquito Range. Pike National Forest. 1/8 mile SW of Weston Pass on S-facing slope.,distance_and_direction,yes,Weston Pass,180216,1/8,mile,SW,,extent,"Position: S-facing slope. multi: Mosquito Range; Pike National Forest. GNIS: Weston Pass, Gap, primary county Lake; supplied county Park."
+H036,2573529764,Jackson,"North Park, sagebrush flats northwest of Cowdrey.",direction_only,yes,Cowdrey,170351,,,NW,,extent;distance,"multi: North Park; sagebrush flats. GNIS: Cowdrey, Populated Place, Jackson County."
+H037,2573323962,Moffat,"Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table.",named_feature,yes,E. Fork Sand Canyon,absent,,,,,extent;feature_not_in_gnis,"multi: Dinosaur National Monument; W of the Billiard Table (no GNIS entry). GNIS: no East Fork Sand Canyon; Sand Canyon (170665), Moffat County, is not substituted."
+H038,2573333394,Delta,Along road to Bowie Mine.,route_relative,no,Bowie Mine,absent,,,,,extent;route_geometry;distance;feature_not_in_gnis,"Along the road to the mine. GNIS: no Bowie Mine entry; Bowie (204744), Populated Place, is not substituted."
+H039,2573472218,Mesa,Found 5 mi. up Jacob's Ladder Road.,route_relative,no,Jacob's Ladder Road,absent,5,mile,,,extent;route_geometry;feature_not_in_gnis;other: starting point on the road,"5 mi. up the road. GNIS: no road entry; Jacobs Ladder (185208), Cliff, Mesa County, is not substituted."
+H040,2573528921,La Plata,"Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station.",route_relative,no,Rainbow gas sta.,absent,1,mile,,,extent;route_geometry;feature_not_in_gnis,"Wallace Gulch Road going N from the station, following Pine River; irrigation field 1 mile from the station. multi: Bayfield (184411). GNIS: no Rainbow entry."
+H041,2573534785,Routt,"Trail from Slavonia to Gilpin Lake, ca. 30 mi. n. of Steamboat Springs.",itinerary,no,Slavonia;Gilpin Lake,196723;170425,,,,,extent;route_geometry,"Trail from Slavonia to Gilpin Lake. multi: ca. 30 mi. n. of Steamboat Springs. GNIS: Slavonia, Populated Place, and Gilpin Lake, Lake, Routt County: two endpoints, not alternatives."
+H042,2573353695,Huerfano,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Black Hawk State Trust Lands off County Road 312, ca 10 air mi S of Walsenberg.",distance_and_direction,yes,Walsenberg,204806,10,mile,S,ca,extent,"air mi. multi: Wet Mountains region heading; Black Hawk State Trust Lands off County Road 312. GNIS: Walsenburg, Populated Place, Huerfano County; the label spells it Walsenberg."
+H043,2573475112,Montezuma,Head of Navajo Canyon. Mesa Verde National Park.,named_feature,yes,Navajo Canyon,179203,,,,,extent,"Position: head. multi: Mesa Verde National Park. GNIS: Navajo Canyon, Valley, Montezuma County."
+H044,2573478723,Park,"South Park, about 1 mile E of HW 285 on Lost Park Road, NE of Jefferson.",route_relative,no,HW 285,absent,1,mile,E,about,extent;route_geometry;feature_not_in_gnis,On Lost Park Road. multi: South Park; NE of Jefferson (204725). A highway is not a GNIS feature here.
+H045,2573338484,El Paso,North Cheyenne Creek.,named_feature,yes,North Cheyenne Creek,193401,,,,,extent,"GNIS: North Cheyenne Creek, Stream, El Paso County."
+H046,2573472860,Boulder,Along Jasper Rd 2 mi W of Erie.,distance_and_direction?,yes,Erie,178731,2,mile,W,,extent,"Along Jasper Rd: the distance may follow the road. Alternative: route_relative. GNIS: Erie, Populated Place, primary county Boulder."
+H047,2573497996,Jefferson,"Golden; Tin Cup Ridge. Along the top of “Tin Cup Ridge,” the northward extension of Dinosaur Ridge into Golden, 5.2 km. south of the GNIS location of Golden.; 39.71099831 -105.2037943",distance_and_direction,yes,Golden,202837,5.2,kilometre,S,,extent,"Measured from the GNIS location of Golden. multi: Golden; Tin Cup Ridge, a local name. The label ends with coordinates; they are not used. GNIS: Golden, Populated Place, Jefferson County."
+H048,2573445140,Moffat,"North-central Colorado: Elkhead Mountains: Sand Point above the head of Fourmile Creek, ca 7.5 air mi E of Fortification; ca 22.5 air mi NNE of Craig.",named_feature,yes,Sand Point,169874,,,,,extent,"Above the head of Fourmile Creek. multi: North-central Colorado; Elkhead Mountains; ca 7.5 air mi E of Fortification; ca 22.5 air mi NNE of Craig. GNIS: Sand Point, Summit, Moffat County."
+H049,2573444346,Moffat,At Ferndale Ranch on Baggs-Great Divide Road; about 20 mi. sw. of Baggs.,named_feature?,yes,Ferndale Ranch,absent,,,,,extent;feature_not_in_gnis,"On Baggs-Great Divide Road. multi: about 20 mi. sw. of Baggs, a Wyoming town with no entry in this Colorado snapshot. GNIS: no Ferndale Ranch entry."
+H050,2573342668,Boulder,"Half mile E of Hiway Nine, 3 mi. S of LaFayette.",distance_and_direction,yes,LaFayette,202813,3,mile,S,,extent,"multi: half mile E of Hiway Nine, a constraint from a road. GNIS: Lafayette, Populated Place, Boulder County."
+H051,2573418149,Larimer,"Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins.",named_feature,yes,West Whilte Pine Mountain,177330,,,,,extent,"Spelled as on the label. multi: Roosevelt National Forest; Front Range; on Forest Road 100 off Pennock Pass Road; ca 18 air mi W of Fort Collins. GNIS: West White Pine Mountain, Summit, Larimer County."
+H052,2573328530,Gunnison,3.8 mi. W of Sapinero Bridge above Curecanti Reservoir just W of Dry Gulch and W of Lake City Turnoff.,distance_and_direction?,yes,Sapinero Bridge,absent,3.8,mile,W,,extent;feature_not_in_gnis,multi: above Curecanti Reservoir; just W of Dry Gulch; W of Lake City Turnoff. GNIS: no bridge entry; Sapinero (188204) and the Gunnison County Dry Gulches are not substituted.
+H053,2573328523,Ouray,Top of Red Mountain Pass.,named_feature,yes,Red Mountain Pass,187296,,,,,extent,"Position: top. GNIS: Red Mountain Pass, Gap, Ouray County; the Larimer one is excluded by county."
+H054,4466523536,Boulder,On North side of Four mile canyon road (118) about 1/2 miles Southeast of Salina.,distance_and_direction,yes,Salina,202585,1/2,mile,SE,about,extent,"On north side of Four mile canyon road (118). GNIS: Salina, Populated Place, Boulder County."
+H055,2573432138,Moffat,Dinosaur National Monument; east of Snow Cabin Harper's Corner.,direction_only,yes,Snow Cabin,absent,,,E,,extent;distance;feature_not_in_gnis,multi: Dinosaur National Monument; Harper's Corner (170591). GNIS: no Snow Cabin entry; Harpers Corner is not substituted.
+H056,2573485127,Larimer,Fork of Poudre and Big South.,named_feature?,yes,Poudre;Big South,absent,,,,,extent;feature_not_in_gnis;other: confirm which stream is the Big South,The fork (confluence) of the Poudre and the Big South. GNIS: no Big South entry. South Fork Cache la Poudre River (177139) may or may not be this stream and is not substituted.
+H057,2573339456,Park/Summit,Hoosier Pass.,named_feature,yes,Hoosier Pass,179963,,,,,extent,"Supplied county Park/Summit. GNIS: Hoosier Pass (179963), Gap, Summit County; the Teller County Hoosier Pass (191218) is a different pass."
+H058,2573330273,Costilla,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Culebra Range: southwestern ridge of Trinchera Peak, SE of Fort Garland.",named_feature,yes,Trinchera Peak,192937,,,,,extent,"Position: southwestern ridge. multi: Wet Mountains region heading; Culebra Range; SE of Fort Garland. GNIS: Trinchera Peak, Summit, Costilla County."
+H059,2573471810,Mesa,Grand Mesa Nat. Forest. Lily Lake. Above lake.,named_feature,yes,Lily Lake,175297,,,,,extent,"Position: above the lake. multi: Grand Mesa Nat. Forest. GNIS: Lily Lake, Reservoir, Mesa County."
+H060,2573440789,Otero,"John Rideo Hill, 1 mi. E. of Hwy 109.",named_feature,yes,John Rideo Hill,absent,,,,,extent;feature_not_in_gnis,"multi: 1 mi. E. of Hwy 109, a road. GNIS: no Rideo Hill entry."
+H061,2573435343,Dolores,"Lone Mesa State Park, 7.5 miles north of southern entrance at FR 514.",named_feature?,yes,Lone Mesa State Park,absent,,,,,extent;feature_not_in_gnis,"multi: 7.5 miles north of southern entrance at FR 514, an offset from an entrance with no GNIS entry. GNIS: no state park entry; Lone Mesa (202402), Summit, Dolores County, is not substituted."
+H062,2573342645,Boulder,"Spenser Mt., Eldora.",named_feature,yes,Spenser Mt.,181065,,,,,extent,"multi: Eldora (181070). GNIS: Spencer Mountain, Summit, Boulder County; the label spells it Spenser."
+H063,4435941311,LAS ANIMAS,"Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa.",named_feature,yes,Fishers Peak Mesa,194868,,,,,extent,"Position: steep southwest facing slope. multi: Fishers Peak State Park; Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of Trinidad; just north of New Mexico. GNIS: Fishers Peak Mesa, Summit, Las Animas County."
+H064,2573533632,Larimer,Neota Wilderness. 7 miles south of Hwy. 14 on Long draw Rd. 1 mile west of road in wilderness.,route_relative,no,Hwy. 14,absent,7,mile,S,,extent;route_geometry;feature_not_in_gnis,"7 miles on Long Draw Rd., then 1 mile west of the road, a second leg. multi: Neota Wilderness. A highway is not a GNIS feature here."
+H065,2573394519,Conejos,Dry flood channel of Conejos river; Spectacle Lake campground.,named_feature,yes,Spectacle Lake campground,absent,,,,,extent;feature_not_in_gnis,"multi: dry flood channel of Conejos river. GNIS: no campground entry; Spectacle Lake (190808), Lake, Conejos County, is not substituted."
+H066,2573525778,Unknown-W,San Juan Mts.,named_feature,yes,San Juan Mts.,203510,,,,,extent,"Supplied county Unknown-W. GNIS: San Juan Mountains, Range, primary county Mineral."
+H067,2573335603,Las Animas,Just north of Colorado-New Mexico state line above Lake Maloya.,named_feature?,yes,Lake Maloya,absent,,,,,extent;feature_not_in_gnis,"Above the lake, just north of the Colorado-New Mexico state line. GNIS: no Lake Maloya entry in this Colorado snapshot; it is likely in New Mexico."
+H068,2573345683,Gunnison,"Northern Gunnison Basin: West Elk Wilderness: Middle Baldy and Middle Baldy Mountain, ca 13.5 air mi N of Blue Mesa Reservoir.",named_feature,yes,Middle Baldy;Middle Baldy Mountain,186783;186782,,,,,extent,"The label names both. multi: Northern Gunnison Basin; West Elk Wilderness; ca 13.5 air mi N of Blue Mesa Reservoir. GNIS: Middle Baldy (186783) and Middle Baldy Mountain (186782), Summits, Gunnison County."
+H069,2573550286,Rio Blanco,Overlooking Hwy 64 ca. 5 mi E of Rangely.,distance_and_direction,yes,Rangely,171670,5,mile,E,ca.,extent,"Overlooking Hwy 64. GNIS: Rangely, Populated Place, Rio Blanco County."
+H070,2573520066,Gunnison,Cement Creek Hot Springs. SE of Crested Butte.,named_feature,yes,Cement Creek Hot Springs,1794702,,,,,extent,"multi: SE of Crested Butte. GNIS: Cement Creek Hot Spring, Spring, Gunnison County."
+H071,2573328054,Boulder,"Just west of Marshall Lake, along Boulder-Golden Highway.",direction_only,yes,Marshall Lake,181245,,,W,,extent;distance,"""Just"" W: close, no stated distance. multi: along Boulder-Golden Highway. GNIS: Marshall Lake, Reservoir, Boulder County."
+H072,2573471302,Pitkin,Along Maroon Creek near Aspen.,named_feature,yes,Aspen,204686,,,,near,extent,"multi: along Maroon Creek (180007); near belongs to Aspen. GNIS: Aspen, Populated Place, Pitkin County."
+H073,2573374342,Pueblo,Along Hwy. 78.,route_relative,no,Hwy. 78,absent,,,,,extent;route_geometry;distance;feature_not_in_gnis,"Along the highway, no place on it. A highway is not a GNIS feature here."
+H074,2573443543,Lake,Mosquito Range. San Isabel National Forest. Buffalo Peaks Wilderness Area. Just SE and below of South Peak.,direction_only,yes,South Peak,180446,,,SE,,extent;distance,"""Just"" SE and below. multi: Mosquito Range; San Isabel National Forest; Buffalo Peaks Wilderness Area. GNIS: South Peak, Summit, Lake County."
+H075,2573477879,Weld,I-76 frontage road between Roggen and Keensburg.,between_features,no,Roggen;Keensburg,204697;204699,,,,,extent;route_geometry,"Along the I-76 frontage road. GNIS: Roggen and Keenesburg, Populated Places, Weld County: two endpoints; the label spells Keensburg."
+H076,2573324382,Mesa,"Grand Mesa, Bull Basin.",named_feature,yes,Bull Basin,174341;202250,,,,,extent;which_feature,"multi: Grand Mesa. GNIS: two Bull Basin features (174341, 202250), Basins, Mesa County; the label does not say which."
+H077,2573480541,Boulder,"1 mile southwest of Eldorado Springs; along railroad tracks at head of Rattlesnake Gulch, just east of tunnel.",named_feature,yes,Rattlesnake Gulch,181178,,,,,extent,"Position: head, along railroad tracks just east of tunnel. multi: 1 mile southwest of Eldorado Springs. GNIS: Rattlesnake Gulch (181178), Valley, Boulder County, about 1.2 km from Eldorado Springs (181177) by GNIS points; the other Boulder County one (178275) is about 34 km away."
+H078,2573551409,Boulder,Near Albion Lake.,named_feature,yes,Albion Lake,198573,,,,near,extent,"GNIS: Albion Lake, Reservoir, Boulder County."
+H079,2573493646,Larimer,"Rocky Mountain National Park. Glacier Basin, Boulder Brook, ~.5 mi. above Sprague Lake.",route_relative,no,Sprague Lake,1802559,0.5,mile,,~,extent;route_geometry,"Written ~.5 mi. above the lake along Boulder Brook (177945), an upstream distance, so direction stays blank. multi: Rocky Mountain National Park; Glacier Basin. GNIS: Sprague Lake, Lake, Larimer County."
+H080,2573332057,Pitkin,"Taylor Peak, above the Iron Mine Road.",named_feature,yes,Taylor Peak,188787,,,,,extent,"multi: above the Iron Mine Road. GNIS: Taylor Peak, Summit, Pitkin County; the Grand County one is excluded by county."
+H081,2573483815,Douglas,Along Horse Creek -South Platte tributary; directly southeast of Deckers on Hwy. 67.,direction_only,yes,Deckers,204730,,,SE,,extent;distance,"""Directly"" SE, on Hwy. 67. multi: along Horse Creek (183563), a South Platte tributary. GNIS: Deckers, Populated Place, Douglas County."
+H082,2573326265,Custer,Watson's Gulch at Florence Picnic grounds.,named_feature,yes,Florence Picnic grounds,absent,,,,,extent;feature_not_in_gnis,"multi: Watson's Gulch; the picnic grounds are the smaller place. GNIS: no picnic ground entry; Watson Gulch (192196), Valley, Custer County, is not substituted."
+H083,2573329557,Dolores,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: ca 2.5 air mi E of Rico, along the Colorado Trail at Black Hawk Basin.",named_feature,yes,Black Hawk Basin,absent,,,,,extent;feature_not_in_gnis,multi: Upper Dolores River Drainage and Adjacent Areas; San Juan National Forest; ca 2.5 air mi E of Rico (204670); along the Colorado Trail. GNIS: no Black Hawk Basin entry.
+H084,2573325687,La Plata,"La Plata Mts., Tomahawk Basin. Slope down toward Little Kate from saddle to 1/2 way down. Diorite Peak.",named_feature?,yes,Diorite Peak,178989,,,,,extent,"Slope down toward Little Kate from the saddle, half way down. multi: La Plata Mts.; Tomahawk Basin (178974), the alternative clause. GNIS: Diorite Peak, Summit, La Plata County; no Little Kate entry."
+H085,2573329135,Douglas,Pike National Forest near Indian Creek Campground.,named_feature,yes,Indian Creek Campground,absent,,,,near,extent;feature_not_in_gnis,"multi: Pike National Forest. GNIS: no campground entry; Indian Creek (183378), Stream, Douglas County, is not substituted."
+H086,2573502145,Unknown,Rocky Mtountain Flora. 39°-41°,no_locality,no,,,,,,,other: no place named,"""Rocky Mtountain Flora. 39°-41°"": a latitude band and a flora name, no place. Supplied county Unknown."
+H087,2573527447,Yuma,Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird.,distance_and_direction,yes,Wray,183032,12,mile,N,,extent,"multi: sand hills; of East-trending side road that ends just W of Laird (183040). GNIS: Wray, Populated Place, Yuma County."
+H088,2573533101,Montezuma,Near the junction of McElmo and Yellow Jacket Canyons (G Rd). SW-facing slopes just E of the Ismay Trading Post.,direction_only,yes,Ismay Trading Post,absent,,,E,,extent;distance;feature_not_in_gnis,"""Just"" E. multi: near the junction of McElmo and Yellow Jacket Canyons (G Rd); SW-facing slopes. GNIS: no Ismay entry."
+H089,2573448333,Larimer,Junction of Hagues Creek and Paudre [sic] River.,named_feature,yes,Hagues Creek,177287,,,,,extent,"The junction with the Poudre, which is the creek's mouth. bracketed: [sic]. GNIS: Hague Creek, Stream, Larimer County; its primary point is the mouth."
+H090,2573519027,Montrose,"9 mi. n.e. of Nucla, on road to Columbine Pass, Uncompahgre Plateau.",distance_and_direction?,yes,Nucla,185887,9,mile,NE,,extent,"On road to Columbine Pass: the distance may follow the road. multi: Uncompahgre Plateau. GNIS: Nucla, Populated Place, Montrose County."
+H091,2573455677,Las Animas,"Luning Arroyo, approx. 20 miles ESE of Earl and 2 miles west of Purgatoire Canyon. South side of arroyo.",named_feature,yes,Luning Arroyo,194590,,,,,extent,"Position: south side. multi: approx. 20 miles ESE of Earl; 2 miles west of Purgatoire Canyon. GNIS: Luning Arroyo, Stream, Las Animas County."
+H092,2573527150,Pueblo,"Start of Stone City Road (road 111), between Pueblo and Penrose 1-2 mi. north of Hwy 50.",named_feature?,yes,Stone City Road,absent,,,,,extent;feature_not_in_gnis,"Start of the road (road 111), between Pueblo and Penrose, 1-2 mi. north of Hwy 50 (a range). GNIS: no road entry; Stone City (193887) and Penrose (192038) are not substituted."
+H093,2573439963,Pitkin,"Vicinity of Aspen. Along forest trail 1994, about one city block east of trailhead on rockfall on south side of trail. (Woody Creek Road.).",named_feature?,yes,trailhead of forest trail 1994,absent,,,,vicinity,extent;feature_not_in_gnis,"About one city block east of the trailhead, a distance with no unit; on rockfall on south side of trail; (Woody Creek Road). multi: Vicinity of Aspen. GNIS: no trailhead entry; Aspen (204686) is not substituted."
+H094,4172797501,Garfield,5 mi. n. of Rifle along Government Creek.; 39.6055368 -107.803777,distance_and_direction,yes,Rifle,174045,5,mile,N,,extent,"Along Government Creek (173889). The label ends with coordinates; they are not used. GNIS: Rifle, Populated Place, Garfield County."
+H095,4052836701,Boulder,"Boulder quad: 13TDQ 751 306. Silver Lake ditch at 2839, 3rd, Boulder.",named_feature?,yes,Silver Lake ditch,178630,,,,,extent,"At 2839 3rd, Boulder, a street address. The UTM reference (13TDQ 751 306) is not used. multi: Boulder quad. GNIS: Silver Lake Ditch, Canal, Boulder County."
+H096,2573518155,Boulder,"Shore of Cowdrey Reservoir, 3½ mi. E of Marshall.",named_feature,yes,Cowdrey Reservoir,181262,,,,,extent,"Position: shore. multi: 3½ mi. E of Marshall (181244). GNIS: Cowdrey Reservoir (historical), Reservoir, Boulder County; the Jackson County one is excluded by county."
+H097,2573478141,Lake,"Hagerman Pass, ca. 10.5 miles northwest of Turquoise Lake, San Isabel National Forest.",named_feature,yes,Hagerman Pass,179816,,,,,extent,"multi: ca. 10.5 miles northwest of Turquoise Lake; San Isabel National Forest. GNIS: Hagerman Pass, Gap, primary county Pitkin; supplied county Lake."
+H098,2573339349,Gunnison,Ridge E of Cumberland Pass. Gunnison National Forest.,direction_only,yes,Cumberland Pass,189320,,,E,,extent;distance,"The ridge E of the pass. multi: Gunnison National Forest. GNIS: Cumberland Pass, Gap, Gunnison County."
+H099,2573339424,Montezuma,"Mesa Verde National Park and vicinity. Gravel pits, S end of Chapin Mesa.",named_feature,yes,Chapin Mesa,179041,,,,,extent,"Position: S end; gravel pits. multi: Mesa Verde National Park and vicinity. GNIS: Chapin Mesa, Summit, Montezuma County."
+H100,2573499127,Summit,Boulder Creeek Road. Willow Lakes Quadrangle.,route_relative?,no,Boulder Creeek Road,absent,,,,,extent;route_geometry;distance;feature_not_in_gnis,"A road with no place on it. Spelled as on the label. multi: Willow Lakes Quadrangle. GNIS: no road entry; Boulder Creek (175929), Stream, Summit County, is not substituted."
+H101,2573477091,Jackson,Inlet to north end of Lake John.,named_feature,yes,Lake John,170366,,,,,extent,"Position: inlet to the north end. GNIS: Lake John, Lake, Jackson County."
+H102,2573528603,Garfield,Ranch at the Roaring Fork. On the floodplain of the Roaring Fork River.,named_feature,yes,Roaring Fork River,174812,,,,,extent,"On the floodplain. multi: ranch at the Roaring Fork. GNIS: Roaring Fork River, Stream, Garfield County."
+H103,2573447079,Montezuma,"Pastures along Mud Creek, south and west of Mancos.",named_feature?,yes,Mud Creek,2831413,,,,,extent,"multi: south and west of Mancos, the alternative (direction_only). GNIS: Mud Creek (2831413), Stream, Montezuma County, about 8.8 km from Mancos (179088) by GNIS points; the other Montezuma one (179030) is about 34 km away."
+H104,2573373642,Boulder,"Boulder Mountain Parks. West side of Bear Pk. & S. Boulder Pk, in rich ravine below the W. ridge of Bear Pk.",named_feature,yes,Bear Pk.,181215,,,,,extent,"Position: west side, in a ravine below the W. ridge. multi: Boulder Mountain Parks; S. Boulder Pk. GNIS: Bear Peak, Summit, Boulder County."
+H105,2573344361,Denver,Capitol Hill.,named_feature,yes,Capitol Hill,absent,,,,,extent;feature_not_in_gnis,A Denver neighbourhood. GNIS: no Capitol Hill entry in Denver County; Denver is not substituted.
+H106,2573334870,Montrose,"Black Canyon of the Gunnison National Park. Gunnison River, at base of "" Warner Route"". GPS waypoint: AB29.",named_feature,yes,Warner Route,absent,,,,,extent;feature_not_in_gnis,"At its base, on the Gunnison River. multi: Black Canyon of the Gunnison National Park; GPS waypoint AB29, not used. GNIS: no route entry; Warner Point (186837) is not substituted."
+H107,2573474898,Unknown-W,Uncompahgre.,named_feature?,yes,Uncompahgre,188124;188678;169608;185397,,,,,extent;which_feature,"One word, supplied county Unknown-W. Candidates: Uncompahgre (188124), Populated Place; Uncompahgre Peak (188678); Uncompahgre Plateau (169608); Uncompahgre River (185397)."
+H108,2573530532,Park,"South Park, Twelve Mile Club, up Sheep Creek along salt flat.",named_feature?,yes,Twelve Mile Club,absent,,,,,extent;feature_not_in_gnis,multi: South Park; up Sheep Creek (180243) along salt flat. GNIS: no Twelve Mile Club entry.
+H109,2573345562,Montrose,On hill above Junc. of Dolores River.,named_feature?,yes,Dolores River,1440517,,,,,extent;other: which junction,"On hill above the junction of the Dolores River, with what is not stated. GNIS: Dolores River, Stream, primary county Grand (its mouth is in Utah)."
+H110,2573442216,El Paso,Near Ellicott.,named_feature,yes,Ellicott,193564,,,,near,extent,"GNIS: Ellicott, Populated Place, El Paso County."
+H111,2573334732,Grand,Fraser Experimental Forest. Bottle Pass treeline.,named_feature,yes,Bottle Pass,180923,,,,,extent,"At treeline. multi: Fraser Experimental Forest. GNIS: Bottle Pass, Gap, Grand County."
+H112,2573465664,Gunnison,5.5 mi. s.e. of Gothic.,distance_and_direction,yes,Gothic,188777,5.5,mile,SE,,extent,"GNIS: Gothic, Populated Place, Gunnison County."
+H113,2573469169,Eagle,E. Thomasville - Fryingpan Creek.,direction_only,yes,Thomasville,179745,,,E,,extent;distance,"multi: Fryingpan Creek. GNIS: Thomasville, Populated Place, primary county Pitkin; supplied county Eagle."
+H114,2573431569,Gunnison,"Northern Gunnison Basin: Raggeds Wilderness: Dark Canyon, ca 8.5 air mi NW of Kebler Pass.",named_feature,yes,Dark Canyon,186403,,,,,extent,"multi: Northern Gunnison Basin; Raggeds Wilderness; ca 8.5 air mi NW of Kebler Pass. GNIS: Dark Canyon (186403), Valley, Gunnison County, about 19 km from Kebler Pass (186677) by GNIS points."
+H115,2573326194,Mesa,"2.2 mi S, 17.2 mi W DeBeque. (Take X.50/222 Road [to Wild Horse Area] 11.5 roadmi E from junction with 204/45 Road, then O.90 Road 6.5 roadmi SE. Site on N side of O.90 Road.) Just E Corcoran Peak.",direction_only,yes,Corcoran Peak,174301,,,E,,extent;distance,"""Just"" E. multi: 2.2 mi S, 17.2 mi W DeBeque (orthogonal offsets, the alternative); road directions in parentheses. GNIS: Corcoran Peak, Summit, Mesa County."
+H116,2573489531,Archuleta,Material from near Chimney Rock.,named_feature,yes,Chimney Rock,184440;196439,,,,near,extent;which_feature,"GNIS: Chimney Rock (184440), Summit, and Chimney Rock (historical) (196439), Populated Place, both Archuleta County."
+H117,2573333107,Delta,Paonia.,named_feature,yes,Paonia,186589,,,,,extent,"GNIS: Paonia, Populated Place, Delta County."
+H118,2573472542,La Plata,Needle Creek.,named_feature,yes,Needle Creek,187785,,,,,extent,"GNIS: Needle Creek, Stream, La Plata County."
+H119,2573326512,Douglas,"Castlewood Canyon State Park, 4.5 miles southeast of Castle Rock.",named_feature,yes,Castlewood Canyon State Park,absent,,,,,extent;feature_not_in_gnis,"multi: 4.5 miles southeast of Castle Rock (169449), the alternative. GNIS: no state park or Castlewood Canyon entry."
+H120,2573330800,Pitkin,"Lost Man Creek, west of Indepdence Pass.",named_feature,yes,Lost Man Creek,180105,,,,,extent,"multi: west of Independence Pass. GNIS: Lost Man Creek, Stream, Pitkin County."
+H121,2573338953,Mesa,"West Mesa County, near Loma.",named_feature,yes,Loma,174379,,,,near,extent,"multi: West Mesa County. GNIS: Loma, Populated Place, Mesa County."
+H122,2573541981,Weld,3 miles east of Roggen on the Painter Hereford Ranch.,distance_and_direction,yes,Roggen,204697,3,mile,E,,extent,"multi: on the Painter Hereford Ranch. GNIS: Roggen, Populated Place, Weld County."
+H123,2573325935,Bent,Northeast of John Martin Reservoir; along two-track service road.,direction_only,yes,John Martin Reservoir,203834,,,NE,,extent;distance,"multi: along two-track service road. GNIS: John Martin Reservoir, Reservoir, Bent County."
+H124,2573472523,El Paso,"Pike-San Isabel National Forest, Pikes Peak, Boemer Creek headwaters, Windy Point, ca. 0.75 SW of Sachett Mt. Below saddle between uppermost knob and knob 11848 at head of 1st ridge W of Windy Point ridge below cog railway.",named_feature?,yes,Windy Point,191235,,,,,extent,"multi: Pike-San Isabel National Forest; Pikes Peak; Boemer Creek headwaters; ca. 0.75 SW of Sachett Mt. (191234), no unit, the alternative; below a saddle at the head of the first ridge W of Windy Point ridge. GNIS: Windy Point, Cliff, El Paso County."
+H125,2573438529,Grand,Rocky Mountain National Park. 1.5 mi W of Grand Lake Village.,distance_and_direction,yes,Grand Lake Village,202505,1.5,mile,W,,extent,"multi: Rocky Mountain National Park. GNIS: Grand Lake (202505), Populated Place, Grand County; the lake (204950) is not the village."
+H126,2573467115,Grand,Fraser Experimental Forest: upper basin of St. Louis Lake trail.,named_feature?,yes,St. Louis Lake,181295,,,,,extent,"Upper basin of the St. Louis Lake trail. multi: Fraser Experimental Forest. GNIS: Saint Louis Lake, Lake, Grand County."
+H127,2573327401,Eagle,"Gore Range, Eagles Nest Wilderness Area, central Colorado. Alpine basin west of Booth Lake.",direction_only,yes,Booth Lake,175936,,,W,,extent;distance,"Alpine basin west of the lake. multi: Gore Range; Eagles Nest Wilderness Area. GNIS: Booth Lake, Lake, Eagle County."
+H128,2573394504,Grand,"One half mile south of Willow Creek Pass, along small drainage on east side of highway.",distance_and_direction,yes,Willow Creek Pass,173052,1/2,mile,S,,extent,"Written ""One half"". Along small drainage on east side of highway. GNIS: Willow Creek Pass, Gap, Grand County."
+H129,2573341854,Gunnison,One-half mile above Gothic.,distance_only?,yes,Gothic,188777,1/2,mile,,,extent;direction,"Written ""One-half mile above Gothic"": above gives no compass direction and may mean up the valley. Alternative: route_relative. GNIS: Gothic, Populated Place, Gunnison County."
+H130,2573327334,Rio Blanco,Between Buford and Trappers Lake.,between_features,no,Buford;Trappers Lake,173624;173679,,,,,extent;route_geometry,"GNIS: Buford, Populated Place, Rio Blanco County, and Trappers Lake, Lake, Garfield County: two endpoints, not alternatives."
+H131,2573332725,Otero,Edge of pond on the north side of the Arkansas River.,named_feature?,yes,Arkansas River,78956,,,,,extent,"Edge of pond on the north side of the river. Supplied county Otero. GNIS: Arkansas River, Stream, primary county Desha (its mouth, in Arkansas)."
+H132,2573385738,Gunnison,Gunnison National Forest. Saddle S of Italian Mtn.,direction_only,yes,Italian Mtn.,188796,,,S,,extent;distance,"The saddle S of the mountain. multi: Gunnison National Forest. GNIS: Italian Mountain, Summit, Gunnison County."
+H133,2573468155,Boulder,Adventive along right-of-way of Boulder-Denver Toll Road just east of Superior.,direction_only,yes,Superior,203891,,,E,,extent;distance,"""Just"" E, along the right-of-way of the Boulder-Denver Toll Road. GNIS: Superior, Populated Place, Boulder County."
+H134,3462359323,Jefferson,"Tin Cup Ridge. East base of the hogback locally called Tin Cup Rudge, the northward extension of Dinosaur Rudge into Golden, 6.4 km. south southeast of the GNIS location of Golden.",distance_and_direction,yes,Golden,202837,6.4,kilometre,SSE,,extent,"Measured from the GNIS location of Golden. multi: Tin Cup Ridge, a local name; east base of the hogback. GNIS: Golden, Populated Place, Jefferson County."
+H135,2573326811,Grand,Upper part of Wheeler Basin.,named_feature,yes,Wheeler Basin,178444,,,,,extent,"Position: upper part. GNIS: Wheeler Basin (178444), Basin, Grand County; the Routt one is excluded by county."
+H136,2573448208,Jackson,"9 miles E of Rand, North Park; drainage gully on hillside below road.",distance_and_direction,yes,Rand,172876,9,mile,E,,extent,"multi: North Park; drainage gully on hillside below road. GNIS: Rand, Populated Place, Jackson County."
+H137,2573447941,Larimer,"Rist Canyon, 5 miles W of Bellevue, 10 miles N of Fort Collins.",distance_and_direction?,yes,Bellevue,177195,5,mile,W,,extent,"multi: Rist Canyon (177168), the alternative; 10 miles N of Fort Collins. GNIS: Bellvue, Populated Place, Larimer County, with Bellevue as a variant."
+H138,2573337040,Boulder,"Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel.",distance_and_direction,yes,Needle Eye Tunnel,absent,0.3,mile,N,,extent;feature_not_in_gnis,multi: Rollins Pass (180996). GNIS: no tunnel entry; Rollins Pass is not substituted.
+H139,3462353323,Jefferson,"Apex Park. East-central Apex Park, part-way up the initial Rocky Mountain Front Range scarp, along a social trail in a small canyon, 5.21 km. south of the GNIS location of Golden.",distance_and_direction,yes,Golden,202837,5.21,kilometre,S,,extent,"Measured from the GNIS location of Golden. multi: Apex Park; part-way up the Front Range scarp; social trail in a small canyon. GNIS: Golden, Populated Place, Jefferson County."
+H140,2573404377,Jefferson,Turkey Creek side canyon. Geneva Glen Camp.,named_feature,yes,Geneva Glen Camp,absent,,,,,extent;feature_not_in_gnis,"multi: Turkey Creek side canyon. GNIS: no camp entry; Turkey Creek (182148), Stream, Jefferson County, is not substituted."
