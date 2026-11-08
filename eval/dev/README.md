@@ -16,6 +16,9 @@ them repeating a held-out group's text. Group keys did not change (`GROUPING_VER
 registry, the lock and the worksheets keep theirs. dev-1 and dev-2 reproduce with
 `--shape-version 1 --exclusion-version 1` (dev-1 also with `--lock /nonexistent`; its
 `excluded_viewed_groups` now reads 100, not 50, because dev-2 is registered too: same groups).
+Since test-2, dev samples also exclude the groups reserved by `eval/splits-2.lock.json` (both
+locks by default). Earlier samples are unaffected by construction: test-2 excluded every group
+they took, and every group of the same wording or collecting event.
 
 ## The viewed-groups registry
 

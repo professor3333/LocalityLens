@@ -7,7 +7,8 @@ The final comparison of the rules baseline, the LLM pipeline and later GEOLocate
 | Split | Groups | Use |
 |---|---|---|
 | `validation/` | 60 | Choosing thresholds and settings, and checking a frozen change before the test |
-| `test/` | 120 | **Locked.** Read only by the final, authorised evaluation, after targets are frozen |
+| `test/` | 120 | **Locked.** Read only by the final, authorised evaluation, after targets are frozen. Scored three times (releases 1–3) |
+| `test-2/` | 120 new + 20 blind repeats | **Locked.** A fresh held-out test for v0.1.0, declared before annotation (below) |
 
 ## How it was drawn
 
@@ -41,6 +42,39 @@ uv run localitylens benchmark draw --seed benchmark/1    # --validation 60 --tes
    policy) before the test is scored.
 4. Score validation freely. Score test **once per declared release**, as an authorised final run,
    and publish the result whether it is good or bad.
+
+## test-2: a fresh held-out test
+
+The locked test has been scored three times and the rules changed in between, so v0.1.0's
+claim needs records that played no part in any of it.
+
+```bash
+uv run localitylens benchmark draw-extra --name test-2 --seed benchmark-2/1 --size 120 \
+    --prefix H --repeats-from eval/benchmark/validation/validation.json --repeats 20 \
+    --repeat-seed selfcheck-1/1 --out eval/benchmark/test-2
+```
+
+1. **Excluded first:**
+   - the 2,192 groups that were viewed in development or reserved by the first lock;
+   - 31 more groups with the same wording under another county;
+   - every leakage component touching any of them: 422 components, 6,608 groups.
+2. **The draw:** 120 groups, at most one per remaining component, in `sha256(seed | group_key)`
+   order (uniform, as for the first test).
+3. **Blind repeats:** 20 validation records, chosen by `selfcheck-1/1`, are mixed in. All 140
+   rows are renumbered `H001`–`H140` in seeded order, so a repeat cannot be told apart by its ID
+   or position. `repeats.json` maps them back. It holds IDs only, and the annotator does not
+   open it, nor the validation worksheet, until annotation is finished. The repeats measure the
+   annotator's self-consistency; they are never scored as test records.
+4. **The lock:** [`../splits-2.lock.json`](../splits-2.lock.json) holds the new groups' keys, and
+   reserves all 956 groups of their components. It is write-once with a digest. Dev samples
+   exclude both locks from now on.
+
+Checked by counts, hashes and key sets only:
+- no reserved group overlaps the first lock or the viewed-groups registry;
+- the worksheet has 140 rows.
+
+Nobody but the annotator reads `test-2/`. [`declaration-test-2.json`](declaration-test-2.json)
+was pushed before annotation began.
 
 ## Declared releases
 

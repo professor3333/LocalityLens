@@ -1,0 +1,141 @@
+audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
+H001,2573337547,Larimer,"Along County Road 27, ~2 mi. N of US 34."
+H002,2573463120,Conejos,Rio Grande National Forest; ~4 miles NW of Platoro; E ridge of Lookout Mountain
+H003,2573443650,Montezuma,"Along Hwy 160 between Mancos and Cortez, west of Mesa Verde Nat. Park exit and ca. 1 mi. W of hwy rest area."
+H004,5082174348,Huerfano,"Roadside cut, ca 24.5 road-km up Forest Service Rd 369 from junct with Forest Service Rd 360, Wet Mountains, San Isabel National Forest, ca 11 air-km W of Rye, CO. NW-facing roadcut, E side of rd."
+H005,2573327713,Mesa,Colorado National Monument. Between Glade Park road and rim of No Thoroughfare canyon.
+H006,2573470579,Clear Creek,Clear Creek Valley 1 mile east of Georgetown.
+H007,2573331665,Douglas,8 miles southwest of Sedalia.
+H008,2573441983,Larimer,Range beyond Windy Gulch.
+H009,2573326043,Fremont,River bench 2 mi. w. of Florence.
+H010,2573337289,Boulder,Wild Basin; Ouzel Burn. Rocky Mountain National Park.
+H011,2573338177,Montezuma,"National Park Service. Yucca House National Monument, near spring."
+H012,2573536721,Jefferson,"Rocky Flats Site, 7 mi S of Boulder. West Entrance road by Woman Creek."
+H013,2573534173,Montrose,"Gunnison Gorge, N of the Black Canyon."
+H014,2573330041,Montrose,Black Canyon of the Gunnison National Park. Sunset Overlook; west end of South Rim road. GPS waypoint: AB21.
+H015,2573469473,Yuma,"Fox Ranch, ca. ten miles NE of Kirk, and six miles N of Hwy. 36. East of County Road P. North bank of the Arickaree River."
+H016,2573340249,Lake/Pitkin,"Independence Pass, top of Continental Divide."
+H017,2573328581,El Paso,"Near Windy Point, s.e. slope of Pike's Peak."
+H018,2573539985,Lincoln,"Limon, 5 mi. N, 0.5 mi. E. S-facing slope of Foncanyon Hill."
+H019,2573473349,Moffat,"In Conway Draw along Ladore Road, 17.45 mi. from Greystone."
+H020,2573324294,Larimer,Approx. 1.2 mi. W of Horsetooth Res.
+H021,2573489391,Boulder,"Bluebell Canyon, south edge of Boulder."
+H022,2573540940,Unknown,"Along Cherry Creek, Denver."
+H023,2573328570,Gunnison,"Trail to Queens Basin, n.e. of Gothic."
+H024,2573437324,Jackson,"Arapahoe National Wildlife Refuge, ca. 10 mi. S of Walden."
+H025,2573467035,Montezuma,5 miles SW Cortez.
+H026,2573544015,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: Goodman Point at Hovenweep National Monument, ca 18 air mi NW of Cortez, County Road P, between County roads 17 and 18."
+H027,2573342922,Custer,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Sangre de Cristo Range, Rainbow Trail between Alvarado and Hiltman creeks, ca 2.8 air mi NE of Horn Peak, ca 6.5 air mi SW of Westcliffe."
+H028,2573344607,Las Animas,"Mesa de Maya Region of southeastern Colorado, Pine Canyon Quad., growing at the far western end of the Mesa de Maya."
+H029,2573536482,Routt,"Park Range; Mad Creek Drainage, ca. 7 air mi NNW of Steamboat Springs; gravel bars of Mad Creek."
+H030,2573331807,Garfield,White River Plateau above Broken Rib Creek.
+H031,2573333967,Montezuma,"Just west of Far Veiw Ruin, Mesa Verde National Park."
+H032,2573539732,Boulder,"Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. North side of road near gate at the park entrance."
+H033,2573471587,Jefferson,"Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment, north of TR08, south of power poles."
+H034,2573470045,Boulder,"Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. Sunny hillside 200 ft. above north side of the creek by Red Garden Wall."
+H035,2573374447,Park,Mosquito Range. Pike National Forest. 1/8 mile SW of Weston Pass on S-facing slope.
+H036,2573529764,Jackson,"North Park, sagebrush flats northwest of Cowdrey."
+H037,2573323962,Moffat,"Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table."
+H038,2573333394,Delta,Along road to Bowie Mine.
+H039,2573472218,Mesa,Found 5 mi. up Jacob's Ladder Road.
+H040,2573528921,La Plata,"Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station."
+H041,2573534785,Routt,"Trail from Slavonia to Gilpin Lake, ca. 30 mi. n. of Steamboat Springs."
+H042,2573353695,Huerfano,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Black Hawk State Trust Lands off County Road 312, ca 10 air mi S of Walsenberg."
+H043,2573475112,Montezuma,Head of Navajo Canyon. Mesa Verde National Park.
+H044,2573478723,Park,"South Park, about 1 mile E of HW 285 on Lost Park Road, NE of Jefferson."
+H045,2573338484,El Paso,North Cheyenne Creek.
+H046,2573472860,Boulder,Along Jasper Rd 2 mi W of Erie.
+H047,2573497996,Jefferson,"Golden; Tin Cup Ridge. Along the top of “Tin Cup Ridge,” the northward extension of Dinosaur Ridge into Golden, 5.2 km. south of the GNIS location of Golden.; 39.71099831 -105.2037943"
+H048,2573445140,Moffat,"North-central Colorado: Elkhead Mountains: Sand Point above the head of Fourmile Creek, ca 7.5 air mi E of Fortification; ca 22.5 air mi NNE of Craig."
+H049,2573444346,Moffat,At Ferndale Ranch on Baggs-Great Divide Road; about 20 mi. sw. of Baggs.
+H050,2573342668,Boulder,"Half mile E of Hiway Nine, 3 mi. S of LaFayette."
+H051,2573418149,Larimer,"Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins."
+H052,2573328530,Gunnison,3.8 mi. W of Sapinero Bridge above Curecanti Reservoir just W of Dry Gulch and W of Lake City Turnoff.
+H053,2573328523,Ouray,Top of Red Mountain Pass.
+H054,4466523536,Boulder,On North side of Four mile canyon road (118) about 1/2 miles Southeast of Salina.
+H055,2573432138,Moffat,Dinosaur National Monument; east of Snow Cabin Harper's Corner.
+H056,2573485127,Larimer,Fork of Poudre and Big South.
+H057,2573339456,Park/Summit,Hoosier Pass.
+H058,2573330273,Costilla,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Culebra Range: southwestern ridge of Trinchera Peak, SE of Fort Garland."
+H059,2573471810,Mesa,Grand Mesa Nat. Forest. Lily Lake. Above lake.
+H060,2573440789,Otero,"John Rideo Hill, 1 mi. E. of Hwy 109."
+H061,2573435343,Dolores,"Lone Mesa State Park, 7.5 miles north of southern entrance at FR 514."
+H062,2573342645,Boulder,"Spenser Mt., Eldora."
+H063,4435941311,LAS ANIMAS,"Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa."
+H064,2573533632,Larimer,Neota Wilderness. 7 miles south of Hwy. 14 on Long draw Rd. 1 mile west of road in wilderness.
+H065,2573394519,Conejos,Dry flood channel of Conejos river; Spectacle Lake campground.
+H066,2573525778,Unknown-W,San Juan Mts.
+H067,2573335603,Las Animas,Just north of Colorado-New Mexico state line above Lake Maloya.
+H068,2573345683,Gunnison,"Northern Gunnison Basin: West Elk Wilderness: Middle Baldy and Middle Baldy Mountain, ca 13.5 air mi N of Blue Mesa Reservoir."
+H069,2573550286,Rio Blanco,Overlooking Hwy 64 ca. 5 mi E of Rangely.
+H070,2573520066,Gunnison,Cement Creek Hot Springs. SE of Crested Butte.
+H071,2573328054,Boulder,"Just west of Marshall Lake, along Boulder-Golden Highway."
+H072,2573471302,Pitkin,Along Maroon Creek near Aspen.
+H073,2573374342,Pueblo,Along Hwy. 78.
+H074,2573443543,Lake,Mosquito Range. San Isabel National Forest. Buffalo Peaks Wilderness Area. Just SE and below of South Peak.
+H075,2573477879,Weld,I-76 frontage road between Roggen and Keensburg.
+H076,2573324382,Mesa,"Grand Mesa, Bull Basin."
+H077,2573480541,Boulder,"1 mile southwest of Eldorado Springs; along railroad tracks at head of Rattlesnake Gulch, just east of tunnel."
+H078,2573551409,Boulder,Near Albion Lake.
+H079,2573493646,Larimer,"Rocky Mountain National Park. Glacier Basin, Boulder Brook, ~.5 mi. above Sprague Lake."
+H080,2573332057,Pitkin,"Taylor Peak, above the Iron Mine Road."
+H081,2573483815,Douglas,Along Horse Creek -South Platte tributary; directly southeast of Deckers on Hwy. 67.
+H082,2573326265,Custer,Watson's Gulch at Florence Picnic grounds.
+H083,2573329557,Dolores,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: ca 2.5 air mi E of Rico, along the Colorado Trail at Black Hawk Basin."
+H084,2573325687,La Plata,"La Plata Mts., Tomahawk Basin. Slope down toward Little Kate from saddle to 1/2 way down. Diorite Peak."
+H085,2573329135,Douglas,Pike National Forest near Indian Creek Campground.
+H086,2573502145,Unknown,Rocky Mtountain Flora. 39°-41°
+H087,2573527447,Yuma,Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird.
+H088,2573533101,Montezuma,Near the junction of McElmo and Yellow Jacket Canyons (G Rd). SW-facing slopes just E of the Ismay Trading Post.
+H089,2573448333,Larimer,Junction of Hagues Creek and Paudre [sic] River.
+H090,2573519027,Montrose,"9 mi. n.e. of Nucla, on road to Columbine Pass, Uncompahgre Plateau."
+H091,2573455677,Las Animas,"Luning Arroyo, approx. 20 miles ESE of Earl and 2 miles west of Purgatoire Canyon. South side of arroyo."
+H092,2573527150,Pueblo,"Start of Stone City Road (road 111), between Pueblo and Penrose 1-2 mi. north of Hwy 50."
+H093,2573439963,Pitkin,"Vicinity of Aspen. Along forest trail 1994, about one city block east of trailhead on rockfall on south side of trail. (Woody Creek Road.)."
+H094,4172797501,Garfield,5 mi. n. of Rifle along Government Creek.; 39.6055368 -107.803777
+H095,4052836701,Boulder,"Boulder quad: 13TDQ 751 306. Silver Lake ditch at 2839, 3rd, Boulder."
+H096,2573518155,Boulder,"Shore of Cowdrey Reservoir, 3½ mi. E of Marshall."
+H097,2573478141,Lake,"Hagerman Pass, ca. 10.5 miles northwest of Turquoise Lake, San Isabel National Forest."
+H098,2573339349,Gunnison,Ridge E of Cumberland Pass. Gunnison National Forest.
+H099,2573339424,Montezuma,"Mesa Verde National Park and vicinity. Gravel pits, S end of Chapin Mesa."
+H100,2573499127,Summit,Boulder Creeek Road. Willow Lakes Quadrangle.
+H101,2573477091,Jackson,Inlet to north end of Lake John.
+H102,2573528603,Garfield,Ranch at the Roaring Fork. On the floodplain of the Roaring Fork River.
+H103,2573447079,Montezuma,"Pastures along Mud Creek, south and west of Mancos."
+H104,2573373642,Boulder,"Boulder Mountain Parks. West side of Bear Pk. & S. Boulder Pk, in rich ravine below the W. ridge of Bear Pk."
+H105,2573344361,Denver,Capitol Hill.
+H106,2573334870,Montrose,"Black Canyon of the Gunnison National Park. Gunnison River, at base of "" Warner Route"". GPS waypoint: AB29."
+H107,2573474898,Unknown-W,Uncompahgre.
+H108,2573530532,Park,"South Park, Twelve Mile Club, up Sheep Creek along salt flat."
+H109,2573345562,Montrose,On hill above Junc. of Dolores River.
+H110,2573442216,El Paso,Near Ellicott.
+H111,2573334732,Grand,Fraser Experimental Forest. Bottle Pass treeline.
+H112,2573465664,Gunnison,5.5 mi. s.e. of Gothic.
+H113,2573469169,Eagle,E. Thomasville - Fryingpan Creek.
+H114,2573431569,Gunnison,"Northern Gunnison Basin: Raggeds Wilderness: Dark Canyon, ca 8.5 air mi NW of Kebler Pass."
+H115,2573326194,Mesa,"2.2 mi S, 17.2 mi W DeBeque. (Take X.50/222 Road [to Wild Horse Area] 11.5 roadmi E from junction with 204/45 Road, then O.90 Road 6.5 roadmi SE. Site on N side of O.90 Road.) Just E Corcoran Peak."
+H116,2573489531,Archuleta,Material from near Chimney Rock.
+H117,2573333107,Delta,Paonia.
+H118,2573472542,La Plata,Needle Creek.
+H119,2573326512,Douglas,"Castlewood Canyon State Park, 4.5 miles southeast of Castle Rock."
+H120,2573330800,Pitkin,"Lost Man Creek, west of Indepdence Pass."
+H121,2573338953,Mesa,"West Mesa County, near Loma."
+H122,2573541981,Weld,3 miles east of Roggen on the Painter Hereford Ranch.
+H123,2573325935,Bent,Northeast of John Martin Reservoir; along two-track service road.
+H124,2573472523,El Paso,"Pike-San Isabel National Forest, Pikes Peak, Boemer Creek headwaters, Windy Point, ca. 0.75 SW of Sachett Mt. Below saddle between uppermost knob and knob 11848 at head of 1st ridge W of Windy Point ridge below cog railway."
+H125,2573438529,Grand,Rocky Mountain National Park. 1.5 mi W of Grand Lake Village.
+H126,2573467115,Grand,Fraser Experimental Forest: upper basin of St. Louis Lake trail.
+H127,2573327401,Eagle,"Gore Range, Eagles Nest Wilderness Area, central Colorado. Alpine basin west of Booth Lake."
+H128,2573394504,Grand,"One half mile south of Willow Creek Pass, along small drainage on east side of highway."
+H129,2573341854,Gunnison,One-half mile above Gothic.
+H130,2573327334,Rio Blanco,Between Buford and Trappers Lake.
+H131,2573332725,Otero,Edge of pond on the north side of the Arkansas River.
+H132,2573385738,Gunnison,Gunnison National Forest. Saddle S of Italian Mtn.
+H133,2573468155,Boulder,Adventive along right-of-way of Boulder-Denver Toll Road just east of Superior.
+H134,3462359323,Jefferson,"Tin Cup Ridge. East base of the hogback locally called Tin Cup Rudge, the northward extension of Dinosaur Rudge into Golden, 6.4 km. south southeast of the GNIS location of Golden."
+H135,2573326811,Grand,Upper part of Wheeler Basin.
+H136,2573448208,Jackson,"9 miles E of Rand, North Park; drainage gully on hillside below road."
+H137,2573447941,Larimer,"Rist Canyon, 5 miles W of Bellevue, 10 miles N of Fort Collins."
+H138,2573337040,Boulder,"Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel."
+H139,3462353323,Jefferson,"Apex Park. East-central Apex Park, part-way up the initial Rocky Mountain Front Range scarp, along a social trail in a small canyon, 5.21 km. south of the GNIS location of Golden."
+H140,2573404377,Jefferson,Turkey Creek side canyon. Geneva Glen Camp.

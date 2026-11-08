@@ -63,6 +63,7 @@ to recover a location a publisher withheld or generalized.
 | dev-3, dev-4 | 50 each | seeds `dev-3/1`, `dev-4/1`: 35 "place, offset" labels, 5 offsets, 5 bare names, 5 other | Dev data: checks of the place-or-offset rules, each scored once by a pinned plan |
 | Validation | 60 | seed `benchmark/1`, uniform | Held out, then read when scored with frozen systems |
 | Locked test | 120 | seed `benchmark/1`, uniform | Scored only under declared releases. Per-record outputs are never read |
+| test-2 | 120 + 20 blind validation repeats | seed `benchmark-2/1`, uniform, after excluding everything viewed or reserved, repeated wording and their leakage components | A fresh locked test for v0.1.0, declared before annotation; the repeats measure annotator self-consistency |
 
 **Leakage controls:**
 - **Collecting events.** Groups that share a collector and an exact date are joined into

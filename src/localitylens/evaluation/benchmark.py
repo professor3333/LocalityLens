@@ -33,6 +33,7 @@ from localitylens.ingest.specimens import SpecimenRecord
 
 SPLIT_VERSION: Final = "1"
 EVENT_GROUPING_VERSION: Final = "1"
+EXTRA_VERSION: Final = "1"  # draw_extra: further held-out splits after the first lock
 DEFAULT_LOCK: Final = Path("eval/splits.lock.json")
 _FULL_DATE: Final = re.compile(r"\d{4}-\d{2}-\d{2}")
 
@@ -176,3 +177,100 @@ def load_lock(path: Path = DEFAULT_LOCK) -> dict[str, Any] | None:
 def reserved_groups(path: Path = DEFAULT_LOCK) -> set[str]:
     lock = load_lock(path)
     return set(lock["reserved_groups"]) if lock else set()
+
+
+DEFAULT_LOCK_2: Final = Path("eval/splits-2.lock.json")
+
+
+def wording_matches(records: Iterable[SpecimenRecord], keys: Iterable[str]) -> set[str]:
+    """Every group whose wording (text key, county ignored) equals that of a group in ``keys``."""
+    from localitylens.ingest.specimens import text_key
+
+    wanted = set(keys)
+    by_group: dict[str, str] = {}
+    for r in records:
+        by_group.setdefault(r.group_key, text_key(r.locality))
+    texts = {t for g, t in by_group.items() if g in wanted}
+    return {g for g, t in by_group.items() if t in texts}
+
+
+def draw_extra(
+    records: list[SpecimenRecord],
+    *,
+    name: str,
+    size: int,
+    seed: str,
+    prefix: str,
+    exclude: Iterable[str],
+    repeats: Iterable[AuditItem] = (),
+) -> tuple[list[AuditItem], dict[str, str], dict[str, Any]]:
+    """A further held-out split after the first lock (``EXTRA_VERSION`` 1).
+
+    Excluded: every group in ``exclude`` (viewed and already reserved), every group with the
+    same wording, and every leakage component touching either. One group per remaining
+    component, in seeded order. ``repeats`` (already annotated items, for a blind
+    self-consistency check) are mixed in, and all items are renumbered in seeded order, so a
+    repeat cannot be told apart by its ID or position. Returns (items, new ID → original ID of
+    each repeat, lock content). The lock lists the new split's group keys only.
+    """
+    excluded = set(exclude)
+    widened = excluded | wording_matches(records, excluded)
+    splits, lock = draw_splits(records, {name: size}, seed, widened, {name: prefix})
+    tagged = [(f"new|{i.record.group_key}", i) for i in splits[name]]
+    tagged += [(f"repeat|{i.audit_id}", i) for i in repeats]
+    tagged.sort(key=lambda t: _rank(seed, t[0]))
+    items: list[AuditItem] = []
+    mapping: dict[str, str] = {}
+    for n, (tag, item) in enumerate(tagged, start=1):
+        new_id = f"{prefix}{n:03d}"
+        if tag.startswith("repeat|"):
+            mapping[new_id] = item.audit_id
+        items.append(item.model_copy(update={"audit_id": new_id}))
+    lock = {**lock, "extra_version": EXTRA_VERSION,
+            "excluded_given_groups": len(excluded),
+            "excluded_wording_groups": len(widened - excluded)}  # fmt: skip
+    return items, mapping, lock
+
+
+def split_repeats(
+    sample_path: Path, worksheet_path: Path, repeats_path: Path, out: Path
+) -> tuple[int, int]:
+    """Separate a drawn split's new rows from its blind repeats, for scoring.
+
+    Writes ``<name>-new.json`` and ``worksheet-new.csv`` (the new rows only, IDs unchanged: the
+    set the systems are scored on) and ``repeats-annotated.csv`` (the repeat rows, with the
+    original ID in ``original_id``: the self-consistency check). Never prints a row; refuses an
+    existing output folder. Returns (new rows, repeat rows).
+    """
+    import csv
+
+    from localitylens.evaluation.audit import WORKSHEET_COLUMNS, load_sample
+
+    if out.exists():
+        raise FileExistsError(f"{out} exists: the split is written once")
+    sample = load_sample(sample_path)
+    mapping: dict[str, str] = json.loads(repeats_path.read_text(encoding="utf-8"))["repeats"]
+    with worksheet_path.open(encoding="utf-8", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    ids = [i.audit_id for i in sample.items]
+    if [r["audit_id"] for r in rows] != ids or not set(mapping) <= set(ids):
+        raise ValueError("the worksheet, sample and repeats do not describe the same rows")
+    out.mkdir(parents=True)
+    new_items = tuple(i for i in sample.items if i.audit_id not in mapping)
+    name = sample.name or "sample"
+    new_sample = sample.model_copy(update={"items": new_items})
+    (out / f"{name}-new.json").write_text(
+        new_sample.model_dump_json(indent=2, exclude_none=True) + "\n", encoding="utf-8"
+    )
+    with (out / "worksheet-new.csv").open("x", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, WORKSHEET_COLUMNS)
+        w.writeheader()
+        w.writerows(
+            {c: r[c] for c in WORKSHEET_COLUMNS} for r in rows if r["audit_id"] not in mapping
+        )
+    with (out / "repeats-annotated.csv").open("x", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, ["original_id", *WORKSHEET_COLUMNS])
+        w.writeheader()
+        w.writerows({"original_id": mapping[r["audit_id"]], **{c: r[c] for c in WORKSHEET_COLUMNS}}
+                    for r in rows if r["audit_id"] in mapping)  # fmt: skip
+    return len(new_items), len(mapping)

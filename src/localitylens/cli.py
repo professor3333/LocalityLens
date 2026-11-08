@@ -321,11 +321,11 @@ def _extents_or_refuse(args: argparse.Namespace) -> Any:
         return False
 
 
-_LOCKED: Final = Path("eval/benchmark/test")
+_LOCKED: Final = (Path("eval/benchmark/test"), Path("eval/benchmark/test-2"))
 
 
 def _is_locked(path: Path) -> bool:
-    return path.resolve().is_relative_to(_LOCKED.resolve())
+    return any(path.resolve().is_relative_to(d.resolve()) for d in _LOCKED)
 
 
 def _extents_worksheet(args: argparse.Namespace) -> int:
@@ -751,7 +751,8 @@ def _dev_sample(args: argparse.Namespace) -> int:
 
     registry = Path(args.registry)
     viewed = {k for k, name in load_registry(registry).items() if name != args.name}
-    viewed |= reserved_groups(Path(args.lock))  # held-out components are never dev data
+    for lock_path in args.lock or ["eval/splits.lock.json", "eval/splits-2.lock.json"]:
+        viewed |= reserved_groups(Path(lock_path))  # held-out components are never dev data
     summary = ScreenSummary(snapshot_id="")
     items, records, groups, skipped = sample_strata(
         iter_snapshot(Path(args.snapshot), summary),
@@ -784,6 +785,85 @@ def _dev_sample(args: argparse.Namespace) -> int:
     print(f"  sample     {sample_path}")
     state = "(annotate before any system runs on it)" if written else "exists; left untouched"
     print(f"  worksheet  {worksheet}  {state}")
+    return 0
+
+
+def _benchmark_draw_extra(args: argparse.Namespace) -> int:
+    """A further held-out split (test-2). Prints counts and paths only, never a record."""
+    import json
+
+    from localitylens.evaluation.audit import AuditSample, load_sample, write_sample
+    from localitylens.evaluation.benchmark import (
+        _rank,
+        draw_extra,
+        reserved_groups,
+        write_lock,
+    )
+    from localitylens.evaluation.dev_sample import load_registry
+    from localitylens.ingest.specimens import (
+        GROUPING_VERSION,
+        SCREEN_VERSION,
+        ScreenSummary,
+        iter_snapshot,
+    )
+
+    out, lock_out = Path(args.out), Path(args.lock_out)
+    repeats_path = out / "repeats.json"
+    if repeats_path.exists() or lock_out.exists():
+        print(f"refused: {repeats_path} or {lock_out} exists; the draw is write-once",
+              file=sys.stderr)  # fmt: skip
+        return 2
+    exclude = set(load_registry(Path(args.registry)))
+    for lock_path in args.exclude_lock:
+        exclude |= reserved_groups(Path(lock_path))
+    source = load_sample(Path(args.repeats_from))
+    picked = sorted(source.items, key=lambda i: _rank(args.repeat_seed, i.audit_id))
+    repeats = picked[: args.repeats]
+    summary = ScreenSummary(snapshot_id="")
+    records = list(iter_snapshot(Path(args.snapshot), summary))
+    items, mapping, lock = draw_extra(
+        records, name=args.name, size=args.size, seed=args.seed, prefix=args.prefix,
+        exclude=exclude, repeats=repeats,
+    )  # fmt: skip
+    lock = {"snapshot_id": summary.snapshot_id, "screen_version": SCREEN_VERSION,
+            "grouping_version": GROUPING_VERSION, **lock}  # fmt: skip
+    write_lock(lock_out, lock)
+    sample = AuditSample(snapshot_id=summary.snapshot_id, screen_version=SCREEN_VERSION,
+                         grouping_version=GROUPING_VERSION, seed=args.seed,
+                         eligible_records=summary.eligible, eligible_groups=lock["eligible_groups"],
+                         items=tuple(items), name=args.name)  # fmt: skip
+    _, worksheet, written = write_sample(sample, out, args.name)
+    with repeats_path.open("x", encoding="utf-8") as fh:
+        json.dump({"source": args.repeats_from, "repeat_seed": args.repeat_seed,
+                   "repeats": mapping}, fh, indent=2, sort_keys=True)  # fmt: skip
+        fh.write("\n")
+    print(f"{summary.snapshot_id}: {lock['components']:,} leakage components")
+    print(f"  excluded: {lock['excluded_given_groups']:,} viewed or reserved groups, "
+          f"{lock['excluded_wording_groups']:,} more by repeated wording, "
+          f"{lock['excluded_viewed_components']:,} components touching them "
+          f"({lock['excluded_viewed_groups']:,} groups)")  # fmt: skip
+    print(f"  {args.name}: {args.size} new groups + {len(mapping)} blind repeats from "
+          f"{args.repeats_from} = {len(items)} rows; worksheet {worksheet} "
+          f"({'written' if written else 'exists; left untouched'})")  # fmt: skip
+    print(f"  lock {lock_out} ({len(lock['reserved_groups']):,} groups reserved)")
+    return 0
+
+
+def _benchmark_split_repeats(args: argparse.Namespace) -> int:
+    """Counts only: the rows themselves are never printed."""
+    from localitylens.evaluation.benchmark import split_repeats
+
+    folder = Path(args.folder)
+    try:
+        new, rep = split_repeats(folder / f"{args.name}.json", folder / "worksheet.csv",
+                                 folder / "repeats.json", folder / "scoring")  # fmt: skip
+    except (FileExistsError, ValueError) as exc:
+        print(f"refused: {exc}", file=sys.stderr)
+        return 2
+    print(
+        f"{args.name}: {new} new rows -> {folder}/scoring/{args.name}-new.json + worksheet-new.csv"
+    )
+    print(f"  {rep} repeat rows -> {folder}/scoring/repeats-annotated.csv")
     return 0
 
 
@@ -1170,7 +1250,9 @@ def main(argv: list[str] | None = None) -> int:
     dsm.add_argument("--snapshot", default="data/raw/gbif/2026-11-01")
     dsm.add_argument("--registry", default="eval/viewed-groups.json")
     dsm.add_argument("--out", required=True)
-    dsm.add_argument("--lock", default="eval/splits.lock.json")
+    dsm.add_argument("--lock", action="append",
+                     help="split lock whose reserved groups are excluded, repeatable "
+                     "(default: eval/splits.lock.json and eval/splits-2.lock.json)")  # fmt: skip
     dsm.add_argument(
         "--shape-version",
         choices=("1", "2"),
@@ -1187,6 +1269,24 @@ def main(argv: list[str] | None = None) -> int:
 
     bm = sub.add_parser("benchmark", help="held-out validation and locked test splits")
     bm_sub = bm.add_subparsers(dest="benchmark_command", required=True)
+    bx = bm_sub.add_parser("draw-extra", help="a further held-out split (write-once lock)")
+    bx.add_argument("--name", required=True, help="e.g. test-2")
+    bx.add_argument("--seed", required=True)
+    bx.add_argument("--size", type=int, default=120)
+    bx.add_argument("--prefix", required=True, help="row id prefix, e.g. H")
+    bx.add_argument("--snapshot", default="data/raw/gbif/2026-11-01")
+    bx.add_argument("--registry", default="eval/viewed-groups.json")
+    bx.add_argument("--exclude-lock", action="append", default=["eval/splits.lock.json"])
+    bx.add_argument("--lock-out", default="eval/splits-2.lock.json")
+    bx.add_argument("--repeats-from", required=True, help="an annotated sample (JSON)")
+    bx.add_argument("--repeats", type=int, default=20)
+    bx.add_argument("--repeat-seed", required=True)
+    bx.add_argument("--out", required=True)
+    bx.set_defaults(func=_benchmark_draw_extra)
+    bsr = bm_sub.add_parser("split-repeats", help="separate new rows from blind repeats to score")
+    bsr.add_argument("--name", required=True, help="e.g. test-2")
+    bsr.add_argument("--folder", required=True, help="e.g. eval/benchmark/test-2")
+    bsr.set_defaults(func=_benchmark_split_repeats)
     bd = bm_sub.add_parser("draw", help="draw the held-out splits (write-once lock)")
     bd.add_argument("--seed", required=True)
     bd.add_argument("--test", type=int, default=120)

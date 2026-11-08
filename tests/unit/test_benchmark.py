@@ -99,3 +99,61 @@ def test_committed_lock_is_intact_and_disjoint_from_development() -> None:
     assert not reserved & viewed
     assert all(keys <= reserved for keys in held_out)
     assert not held_out[0] & held_out[1]
+
+
+def test_an_extra_split_excludes_viewed_reserved_repeated_wording_and_their_trips() -> None:
+    from localitylens.evaluation.audit import AuditItem
+    from localitylens.evaluation.benchmark import EXTRA_VERSION, draw_extra, wording_matches
+
+    records = [
+        *RECORDS,
+        to_record(row(9, "Alpha Peak.", county="Other")),  # same wording as group 1, other county
+        rec(10, "Theta Butte.", "D. Kim", "1980-05-05"),
+        rec(11, "Iota Gulch.", "D. Kim", "1980-05-05"),  # same trip as 10
+    ]
+    key = {r.gbif_id: r.group_key for r in records}
+    viewed = {key["1"], key["10"]}  # viewed: Alpha Peak (Alpha county) and Theta Butte
+    assert wording_matches(records, viewed) == {key["1"], key["9"], key["10"]}
+    old = AuditItem(audit_id="V001", group_size=1, record=rec(99, "Kappa Ridge."))
+    items, mapping, lock = draw_extra(records, name="t2", size=3, seed="s", prefix="H",
+                                      exclude=viewed, repeats=[old])  # fmt: skip
+    chosen = {i.record.gbif_id for i in items}
+    # 1, 2 (same trip as 1), 9 (same words as 1), 10 and 11 (same trip as 10) are never drawn
+    assert chosen.isdisjoint({"1", "2", "9", "10", "11"})
+    assert len(items) == 4
+    assert [i.audit_id for i in items] == ["H001", "H002", "H003", "H004"]
+    assert list(mapping.values()) == ["V001"]
+    assert next(i for i in items if i.audit_id in mapping).record.gbif_id == "99"
+    assert old.record.group_key not in lock["splits"]["t2"]  # the lock lists new groups only
+    assert len(lock["splits"]["t2"]) == 3
+    assert lock["extra_version"] == EXTRA_VERSION
+    assert lock["excluded_wording_groups"] == 1
+    again = draw_extra(records, name="t2", size=3, seed="s", prefix="H", exclude=viewed,
+                       repeats=[old])  # fmt: skip
+    assert again[0] == items  # deterministic
+
+
+def test_split_repeats_separates_new_rows_from_blind_repeats(tmp_path: Path) -> None:
+    import csv
+
+    from localitylens.evaluation.audit import AuditItem, AuditSample, load_sample, write_sample
+    from localitylens.evaluation.benchmark import split_repeats
+
+    items = tuple(AuditItem(audit_id=f"H00{i}", group_size=1, record=rec(i, f"Place {i}."))
+                  for i in (1, 2, 3))  # fmt: skip
+    sample = AuditSample(snapshot_id="s", screen_version="1", grouping_version="1", seed="x",
+                         eligible_records=3, eligible_groups=3, items=items, name="t2")  # fmt: skip
+    folder = tmp_path / "t2"
+    write_sample(sample, folder, "t2")
+    (folder / "repeats.json").write_text(json.dumps({"repeats": {"H002": "V009"}}))
+    assert split_repeats(folder / "t2.json", folder / "worksheet.csv", folder / "repeats.json",
+                         folder / "scoring") == (2, 1)  # fmt: skip
+    new = load_sample(folder / "scoring" / "t2-new.json")
+    assert [i.audit_id for i in new.items] == ["H001", "H003"]
+    with (folder / "scoring" / "worksheet-new.csv").open(encoding="utf-8") as fh:
+        assert [r["audit_id"] for r in csv.DictReader(fh)] == ["H001", "H003"]
+    with (folder / "scoring" / "repeats-annotated.csv").open(encoding="utf-8") as fh:
+        assert [(r["original_id"], r["audit_id"]) for r in csv.DictReader(fh)] == [("V009", "H002")]
+    with pytest.raises(FileExistsError):
+        split_repeats(folder / "t2.json", folder / "worksheet.csv", folder / "repeats.json",
+                      folder / "scoring")  # fmt: skip
