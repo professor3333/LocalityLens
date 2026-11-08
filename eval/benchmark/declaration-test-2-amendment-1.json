@@ -5,16 +5,17 @@
   "change": "Annotator. The declaration names the owner. At the owner's request, Claude annotated test-2 instead.",
   "annotations": {
     "commit": "07451dc",
-    "worksheet_sha256": "0cb5d489537fdc78",
+    "worksheet_sha256": "0cb5d489537fdc7808f7d6009e182cf1be71aa4f13f2362420d9c01ecc596248",
     "rows": 140,
     "checker": "0 problems",
     "method": "eval/annotation_guide.md, two passes: clause choices fixed from the label text before any GNIS lookup, then GNIS IDs from the pinned snapshot. No system output on test-2 was seen. repeats.json and the validation worksheet were not opened before the commit."
   },
-  "unchanged": "Code, systems, primary metric, comparison, decision rule, target and stated expectation: everything else in the declaration stands.",
+  "unchanged": "Systems, primary metric, comparison, decision rule, target and stated expectation: everything else in the declaration stands. Pipeline code is unchanged: since the declared commit 0fbde5d, src/ differs only in evaluation/audit.py, where d4d27e6 adds test-2 to CLAUDE_ANNOTATED so that reports name the annotator.",
   "consequences": [
     "The annotator also wrote the rules baseline (rules-3 to rules-6) and much of the pipeline. The annotations are therefore not independent of the systems being compared, and the comparison may lean toward the rules, as on dev-2 to dev-4. Locked-test releases 1 to 3, annotated by the owner, remain the independent evidence.",
     "The 20 repeats no longer measure one annotator's self-consistency. They now measure agreement between Claude (this pass) and the owner (the original validation annotations). Report them as inter-annotator agreement.",
     "Claude had seen some validation records and their annotations during development. At least three test-2 labels match validation wording Claude recognised from that work (H021 Bluebell Canyon, H039 Jacob's Ladder Road, H057 Hoosier Pass); whether they are among the repeats was not checked before the commit. Agreement on recognised records is not blind, so report agreement with and without them.",
     "Some new labels are close to records read in development (Rocky Flats Site wordings like A15 and V029; the 'GNIS location of Golden' collector like dev-3's F25 and F38). The exclusion only removes identical wording."
-  ]
+  ],
+  "checked_before_any_run": "2026-11-08, by hashes, counts and IDs only: worksheet 140 rows, full SHA-256 above, checker 0 problems; H021, H039 and H057 (the labels recognised from validation) are all among the 20 repeats, so none of the 120 new records was recognised this way."
 }
