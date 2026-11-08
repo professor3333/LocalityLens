@@ -1,0 +1,5 @@
+relation   named_feature=57  distance_and_direction=32  direction_only=20  between_features=5  other=5  distance_only=1
+retrieval  candidates_found=69  feature_absent_from_index=41  no_reference_feature=10
+proposal   needs_information=110  unsupported=10
+  report  eval/benchmark/test-2/reports/test-2-rules-6.md
+  data    eval/benchmark/test-2/reports/test-2-rules-6.json

@@ -1,0 +1,588 @@
+{
+  "declaration": [
+    "eval/benchmark/declaration-test-2.json",
+    "eval/benchmark/declaration-test-2-amendment-1.json"
+  ],
+  "note": "Aggregates only. Annotations by Claude (amendment 1), not independent of the systems. Per-record outputs are under eval/benchmark/test-2/reports/ and are never read during development.",
+  "meta": {
+    "rules": "rules-6",
+    "llm": "llm-x2g2-qwen3.5-4b-q4km",
+    "hybrid": "hybrid-1",
+    "specimens": "gbif-cu-2026-11-01"
+  },
+  "records": 120,
+  "categories": {
+    "answerable": 80,
+    "reference_absent": 27,
+    "unsupported": 13
+  },
+  "annotated_types": {
+    "named_feature": 66,
+    "distance_and_direction": 25,
+    "direction_only": 15,
+    "route_relative": 8,
+    "between_features": 3,
+    "itinerary": 1,
+    "no_locality": 1,
+    "distance_only": 1
+  },
+  "systems": {
+    "rules": {
+      "relation_accuracy": {
+        "hits": 75,
+        "n": 120,
+        "rate": 0.625
+      },
+      "valid_extraction": {
+        "hits": 120,
+        "n": 120,
+        "rate": 1.0
+      },
+      "critical_exact_match": {
+        "hits": 71,
+        "n": 120,
+        "rate": 0.592
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 95,
+          "n": 120,
+          "rate": 0.792
+        },
+        "unit": {
+          "hits": 96,
+          "n": 120,
+          "rate": 0.8
+        },
+        "direction": {
+          "hits": 90,
+          "n": 120,
+          "rate": 0.75
+        },
+        "qualifiers": {
+          "hits": 106,
+          "n": 120,
+          "rate": 0.883
+        }
+      },
+      "reference_top1": {
+        "hits": 37,
+        "n": 80,
+        "rate": 0.463
+      },
+      "reference_recall5": {
+        "hits": 37,
+        "n": 80,
+        "rate": 0.463
+      },
+      "correct_proposal_candidates": {
+        "hits": 34,
+        "n": 80,
+        "rate": 0.425
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 4,
+        "n": 13,
+        "rate": 0.308
+      },
+      "absent_reported_absent": {
+        "hits": 12,
+        "n": 27,
+        "rate": 0.444
+      },
+      "false_no_locality": 0,
+      "mean_corrections": 1.51
+    },
+    "llm": {
+      "relation_accuracy": {
+        "hits": 72,
+        "n": 120,
+        "rate": 0.6
+      },
+      "valid_extraction": {
+        "hits": 108,
+        "n": 120,
+        "rate": 0.9
+      },
+      "critical_exact_match": {
+        "hits": 57,
+        "n": 120,
+        "rate": 0.475
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 92,
+          "n": 120,
+          "rate": 0.767
+        },
+        "unit": {
+          "hits": 92,
+          "n": 120,
+          "rate": 0.767
+        },
+        "direction": {
+          "hits": 85,
+          "n": 120,
+          "rate": 0.708
+        },
+        "qualifiers": {
+          "hits": 92,
+          "n": 120,
+          "rate": 0.767
+        }
+      },
+      "reference_top1": {
+        "hits": 47,
+        "n": 80,
+        "rate": 0.588
+      },
+      "reference_recall5": {
+        "hits": 48,
+        "n": 80,
+        "rate": 0.6
+      },
+      "correct_proposal_candidates": {
+        "hits": 31,
+        "n": 80,
+        "rate": 0.388
+      },
+      "computed_proposals_correct": {
+        "hits": 1,
+        "n": 1,
+        "rate": 1.0
+      },
+      "unsupported_flagged": {
+        "hits": 9,
+        "n": 13,
+        "rate": 0.692
+      },
+      "absent_reported_absent": {
+        "hits": 16,
+        "n": 27,
+        "rate": 0.593
+      },
+      "false_no_locality": 2,
+      "mean_corrections": 1.67
+    },
+    "hybrid": {
+      "relation_accuracy": {
+        "hits": 76,
+        "n": 120,
+        "rate": 0.633
+      },
+      "valid_extraction": {
+        "hits": 120,
+        "n": 120,
+        "rate": 1.0
+      },
+      "critical_exact_match": {
+        "hits": 68,
+        "n": 120,
+        "rate": 0.567
+      },
+      "field_accuracy": {
+        "distance": {
+          "hits": 97,
+          "n": 120,
+          "rate": 0.808
+        },
+        "unit": {
+          "hits": 97,
+          "n": 120,
+          "rate": 0.808
+        },
+        "direction": {
+          "hits": 91,
+          "n": 120,
+          "rate": 0.758
+        },
+        "qualifiers": {
+          "hits": 104,
+          "n": 120,
+          "rate": 0.867
+        }
+      },
+      "reference_top1": {
+        "hits": 53,
+        "n": 80,
+        "rate": 0.662
+      },
+      "reference_recall5": {
+        "hits": 53,
+        "n": 80,
+        "rate": 0.662
+      },
+      "correct_proposal_candidates": {
+        "hits": 43,
+        "n": 80,
+        "rate": 0.537
+      },
+      "computed_proposals_correct": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "unsupported_flagged": {
+        "hits": 5,
+        "n": 13,
+        "rate": 0.385
+      },
+      "absent_reported_absent": {
+        "hits": 11,
+        "n": 27,
+        "rate": 0.407
+      },
+      "false_no_locality": 0,
+      "mean_corrections": 1.35
+    }
+  },
+  "by_type": {
+    "rules": {
+      "between_features": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "direction_only": {
+        "hits": 8,
+        "n": 12,
+        "rate": 0.667
+      },
+      "distance_and_direction": {
+        "hits": 14,
+        "n": 23,
+        "rate": 0.609
+      },
+      "distance_only": {
+        "hits": 0,
+        "n": 1,
+        "rate": 0.0
+      },
+      "itinerary": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "named_feature": {
+        "hits": 12,
+        "n": 44,
+        "rate": 0.273
+      },
+      "no_locality": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "route_relative": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      }
+    },
+    "llm": {
+      "between_features": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "direction_only": {
+        "hits": 2,
+        "n": 12,
+        "rate": 0.167
+      },
+      "distance_and_direction": {
+        "hits": 13,
+        "n": 23,
+        "rate": 0.565
+      },
+      "distance_only": {
+        "hits": 0,
+        "n": 1,
+        "rate": 0.0
+      },
+      "itinerary": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "named_feature": {
+        "hits": 16,
+        "n": 44,
+        "rate": 0.364
+      },
+      "no_locality": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "route_relative": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      }
+    },
+    "hybrid": {
+      "between_features": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "direction_only": {
+        "hits": 8,
+        "n": 12,
+        "rate": 0.667
+      },
+      "distance_and_direction": {
+        "hits": 17,
+        "n": 23,
+        "rate": 0.739
+      },
+      "distance_only": {
+        "hits": 0,
+        "n": 1,
+        "rate": 0.0
+      },
+      "itinerary": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "named_feature": {
+        "hits": 18,
+        "n": 44,
+        "rate": 0.409
+      },
+      "no_locality": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      },
+      "route_relative": {
+        "hits": 0,
+        "n": 0,
+        "rate": null
+      }
+    }
+  },
+  "paired_hybrid_vs_rules": {
+    "correct_proposal_candidates": {
+      "n": 80,
+      "rules": 34,
+      "llm": 43,
+      "difference": 0.113,
+      "ci95": [
+        0.05,
+        0.188
+      ],
+      "llm_only": 9,
+      "rules_only": 0,
+      "sign_test_p": 0.0039
+    },
+    "critical_exact_match": {
+      "n": 120,
+      "rules": 71,
+      "llm": 68,
+      "difference": -0.025,
+      "ci95": [
+        -0.075,
+        0.025
+      ],
+      "llm_only": 3,
+      "rules_only": 6,
+      "sign_test_p": 0.5078
+    }
+  },
+  "paired_llm_vs_rules": {
+    "correct_proposal_candidates": {
+      "n": 80,
+      "rules": 34,
+      "llm": 31,
+      "difference": -0.037,
+      "ci95": [
+        -0.15,
+        0.075
+      ],
+      "llm_only": 10,
+      "rules_only": 13,
+      "sign_test_p": 0.6776
+    },
+    "critical_exact_match": {
+      "n": 120,
+      "rules": 71,
+      "llm": 57,
+      "difference": -0.117,
+      "ci95": [
+        -0.217,
+        -0.017
+      ],
+      "llm_only": 13,
+      "rules_only": 27,
+      "sign_test_p": 0.0385
+    }
+  },
+  "sensitivity_excluding_unsure": {
+    "excluded": 27,
+    "categories": {
+      "answerable": 65,
+      "reference_absent": 17,
+      "unsupported": 11
+    },
+    "paired_hybrid_vs_rules": {
+      "correct_proposal_candidates": {
+        "n": 65,
+        "rules": 32,
+        "llm": 39,
+        "difference": 0.108,
+        "ci95": [
+          0.031,
+          0.185
+        ],
+        "llm_only": 7,
+        "rules_only": 0,
+        "sign_test_p": 0.0156
+      },
+      "critical_exact_match": {
+        "n": 93,
+        "rules": 60,
+        "llm": 57,
+        "difference": -0.032,
+        "ci95": [
+          -0.086,
+          0.022
+        ],
+        "llm_only": 2,
+        "rules_only": 5,
+        "sign_test_p": 0.4531
+      }
+    }
+  },
+  "hybrid_counts": {
+    "source": {
+      "rules": 99,
+      "llm": 21
+    },
+    "llm_call": {
+      "made": 51,
+      "skipped": 69
+    },
+    "relation": {
+      "named_feature": 52,
+      "distance_and_direction": 35,
+      "direction_only": 20,
+      "between_features": 6,
+      "other": 4,
+      "distance_only": 1,
+      "itinerary": 1,
+      "route_relative": 1
+    },
+    "retrieval": {
+      "candidates_found": 90,
+      "feature_absent_from_index": 23,
+      "no_reference_feature": 7
+    },
+    "proposal": {
+      "needs_information": 108,
+      "unsupported": 12
+    }
+  },
+  "llm_counts": {
+    "relation": {
+      "named_feature": 55,
+      "distance_and_direction": 27,
+      "itinerary": 9,
+      "route_relative": 7,
+      "between_features": 6,
+      "orthogonal_offsets": 5,
+      "other": 4,
+      "direction_only": 3,
+      "no_locality": 3,
+      "distance_only": 1
+    },
+    "retrieval": {
+      "candidates_found": 69,
+      "feature_absent_from_index": 32,
+      "None": 12,
+      "no_reference_feature": 7
+    },
+    "proposal": {
+      "needs_information": 80,
+      "unsupported": 27,
+      "invalid_extraction": 12,
+      "computed": 1
+    }
+  },
+  "llm_cache": {},
+  "model_time_s": {
+    "llm_only_total": 1301.3,
+    "hybrid_calls": 51,
+    "hybrid_total": 535.4,
+    "p50": 10.4,
+    "p95": 17.3,
+    "note": "Per-record model seconds from this release's LLM run (cache off), Apple M1 8 GB, warm server."
+  },
+  "decision": "yes",
+  "annotator": "Claude, at the owner's request (declaration-test-2-amendment-1.json); not independent of the systems: Claude also wrote rules-3 to rules-6",
+  "inter_annotator_agreement": {
+    "what": "Claude (test-2 repeats, amendment 1) vs the owner (validation worksheet), counts only",
+    "all_20": {
+      "rows": 20,
+      "description_type": 16,
+      "supported": 18,
+      "acceptable_gnis_ids": 16,
+      "distance": 17,
+      "unit": 18,
+      "direction": 17,
+      "qualifiers": 18,
+      "category": 16,
+      "every_field": 12,
+      "owner_categories": {
+        "answerable": 11,
+        "reference_absent": 8,
+        "unsupported": 1
+      },
+      "claude_categories": {
+        "answerable": 13,
+        "reference_absent": 4,
+        "unsupported": 3
+      }
+    },
+    "without_recognised": {
+      "rows": 17,
+      "description_type": 13,
+      "supported": 15,
+      "acceptable_gnis_ids": 13,
+      "distance": 14,
+      "unit": 15,
+      "direction": 14,
+      "qualifiers": 15,
+      "category": 13,
+      "every_field": 9,
+      "owner_categories": {
+        "answerable": 9,
+        "reference_absent": 8
+      },
+      "claude_categories": {
+        "answerable": 11,
+        "reference_absent": 4,
+        "unsupported": 2
+      }
+    },
+    "recognised_ids_excluded": [
+      "H021",
+      "H039",
+      "H057"
+    ]
+  },
+  "run": {
+    "code_commit": "2733648efdcad8d88f74cf9c07947adc426c5e6e",
+    "started": "2026-11-08T15:43:17Z",
+    "finished": "2026-11-08T16:05:29Z",
+    "llm_cache": "off",
+    "server": "native llama-server, Metal"
+  }
+}

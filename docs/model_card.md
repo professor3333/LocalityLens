@@ -93,6 +93,10 @@ The model and prompt are the same in every release; the gains come from validati
 and supplied-county handling. hybrid-1 calls the model on 39% (release 2) and 38% (release 3)
 of test records. All test measures are in [evaluation](evaluation.md#locked-test-the-milestone-answer).
 
+On **test-2**, a fresh sample annotated by Claude rather than the owner (so not independent of
+the rules Claude wrote): rules-6 34, LLM alone 31, hybrid-1 43 of 80 answerable, +11.3 points
+(CI +5.0 to +18.8) ([result](../eval/reports/test-2.md)).
+
 With 67 measured extents and rules-6, on the read dev and validation data (160 records), hybrid-1
 computes 35 full regions, 32 of them correct (91%; target ≥ 95%), a useful coverage of 35%
 (target ≥ 70%). On dev-2's unseen labels it computes 11, 10 correct (91%), a useful coverage of

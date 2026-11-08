@@ -122,6 +122,18 @@ pushed before the run:
   completion cache off).
 - MRR is not computed: the score reports top-1 and top-5 only.
 
+### test-2: a fresh sample, Claude-annotated
+
+test-2 is 120 new records, drawn after excluding everything read or reserved and declared before
+annotation. At the owner's request Claude annotated it, not the owner. Claude also wrote the
+rules, so it is not independent evidence ([result](../eval/reports/test-2.md)).
+
+- **Result:** hybrid-1 43 against rules-6 34 of 80 answerable, **+11.3 points** (CI +5.0 to
+  +18.8, p = 0.004), 9 gained and 0 lost. The declared rule says yes. The LLM alone: 31.
+- **Claude marks more references findable in GNIS than the owner:** 80 answerable of 120,
+  against 56 on the locked test. On 20 blind repeats of validation records, the two annotators
+  agree on every field for 12 of 20, and on the record's category for 16 of 20.
+
 ### Ablations and model comparisons (read samples only)
 
 - **Few-shot examples** ([findings](../eval/reports/ablation-fewshot-findings.md)): without its 11
