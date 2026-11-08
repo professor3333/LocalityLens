@@ -1,0 +1,96 @@
+{
+  "declaration": "test-2",
+  "declared": "2026-11-08",
+  "note": "Frozen before the owner annotates test-2 and before any system runs on it. Committed and pushed before annotation begins; the result is published whatever it is.",
+  "code_commit": "0fbde5d12151d02de0e868283612954cbc23080d",
+  "release": "v0.1.0",
+  "release_note": "The pipeline code is v0.1.0's (tag v0.1.0, 4ddb131): `git diff v0.1.0 0fbde5d -- src/ release/` touches only cli.py and evaluation/benchmark.py, which add the sampling and split-repeats commands. Extraction, validation, retrieval, geometry and the release manifest are unchanged.",
+  "system": {
+    "id": "hybrid-1",
+    "rule": "Rules first. If the rules' interpretation is valid and retrieval returns at least one candidate, use it with no model call. Otherwise use the LLM's result if it is valid and returns at least one candidate. Otherwise keep the rules' result. Whole results only, never mixed by field.",
+    "components": {
+      "rules": "rules-6",
+      "llm": "llm-x2g2-qwen3.5-4b-q4km"
+    }
+  },
+  "release_manifest_sha256": "a14ead42792f2075035bfb8023460832689e4bb984e36f85811d332719424601",
+  "llm": {
+    "prompt": "extraction-v2",
+    "prompt_sha256": "8074f1f8aed024f6bbb3e308939bf19552e2273012ef73babaf3fa5fdc64eba3",
+    "grammar_version": "2",
+    "validation_version": "3",
+    "core_key_version": "1",
+    "county_context_version": "1",
+    "model": "Qwen3.5-4B Q4_K_M (GGUF sha256 pinned in release/manifest.json)",
+    "server": "llama.cpp b11960-8642541b2, -c 4096 -np 1 --no-context-shift, 127.0.0.1:8080, native (Metal)",
+    "decoding": "greedy, temperature 0, top_k 1, seed 20261101, max_tokens 512, thinking off"
+  },
+  "uncertainty_policy": "gbif-bp-2020/1",
+  "snapshots": {
+    "gazetteer": "gnis-co-2026-09-29",
+    "specimens": "gbif-cu-2026-11-01",
+    "gbif_manifest_sha256": "f64e919f274aabf249c88816d13a49e723998a9f165a76a52fded012fd5c9f9e",
+    "gnis_manifest_sha256": "31cc69749cb1dddcab6c8645d6b94da5897631053b1afe2ccbd37f3961dbc1ec"
+  },
+  "data": {
+    "draw": "benchmark draw-extra --name test-2 --seed benchmark-2/1 --size 120 --prefix H --repeats-from eval/benchmark/validation/validation.json --repeats 20 --repeat-seed selfcheck-1/1 --out eval/benchmark/test-2 (EXTRA_VERSION 1)",
+    "splits_lock_sha256": "996a6e28e25727e44cef88b9737693dca0765e1aedc3bb4c8df414aa947aa85a",
+    "splits_2_lock_sha256": "8332f536f0652bc572952c71d41db1a8eb8cd9e8dd45dc473340ec1393adae0e",
+    "sample_sha256": "6181d16fa75a1fbb590b13a2a7848ddbf9c3e2aa3a76917530a7ae364aa6b760",
+    "blank_worksheet_sha256": "17eacb42da53a06409ea74282a99e704139651811d9b05bc91191b34ca395838",
+    "repeats_sha256": "b2dcfd8eadda41ccf7edb8c2dc3b678f304da5abe0eb1dc536f44cd86a26a833",
+    "validation_sample_sha256": "829780273b5acbe7d038ad6ba6678a39b6d8266b6d8a7f974366cf9b799c0ebc",
+    "validation_worksheet_sha256": "fe612eb3a1d630c25959153a1798c21a254faffc32b97c7e5230cab72ce2e7a4",
+    "rows": "140: 120 new groups + 20 blind validation repeats",
+    "annotations": "The owner's first commit of eval/benchmark/test-2/worksheet.csv after this declaration, unchanged, following eval/annotation_guide.md, blind to system output. It must pass the worksheet checker with 0 errors before scoring; if it does not, the owner corrects it in a further commit before any system runs.",
+    "annotator": "the owner, one annotator. The owner does not open repeats.json or the validation worksheet until annotation is committed."
+  },
+  "how_it_runs": [
+    "After the annotations are committed: `benchmark split-repeats --name test-2 --folder eval/benchmark/test-2` writes scoring/test-2-new.json and scoring/worksheet-new.csv (the 120 new rows, IDs unchanged) and scoring/repeats-annotated.csv (the 20 repeats).",
+    "Systems run once on scoring/test-2-new.json at the code commit above, outputs to eval/benchmark/test-2/reports/: `audit rules`; `audit llm --no-cache`; `audit hybrid`; `audit score --worksheet eval/benchmark/test-2/scoring/worksheet-new.csv --hybrid <out>/test-2-new-hybrid-1.json`. Standard output goes to log files in the same folder.",
+    "No reviewed extents are used: none exist for test-2 features."
+  ],
+  "primary_metric": {
+    "name": "correct_proposal_candidates",
+    "definition": "On answerable records: the critical interpretation (relation, distance, unit, direction, qualifiers) matches the annotation AND the top-ranked candidate is an acceptable GNIS ID.",
+    "comparison": "hybrid-1 minus rules-6, paired by record, in percentage points of answerable new records (repeats excluded)",
+    "target_pp": 10
+  },
+  "analysis": {
+    "interval": "paired bootstrap over records, 10,000 resamples, seed 20261101, 95% percentile interval",
+    "test": "exact two-sided sign test on discordant records",
+    "sensitivity": "the same, excluding rows with an unsure (?) annotation; reported, not decisive"
+  },
+  "decision_rule": {
+    "yes": "difference >= +10 pp AND the 95% interval lower bound > 0",
+    "no": "the 95% interval upper bound < +10 pp",
+    "not_shown": "anything else"
+  },
+  "expectation_stated_in_advance": "Between +5 and +11 pp. Locked-test releases 2 and 3 both gave +10.7 pp; owner-annotated read samples at this code give +5.4 pp (rules-6 51, hybrid-1 56 of 92). With about 55 answerable records the interval is roughly 16 pp wide, so 'yes' needs an observed gain of 10 pp or more: 'yes' and 'not_shown' are both plausible.",
+  "self_consistency": {
+    "what": "The 20 repeats, annotated blind a second time, against the owner's original validation annotations (validation_worksheet_sha256 above).",
+    "fields": "description_type; supported; acceptable_gnis_ids as a set (unsure marks removed; 'absent' is a value); distance, unit and direction (after the checker's normalisation); qualifiers as a set.",
+    "reported": "agreement count of 20 for each field; rows where every field agrees; whether the record's answerable/absent/unsupported category agrees. Descriptive only: no target, and it does not change the decision."
+  },
+  "secondary_reported": [
+    "the same metrics and paired comparison for hybrid-1 against the LLM alone, and the LLM alone against the rules",
+    "records gained and lost against the rules",
+    "LLM calls made and skipped, model time, p50/p95 latency (warm, Apple M1 8 GB)",
+    "relation read correctly, extraction passed validation, critical interpretation exact, field accuracy",
+    "reference top-1 and top-5 acceptable",
+    "unsupported flagged unsupported, references absent from GNIS reported absent",
+    "mean fields to correct per record, per annotated type",
+    "category counts (answerable, reference absent, unsupported) next to the locked test's"
+  ],
+  "caveats": [
+    "The pipeline was developed on dev and validation data, and its direction was chosen partly from locked-test release 1 totals; test-2 itself has played no part.",
+    "Same collection, same snapshot and the same annotator as the locked test.",
+    "test-2 excludes leakage components touching anything read or reserved, so it under-represents collectors and trips that appear in development samples."
+  ],
+  "not_evaluable": "Proposal correctness of ready_for_review records, useful coverage, containment with region size and reviewer time: no reviewed extents exist for test-2 features.",
+  "run_rules": [
+    "Each component runs once, and hybrid-1 is combined and scored once. A technical failure may be rerun under this declaration and is recorded; nothing is rerun because of its result.",
+    "Per-record outputs stay under eval/benchmark/test-2/ and are never read during development. Only aggregates are published, in eval/reports/test-2.{md,json}.",
+    "Any change to the system after this is a new release and needs a new declaration before test-2 is scored again."
+  ]
+}
