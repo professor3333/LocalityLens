@@ -76,6 +76,13 @@ Checked by counts, hashes and key sets only:
 Nobody but the annotator reads `test-2/`. [`declaration-test-2.json`](declaration-test-2.json)
 was pushed before annotation began.
 
+**Annotator changed (2026-11-08).** At the owner's request, Claude annotated test-2, not the owner
+([amendment](declaration-test-2-amendment-1.json), pushed after the annotation commit and before
+any system runs). Claude also wrote the rules being compared, so test-2 is not independent of the
+systems, as dev-2 to dev-4 were not. The 20 repeats now measure agreement between Claude and the
+owner, not one annotator's self-consistency. Locked-test releases 1 to 3, annotated by the owner,
+remain the independent evidence.
+
 ## Declared releases
 
 | Release | Declaration | Result (correct proposal candidates, of 56 answerable) |

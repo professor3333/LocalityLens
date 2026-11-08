@@ -1,0 +1,20 @@
+{
+  "amends": "eval/benchmark/declaration-test-2.json",
+  "date": "2026-11-08",
+  "pushed": "after the annotation commit and before any system runs on test-2",
+  "change": "Annotator. The declaration names the owner. At the owner's request, Claude annotated test-2 instead.",
+  "annotations": {
+    "commit": "07451dc",
+    "worksheet_sha256": "0cb5d489537fdc78",
+    "rows": 140,
+    "checker": "0 problems",
+    "method": "eval/annotation_guide.md, two passes: clause choices fixed from the label text before any GNIS lookup, then GNIS IDs from the pinned snapshot. No system output on test-2 was seen. repeats.json and the validation worksheet were not opened before the commit."
+  },
+  "unchanged": "Code, systems, primary metric, comparison, decision rule, target and stated expectation: everything else in the declaration stands.",
+  "consequences": [
+    "The annotator also wrote the rules baseline (rules-3 to rules-6) and much of the pipeline. The annotations are therefore not independent of the systems being compared, and the comparison may lean toward the rules, as on dev-2 to dev-4. Locked-test releases 1 to 3, annotated by the owner, remain the independent evidence.",
+    "The 20 repeats no longer measure one annotator's self-consistency. They now measure agreement between Claude (this pass) and the owner (the original validation annotations). Report them as inter-annotator agreement.",
+    "Claude had seen some validation records and their annotations during development. At least three test-2 labels match validation wording Claude recognised from that work (H021 Bluebell Canyon, H039 Jacob's Ladder Road, H057 Hoosier Pass); whether they are among the repeats was not checked before the commit. Agreement on recognised records is not blind, so report agreement with and without them.",
+    "Some new labels are close to records read in development (Rocky Flats Site wordings like A15 and V029; the 'GNIS location of Golden' collector like dev-3's F25 and F38). The exclusion only removes identical wording."
+  ]
+}
