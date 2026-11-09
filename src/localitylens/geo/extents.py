@@ -34,6 +34,7 @@ from pathlib import Path
 from typing import Any, Final
 
 from localitylens.gazetteer.index import FeatureSummary, Gazetteer
+from localitylens.geo.derived_extents import DerivedStore, DerivedStoreError, load_derived
 from localitylens.geo.georeference import ExtentEstimate, ExtentSource
 
 STORE_VERSION: Final = "extents-1"
@@ -108,19 +109,28 @@ class ExtentStore:
     sha256: str
     entries: dict[int, ReviewedExtent]
     pending: int
+    derived: DerivedStore | None = None  # polygon-derived extents, used only where none reviewed
 
     def get(self, feature_id: int) -> ExtentEstimate | None:
+        """A curator's reviewed extent first; otherwise a derived one, if that store is in use."""
         entry = self.entries.get(feature_id)
-        return entry.estimate() if entry is not None else None
+        if entry is not None:
+            return entry.estimate()
+        if self.derived is not None and (d := self.derived.entries.get(feature_id)) is not None:
+            return d.estimate()
+        return None
 
     def summary(self) -> dict[str, Any]:
         """What a report records about the store it used."""
-        return {
+        out: dict[str, Any] = {
             "version": STORE_VERSION,
             "sha256": self.sha256,
             "reviewed": len(self.entries),
             "pending": self.pending,
         }
+        if self.derived is not None:
+            out["derived"] = self.derived.summary()
+        return out
 
 
 def _same_point(text: str, value: float) -> bool:
@@ -241,8 +251,10 @@ def _reviewed(
     )
 
 
-def load_store(path: Path, gazetteer: Gazetteer) -> ExtentStore:
-    """Load a store that passes :func:`check_store`; refuse one with any problem."""
+def load_store(path: Path, gazetteer: Gazetteer, derived: Path | None = None) -> ExtentStore:
+    """Load a store that passes :func:`check_store`; refuse one with any problem. With
+    ``derived``, also the derived-extent store, checked the same way, for features with no
+    reviewed extent."""
     check = check_store(path, gazetteer)
     if check.problems:
         first = "; ".join(f"row {p.row} {p.column}: {p.message}" for p in check.problems[:3])
@@ -252,7 +264,17 @@ def load_store(path: Path, gazetteer: Gazetteer) -> ExtentStore:
         sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
         entries=check.entries,
         pending=check.pending,
+        derived=_derived(derived, gazetteer),
     )
+
+
+def _derived(path: Path | None, gazetteer: Gazetteer) -> DerivedStore | None:
+    if path is None:
+        return None
+    try:
+        return load_derived(path, gazetteer)
+    except (DerivedStoreError, OSError) as exc:
+        raise ExtentStoreError(str(exc)) from exc
 
 
 def write_extent_worksheet(path: Path, feature_ids: Iterable[int], gazetteer: Gazetteer) -> int:

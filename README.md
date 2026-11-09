@@ -743,6 +743,18 @@ against 46 for 4B. As hybrid-1's fallback it still reaches 49 against 4B's 51
 - **"Correct" tests the interpretation and the reference,** not the size of the radius: one
   correct dev-2 region is 39 km.
 
+> [!WARNING]
+> **The 91% above is inflated by how extents were chosen.** Extents were measured only for the
+> features the annotations accepted, so a wrong pick could never get a region.
+> [Derived extents](data/extents/README.md) give every feature with a Census place polygon or an
+> NHD geometry a region (11,993 features, computed from the pinned snapshots; opt-in with
+> `--derived-extents`). With them, hybrid-1's regions are 52 of which 33 are correct (63%) on the
+> owner-annotated read samples. On Claude-annotated dev-3 and dev-4, mostly unmeasured features,
+> they are 36 of which 14 are correct (39%), with useful coverage 0 → 23%
+> ([findings](eval/reports/derived-extents-findings.md)). The derived extents match hand
+> measurements (median ratio 0.98 over 45 features). What fails is choosing the reference: a
+> specific collecting place is named and missed, and "N mi of Town" wins.
+
 **How to read the "yes":**
 - **The margin is one record.** +10 points of 56 is 5.6 records, and the hybrid gains 6 while
   losing none.
@@ -905,6 +917,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `geo/uncertainty.py` | Uncertainty policy `gbif-bp-2020/1`: heading, distance precision, coordinate precision, datum, extent defaults, each cited |
 | `geo/georeference.py` | Point-radius proposals: offset point, combined radius, lower bound, assumptions, blocking questions |
 | `geo/extents.py` | Reviewed-extent store `extents-1`: curator-measured radials per GNIS feature, checked against the snapshot, never overwritten |
+| `geo/derived_extents.py` · `data/nhd.py` · `data/shapefile.py` · `data/geometry_fetch.py` | Derived extents `derived-extents-1`: farthest vertex of the Census place polygon or the NHD geometry carrying the feature's GNIS ID, from the GNIS point; pinned NHD and TIGER snapshots, read without a GIS dependency; opt-in with `--derived-extents`, reviewed extents first |
 | `domain/status.py` | Record lifecycle with a single checked transition function |
 | `data/` | Snapshot manifests, the GNIS fetcher and the GBIF download client (DOI, immutable, checksummed) |
 | `gazetteer/` | GNIS parsing, versioned name keys, SQLite index, ranked search with evidence: exact, then core (generic words set aside), then fuzzy |
@@ -922,7 +935,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | `web/replay.py` | Static replay `replay-1`: freezes the review screen's pages into `demo/site` with relative links and a replay banner, no forms; built by `scripts/build_replay.py`, published by the `pages` workflow |
 | `export/darwin_core.py` | Darwin Core CSV of approved records (`dwc-export-1`) and the unresolved-record report |
 | `export/geojson.py` | GeoJSON (RFC 7946) of the same approved records (`geojson-export-1`), converted to WGS 84 by `geo/datum.py` (`datum-1`: EPSG:1188, accuracy added to the radius) |
-| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `extents worksheet` · `extents check` · `review import` (`--sample` or `--csv`) · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review backup` · `review restore` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
+| `cli.py` | `data fetch-gnis` · `data fetch-gbif` · `model fetch` · `model check` · `ingest scan` · `audit sample` · `audit rules` · `audit llm` · `audit hybrid` · `audit score` · `data fetch-geometry` · `extents worksheet` · `extents check` · `extents derive` · `review import` (`--sample` or `--csv`) · `review work` · `review jobs` · `review cancel` · `review traces` · `review queue` · `review decide` · `review export` · `review backup` · `review restore` · `review serve` (`/readyz`, `/api/version`) · `dev register` · `dev sample` · `benchmark draw` · `gazetteer build` · `gazetteer search` · `baseline run` · `interpret` |
 
 </details>
 
@@ -1021,7 +1034,7 @@ scripts/          README banner and pipeline diagram, replay build, evaluation h
 ## 📄 Licence & acknowledgements
 
 Code is released under the [MIT licence](LICENSE). Geographic names are courtesy of the
-**U.S. Geological Survey** Geographic Names Information System. Methodology follows the
+**U.S. Geological Survey** Geographic Names Information System. Derived extents use the USGS National Hydrography Dataset and place boundaries from the **U.S. Census Bureau** TIGER/Line Shapefiles (source: U.S. Census Bureau). Methodology follows the
 [GBIF Georeferencing Best Practices](https://docs.gbif.org/georeferencing-best-practices/1.0/en/).
 [GEOLocate](https://www.geo-locate.org/) is the established tool in this space. LocalityLens has
 been compared with it on read samples only ([findings](eval/reports/geolocate-findings.md)), not

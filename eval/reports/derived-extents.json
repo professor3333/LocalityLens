@@ -1,0 +1,634 @@
+{
+  "derived_store": {
+    "path": "data/extents/derived.csv",
+    "sha256": "215df8667b30584caafbe01c7b8f7bd20df62f80a0c69ee7f72784b6ea3cfae5",
+    "rows": 11993,
+    "by_method": {
+      "nhd-geometry-by-gnis-id": 11077,
+      "census-place-polygon-by-name": 435,
+      "census-place-polygon-by-gnis-id": 481
+    },
+    "by_class": {
+      "Stream": 5118,
+      "Reservoir": 2680,
+      "Canal": 1858,
+      "Lake": 1398,
+      "Populated Place": 435,
+      "Civil": 272,
+      "Census": 209,
+      "Swamp": 9,
+      "Glacier": 8,
+      "Channel": 5,
+      "Gut": 1
+    },
+    "sources": {
+      "nhd-co-2023-12-27": "b57ed45f4d479896027fb9b61ea031c2e78e067a7c9ae51baacffeebab94a717",
+      "tiger-place-co-2025": "391e29759e8fb8b10c76e4ff855924675c4e3d0fdb06ee66a9d1a2036c78f841"
+    },
+    "left_out_crossing_state_line": 230
+  },
+  "against_reviewed": {
+    "features": 44,
+    "all": {
+      "median": 0.981,
+      "min": 0.805,
+      "max": 1.178
+    },
+    "places": {
+      "n": 24,
+      "median": 0.9815,
+      "min": 0.941,
+      "max": 0.999
+    },
+    "streams": {
+      "n": 16,
+      "median": 0.982,
+      "min": 0.805,
+      "max": 1.178
+    },
+    "rows": [
+      {
+        "gnis_id": 169843,
+        "name": "Beaver Creek",
+        "class": "Stream",
+        "reviewed_m": 2800.0,
+        "derived_m": 2715,
+        "ratio": 0.97
+      },
+      {
+        "gnis_id": 171304,
+        "name": "Craig",
+        "class": "Populated Place",
+        "reviewed_m": 4700.0,
+        "derived_m": 4662,
+        "ratio": 0.992
+      },
+      {
+        "gnis_id": 172735,
+        "name": "Oak Creek",
+        "class": "Stream",
+        "reviewed_m": 37000.0,
+        "derived_m": 36347,
+        "ratio": 0.982
+      },
+      {
+        "gnis_id": 174812,
+        "name": "Roaring Fork River",
+        "class": "Stream",
+        "reviewed_m": 81000.0,
+        "derived_m": 80910,
+        "ratio": 0.999
+      },
+      {
+        "gnis_id": 175912,
+        "name": "South Fork Dickson Creek",
+        "class": "Stream",
+        "reviewed_m": 2800.0,
+        "derived_m": 2750,
+        "ratio": 0.982
+      },
+      {
+        "gnis_id": 175917,
+        "name": "Dickson Creek",
+        "class": "Stream",
+        "reviewed_m": 4200.0,
+        "derived_m": 4183,
+        "ratio": 0.996
+      },
+      {
+        "gnis_id": 175921,
+        "name": "Piney Lake",
+        "class": "Lake",
+        "reviewed_m": 360.0,
+        "derived_m": 350,
+        "ratio": 0.972
+      },
+      {
+        "gnis_id": 177287,
+        "name": "Hague Creek",
+        "class": "Stream",
+        "reviewed_m": 9400.0,
+        "derived_m": 7566,
+        "ratio": 0.805
+      },
+      {
+        "gnis_id": 178219,
+        "name": "Allenspark",
+        "class": "Populated Place",
+        "reviewed_m": 7600.0,
+        "derived_m": 7574,
+        "ratio": 0.997
+      },
+      {
+        "gnis_id": 178461,
+        "name": "Arapaho Glacier",
+        "class": "Glacier",
+        "reviewed_m": 430.0,
+        "derived_m": 423,
+        "ratio": 0.984
+      },
+      {
+        "gnis_id": 178680,
+        "name": "Boulder",
+        "class": "Populated Place",
+        "reviewed_m": 12000.0,
+        "derived_m": 11291,
+        "ratio": 0.941
+      },
+      {
+        "gnis_id": 180007,
+        "name": "Maroon Creek",
+        "class": "Stream",
+        "reviewed_m": 14000.0,
+        "derived_m": 13180,
+        "ratio": 0.941
+      },
+      {
+        "gnis_id": 180261,
+        "name": "East Maroon Creek",
+        "class": "Stream",
+        "reviewed_m": 11000.0,
+        "derived_m": 10869,
+        "ratio": 0.988
+      },
+      {
+        "gnis_id": 181234,
+        "name": "Rock Creek",
+        "class": "Stream",
+        "reviewed_m": 15000.0,
+        "derived_m": 17663,
+        "ratio": 1.178
+      },
+      {
+        "gnis_id": 181355,
+        "name": "Empire",
+        "class": "Populated Place",
+        "reviewed_m": 1200.0,
+        "derived_m": 1176,
+        "ratio": 0.98
+      },
+      {
+        "gnis_id": 183032,
+        "name": "Wray",
+        "class": "Populated Place",
+        "reviewed_m": 4500.0,
+        "derived_m": 4403,
+        "ratio": 0.978
+      },
+      {
+        "gnis_id": 183776,
+        "name": "Hartsel",
+        "class": "Populated Place",
+        "reviewed_m": 760.0,
+        "derived_m": 740,
+        "ratio": 0.974
+      },
+      {
+        "gnis_id": 184411,
+        "name": "Bayfield",
+        "class": "Populated Place",
+        "reviewed_m": 3000.0,
+        "derived_m": 2957,
+        "ratio": 0.986
+      },
+      {
+        "gnis_id": 184512,
+        "name": "Arboles",
+        "class": "Populated Place",
+        "reviewed_m": 3800.0,
+        "derived_m": 3716,
+        "ratio": 0.978
+      },
+      {
+        "gnis_id": 186369,
+        "name": "Somerset",
+        "class": "Populated Place",
+        "reviewed_m": 1700.0,
+        "derived_m": 1655,
+        "ratio": 0.974
+      },
+      {
+        "gnis_id": 186534,
+        "name": "Hotchkiss",
+        "class": "Populated Place",
+        "reviewed_m": 3100.0,
+        "derived_m": 3038,
+        "ratio": 0.98
+      },
+      {
+        "gnis_id": 186589,
+        "name": "Paonia",
+        "class": "Populated Place",
+        "reviewed_m": 1500.0,
+        "derived_m": 1437,
+        "ratio": 0.958
+      },
+      {
+        "gnis_id": 190391,
+        "name": "Dry Creek",
+        "class": "Stream",
+        "reviewed_m": 16000.0,
+        "derived_m": 15942,
+        "ratio": 0.996
+      },
+      {
+        "gnis_id": 191155,
+        "name": "Florissant",
+        "class": "Populated Place",
+        "reviewed_m": 1100.0,
+        "derived_m": 1081,
+        "ratio": 0.983
+      },
+      {
+        "gnis_id": 191867,
+        "name": "Ca\u00f1on City",
+        "class": "Populated Place",
+        "reviewed_m": 8800.0,
+        "derived_m": 8700,
+        "ratio": 0.989
+      },
+      {
+        "gnis_id": 192151,
+        "name": "Westcliffe",
+        "class": "Populated Place",
+        "reviewed_m": 2600.0,
+        "derived_m": 2511,
+        "ratio": 0.966
+      },
+      {
+        "gnis_id": 192263,
+        "name": "North Crestone Creek",
+        "class": "Stream",
+        "reviewed_m": 9200.0,
+        "derived_m": 9454,
+        "ratio": 1.028
+      },
+      {
+        "gnis_id": 192405,
+        "name": "South Crestone Creek",
+        "class": "Stream",
+        "reviewed_m": 11000.0,
+        "derived_m": 10365,
+        "ratio": 0.942
+      },
+      {
+        "gnis_id": 192422,
+        "name": "North Colony Creek",
+        "class": "Stream",
+        "reviewed_m": 14000.0,
+        "derived_m": 14664,
+        "ratio": 1.047
+      },
+      {
+        "gnis_id": 192925,
+        "name": "Conejos River",
+        "class": "Stream",
+        "reviewed_m": 84000.0,
+        "derived_m": 78826,
+        "ratio": 0.938
+      },
+      {
+        "gnis_id": 193281,
+        "name": "Black Squirrel Creek",
+        "class": "Stream",
+        "reviewed_m": 11000.0,
+        "derived_m": 10396,
+        "ratio": 0.945
+      },
+      {
+        "gnis_id": 196063,
+        "name": "Two Buttes",
+        "class": "Populated Place",
+        "reviewed_m": 720.0,
+        "derived_m": 719,
+        "ratio": 0.999
+      },
+      {
+        "gnis_id": 202505,
+        "name": "Grand Lake",
+        "class": "Populated Place",
+        "reviewed_m": 2800.0,
+        "derived_m": 2701,
+        "ratio": 0.965
+      },
+      {
+        "gnis_id": 202607,
+        "name": "Dolores",
+        "class": "Populated Place",
+        "reviewed_m": 2100.0,
+        "derived_m": 2017,
+        "ratio": 0.96
+      },
+      {
+        "gnis_id": 202802,
+        "name": "Base Line Reservoir",
+        "class": "Reservoir",
+        "reviewed_m": 1000.0,
+        "derived_m": 937,
+        "ratio": 0.937
+      },
+      {
+        "gnis_id": 203328,
+        "name": "Montrose",
+        "class": "Populated Place",
+        "reviewed_m": 8300.0,
+        "derived_m": 8260,
+        "ratio": 0.995
+      },
+      {
+        "gnis_id": 203420,
+        "name": "South Fork",
+        "class": "Populated Place",
+        "reviewed_m": 4400.0,
+        "derived_m": 4335,
+        "ratio": 0.985
+      },
+      {
+        "gnis_id": 204686,
+        "name": "Aspen",
+        "class": "Populated Place",
+        "reviewed_m": 4900.0,
+        "derived_m": 4862,
+        "ratio": 0.992
+      },
+      {
+        "gnis_id": 204691,
+        "name": "Eaton",
+        "class": "Populated Place",
+        "reviewed_m": 3000.0,
+        "derived_m": 2991,
+        "ratio": 0.997
+      },
+      {
+        "gnis_id": 204755,
+        "name": "Pitkin",
+        "class": "Populated Place",
+        "reviewed_m": 990.0,
+        "derived_m": 978,
+        "ratio": 0.988
+      },
+      {
+        "gnis_id": 204798,
+        "name": "Pueblo",
+        "class": "Populated Place",
+        "reviewed_m": 14000.0,
+        "derived_m": 13677,
+        "ratio": 0.977
+      },
+      {
+        "gnis_id": 204817,
+        "name": "Idalia",
+        "class": "Populated Place",
+        "reviewed_m": 440.0,
+        "derived_m": 438,
+        "ratio": 0.995
+      },
+      {
+        "gnis_id": 204950,
+        "name": "Grand Lake",
+        "class": "Reservoir",
+        "reviewed_m": 1300.0,
+        "derived_m": 1239,
+        "ratio": 0.953
+      },
+      {
+        "gnis_id": 205018,
+        "name": "Cache la Poudre River",
+        "class": "Stream",
+        "reviewed_m": 110000.0,
+        "derived_m": 106039,
+        "ratio": 0.964
+      }
+    ]
+  },
+  "regions_by_sample": {
+    "audit-50": {
+      "reviewed_only": {
+        "rules": {
+          "computed": 11,
+          "correct": 9,
+          "answerable": 31
+        },
+        "llm": {
+          "computed": 9,
+          "correct": 7,
+          "answerable": 31
+        },
+        "hybrid": {
+          "computed": 11,
+          "correct": 9,
+          "answerable": 31
+        }
+      },
+      "reviewed_plus_derived": {
+        "rules": {
+          "computed": 16,
+          "correct": 9,
+          "answerable": 31
+        },
+        "llm": {
+          "computed": 11,
+          "correct": 7,
+          "answerable": 31
+        },
+        "hybrid": {
+          "computed": 17,
+          "correct": 9,
+          "answerable": 31
+        }
+      }
+    },
+    "dev-1": {
+      "reviewed_only": {
+        "rules": {
+          "computed": 11,
+          "correct": 11,
+          "answerable": 29
+        },
+        "llm": {
+          "computed": 11,
+          "correct": 10,
+          "answerable": 29
+        },
+        "hybrid": {
+          "computed": 12,
+          "correct": 12,
+          "answerable": 29
+        }
+      },
+      "reviewed_plus_derived": {
+        "rules": {
+          "computed": 15,
+          "correct": 11,
+          "answerable": 29
+        },
+        "llm": {
+          "computed": 12,
+          "correct": 10,
+          "answerable": 29
+        },
+        "hybrid": {
+          "computed": 17,
+          "correct": 12,
+          "answerable": 29
+        }
+      }
+    },
+    "validation": {
+      "reviewed_only": {
+        "rules": {
+          "computed": 10,
+          "correct": 9,
+          "answerable": 32
+        },
+        "llm": {
+          "computed": 13,
+          "correct": 11,
+          "answerable": 32
+        },
+        "hybrid": {
+          "computed": 12,
+          "correct": 11,
+          "answerable": 32
+        }
+      },
+      "reviewed_plus_derived": {
+        "rules": {
+          "computed": 14,
+          "correct": 9,
+          "answerable": 32
+        },
+        "llm": {
+          "computed": 20,
+          "correct": 12,
+          "answerable": 32
+        },
+        "hybrid": {
+          "computed": 18,
+          "correct": 12,
+          "answerable": 32
+        }
+      }
+    },
+    "dev-2": {
+      "reviewed_only": {
+        "rules": {
+          "computed": 10,
+          "correct": 9,
+          "answerable": 36
+        },
+        "llm": {
+          "computed": 8,
+          "correct": 7,
+          "answerable": 36
+        },
+        "hybrid": {
+          "computed": 11,
+          "correct": 10,
+          "answerable": 36
+        }
+      },
+      "reviewed_plus_derived": {
+        "rules": {
+          "computed": 14,
+          "correct": 9,
+          "answerable": 36
+        },
+        "llm": {
+          "computed": 9,
+          "correct": 7,
+          "answerable": 36
+        },
+        "hybrid": {
+          "computed": 15,
+          "correct": 10,
+          "answerable": 36
+        }
+      }
+    },
+    "dev-3": {
+      "reviewed_only": {
+        "rules": {
+          "computed": 2,
+          "correct": 0,
+          "answerable": 32
+        },
+        "llm": {
+          "computed": 2,
+          "correct": 0,
+          "answerable": 32
+        },
+        "hybrid": {
+          "computed": 2,
+          "correct": 0,
+          "answerable": 32
+        }
+      },
+      "reviewed_plus_derived": {
+        "rules": {
+          "computed": 17,
+          "correct": 6,
+          "answerable": 32
+        },
+        "llm": {
+          "computed": 14,
+          "correct": 8,
+          "answerable": 32
+        },
+        "hybrid": {
+          "computed": 18,
+          "correct": 7,
+          "answerable": 32
+        }
+      }
+    },
+    "dev-4": {
+      "reviewed_only": {
+        "rules": {
+          "computed": 3,
+          "correct": 0,
+          "answerable": 29
+        },
+        "llm": {
+          "computed": 1,
+          "correct": 0,
+          "answerable": 29
+        },
+        "hybrid": {
+          "computed": 3,
+          "correct": 0,
+          "answerable": 29
+        }
+      },
+      "reviewed_plus_derived": {
+        "rules": {
+          "computed": 16,
+          "correct": 6,
+          "answerable": 29
+        },
+        "llm": {
+          "computed": 15,
+          "correct": 8,
+          "answerable": 29
+        },
+        "hybrid": {
+          "computed": 18,
+          "correct": 7,
+          "answerable": 29
+        }
+      }
+    }
+  },
+  "derived_regions_hybrid_six_samples": {
+    "total": 52,
+    "correct": 15,
+    "wrong_reference_answerable": 16,
+    "wrong_reference_absent_from_gnis": 15,
+    "wrong_reference_unsupported": 4,
+    "reference_right_reading_wrong": 2,
+    "wrong_reference_answerable_by_relation": {
+      "distance_and_direction": 14,
+      "named_feature": 2
+    }
+  }
+}

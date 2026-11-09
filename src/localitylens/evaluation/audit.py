@@ -387,7 +387,9 @@ def sample_label(sample: AuditSample) -> str:
 def extents_suffix(report: dict[str, Any]) -> str:
     """``-extents`` for a run that used the reviewed-extent store, so it never overwrites the
     run without it."""
-    return "-extents" if "extent_store" in report else ""
+    if "extent_store" not in report:
+        return ""
+    return "-extents-derived" if "derived" in report["extent_store"] else "-extents"
 
 
 def write_report(

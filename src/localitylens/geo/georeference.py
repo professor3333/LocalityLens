@@ -44,6 +44,7 @@ class ComponentName(StrEnum):
 class ExtentSource(StrEnum):
     REVIEWED = "reviewed"  # supplied by a curator, with a rationale
     CLASS_DEFAULT = "class_default"  # QRG Table 1 default for the feature class
+    DERIVED = "derived"  # computed from an authoritative polygon or line; not curator-reviewed
 
 
 class ExtentEstimate(BaseModel):

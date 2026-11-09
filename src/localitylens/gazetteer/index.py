@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import sqlite3
 from collections import defaultdict
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
 from enum import StrEnum
 from pathlib import Path
 from typing import Final
@@ -260,6 +260,27 @@ class Gazetteer:
                 latitude=r["prim_lat"], longitude=r["prim_lon"], datum=Datum.NAD83
             ),
         )
+
+    def features(self, classes: Iterable[str]) -> Iterator[FeatureSummary]:
+        """Every feature of the given classes that has a primary point, in ID order."""
+        wanted = sorted(set(classes))
+        marks = ",".join("?" * len(wanted))
+        rows = self._con.execute(
+            "SELECT feature_id, name, feature_class, county_name, prim_lat, prim_lon FROM feature "
+            f"WHERE feature_class IN ({marks}) AND NOT (prim_lat = 0 AND prim_lon = 0) "
+            "ORDER BY feature_id",
+            wanted,
+        )
+        for r in rows:
+            yield FeatureSummary(
+                feature_id=r["feature_id"],
+                official_name=r["name"],
+                feature_class=r["feature_class"],
+                county_name=r["county_name"],
+                primary_point=Coordinate(
+                    latitude=r["prim_lat"], longitude=r["prim_lon"], datum=Datum.NAD83
+                ),
+            )
 
     def county_keys(self, state: str = "Colorado") -> frozenset[str]:
         """The county keys of ``state``, computed once per index connection."""

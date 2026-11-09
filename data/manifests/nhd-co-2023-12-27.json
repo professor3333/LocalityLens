@@ -1,0 +1,28 @@
+{
+  "manifest_version": "2",
+  "snapshot_id": "nhd-co-2023-12-27",
+  "source": "USGS National Hydrography Dataset Best Resolution (NHD) - Colorado (published 20231227) GeoPackage",
+  "publisher": "U.S. Geological Survey, National Geospatial Program",
+  "retrieved_at": "2026-11-09T03:03:32+00:00",
+  "licence": "U.S. Government work (USGS); public domain in the United States",
+  "usage_constraints": "None. However, users should be aware that temporal changes may have occurred since this data set was collected and that some parts of this data may no longer represent actual surface conditions. (from the FGDC metadata <useconst>, first sentences)",
+  "citation": "U.S. Geological Survey, National Hydrography Dataset Best Resolution (NHD) for Colorado, GeoPackage, published 2023-12-27",
+  "horizontal_datum": "North American Datum of 1983",
+  "ellipsoid": "Geodetic Reference System 80",
+  "doi": null,
+  "record_count": null,
+  "query": null,
+  "files": [
+    {
+      "name": "NHD_H_Colorado_State_GPKG.zip",
+      "url": "https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/GPKG/NHD_H_Colorado_State_GPKG.zip",
+      "sha256": "bf7a68d49542006136375870bbc9642449995e4bb1705ef2649c51a01ff424d2",
+      "size_bytes": 1049938454,
+      "publication_date": "2023-12-27",
+      "server_last_modified": null
+    }
+  ],
+  "notes": [
+    "Used only to derive feature extents (localitylens.geo.derived_extents); never shown to a model."
+  ]
+}

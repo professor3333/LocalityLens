@@ -100,7 +100,11 @@ the rules Claude wrote): rules-6 34, LLM alone 31, hybrid-1 43 of 80 answerable,
 With 67 measured extents and rules-6, on the read dev and validation data (160 records), hybrid-1
 computes 35 full regions, 32 of them correct (91%; target ≥ 95%), a useful coverage of 35%
 (target ≥ 70%). On dev-2's unseen labels it computes 11, 10 correct (91%), a useful coverage of
-28% ([batch 4 findings](../eval/reports/extents-batch-4-findings.md)).
+28% ([batch 4 findings](../eval/reports/extents-batch-4-findings.md)). That precision is inflated:
+extents existed only for features the annotations accepted. With polygon-derived extents for every
+feature, regions are 63% correct on owner-annotated read data and 39–47% on Claude-annotated data
+([findings](../eval/reports/derived-extents-findings.md)). The usual error is the reference
+choice, not the reading.
 Containment, and these measures on the locked test, are not measured yet. See
 [evaluation](evaluation.md) for definitions and every report.
 

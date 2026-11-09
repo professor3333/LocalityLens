@@ -15,6 +15,10 @@ if TYPE_CHECKING:
 
 _EXTENTS_HELP: Final = "reviewed-extent store (CSV) to take feature extents from"
 _WITH_EXTENTS_HELP: Final = "use the -extents reports (runs made with --extents)"
+_DERIVED_HELP: Final = (
+    "derived-extent store (CSV), used where no reviewed extent exists; needs --extents"
+)
+_WITH_DERIVED_HELP: Final = "use the -extents-derived reports (runs made with --derived-extents)"
 
 
 def _pinned_gnis(release: str) -> str:
@@ -45,6 +49,26 @@ def _fetch_gnis(args: argparse.Namespace) -> int:
         print(f"{manifest.snapshot_id} (pinned) -> {path}")
     for f, source in zip(manifest.files, sources, strict=True):
         print(f"  {f.name}  {f.size_bytes:>11,} bytes  sha256={f.sha256[:16]}…  from {source}")
+    return 0
+
+
+def _fetch_geometry(args: argparse.Namespace) -> int:
+    from localitylens.data.geometry_fetch import SOURCES, fetch_geometry
+    from localitylens.data.manifest import ChecksumMismatchError
+
+    roots = {"nhd-co-2023-12-27": "data/raw/nhd", "tiger-place-co-2025": "data/raw/tiger"}
+    wanted = list(SOURCES) if args.snapshot == "all" else [args.snapshot]
+    for snapshot_id in wanted:
+        try:
+            path, manifest, sources = fetch_geometry(
+                snapshot_id, Path(roots[snapshot_id]), Path(args.manifest_dir)
+            )
+        except (FileNotFoundError, ChecksumMismatchError) as exc:
+            print(f"refused: {exc}", file=sys.stderr)
+            return 2
+        for f, source in zip(manifest.files, sources, strict=True):
+            print(f"{snapshot_id} -> {path}")
+            print(f"  {f.name}  {f.size_bytes:>13,} bytes  sha256={f.sha256[:16]}…  from {source}")
     return 0
 
 
@@ -241,7 +265,7 @@ def _audit_score(args: argparse.Namespace) -> int:
 
     label = sample_label(sample)
     llm_id = load_release(Path(args.release)).extractor_id
-    ext = "-extents" if args.with_extents else ""
+    ext = "-extents-derived" if args.with_derived else "-extents" if args.with_extents else ""
     rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
     llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     reports = {
@@ -277,7 +301,7 @@ def _audit_hybrid(args: argparse.Namespace) -> int:
 
     label = sample_label(load_sample(Path(args.sample)))
     llm_id = load_release(Path(args.release)).extractor_id
-    ext = "-extents" if args.with_extents else ""
+    ext = "-extents-derived" if args.with_derived else "-extents" if args.with_extents else ""
     rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
     llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     try:
@@ -298,12 +322,19 @@ def _audit_hybrid(args: argparse.Namespace) -> int:
 def _load_extents(args: argparse.Namespace) -> ExtentStore | None:
     """The reviewed-extent store named by ``--extents``, checked against the snapshot."""
     if not getattr(args, "extents", None):
+        if getattr(args, "derived_extents", None):
+            from localitylens.geo.extents import ExtentStoreError
+
+            raise ExtentStoreError(
+                "--derived-extents needs --extents (reviewed extents come first)"
+            )
         return None
     from localitylens.gazetteer.index import Gazetteer
     from localitylens.geo.extents import load_store
 
+    derived = getattr(args, "derived_extents", None)
     with Gazetteer(Path(args.index)) as gaz:
-        return load_store(Path(args.extents), gaz)
+        return load_store(Path(args.extents), gaz, Path(derived) if derived else None)
 
 
 def _extents_or_refuse(args: argparse.Namespace) -> Any:
@@ -361,6 +392,52 @@ def _extents_worksheet(args: argparse.Namespace) -> int:
             print(f"refused: {args.out} exists and is never overwritten", file=sys.stderr)
             return 2
     print(f"wrote {n} pending rows to {args.out}")
+    return 0
+
+
+def _extents_derive(args: argparse.Namespace) -> int:
+    """Derived extents from the pinned NHD and TIGER snapshots. Prints counts only."""
+    import zipfile
+
+    from localitylens.data.manifest import load_manifest, verify_snapshot
+    from localitylens.data.nhd import gnis_groups
+    from localitylens.data.shapefile import read_polygons
+    from localitylens.gazetteer.index import Gazetteer
+    from localitylens.geo.derived_extents import (
+        derive_nhd,
+        derive_places,
+        ring_bounds,
+        write_derived,
+    )
+
+    out = Path(args.out)
+    if out.exists():
+        print(f"refused: {out} exists; derived stores are written once", file=sys.stderr)
+        return 2
+    nhd_dir, tiger_dir = Path(args.nhd), Path(args.tiger)
+    nhd_m, tiger_m = (
+        load_manifest(nhd_dir / "manifest.json"),
+        load_manifest(tiger_dir / "manifest.json"),
+    )
+    verify_snapshot(nhd_dir, nhd_m)
+    verify_snapshot(tiger_dir, tiger_m)
+    gpkg = Path(args.work) / "NHD_H_Colorado_State_GPKG.gpkg"
+    if not gpkg.is_file():  # extracted into its own folder; the archive is never written to
+        gpkg.parent.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(nhd_dir / nhd_m.files[0].name) as zf:
+            zf.extract(gpkg.name, gpkg.parent)
+    archive = tiger_dir / tiger_m.files[0].name
+    polygons = [(r.attributes, r.rings) for r in read_polygons(archive)]
+    within = ring_bounds(ring for _, rings in polygons for ring in rings)
+    with Gazetteer(Path(args.index)) as gaz:
+        places = derive_places(polygons, gaz, tiger_m.snapshot_id)
+        water = derive_nhd(gnis_groups(gpkg), gaz, nhd_m.snapshot_id, within)
+        place_ids = {r.feature_id for r in places}
+        rows = places + [r for r in water if r.feature_id not in place_ids]
+        n = write_derived(out, rows, gaz.snapshot_id)
+    print(f"derived {n:,} extents -> {out}")
+    print(f"  places (TIGER)  {len(places):>6,}")
+    print(f"  water (NHD)     {len(water):>6,}")
     return 0
 
 
@@ -1154,6 +1231,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     fg.add_argument("--release", default="release/manifest.json")
     fg.set_defaults(func=_fetch_gnis)
+    fgeo = data.add_parser(
+        "fetch-geometry", help="NHD and TIGER snapshots for derived extents (pinned, checksummed)"
+    )
+    fgeo.add_argument(
+        "--snapshot", default="all", choices=["all", "nhd-co-2023-12-27", "tiger-place-co-2025"]
+    )
+    fgeo.add_argument("--manifest-dir", default="data/manifests")
+    fgeo.set_defaults(func=_fetch_geometry)
     fb = data.add_parser(
         "fetch-gbif", help="download the pinned CU Herbarium snapshot (or --request a new one)"
     )
@@ -1190,6 +1275,7 @@ def main(argv: list[str] | None = None) -> int:
     aru.add_argument("--index", default="data/derived/gazetteer.sqlite")
     aru.add_argument("--out", default="eval/reports")
     aru.add_argument("--extents", help=_EXTENTS_HELP)
+    aru.add_argument("--derived-extents", help=_DERIVED_HELP)
     aru.set_defaults(func=_audit_rules)
     alm = aud.add_parser("llm", help="run LLM extraction on the audit sample (llama-server)")
     alm.add_argument("--sample", default="eval/audit/audit-50.json")
@@ -1198,6 +1284,7 @@ def main(argv: list[str] | None = None) -> int:
     alm.add_argument("--url", default="http://127.0.0.1:8080")
     alm.add_argument("--release", default="release/manifest.json")
     alm.add_argument("--extents", help=_EXTENTS_HELP)
+    alm.add_argument("--derived-extents", help=_DERIVED_HELP)
     alm.add_argument("--cache", default="eval/.cache/llm", help="completion cache directory")
     alm.add_argument("--no-cache", action="store_true", help="call the model for every record")
     alm.set_defaults(func=_audit_llm)
@@ -1211,6 +1298,7 @@ def main(argv: list[str] | None = None) -> int:
     asc.add_argument("--hybrid", help="also score this hybrid report (written as -score-<id>)")
     asc.add_argument("--out", default="eval/reports")
     asc.add_argument("--with-extents", action="store_true", help=_WITH_EXTENTS_HELP)
+    asc.add_argument("--with-derived", action="store_true", help=_WITH_DERIVED_HELP)
     asc.set_defaults(func=_audit_score)
 
     ahy = aud.add_parser("hybrid", help="combine the rules and LLM reports into a hybrid report")
@@ -1220,6 +1308,7 @@ def main(argv: list[str] | None = None) -> int:
     ahy.add_argument("--release", default="release/manifest.json")
     ahy.add_argument("--out", default="eval/reports")
     ahy.add_argument("--with-extents", action="store_true", help=_WITH_EXTENTS_HELP)
+    ahy.add_argument("--with-derived", action="store_true", help=_WITH_DERIVED_HELP)
     ahy.set_defaults(func=_audit_hybrid)
 
     mod = sub.add_parser("model", help="pinned local LLM").add_subparsers(
@@ -1329,6 +1418,7 @@ def main(argv: list[str] | None = None) -> int:
     br.add_argument("--extent-m", type=float, help="reviewed extent (geographic radial), metres")
     br.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
     br.add_argument("--extents", help=_EXTENTS_HELP)
+    br.add_argument("--derived-extents", help=_DERIVED_HELP)
     br.set_defaults(func=_baseline_run)
 
     it = sub.add_parser(
@@ -1347,6 +1437,7 @@ def main(argv: list[str] | None = None) -> int:
     it.add_argument("--extent-m", type=float, help="reviewed extent (geographic radial), metres")
     it.add_argument("--extent-note", help="why that extent (recorded with the proposal)")
     it.add_argument("--extents", help=_EXTENTS_HELP)
+    it.add_argument("--derived-extents", help=_DERIVED_HELP)
     it.set_defaults(func=_baseline_run)
 
     rv = sub.add_parser("review", help="curator review store: import, decide, export")
@@ -1368,6 +1459,7 @@ def main(argv: list[str] | None = None) -> int:
     ri.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     ri.add_argument("--index", default="data/derived/gazetteer.sqlite")
     ri.add_argument("--extents", help=_EXTENTS_HELP)
+    ri.add_argument("--derived-extents", help=_DERIVED_HELP)
     ri.add_argument("--url", default="http://127.0.0.1:8080")
     ri.add_argument("--release", default="release/manifest.json")
     ri.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
@@ -1385,6 +1477,7 @@ def main(argv: list[str] | None = None) -> int:
     rw.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     rw.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rw.add_argument("--extents", help=_EXTENTS_HELP)
+    rw.add_argument("--derived-extents", help=_DERIVED_HELP)
     rw.add_argument("--url", default="http://127.0.0.1:8080")
     rw.add_argument("--release", default="release/manifest.json")
     rw.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
@@ -1421,6 +1514,7 @@ def main(argv: list[str] | None = None) -> int:
     rd.add_argument("--extent-note", help="how the extent was determined (required with it)")
     rd.add_argument("--key", help="idempotency key (default: hash of the decision)")
     rd.add_argument("--extents", help=_EXTENTS_HELP)
+    rd.add_argument("--derived-extents", help=_DERIVED_HELP)
     rd.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rd.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     rd.set_defaults(func=_review_decide)
@@ -1451,6 +1545,7 @@ def main(argv: list[str] | None = None) -> int:
     rs = rv_sub.add_parser("serve", help="the local review screen (queue, map, decisions)")
     rs.add_argument("--db", default="data/review/review.sqlite", help=db_help)
     rs.add_argument("--extents", help=_EXTENTS_HELP)
+    rs.add_argument("--derived-extents", help=_DERIVED_HELP)
     rs.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rs.add_argument("--host", default="127.0.0.1", help="loopback only")
     rs.add_argument("--port", type=int, default=8000)
@@ -1462,6 +1557,15 @@ def main(argv: list[str] | None = None) -> int:
 
     ex = sub.add_parser("extents", help="the reviewed-extent store (curator-measured radials)")
     ex_sub = ex.add_subparsers(dest="extents_command", required=True)
+    ed = ex_sub.add_parser("derive", help="derived extents from the pinned NHD and TIGER snapshots")
+    ed.add_argument("--nhd", default="data/raw/nhd/2023-12-27")
+    ed.add_argument("--tiger", default="data/raw/tiger/2025")
+    ed.add_argument(
+        "--work", default="data/derived/nhd-extract", help="where the GeoPackage is extracted"
+    )
+    ed.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    ed.add_argument("--out", default="data/extents/derived.csv")
+    ed.set_defaults(func=_extents_derive)
     ew = ex_sub.add_parser(
         "worksheet", help="write a new store with one pending row per annotated reference"
     )

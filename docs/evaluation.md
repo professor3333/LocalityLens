@@ -173,6 +173,16 @@ dev-2's labels: 11 regions, 10 correct (91%), coverage 10 of 36 (28%)
 ([findings](../eval/reports/extents-findings.md), [batch 4](../eval/reports/extents-batch-4-findings.md)).
 No test feature has a measured extent, so no system computes test regions.
 
+**These precision figures are inflated.** The store measured only features the annotations
+accepted, so a wrong pick could never get a region.
+[Derived extents](../data/extents/README.md) (Census place polygons and NHD geometry by GNIS ID,
+opt-in) give regions to about 12,000 features, and they show the honest picture:
+- **Owner-annotated read samples:** hybrid-1 computes 52 regions, 33 correct (63%).
+- **Claude-annotated dev-2 to dev-4:** 51 regions, 24 correct (47%), useful coverage 10% → 25%.
+- **Of the 52 regions the derived extents add, 15 are correct.** 35 pick the wrong reference,
+  usually a town named in an offset when the label names a more specific place
+  ([findings](../eval/reports/derived-extents-findings.md)).
+
 <details>
 <summary><b>Development history: dev and validation scores by rules version</b></summary>
 

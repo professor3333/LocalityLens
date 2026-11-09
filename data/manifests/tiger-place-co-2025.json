@@ -1,0 +1,28 @@
+{
+  "manifest_version": "2",
+  "snapshot_id": "tiger-place-co-2025",
+  "source": "TIGER/Line Shapefile, Current, State, Colorado, Place (tl_2025_08_place)",
+  "publisher": "U.S. Department of Commerce, U.S. Census Bureau, Geography Division",
+  "retrieved_at": "2026-11-09T03:03:32+00:00",
+  "licence": "Not copyrighted (U.S. Census Bureau); acknowledgement of the source is required",
+  "usage_constraints": "The TIGER/Line Shapefile products are not copyrighted however TIGER/Line and Census TIGER are registered trademarks of the U.S. Census Bureau. These products are free to use in a product or publication, however acknowledgement must be given to the U.S. Census Bureau as the source. The boundary information in the TIGER/Line Shapefiles are for statistical data collection and tabulation purposes only; their depiction and designation for statistical purposes does not constitute a determination of jurisdictional authority or rights of ownership or entitlement and they are not legal land descriptions. (verbatim from the ISO metadata)",
+  "citation": "U.S. Census Bureau, 2025 TIGER/Line Shapefiles: Places, Colorado",
+  "horizontal_datum": "North American Datum of 1983",
+  "ellipsoid": "Geodetic Reference System 80",
+  "doi": null,
+  "record_count": null,
+  "query": null,
+  "files": [
+    {
+      "name": "tl_2025_08_place.zip",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2025/PLACE/tl_2025_08_place.zip",
+      "sha256": "e0072e2f1c049e53d598119014e6bc93f82a0a02082b3604d81b0a8c3e8b043c",
+      "size_bytes": 2791333,
+      "publication_date": "2025-09-18",
+      "server_last_modified": null
+    }
+  ],
+  "notes": [
+    "Used only to derive feature extents (localitylens.geo.derived_extents); never shown to a model."
+  ]
+}
