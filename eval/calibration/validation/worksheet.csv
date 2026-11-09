@@ -1,61 +1,61 @@
 audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
-C01,2573326186,Fremont,4 miles northwest of Canyon City.
-C02,2573324715,Mesa,Hwy I-70 at Beavertail Bridge along Colorado River east of Grand Junction.
-C03,2573527447,Yuma,Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird.
-C04,2573472218,Mesa,Found 5 mi. up Jacob's Ladder Road.
-C05,2573524976,Boulder,19th and Alpine Street.
-C06,2573338177,Montezuma,"National Park Service. Yucca House National Monument, near spring."
-C07,2573331455,Yuma,Along U.S. 36 near Idalia.
-C08,2573470044,Montrose,"West Rim of Uncompahgre Plateau, near road between Columbine Pass and Uncompahgre Butte, along road to Love Mesa."
-C09,2573342668,Boulder,"Half mile E of Hiway Nine, 3 mi. S of LaFayette."
-C10,2573466495,Gunnison,"Castleton Ranch, along Carbon Creek, just east of County Road 730, near jct. with CR 737."
-C11,2573528622,Boulder,"Gravelly slope of Table Mesa, 3 mi. s. of Lyons."
-C12,2573335984,Baca,Slope along Sand Creek Canyon 25 mi. south of Pritchett.
-C13,2573328429,Boulder,Allenspark.
-C14,2573528603,Garfield,Ranch at the Roaring Fork. On the floodplain of the Roaring Fork River.
-C15,2573329589,La Plata,Sandstone hill ¼ mile west of Gem Village on north side US 160.
-C16,2573325456,Lake/Park,Ca. 0.25 mi N of Weston Pass summit.
-C17,2573469379,Boulder,Along the trail up Sawtooth Peak (Buchanan Pass). Just E of the summit of the pass.
-C18,2573489391,Boulder,"Bluebell Canyon, south edge of Boulder."
-C19,2573465664,Gunnison,5.5 mi. s.e. of Gothic.
-C20,2573326436,Larimer,"Roosevelt National Forest: Medicine Bow Mountains: Rawah Wilderness: Link Trail from Link/McIntyre Trailhead on Old Glendevey Road (County Road 80C), ca 46 air mi NW of Fort Collins."
-C21,2573341380,Moffat,"Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone."
-C22,2573537722,Moffat,"Summit of Rountop Mountain, Fire Lookout. Dinosaur National Monument. East-facing slope between lookout and brink of Hell Canyon."
-C23,2573433953,El Paso,Cultivated. S.E. Corner of Uinta and Hancock.
-C24,4435941311,LAS ANIMAS,"Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa."
-C25,2573469544,Montrose,"Vernal Mesa, 15 mi. east of Montrose."
-C26,2573494576,Montezuma,"Yucca House National Monument, west Ishmay property, ¼ mile south of gravel pit."
-C27,2573544050,Costilla,Intersect of dirt roads along Alimosita Creek.
-C28,2573341695,Larimer,"Skyland Ranch, 6 1/2 miles n. east of Estes Park."
-C29,2573327103,Jefferson,Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Rock Creek.
-C30,2573373642,Boulder,"Boulder Mountain Parks. West side of Bear Pk. & S. Boulder Pk, in rich ravine below the W. ridge of Bear Pk."
-C31,2573466253,Custer,Bull Domingo Hills at east edge of Wet Mountain Valley about 1 mile north of Westcliffe.
-C32,2573418149,Larimer,"Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins."
-C33,2573476365,Chaffee,"S. slope Mt. Shavano, 10 mi. n. w. Salida."
-C34,2573343264,Yuma,"Approx. 12 miles northwest of Idalia, along the Arikaree River."
-C35,2573484913,Weld,13T 0520450/ 449820; T12N R64W SEC20 E. central part
-C36,2573471302,Pitkin,Along Maroon Creek near Aspen.
-C37,2573560330,Archuleta,BLM. Samjbrito Wetalnds.State Hwy 140 to County Road 136. On 136 ca. 4 mi. to County Road 134
-C38,3950494394,Fremont,"Wet Mountains; Grape Creek drainage, Bear Gulch tributary; ~1.5 miles NW of Yorkville, ~1.5 mile SW of Curley Peak"
-C39,2573435343,Dolores,"Lone Mesa State Park, 7.5 miles north of southern entrance at FR 514."
-C40,2573349209,Grand,"Fraser Experimental Forest, near Fool Creek gaging station."
-C41,2573323962,Moffat,"Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table."
-C42,2573541981,Weld,3 miles east of Roggen on the Painter Hereford Ranch.
-C43,2573331131,Conejos,"Along Conejos River, Near Antonito."
-C44,2573338536,Pueblo,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, drainage N of North Peak."
-C45,2573337276,Grand,Cirque of the Peck Glacier and base of the west slopes of Lone Eagle Peak.
-C46,2573394857,Clear Creek,Moun tains about the head waters of Clear Creek. In the valley near Empire.
-C47,2573526802,Adams,"Lutz Reservoir, NW of Barr Lake."
-C48,2573448333,Larimer,Junction of Hagues Creek and Paudre [sic] River.
-C49,2573332725,Otero,Edge of pond on the north side of the Arkansas River.
-C50,2573534486,San Juan,San Juan National Forest: Tenmile Basin. Animas River drainage ca. 18 mi. S.E. of Silverton. Meadow NE and above Balsam Lake.
-C51,2573492269,Custer,13 mi SW of Westcliffe on Hermit road.
-C52,2573341504,Jefferson,Genessee Mountain.
-C53,2573339456,Park/Summit,Hoosier Pass.
-C54,2573335806,Boulder,"Boulder, 28th Street north of Arapahoe St., along irrigation ditch."
-C55,2573449357,Boulder,"Boulder Mt. Parks, NBS Mesa. Along the Enchanted Mesa cutoff trails just S of the gully."
-C56,2573539254,Larimer,One mile below summit Pennock Pass.
-C57,2573337040,Boulder,"Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel."
-C58,2573337547,Larimer,"Along County Road 27, ~2 mi. N of US 34."
-C59,2573528921,La Plata,"Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station."
-C60,2573334051,Boulder,"Eldorado Canyon State Park, Upper Big Bluestem Trail."
+C01,2573326186,Fremont,4 miles northwest of Canyon City.,distance_and_direction,yes,Canyon City,191867,4,mile,NW,,extent,
+C02,2573324715,Mesa,Hwy I-70 at Beavertail Bridge along Colorado River east of Grand Junction.,named_feature,yes,Beavertail Bridge,absent,,,,,extent;feature_not_in_gnis,multi: Hwy I-70; along Colorado River east of Grand Junction. Bridge is the most specific collecting landmark.
+C03,2573527447,Yuma,Sand hills 12 mi N of Wray of East-trending side road that ends just W of Laird.,distance_and_direction,yes,Wray,183032,12,mile,N,,extent,"multi: sand hills; East-trending side road ending just W of Laird. Road identifies context, not a road distance."
+C04,2573472218,Mesa,Found 5 mi. up Jacob's Ladder Road.,route_relative,no,Jacob's Ladder Road,absent,5,mile,,,route_geometry;feature_not_in_gnis,Up the road is a route distance; starting point unspecified.
+C05,2573524976,Boulder,19th and Alpine Street.,named_feature,yes,19th;Alpine Street,absent,,,,,other: street intersection geometry;feature_not_in_gnis,Intersection; city unstated in label.
+C06,2573338177,Montezuma,"National Park Service. Yucca House National Monument, near spring.",named_feature,yes,Yucca House National Monument,absent,,,,near,extent;other: unidentified spring;feature_not_in_gnis,Near unnamed spring within monument.
+C07,2573331455,Yuma,Along U.S. 36 near Idalia.,named_feature,yes,Idalia,204817,,,,near,extent;distance,multi: Along U.S. 36.
+C08,2573470044,Montrose,"West Rim of Uncompahgre Plateau, near road between Columbine Pass and Uncompahgre Butte, along road to Love Mesa.",between_features,no,Columbine Pass;Uncompahgre Butte,185774;185583,,,,near,other: location on road,multi: West Rim of Uncompahgre Plateau; along road to Love Mesa.
+C09,2573342668,Boulder,"Half mile E of Hiway Nine, 3 mi. S of LaFayette.",distance_and_direction,yes,Hiway Nine,absent,Half,mile,E,,extent;feature_not_in_gnis,multi: 3 mi. S of LaFayette. Road location requires segment identification.
+C10,2573466495,Gunnison,"Castleton Ranch, along Carbon Creek, just east of County Road 730, near jct. with CR 737.",named_feature,yes,Castleton Ranch,absent,,,,near,extent;feature_not_in_gnis,multi: along Carbon Creek; just east of CR 730 near junction CR 737.
+C11,2573528622,Boulder,"Gravelly slope of Table Mesa, 3 mi. s. of Lyons.",named_feature,yes,Table Mesa,178285?,,,,,extent;which_feature,Gravelly slope. multi: 3 mi. s. of Lyons. Table Mountain variant matches county but distance south of Lyons is questionable; identity uncertain?.
+C12,2573335984,Baca,Slope along Sand Creek Canyon 25 mi. south of Pritchett.,named_feature,yes,Sand Creek Canyon,absent,,,,,extent;feature_not_in_gnis,Slope along canyon. multi: 25 mi. south of Pritchett.
+C13,2573328429,Boulder,Allenspark.,named_feature,yes,Allenspark,178219,,,,,extent,
+C14,2573528603,Garfield,Ranch at the Roaring Fork. On the floodplain of the Roaring Fork River.,named_feature,yes,Roaring Fork River,174812,,,,,extent,Floodplain. multi: Ranch at the Roaring Fork.
+C15,2573329589,La Plata,Sandstone hill ¼ mile west of Gem Village on north side US 160.,distance_and_direction,yes,Gem Village,184391,¼,mile,W,,extent,North side US 160; sandstone hill.
+C16,2573325456,Lake/Park,Ca. 0.25 mi N of Weston Pass summit.,distance_and_direction,yes,Weston Pass,180216,0.25,mile,N,Ca.,extent,Pass summit is reference.
+C17,2573469379,Boulder,Along the trail up Sawtooth Peak (Buchanan Pass). Just E of the summit of the pass.,direction_only,yes,Buchanan Pass,178163,,,E,,extent;distance,Just E of pass summit. multi: along trail up Sawtooth Peak. GNIS primary county Grand; pass-border context retained.
+C18,2573489391,Boulder,"Bluebell Canyon, south edge of Boulder.",named_feature,yes,Bluebell Canyon,181223,,,,,extent,multi: south edge of Boulder.
+C19,2573465664,Gunnison,5.5 mi. s.e. of Gothic.,distance_and_direction,yes,Gothic,188777,5.5,mile,SE,,extent,
+C20,2573326436,Larimer,"Roosevelt National Forest: Medicine Bow Mountains: Rawah Wilderness: Link Trail from Link/McIntyre Trailhead on Old Glendevey Road (County Road 80C), ca 46 air mi NW of Fort Collins.",named_feature,yes,Link Trail,absent,,,,,extent;feature_not_in_gnis,multi: Link/McIntyre Trailhead on Old Glendevey Road CR 80C; ca 46 air mi NW Fort Collins; Roosevelt NF; Medicine Bow Mountains; Rawah Wilderness.
+C21,2573341380,Moffat,"Northeast-facing slope of Douglas Mt., 3/5 mi. SW of Greystone.",distance_and_direction,yes,Greystone,170638,3/5,mile,SW,,extent,multi: northeast-facing slope Douglas Mt.
+C22,2573537722,Moffat,"Summit of Rountop Mountain, Fire Lookout. Dinosaur National Monument. East-facing slope between lookout and brink of Hell Canyon.",named_feature,yes,Rountop Mountain,170795?,,,,,extent,"Summit/fire lookout, east-facing slope between lookout and brink of Hell Canyon. multi: Dinosaur National Monument. Mountain spelling uncertain?."
+C23,2573433953,El Paso,Cultivated. S.E. Corner of Uinta and Hancock.,named_feature,yes,Uinta;Hancock,absent,,,,,other: intersection geometry;feature_not_in_gnis,SE corner of street intersection. Cultivated. City unstated.
+C24,4435941311,LAS ANIMAS,"Fishers Peak State Park, Raton Mesa and vicinity; east side of I-25 approx. 6 miles south of the town of Trinidad and just north of New Mexico; steep southwest facing slope of Fishers Peak Mesa.",named_feature,yes,Fishers Peak Mesa,194868,,,,,extent,Steep SW-facing slope. multi: Fishers Peak State Park; Raton Mesa and vicinity; east I-25 approx. 6 miles S Trinidad; north New Mexico.
+C25,2573469544,Montrose,"Vernal Mesa, 15 mi. east of Montrose.",named_feature,yes,Vernal Mesa,186848;203335,,,,,extent;which_feature,multi: 15 mi east Montrose. Both official/variant matches are defensible; label does not resolve them.
+C26,2573494576,Montezuma,"Yucca House National Monument, west Ishmay property, ¼ mile south of gravel pit.",distance_and_direction,yes,gravel pit,absent,¼,mile,S,,which_feature;extent;feature_not_in_gnis,Unnamed pit. multi: Yucca House National Monument; west Ishmay property.
+C27,2573544050,Costilla,Intersect of dirt roads along Alimosita Creek.,named_feature,yes,Alimosita Creek,193128?,,,,,extent;other: unidentified road intersection,Dirt-road intersection along creek. Alamosito Creek is a plausible spelling correction in Costilla; uncertain?.
+C28,2573341695,Larimer,"Skyland Ranch, 6 1/2 miles n. east of Estes Park.",named_feature,yes,Skyland Ranch,absent,,,,,extent;feature_not_in_gnis,multi: 6 1/2 miles northeast Estes Park.
+C29,2573327103,Jefferson,Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Rock Creek.,named_feature,yes,Rock Creek,181234,,,,,extent,multi: Rocky Flats Site; 7 miles S Boulder on Rocky Flats Pediment. Southern Boulder County stream is consistent with Rocky Flats context; GNIS primary county differs.
+C30,2573373642,Boulder,"Boulder Mountain Parks. West side of Bear Pk. & S. Boulder Pk, in rich ravine below the W. ridge of Bear Pk.",named_feature,yes,Bear Pk.,181215,,,,,extent,Rich ravine below W ridge Bear Pk. multi: west side Bear Pk. and S. Boulder Pk.; Boulder Mountain Parks.
+C31,2573466253,Custer,Bull Domingo Hills at east edge of Wet Mountain Valley about 1 mile north of Westcliffe.,distance_and_direction,yes,Westcliffe,192151,1,mile,N,about,extent,multi: Bull Domingo Hills at east edge Wet Mountain Valley.
+C32,2573418149,Larimer,"Roosevelt National Forest: Front Range: West Whilte Pine Mountain on Forest Road 100 off Pennock Pass Road (County Road 44H), ca 18 air mi W of Fort Collins.",named_feature,yes,West Whilte Pine Mountain,177330,,,,,extent,multi: Forest Road 100 off Pennock Pass Road CR44H; ca 18 air mi W Fort Collins; Roosevelt NF; Front Range. Whilte appears typographical?.
+C33,2573476365,Chaffee,"S. slope Mt. Shavano, 10 mi. n. w. Salida.",named_feature,yes,Mt. Shavano,189451,,,,,extent,S slope. multi: 10 mi NW Salida.
+C34,2573343264,Yuma,"Approx. 12 miles northwest of Idalia, along the Arikaree River.",distance_and_direction,yes,Idalia,204817,12,mile,NW,Approx.,extent,multi: along Arikaree River.
+C35,2573484913,Weld,13T 0520450/ 449820; T12N R64W SEC20 E. central part,no_locality,no,,,,,,,other: coordinate or cadastral description outside inventory,UTM-like numbers and township/range/section only; no named locality. Coordinate interpretation unsupported.
+C36,2573471302,Pitkin,Along Maroon Creek near Aspen.,named_feature,yes,Maroon Creek,180007;180261,,,,near,extent;which_feature,multi: near Aspen. Both official/variant matches are defensible; label does not resolve them.
+C37,2573560330,Archuleta,BLM. Samjbrito Wetalnds.State Hwy 140 to County Road 136. On 136 ca. 4 mi. to County Road 134,itinerary,no,State Hwy 140;County Road 136;County Road 134,absent,4,mile,,ca.,route_geometry;feature_not_in_gnis,Travel directions to wetland. multi: BLM Samjbrito Wetalnds (spelling as supplied).
+C38,3950494394,Fremont,"Wet Mountains; Grape Creek drainage, Bear Gulch tributary; ~1.5 miles NW of Yorkville, ~1.5 mile SW of Curley Peak",distance_and_direction,yes,Yorkville,191847,1.5,mile,NW,~,extent,multi: ~1.5 mile SW Curley Peak; Wet Mountains; Grape Creek drainage Bear Gulch tributary.
+C39,2573435343,Dolores,"Lone Mesa State Park, 7.5 miles north of southern entrance at FR 514.",distance_and_direction?,yes,southern entrance at FR 514,absent,7.5,mile,N,,extent;which_feature;feature_not_in_gnis,multi: Lone Mesa State Park. Distance may follow access road? No explicit along-route wording.
+C40,2573349209,Grand,"Fraser Experimental Forest, near Fool Creek gaging station.",named_feature,yes,Fool Creek gaging station,absent,,,,near,extent;distance;feature_not_in_gnis,multi: Fraser Experimental Forest. Station is more specific than creek.
+C41,2573323962,Moffat,"Dinosaur National Monument. E. Fork Sand Canyon, W of the Billiard Table.",named_feature,yes,E. Fork Sand Canyon,absent,,,,,extent;feature_not_in_gnis,multi: W of Billiard Table; Dinosaur National Monument.
+C42,2573541981,Weld,3 miles east of Roggen on the Painter Hereford Ranch.,named_feature,yes,Painter Hereford Ranch,absent,,,,,extent;feature_not_in_gnis,multi: 3 miles east Roggen.
+C43,2573331131,Conejos,"Along Conejos River, Near Antonito.",named_feature,yes,Conejos River,192925,,,,Near,extent,multi: near Antonito.
+C44,2573338536,Pueblo,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity. Wet Mountains, drainage N of North Peak.",direction_only,yes,North Peak,192550,,,N,,extent;distance,Drainage N of peak. multi: Wet Mountains; Wet Mountain Valley; Sangre de Cristo Range and Vicinity.
+C45,2573337276,Grand,Cirque of the Peck Glacier and base of the west slopes of Lone Eagle Peak.,named_feature,yes,Peck Glacier,178449,,,,,extent,Cirque of glacier at base of west slopes Lone Eagle Peak.
+C46,2573394857,Clear Creek,Moun tains about the head waters of Clear Creek. In the valley near Empire.,named_feature,yes,Empire,181355,,,,near,extent;distance,Valley near Empire. multi: mountains about headwaters Clear Creek.
+C47,2573526802,Adams,"Lutz Reservoir, NW of Barr Lake.",named_feature,yes,Lutz Reservoir,184613;200193,,,,,extent;which_feature,multi: NW Barr Lake. Both official/variant matches are defensible; label does not resolve them.
+C48,2573448333,Larimer,Junction of Hagues Creek and Paudre [sic] River.,between_features,no,Hagues Creek;Paudre River,177287;205018,,,,,other: confluence geometry,Junction/confluence; unsupported relation inventory. bracketed: sic. Paudre spelling as label.
+C49,2573332725,Otero,Edge of pond on the north side of the Arkansas River.,named_feature,yes,Arkansas River,78956,,,,,extent;which_feature,Unnamed pond north side river; pond cannot be independently identified from label. GNIS primary county is at the river mouth outside Colorado; same named interstate river.
+C50,2573534486,San Juan,San Juan National Forest: Tenmile Basin. Animas River drainage ca. 18 mi. S.E. of Silverton. Meadow NE and above Balsam Lake.,direction_only,yes,Balsam Lake,187821,,,NE,,extent;distance,Meadow NE and above lake. multi: San Juan NF; Tenmile Basin; Animas River drainage ca.18 mi SE Silverton.
+C51,2573492269,Custer,13 mi SW of Westcliffe on Hermit road.,distance_and_direction?,yes,Westcliffe,192151,13,mile,SW,,extent,multi: on Hermit road. Could be road distance? No explicit road-mi or along-road wording.
+C52,2573341504,Jefferson,Genessee Mountain.,named_feature,yes,Genessee Mountain,182105,,,,,extent,Spelling as label.
+C53,2573339456,Park/Summit,Hoosier Pass.,named_feature,yes,Hoosier Pass,179963,,,,,extent,
+C54,2573335806,Boulder,"Boulder, 28th Street north of Arapahoe St., along irrigation ditch.",named_feature,yes,28th Street;Arapahoe St.,absent,,,,,other: street and ditch geometry;feature_not_in_gnis,28th north of Arapahoe along irrigation ditch. multi: Boulder.
+C55,2573449357,Boulder,"Boulder Mt. Parks, NBS Mesa. Along the Enchanted Mesa cutoff trails just S of the gully.",named_feature,yes,Enchanted Mesa cutoff trails,absent,,,,,extent;other: unidentified gully;feature_not_in_gnis,Just S of gully. multi: Boulder Mt. Parks; NBS Mesa.
+C56,2573539254,Larimer,One mile below summit Pennock Pass.,distance_only?,yes,Pennock Pass,absent,One,mile,,,extent;direction;feature_not_in_gnis,Below summit: downhill or along road? No compass bearing; relation uncertain.
+C57,2573337040,Boulder,"Rollins Pass, 0.3 mi. N. of Needle Eye Tunnel.",distance_and_direction,yes,Needle Eye Tunnel,absent,0.3,mile,N,,extent;feature_not_in_gnis,multi: Rollins Pass.
+C58,2573337547,Larimer,"Along County Road 27, ~2 mi. N of US 34.",distance_and_direction,yes,US 34,absent,2,mile,N,~,extent;other: road reference point;feature_not_in_gnis,Along CR27; no explicit route distance. Reference intersection implied but not stated.
+C59,2573528921,La Plata,"Wallace Gulch Road going N from Rainbow gas sta., Bayfield & following Pine River short way; in irrigation field 1 mile from station.",route_relative,no,Rainbow gas sta.,absent,1,mile,,,route_geometry;which_feature;feature_not_in_gnis,Route from station along Wallace Gulch Road following Pine River; irrigation field. multi: Bayfield.
+C60,2573334051,Boulder,"Eldorado Canyon State Park, Upper Big Bluestem Trail.",named_feature,yes,Upper Big Bluestem Trail,absent,,,,,extent;feature_not_in_gnis,multi: Eldorado Canyon State Park.
