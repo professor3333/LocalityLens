@@ -1,0 +1,5 @@
+relation   distance_and_direction=69  named_feature=28  route_relative=10  itinerary=7  between_features=3  orthogonal_offsets=3
+retrieval  candidates_found=76  feature_absent_from_index=37  None=7
+proposal   needs_information=70  computed=23  unsupported=20  invalid_extraction=7
+  report  eval/benchmark/test-3/reports/test-3-llm-x2g2-qwen3.5-4b-q4km-extents-derived-sel2.md
+  data    eval/benchmark/test-3/reports/test-3-llm-x2g2-qwen3.5-4b-q4km-extents-derived-sel2.json

@@ -189,6 +189,14 @@ opt-in) give regions to about 12,000 features, and they show the honest picture:
   correct and 7 wrong regions (58% → 63% correct, coverage 22.5% → 12.5%). It is not used
   ([findings](../eval/reports/selection-check-findings.md),
   [test-2](../eval/reports/test-2-regions.md)).
+- **A GNIS-aware check** (`selection-2`: hold back only when the other named place is in GNIS
+  inside the region, or absent from GNIS) was checked on test-3. test-3 holds 120 unread "place,
+  offset" labels, annotated by Codex (agreement with the owner 54/60 on category, 55/60 on GNIS
+  IDs). The check was declared before annotation.
+  - **It held back 24 regions: 22 wrong, 2 correct.**
+  - **Precision rose only 4.0 points** (7 of 53 correct → 5 of 29), against the +5 needed, so
+    under the declared rule it does not work. It is not used
+    ([test-3](../eval/reports/test-3.md)).
 
 <details>
 <summary><b>Development history: dev and validation scores by rules version</b></summary>

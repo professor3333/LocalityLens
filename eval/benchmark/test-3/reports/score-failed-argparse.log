@@ -1,0 +1,4 @@
+usage: localitylens [-h]
+                    {data,ingest,audit,model,dev,benchmark,gazetteer,baseline,interpret,review,extents}
+                    ...
+localitylens: error: unrecognized arguments: --extents data/reviewed/extents.csv --derived-extents data/extents/derived.csv

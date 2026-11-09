@@ -54,6 +54,15 @@ measurements (67 features), and now also from Census place polygons and USGS NHD
   - Read data: precision rose to about 70%.
   - Unread test-2: it held back 8 correct and 7 wrong regions, and halved coverage
     ([result](../eval/reports/test-2-regions.md)). It is opt-in and not recommended.
+- **`selection-2`** holds a region back only when GNIS places the other named place inside the
+  region, or doesn't have it.
+  - **test-3:** 120 unread "place, offset" labels, Codex-annotated (agreement with the owner
+    54/60 on category, 55/60 on GNIS IDs), declared before annotation.
+  - **It held back 22 wrong and 2 correct regions.** Precision rose only from 13% to 17%,
+    against the +5 points needed, so under the declared rule it does not work
+    ([result](../eval/reports/test-3.md)).
+  - **On this label shape, most regions are wrong either way.** Of the 53 ready regions
+    without the check, 7 are correct.
 - **The rules-3 to rules-6 changes for "place, offset" labels** showed no gain on the samples
   drawn to test them (dev-3, dev-4).
 - **Qwen3.5-2B** as the fallback gives 49 against 4B's 51 of 92, at a quarter of the model time.

@@ -1,0 +1,197 @@
+{
+  "declaration": "eval/benchmark/declaration-test-3.json",
+  "amendments": [
+    "eval/benchmark/declaration-test-3-amendment-1.json"
+  ],
+  "note": "Totals only. Annotations by Codex (calibrated against the owner: category 54/60, GNIS IDs 55/60); secondary evidence. Per-record outputs stay under eval/benchmark/test-3/reports/.",
+  "label": "Codex-annotated; agreement with the owner 54/60 (category), 55/60 (GNIS IDs)",
+  "annotations": {
+    "commit": "ff55e8e",
+    "worksheet_sha256": "13135ff6eb76fb8095651b1fe4ac7cfaa9bd31b3a37098c39f698bb0a3c4a5fb",
+    "rows": 120,
+    "checker": "0 problems"
+  },
+  "run": {
+    "code_commit": "f4536856b503bf06242f93f57fa96937c7d16898",
+    "systems": {
+      "rules": "rules-6",
+      "llm": "llm-x2g2-qwen3.5-4b-q4km",
+      "hybrid": "hybrid-1",
+      "specimens": "gbif-cu-2026-11-01"
+    },
+    "without_check": {
+      "started": "2026-11-09T15:49:10Z",
+      "finished": "2026-11-09T16:18:32Z"
+    },
+    "with_check": {
+      "started": "2026-11-09T16:18:32Z",
+      "finished": "2026-11-09T16:43:55Z"
+    },
+    "llm_cache": "off",
+    "llm_wall_clock_minutes": {
+      "without_check": 28.5,
+      "with_check": 25.3
+    },
+    "technical_failure": "The first score command also passed --extents and --derived-extents, which audit score does not take (it reads the stores from the reports). argparse exited before scoring anything. The score step alone was rerun with the declared options; rules, LLM and hybrid were not rerun. The failed log is kept as score-failed-argparse.log."
+  },
+  "results": {
+    "without_check": {
+      "records": 120,
+      "categories": {
+        "answerable": 63,
+        "reference_absent": 44,
+        "unsupported": 13
+      },
+      "excluding_unsure": {
+        "records": 97,
+        "categories": {
+          "answerable": 53,
+          "reference_absent": 37,
+          "unsupported": 7
+        }
+      },
+      "rules": {
+        "ready": 50,
+        "correct": 5,
+        "useful_coverage": 5,
+        "answerable": 63,
+        "correct_proposal_candidates": 14,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 13,
+        "answerable_excl_unsure": 53
+      },
+      "llm": {
+        "ready": 43,
+        "correct": 6,
+        "useful_coverage": 6,
+        "answerable": 63,
+        "correct_proposal_candidates": 8,
+        "valid_extraction": 113,
+        "correct_candidates_excl_unsure": 8,
+        "answerable_excl_unsure": 53
+      },
+      "hybrid": {
+        "ready": 53,
+        "correct": 7,
+        "useful_coverage": 7,
+        "answerable": 63,
+        "correct_proposal_candidates": 16,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 15,
+        "answerable_excl_unsure": 53
+      },
+      "hybrid_vs_rules": {
+        "n": 63,
+        "rules": 14,
+        "llm": 16,
+        "difference": 0.032,
+        "ci95": [
+          0.0,
+          0.079
+        ],
+        "llm_only": 2,
+        "rules_only": 0,
+        "sign_test_p": 0.5
+      },
+      "llm_vs_rules": {
+        "n": 63,
+        "rules": 14,
+        "llm": 8,
+        "difference": -0.095,
+        "ci95": [
+          -0.206,
+          0.016
+        ],
+        "llm_only": 4,
+        "rules_only": 10,
+        "sign_test_p": 0.1796
+      }
+    },
+    "with_check": {
+      "records": 120,
+      "categories": {
+        "answerable": 63,
+        "reference_absent": 44,
+        "unsupported": 13
+      },
+      "excluding_unsure": {
+        "records": 97,
+        "categories": {
+          "answerable": 53,
+          "reference_absent": 37,
+          "unsupported": 7
+        }
+      },
+      "rules": {
+        "ready": 26,
+        "correct": 3,
+        "useful_coverage": 3,
+        "answerable": 63,
+        "correct_proposal_candidates": 14,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 13,
+        "answerable_excl_unsure": 53
+      },
+      "llm": {
+        "ready": 23,
+        "correct": 3,
+        "useful_coverage": 3,
+        "answerable": 63,
+        "correct_proposal_candidates": 8,
+        "valid_extraction": 113,
+        "correct_candidates_excl_unsure": 8,
+        "answerable_excl_unsure": 53
+      },
+      "hybrid": {
+        "ready": 29,
+        "correct": 5,
+        "useful_coverage": 5,
+        "answerable": 63,
+        "correct_proposal_candidates": 16,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 15,
+        "answerable_excl_unsure": 53
+      },
+      "hybrid_vs_rules": {
+        "n": 63,
+        "rules": 14,
+        "llm": 16,
+        "difference": 0.032,
+        "ci95": [
+          0.0,
+          0.079
+        ],
+        "llm_only": 2,
+        "rules_only": 0,
+        "sign_test_p": 0.5
+      },
+      "llm_vs_rules": {
+        "n": 63,
+        "rules": 14,
+        "llm": 8,
+        "difference": -0.095,
+        "ci95": [
+          -0.206,
+          0.016
+        ],
+        "llm_only": 4,
+        "rules_only": 10,
+        "sign_test_p": 0.1796
+      }
+    }
+  },
+  "decision_rule": "works iff held back wrong >= 2 x held back correct AND hybrid ready-region precision rises by >= 5 percentage points",
+  "decision": {
+    "held_back_total": 24,
+    "held_back_correct": 2,
+    "held_back_wrong": 22,
+    "precision_without": 0.1320754716981132,
+    "precision_with": 0.1724137931034483,
+    "precision_rise_pp": 4.0,
+    "works": false,
+    "condition_held_back_ratio": "met (22 wrong vs 2 correct; needed >= 4)",
+    "condition_precision": "not met (+4.0 points; needed +5)",
+    "result": "does not work"
+  },
+  "expectation_stated_in_advance": "either outcome plausible; the targeted sample should hold more regions than test-2 did (it held 24 against test-2's 15 for selection-1)"
+}
