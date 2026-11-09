@@ -2,7 +2,7 @@
 
 The language model in LocalityLens **reads** a specimen's locality description. It never
 places it: coordinates and radii come only from GNIS records and deterministic geometry code.
-This card describes the model as used in release `0.1.0`.
+This card describes the model as used in release `0.1.1` (the same model, prompt and settings as `0.1.0`).
 
 ## Intended use
 

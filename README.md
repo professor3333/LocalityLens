@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/types-mypy%20strict-2A6DB2" alt="mypy strict">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3DA639" alt="MIT licence"></a>
   <br>
-  <img src="https://img.shields.io/badge/release-v0.1.0-F4B860" alt="Release v0.1.0">
+  <img src="https://img.shields.io/badge/release-v0.1.1-F4B860" alt="Release v0.1.1">
   <img src="https://img.shields.io/badge/gazetteer-USGS%20GNIS%202026--09--29-5FD3B5" alt="Gazetteer: USGS GNIS 2026-09-29">
   <img src="https://img.shields.io/badge/inference-local%20only-103A34" alt="Local inference only">
   <a href="https://professor3333.github.io/LocalityLens/"><img src="https://img.shields.io/badge/demo-static%20replay-B45309" alt="Demo: static replay"></a>
@@ -41,8 +41,8 @@ result is. **LocalityLens** is a review workbench for that job. A small, local l
 curator approves, corrects, or defers every result before it is exported as Darwin Core.
 
 > [!NOTE]
-> **Release v0.1.0: a research prototype, not a production georeferencing service.** This
-> README separates what exists (✅) from what is planned (🔜). The first milestone has been measured on a locked test split
+> **Release v0.1.1: a research prototype, not a production georeferencing service.** This
+> README separates what exists (✅) from what is planned (🔜). [Results on one page](docs/results.md). The first milestone has been measured on a locked test split
 > three times, and every result is published below: the LLM alone fell short
 > ([release 1](eval/reports/test-release-1.md)), and rules with an LLM fallback cleared the
 > target by a thin margin, both with the first rules ([release 2](eval/reports/test-release-2.md))
@@ -519,7 +519,7 @@ sample: the containerized worker processed all 50 records (36 needing informatio
 
 ```console
 $ curl -s http://127.0.0.1:8000/readyz | jq -c '{ready, release: .release.release, model: .release.model.id, llama_cpp: .release.llama_cpp.build, store: .store_schema}'
-{"ready":true,"release":"0.1.0","model":"Qwen/Qwen3.5-4B","llama_cpp":"b11960-8642541b2","store":"review-3"}
+{"ready":true,"release":"0.1.1","model":"Qwen/Qwen3.5-4B","llama_cpp":"b11960-8642541b2","store":"review-3"}
 ```
 
 - **llama-server never gets a network address:** it shares the worker's network namespace and
@@ -891,7 +891,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · ✅ GeoJSON export (WGS 84, EPSG:1188, +4 m) · candidate disambiguation · footprints | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ [test-2](eval/reports/test-2.md), a fresh held-out sample declared before annotation (Claude-annotated, not independent): hybrid-1 43 vs rules 34 of 80, +11.3 pts, **yes** · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · ✅ GEOLocate on the read samples: points within 5 km of the defensible position, GEOLocate 58 vs hybrid-1 61 of 85 (owner-annotated) · quantization study | 🚧 started |
-| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · ✅ specimen snapshot archived ([data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)) · ✅ [v0.1.0](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.0) | ✅ v0.1.0 |
+| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · ✅ specimen snapshot archived ([data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)) · ✅ [v0.1.0](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.0) · ✅ derived extents (opt-in) and a declared selection-check experiment (failed on unread labels) · ✅ [v0.1.1](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.1), [results on one page](docs/results.md) | ✅ v0.1.1 |
 
 <details>
 <summary><b>What exists today, module by module</b></summary>
