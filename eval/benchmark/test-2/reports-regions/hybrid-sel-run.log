@@ -1,0 +1,7 @@
+source     rules=99  llm=21
+llm_call   made=51  skipped=69
+relation   named_feature=52  distance_and_direction=35  direction_only=20  between_features=6  other=4  distance_only=1  itinerary=1  route_relative=1
+retrieval  candidates_found=90  feature_absent_from_index=23  no_reference_feature=7
+proposal   needs_information=92  computed=16  unsupported=12
+  report  eval/benchmark/test-2/reports-regions/test-2-hybrid-1-extents-derived-sel.md
+  data    eval/benchmark/test-2/reports-regions/test-2-hybrid-1-extents-derived-sel.json

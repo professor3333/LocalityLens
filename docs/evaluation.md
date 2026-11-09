@@ -182,6 +182,13 @@ opt-in) give regions to about 12,000 features, and they show the honest picture:
 - **Of the 52 regions the derived extents add, 15 are correct.** 35 pick the wrong reference,
   usually a town named in an offset when the label names a more specific place
   ([findings](../eval/reports/derived-extents-findings.md)).
+- **On test-2's unread labels** (Claude-annotated, declared, totals only), hybrid-1 with derived
+  extents has 31 ready regions, 18 correct (58%), useful coverage 22.5%.
+- **A selection check written on dev data** (`selection-1`: hold back a region when the label
+  names another typed feature) raised dev precision to about 70%. On test-2 it held back 8
+  correct and 7 wrong regions (58% → 63% correct, coverage 22.5% → 12.5%). It is not used
+  ([findings](../eval/reports/selection-check-findings.md),
+  [test-2](../eval/reports/test-2-regions.md)).
 
 <details>
 <summary><b>Development history: dev and validation scores by rules version</b></summary>

@@ -51,10 +51,13 @@ reference.
 
 ## What this means
 
-- **The check moves precision from about 50–60% to about 70%,** at a cost of a few points of
-  coverage. It is still far from the 95% target. Most of the remaining errors cannot be seen in
+- **On the dev data it was written from, the check moved precision from about 50–60% to about
+  70%,** at a cost of a few points of coverage. It is still far from the 95% target. Most of the remaining errors cannot be seen in
   the label text.
-- **These are in-sample numbers.** A declared check on unread labels comes next (test-2, totals
-  only).
+- **These are in-sample numbers, and they did not hold up.** On test-2's unread labels (declared
+  check, totals only), the check held back 8 correct and 7 wrong regions. Correct ready regions
+  went from 58% to 63%, and useful coverage fell from 22.5% to 12.5%
+  ([result](test-2-regions.md)). `selection-1` is kept as a failed experiment: opt-in, never the
+  default.
 - **The check does not change any region, extent or interpretation.** It only decides which
   computed regions a curator sees as ready and which come with a question.

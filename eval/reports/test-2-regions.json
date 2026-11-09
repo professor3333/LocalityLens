@@ -1,0 +1,62 @@
+{
+  "declaration": "eval/benchmark/declaration-test-2-regions.json",
+  "note": "Totals only. Annotations by Claude (not independent). Per-record outputs stay under eval/benchmark/test-2/reports-regions/.",
+  "run": {
+    "code_commit": "2a22383af557b83c7443eb37f1434edb21547a41",
+    "started": "2026-11-09T03:41:12Z",
+    "finished": "2026-11-09T04:29:17Z",
+    "llm_cache": "off"
+  },
+  "results": {
+    "without_check": {
+      "rules": {
+        "ready": 26,
+        "correct": 15,
+        "answerable": 80
+      },
+      "llm": {
+        "ready": 25,
+        "correct": 17,
+        "answerable": 80
+      },
+      "hybrid": {
+        "ready": 31,
+        "correct": 18,
+        "answerable": 80
+      },
+      "correct_proposal_candidates": {
+        "rules": 34,
+        "llm": 31,
+        "hybrid": 43
+      }
+    },
+    "with_check": {
+      "rules": {
+        "ready": 12,
+        "correct": 8,
+        "answerable": 80
+      },
+      "llm": {
+        "ready": 15,
+        "correct": 9,
+        "answerable": 80
+      },
+      "hybrid": {
+        "ready": 16,
+        "correct": 10,
+        "answerable": 80
+      },
+      "correct_proposal_candidates": {
+        "rules": 34,
+        "llm": 31,
+        "hybrid": 43
+      }
+    }
+  },
+  "hybrid_held_back_by_check": {
+    "total": 15,
+    "correct": 8,
+    "wrong": 7
+  },
+  "expectation_stated_in_advance": "40-60% correct without the check, 60-70% with it, 3-5 points of coverage lost"
+}

@@ -1,0 +1,5 @@
+critical_exact_match         rules=71/120  llm=57/120  hybrid=68/120
+reference_top1               rules=37/80  llm=47/80  hybrid=53/80
+correct_proposal_candidates  rules=34/80  llm=31/80  hybrid=43/80
+  report  eval/benchmark/test-2/reports-regions/test-2-score-hybrid-1-extents-derived-sel.md
+  data    eval/benchmark/test-2/reports-regions/test-2-score-hybrid-1-extents-derived-sel.json
