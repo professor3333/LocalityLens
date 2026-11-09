@@ -431,7 +431,11 @@ def _extents_or_refuse(args: argparse.Namespace) -> Any:
         return False
 
 
-_LOCKED: Final = (Path("eval/benchmark/test"), Path("eval/benchmark/test-2"))
+_LOCKED: Final = (
+    Path("eval/benchmark/test"),
+    Path("eval/benchmark/test-2"),
+    Path("eval/benchmark/test-3"),
+)
 
 
 def _is_locked(path: Path) -> bool:
