@@ -1,0 +1,44 @@
+{
+  "declaration": "test-2-regions",
+  "declared": "2026-11-09",
+  "note": "A second, declared scoring of test-2, as declaration-test-2.json requires for any change. Frozen before any system runs on test-2 with extents or the selection check. Committed and pushed before the run; totals are published whatever they are. Per-record outputs are never read.",
+  "code_commit": "7a543b5343ab6ac0db3e1e926f7b9d44cbf994fb",
+  "question": "On labels nobody has read, does the selection check (selection-1) raise the share of ready regions that are correct, and what does it cost in useful coverage?",
+  "systems": {
+    "without_check": "hybrid-1 (rules-6 first, llm-x2g2-qwen3.5-4b-q4km where the rules reach no candidate), reviewed + derived extents",
+    "with_check": "the same, with --selection-check (selection-1)"
+  },
+  "inputs": {
+    "release_manifest_sha256": "a14ead42792f2075035bfb8023460832689e4bb984e36f85811d332719424601",
+    "reviewed_extents_sha256": "85b610b3c31bdd4b8e003079441b721d8d6a136d8f74d0179cccb39041984a25",
+    "derived_extents_sha256": "215df8667b30584caafbe01c7b8f7bd20df62f80a0c69ee7f72784b6ea3cfae5",
+    "derived_extents_version": "derived-extents-1",
+    "selection_version": "selection-1",
+    "test_2_new_sample_sha256": "7edbc6f1d63926fe8f71808c2eebfae4f84493869cafb0b73c6b8fd62a59d576",
+    "test_2_new_worksheet_sha256": "0a680758157c8354365c52ef3cdf3ce080b7e5c03daf10996dd742b7f123c3d9",
+    "annotations": "Claude's (declaration-test-2-amendment-1.json): not independent of the systems; the derived extents and the selection check were also written by Claude, on dev data"
+  },
+  "how_it_runs": [
+    "Outputs go to a new locked folder, eval/benchmark/test-2/reports-regions/. Standard output goes to log files there.",
+    "Common options: --sample eval/benchmark/test-2/scoring/test-2-new.json --extents data/reviewed/extents.csv --derived-extents data/extents/derived.csv --out eval/benchmark/test-2/reports-regions.",
+    "Without the check: `audit rules`; `audit llm --no-cache`; `audit hybrid --with-derived`; `audit score --worksheet eval/benchmark/test-2/scoring/worksheet-new.csv --with-derived --hybrid <out>/test-2-hybrid-1-extents-derived.json`.",
+    "With the check: the same four commands with --selection-check on rules and llm, and --with-derived --with-selection on hybrid and score (hybrid report test-2-hybrid-1-extents-derived-sel.json).",
+    "The LLM runs twice with the cache off (once per run); greedy decoding makes its completions the same in both."
+  ],
+  "measures": {
+    "ready_regions": "records whose proposal outcome is computed (ready_for_review)",
+    "correct": "of those, records with the right critical interpretation and an acceptable top candidate (the score report's precision)",
+    "useful_coverage": "correct ready regions over answerable records",
+    "held_back": "computed without the check but not with it, split into correct and wrong by the difference of the two runs' totals"
+  },
+  "expectation_stated_in_advance": "Without the check, roughly 40-60% of ready regions correct (dev data: 47% Claude-annotated, 39% on dev-3 and dev-4). With it, roughly 60-70%, at a cost of about 3-5 points of useful coverage. No target applies to the check itself; this is a descriptive check of an in-sample rule on unread labels.",
+  "caveats": [
+    "Claude annotated test-2 and wrote the rules, the derived extents and the check.",
+    "test-2 has been scored once already (declaration-test-2.json). Its totals did not shape the check, which was written from dev and validation records only.",
+    "Derived extents use current boundaries; correctness tests the interpretation and the reference, not the size of the radius."
+  ],
+  "run_rules": [
+    "Each run happens once. A technical failure may be rerun under this declaration and is recorded.",
+    "Only totals are published, in eval/reports/test-2-regions.{md,json}."
+  ]
+}
