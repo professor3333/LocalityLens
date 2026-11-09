@@ -25,7 +25,7 @@ Measured on dev data only (in-sample; ``eval/reports/selection-check-findings.md
 from __future__ import annotations
 
 import re
-from typing import Final
+from typing import Any, Final
 
 from localitylens.extract.feature_words import TYPE_WORDS
 from localitylens.gazetteer.keys import name_key
@@ -50,14 +50,16 @@ _BROAD_LAST_TWO: Final = frozenset({
 })  # fmt: skip
 
 
-def competing_features(locality: str, reference: str) -> list[str]:
+def competing_features(
+    locality: str, reference: str, leading: frozenset[str] = _LEADING
+) -> list[str]:
     """Names of typed features in the label other than ``reference``, in label order."""
     ref_key = name_key(reference)
     found: list[str] = []
     for part in _PARTS.split(locality):
         for m in _RUN.finditer(part):
             words = m.group(0).split()
-            while words and words[0].lower() in _LEADING:
+            while words and words[0].lower().rstrip(".") in leading:
                 words = words[1:]
             if not words:
                 continue
@@ -108,3 +110,73 @@ def only_selection_questions(proposal: Proposal) -> bool:
         and bool(proposal.questions)
         and all(q.startswith(QUESTION_PREFIX) for q in proposal.questions)
     )
+
+
+# ------------------------------------------------------------------------------- selection-2
+
+SELECTION_2_VERSION: Final = "selection-2"
+# selection-2 also drops a capitalised preposition or position word that opens a sentence
+# ("Below Vela Lake", "Head of Fenn Creek"); the position words are the rules' (rules-3).
+_LEADING_2: Final = _LEADING | frozenset({
+    "below", "above", "near", "at", "in", "on", "along", "from", "to", "toward", "towards",
+    "by", "beside", "across", "around", "behind", "beyond", "off", "over", "under", "up", "down",
+    "approx", "approximately", "about", "ca", "just", "head", "foot", "top", "base", "mouth",
+    "edge", "shore", "rim", "summit", "flank", "the",
+})  # fmt: skip
+_STRONG_MATCHES: Final = frozenset({"exact_official", "exact_variant", "core_official",
+                                    "core_variant"})  # fmt: skip
+
+
+def geographic_competitors(
+    locality: str,
+    reference: str,
+    proposal: Proposal,
+    gazetteer: Any,
+    county: str | None,
+) -> list[tuple[str, str]]:
+    """``selection-2``: the competing features of :func:`competing_features` that still cast
+    doubt once GNIS is asked. Each is ``(name, why)``, where ``why`` is ``"inside"`` (GNIS has
+    the feature, by an exact or core name match, and its point lies inside the proposed region:
+    the label's offset points at a more specific named place) or ``"absent"`` (GNIS has no such
+    feature, so the label names a place this gazetteer cannot place). A competing feature that
+    GNIS places outside the region is a separate landmark ("along the Arikaree River") and does
+    not count."""
+    from localitylens.geo.geodesy import distance_m
+
+    if proposal.point is None or proposal.radius_m is None:
+        return []
+    out: list[tuple[str, str]] = []
+    for name in competing_features(locality, reference, _LEADING_2):
+        hits = [h for h in gazetteer.search(name, county=county, limit=3)
+                if h.match_kind.value in _STRONG_MATCHES]  # fmt: skip
+        if not hits:
+            out.append((name, "absent"))
+        elif distance_m(proposal.point, hits[0].primary_point) <= proposal.radius_m:
+            out.append((name, "inside"))
+    return out
+
+
+def apply_selection_2(
+    locality: str, reference: str, proposal: Proposal, gazetteer: Any, county: str | None
+) -> Proposal:
+    """Hold a computed region in needs_information when :func:`geographic_competitors` finds
+    any; keep the region. Anything else is returned unchanged."""
+    if proposal.outcome is not ProposalOutcome.COMPUTED:
+        return proposal
+    found = geographic_competitors(locality, reference, proposal, gazetteer, county)
+    if not found:
+        return proposal
+    parts = [
+        f"'{n}' (in GNIS, inside the proposed region)" if why == "inside"
+        else f"'{n}' (not in GNIS)"
+        for n, why in found
+    ]  # fmt: skip
+    question = (
+        f"{QUESTION_PREFIX}the label also names {', '.join(parts)}, which this proposal does "
+        f"not use. Is '{reference}' the reference for the collecting place? "
+        f"({SELECTION_2_VERSION})"
+    )
+    return proposal.model_copy(update={
+        "outcome": ProposalOutcome.NEEDS_INFORMATION,
+        "questions": (*proposal.questions, question),
+    })  # fmt: skip

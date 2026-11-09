@@ -24,7 +24,7 @@ import hashlib
 import json
 import re
 from collections import Counter, defaultdict
-from collections.abc import Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 from pathlib import Path
 from typing import Any, Final
 
@@ -102,15 +102,18 @@ def draw_splits(
     seed: str,
     viewed: Iterable[str],
     prefixes: Mapping[str, str],
+    eligible: Callable[[SpecimenRecord], bool] | None = None,
 ) -> tuple[dict[str, list[AuditItem]], dict[str, Any]]:
-    """Held-out splits in quota order, one group per component, plus the lock content."""
+    """Held-out splits in quota order, one group per component, plus the lock content. With
+    ``eligible``, only groups whose representative record passes it are drawn."""
     representative, sizes, component = leakage_components(records)
     members: defaultdict[str, set[str]] = defaultdict(set)
     for g, root in component.items():
         members[root].add(g)
     viewed_set = set(viewed)
     tainted = {component[g] for g in viewed_set if g in component}
-    pool = sorted((g for g in representative if component[g] not in tainted),
+    pool = sorted((g for g in representative if component[g] not in tainted
+                   and (eligible is None or eligible(representative[g]))),
                   key=lambda g: _rank(seed, g))  # fmt: skip
     chosen: list[str] = []
     used: set[str] = set()
@@ -203,6 +206,7 @@ def draw_extra(
     prefix: str,
     exclude: Iterable[str],
     repeats: Iterable[AuditItem] = (),
+    eligible: Callable[[SpecimenRecord], bool] | None = None,
 ) -> tuple[list[AuditItem], dict[str, str], dict[str, Any]]:
     """A further held-out split after the first lock (``EXTRA_VERSION`` 1).
 
@@ -215,7 +219,7 @@ def draw_extra(
     """
     excluded = set(exclude)
     widened = excluded | wording_matches(records, excluded)
-    splits, lock = draw_splits(records, {name: size}, seed, widened, {name: prefix})
+    splits, lock = draw_splits(records, {name: size}, seed, widened, {name: prefix}, eligible)
     tagged = [(f"new|{i.record.group_key}", i) for i in splits[name]]
     tagged += [(f"repeat|{i.audit_id}", i) for i in repeats]
     tagged.sort(key=lambda t: _rank(seed, t[0]))

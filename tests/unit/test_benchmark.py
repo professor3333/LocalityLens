@@ -157,3 +157,19 @@ def test_split_repeats_separates_new_rows_from_blind_repeats(tmp_path: Path) -> 
     with pytest.raises(FileExistsError):
         split_repeats(folder / "t2.json", folder / "worksheet.csv", folder / "repeats.json",
                       folder / "scoring")  # fmt: skip
+
+
+def test_an_extra_split_can_be_limited_to_one_kind_of_label() -> None:
+    from localitylens.evaluation.benchmark import draw_extra
+
+    items, _, lock = draw_extra(
+        RECORDS,
+        name="t3",
+        size=2,
+        seed="s",
+        prefix="P",
+        exclude=set(),
+        eligible=lambda r: "Peak" in r.locality or "Lake" in r.locality,
+    )
+    assert {i.record.gbif_id for i in items} <= {"1", "2", "3"}
+    assert len(lock["splits"]["t3"]) == 2

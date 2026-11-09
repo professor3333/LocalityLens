@@ -24,7 +24,11 @@ from localitylens.jobs.queue import Clock, JobQueue, default_owner
 from localitylens.jobs.worker import Process, work
 from localitylens.pipeline.hybrid import interpret_hybrid
 from localitylens.pipeline.interpret import Extractor, InterpretResult, interpret
-from localitylens.resolve.selection import apply_selection_check
+from localitylens.resolve.selection import (
+    SELECTION_2_VERSION,
+    apply_selection_2,
+    apply_selection_check,
+)
 from localitylens.review.store import ReviewStore
 
 
@@ -39,7 +43,7 @@ def import_records(
     llm: Extractor | None,
     release: str,
     extents: ExtentStore | None = None,
-    selection: bool = False,
+    selection: str | None = None,
     clock: Clock = time.time,
     owner: str | None = None,
     process_now: bool = True,
@@ -104,7 +108,7 @@ def work_batch(
     rules: Extractor,
     llm: Extractor | None,
     extents: ExtentStore | None = None,
-    selection: bool = False,
+    selection: str | None = None,
     owner: str | None = None,
     max_jobs: int | None = None,
     should_stop: Callable[[], bool] = lambda: False,
@@ -139,7 +143,7 @@ def pipeline_step(
     llm: Extractor | None,
     release: str,
     extents: ExtentStore | None = None,
-    selection: bool = False,
+    selection: str | None = None,
 ) -> Process:
     """``process(record_id)`` for the worker: run the pipeline on the record's allowlisted
     fields (locality text and supplied county) and return the writer of its result."""
@@ -158,9 +162,11 @@ def pipeline_step(
         t0 = time.perf_counter()
         proposal = propose(interp, top, extent) if interp is not None else None
         if selection and proposal is not None and interp is not None and interp.reference_feature:
-            proposal = apply_selection_check(
-                row["locality"], interp.reference_feature.name, proposal
-            )
+            ref = interp.reference_feature.name
+            if selection == SELECTION_2_VERSION:
+                proposal = apply_selection_2(row["locality"], ref, proposal, gazetteer, county)
+            else:
+                proposal = apply_selection_check(row["locality"], ref, proposal)
         done = time.perf_counter()
 
         def write() -> str:

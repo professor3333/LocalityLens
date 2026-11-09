@@ -61,3 +61,36 @@ reference.
   default.
 - **The check does not change any region, extent or interpretation.** It only decides which
   computed regions a curator sees as ready and which come with a question.
+
+## selection-2: ask GNIS before holding a region back
+
+selection-1 held back every region whose label names another typed feature, and on unread labels
+it held back as many correct regions as wrong ones. **selection-2** asks GNIS about each such
+feature, and holds the region back only when:
+- **the feature is in GNIS** (exact or core name match) **and its point lies inside the proposed
+  region:** the label's offset points at a more specific, real place; or
+- **the feature is not in GNIS at all:** the label names a place this gazetteer cannot place.
+
+A feature that GNIS places outside the region, such as "along the Arikaree River", is treated
+as a separate landmark and does not count. A synthetic test found that a capitalised sentence
+opener ("Below Vela Lake") was glued onto the name. selection-2 drops such words; selection-1
+is frozen as it was.
+
+In-sample on the read samples (hybrid-1, reviewed + derived extents):
+
+| | No check | selection-1 | **selection-2** |
+|---|---|---|---|
+| Owner-annotated: ready / correct | 52 / 33 (63%) | 38 / 27 (71%) | **43 / 30 (70%)** |
+| … useful coverage | 36% | 29% | **33%** |
+| … held back: correct / wrong | – | 6 / 8 | **3 / 6** |
+| Claude-annotated: ready / correct | 51 / 24 (47%) | 29 / 19 (66%) | **35 / 22 (63%)** |
+| … useful coverage | 25% | 20% | **23%** |
+| … held back: correct / wrong | – | 5 / 17 | **2 / 14** |
+
+- **The trade on read data:** about the same precision as selection-1, with half the coverage
+  loss.
+- **Also tried, not adopted:** switching the reference to the in-region place, rather than
+  holding the region. It fixed 4 Claude-annotated records but broke 3 correct ones, 2 of them
+  owner-annotated.
+- **These are still in-sample numbers.** selection-2 is tested next on a fresh, unread sample of
+  "place, offset" labels annotated by Codex, under a declaration pushed before annotation.

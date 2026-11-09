@@ -51,3 +51,41 @@ def test_a_held_region_keeps_its_geometry_and_asks() -> None:
     assert not only_selection_questions(other)
     clean = _proposal(ProposalOutcome.COMPUTED)
     assert apply_selection_check("4 mi E of Osgood.", "Osgood", clean) is clean
+
+
+def test_selection_2_holds_only_for_a_named_place_inside_the_region_or_missing_from_gnis(
+    gnis_snapshot, tmp_path
+) -> None:  # type: ignore[no-untyped-def]
+    """Synthetic GNIS: Testa Lake at 40.2, -105.2 and Vela Lake at 40.31, -105.31 (~15 km)."""
+    from localitylens.data.manifest import write_manifest
+    from localitylens.gazetteer.index import Gazetteer, build_index
+    from localitylens.resolve.selection import apply_selection_2, geographic_competitors
+
+    directory, manifest = gnis_snapshot
+    write_manifest(directory / "manifest.json", manifest)
+    build_index(directory, manifest, tmp_path / "g.sqlite")
+
+    def at_testa(radius: float) -> GeoreferenceProposal:
+        return GeoreferenceProposal(
+            outcome=ProposalOutcome.COMPUTED, feature_id=3,
+            point=Coordinate(latitude=40.2, longitude=-105.2, datum=Datum.NAD83),
+            radius_m=radius, radius_lower_bound_m=None, components=(), assumptions=(),
+            questions=(), reasons=(),
+        )  # fmt: skip
+
+    label = "Below Vela Lake, 1 mi N of Testa Lake"
+    with Gazetteer(tmp_path / "g.sqlite") as gaz:
+        wide, narrow = at_testa(20_000), at_testa(5_000)
+        assert geographic_competitors(label, "Testa Lake", wide, gaz, "Alpha") == [
+            ("Vela Lake", "inside")
+        ]
+        assert geographic_competitors(label, "Testa Lake", narrow, gaz, "Alpha") == []
+        held = apply_selection_2(label, "Testa Lake", wide, gaz, "Alpha")
+        assert held.outcome is ProposalOutcome.NEEDS_INFORMATION
+        assert held.radius_m == 20_000
+        assert "in GNIS, inside the proposed region" in held.questions[0]
+        assert apply_selection_2(label, "Testa Lake", narrow, gaz, "Alpha") is narrow
+        missing = "Near Brindle Lake, 1 mi N of Testa Lake"  # not in the synthetic GNIS
+        assert geographic_competitors(missing, "Testa Lake", narrow, gaz, "Alpha") == [
+            ("Brindle Lake", "absent")
+        ]
