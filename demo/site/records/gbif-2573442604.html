@@ -23,7 +23,7 @@
   
   <aside class="replay" role="note" aria-label="About this replay">
     <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
-    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit 34b31ea, 2026-11-07</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate; extents measured by hand where they exist, otherwise derived from Census place polygons and USGS NHD geometry (marked &#39;derived, not curator-reviewed&#39;) · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit a48dbf0, 2026-11-09</p>
     <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
   </aside>
   
@@ -95,7 +95,7 @@
   <table class="kv">
     <tr><th>Outcome</th><td><span class="badge outcome-needs_information">needs information</span></td></tr>
     <tr><th>Point</th><td>37.54639, -107.94285 (NAD83) · GNIS 187931</td></tr>
-    <tr><th>Radius</th><td><b>unknown</b> (at least 39 m from the known components)</td></tr>
+    <tr><th>Radius</th><td><b>2,758 m</b></td></tr>
     <tr><th>Policy</th><td><code>gbif-bp-2020/1</code></td></tr>
   </table>
   
@@ -104,8 +104,8 @@
     <tbody>
     
       <tr><td>extent</td>
-          <td class="num"><span class="unknown">unknown</span></td>
-          <td>unknown <span class="cite">BP §3.4.1; QRG §2.1.2 Table 1</span></td></tr>
+          <td class="num">2,719</td>
+          <td><details><summary>derived: radial of East Deer Creek from the GNIS representative point (BP §3.4.1): farthest of 137 vertices of the USGS NHD geometry carrying this GNI…</summary>derived: radial of East Deer Creek from the GNIS representative point (BP §3.4.1): farthest of 137 vertices of the USGS NHD geometry carrying this GNIS ID (nhd-co-2023-12-27: NHDFlowline x13); current boundaries, not curator-reviewed (derived-extents-1)</details> <span class="cite">BP §3.4.1; QRG §2.1.2 Table 1</span></td></tr>
     
       <tr><td>datum</td>
           <td class="num">0</td>
@@ -122,7 +122,7 @@
     </tbody>
   </table>
   
-  <p class="question">Question: &#39;near&#39;/&#39;vicinity&#39; has no defensible default buffer (QRG §2.1.3.8); how far around East Deer Creek should the region extend?</p><p class="question">Question: What is the extent of East Deer Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</p>
+  <p class="question">Question: &#39;near&#39;/&#39;vicinity&#39; has no defensible default buffer (QRG §2.1.3.8); how far around East Deer Creek should the region extend?</p>
   
   <ul class="assumptions"><li>Assumed: Reference point: GNIS feature 187931 (East Deer Creek), representative point in NAD83.</li><li>Assumed: GNIS places a stream&#39;s representative point at its mouth.</li></ul>
 

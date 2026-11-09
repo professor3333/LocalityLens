@@ -20,7 +20,7 @@
   
   <aside class="replay" role="note" aria-label="About this replay">
     <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
-    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit 34b31ea, 2026-11-07</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate; extents measured by hand where they exist, otherwise derived from Census place polygons and USGS NHD geometry (marked &#39;derived, not curator-reviewed&#39;) · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit a48dbf0, 2026-11-09</p>
     <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
   </aside>
   
@@ -30,9 +30,9 @@
 <nav class="filters" aria-label="Filter by status">
   <a href="index.html" class="chip on">all <b>50</b></a>
   
-  <a href="status-ready_for_review.html" class="chip status-ready_for_review">ready for review <b>11</b></a>
+  <a href="status-ready_for_review.html" class="chip status-ready_for_review">ready for review <b>17</b></a>
   
-  <a href="status-needs_information.html" class="chip status-needs_information">needs information <b>37</b></a>
+  <a href="status-needs_information.html" class="chip status-needs_information">needs information <b>31</b></a>
   
   <a href="status-unsupported.html" class="chip status-unsupported">unsupported <b>2</b></a>
   
@@ -46,6 +46,14 @@
 <table class="queue">
   <thead><tr><th>Record</th><th>Status</th><th>County</th><th>Locality</th><th>Proposal or blocking question</th></tr></thead>
   <tbody>
+  
+    <tr>
+      <td><a href="records/gbif-2573330473.html">gbif:2573330473</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Larimer</td>
+      <td class="locality">Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake,...</td>
+      <td>Fort Collins, radius 53,578 m</td>
+    </tr>
   
     <tr>
       <td><a href="records/gbif-2573344610.html">gbif:2573344610</a></td>
@@ -96,11 +104,43 @@
     </tr>
   
     <tr>
+      <td><a href="records/gbif-2573450094.html">gbif:2573450094</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Teller</td>
+      <td class="locality">1.5 mi N of CO24 off tranquil Acres Rd along Rule Cr.</td>
+      <td>Rule Creek, radius 18,544 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573470344.html">gbif:2573470344</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Larimer</td>
+      <td class="locality">Rocky Mountain National Park, along Old Fall River Rd., ca. 6 mi. from Fall River entrance to Park.</td>
+      <td>Fall River, radius 31,354 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573470953.html">gbif:2573470953</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Chaffee</td>
+      <td class="locality">Collegiate Peaks Overlook, Arkansas Headwaters State Recreation Area, approx. 1 mile east of Johnson...</td>
+      <td>Johnson Village, radius 3,313 m</td>
+    </tr>
+  
+    <tr>
       <td><a href="records/gbif-2573488436.html">gbif:2573488436</a></td>
       <td><span class="badge status-ready_for_review">ready for review</span></td>
       <td>Grand</td>
       <td class="locality">Rocky Mountain National Park. Neversummer Range. About halfway up south slope of Thunder Mt., 16 miles N...</td>
       <td>Thunder Mountain, radius 1,639 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573525930.html">gbif:2573525930</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Baca</td>
+      <td class="locality">Co Rd PP ca 3.2 mi W jct Co Rd 5. Immediately E of dry tributary of Two Buttes Creek.</td>
+      <td>Two Butte Creek, radius 137,443 m</td>
     </tr>
   
     <tr>
@@ -133,6 +173,14 @@
       <td>Weld</td>
       <td class="locality">5 mi. E. of Eaton towards Cornish.</td>
       <td>Eaton, radius 8,426 m</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-4172815389.html">gbif:4172815389</a></td>
+      <td><span class="badge status-ready_for_review">ready for review</span></td>
+      <td>Jefferson</td>
+      <td class="locality">Morrison Creek. Buffalo Creek Recreation Area, along Morrison Creek and former National Forest Road 547,...</td>
+      <td>Morrison Creek, radius 6,415 m</td>
     </tr>
   
     <tr>
@@ -173,14 +221,6 @@
       <td>Mesa</td>
       <td class="locality">Grand Mesa National Forest. Old road on N slope of plateau E of Mesa Creek.</td>
       <td>Heading without a distance has no defensible bound (QRG §2.2.2).</td>
-    </tr>
-  
-    <tr>
-      <td><a href="records/gbif-2573330473.html">gbif:2573330473</a></td>
-      <td><span class="badge status-needs_information">needs information</span></td>
-      <td>Larimer</td>
-      <td class="locality">Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake,...</td>
-      <td>What is the extent of Fort Collins (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
     </tr>
   
     <tr>
@@ -320,35 +360,11 @@
     </tr>
   
     <tr>
-      <td><a href="records/gbif-2573450094.html">gbif:2573450094</a></td>
-      <td><span class="badge status-needs_information">needs information</span></td>
-      <td>Teller</td>
-      <td class="locality">1.5 mi N of CO24 off tranquil Acres Rd along Rule Cr.</td>
-      <td>What is the extent of Rule Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
-    </tr>
-  
-    <tr>
       <td><a href="records/gbif-2573469672.html">gbif:2573469672</a></td>
       <td><span class="badge status-needs_information">needs information</span></td>
       <td>Montezuma</td>
       <td class="locality">Trail from Soda Tipoff to Mancos River, south rim of Mesa Verde.</td>
       <td>What is the extent of Mancos River (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
-    </tr>
-  
-    <tr>
-      <td><a href="records/gbif-2573470344.html">gbif:2573470344</a></td>
-      <td><span class="badge status-needs_information">needs information</span></td>
-      <td>Larimer</td>
-      <td class="locality">Rocky Mountain National Park, along Old Fall River Rd., ca. 6 mi. from Fall River entrance to Park.</td>
-      <td>What is the extent of Fall River (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
-    </tr>
-  
-    <tr>
-      <td><a href="records/gbif-2573470953.html">gbif:2573470953</a></td>
-      <td><span class="badge status-needs_information">needs information</span></td>
-      <td>Chaffee</td>
-      <td class="locality">Collegiate Peaks Overlook, Arkansas Headwaters State Recreation Area, approx. 1 mile east of Johnson...</td>
-      <td>What is the extent of Johnson Village (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
     </tr>
   
     <tr>
@@ -365,14 +381,6 @@
       <td>San Juan</td>
       <td class="locality">Eastern San Miguel Mts. Seep 0.2 mi. southeast from Graysill Mine. By FR 578.</td>
       <td>Which gazetteer feature is the reference?</td>
-    </tr>
-  
-    <tr>
-      <td><a href="records/gbif-2573525930.html">gbif:2573525930</a></td>
-      <td><span class="badge status-needs_information">needs information</span></td>
-      <td>Baca</td>
-      <td class="locality">Co Rd PP ca 3.2 mi W jct Co Rd 5. Immediately E of dry tributary of Two Buttes Creek.</td>
-      <td>What is the extent of Two Butte Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
     </tr>
   
     <tr>
@@ -421,14 +429,6 @@
       <td>Fremont</td>
       <td class="locality">Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: San...</td>
       <td>What is the extent of Wet Mountains (Range)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
-    </tr>
-  
-    <tr>
-      <td><a href="records/gbif-4172815389.html">gbif:4172815389</a></td>
-      <td><span class="badge status-needs_information">needs information</span></td>
-      <td>Jefferson</td>
-      <td class="locality">Morrison Creek. Buffalo Creek Recreation Area, along Morrison Creek and former National Forest Road 547,...</td>
-      <td>What is the extent of Morrison Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
     </tr>
   
     <tr>

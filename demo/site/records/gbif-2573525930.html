@@ -23,7 +23,7 @@
   
   <aside class="replay" role="note" aria-label="About this replay">
     <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
-    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit 34b31ea, 2026-11-07</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate; extents measured by hand where they exist, otherwise derived from Census place polygons and USGS NHD geometry (marked &#39;derived, not curator-reviewed&#39;) · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit a48dbf0, 2026-11-09</p>
     <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
   </aside>
   
@@ -32,7 +32,7 @@
 <p class="crumbs"><a href="../index.html">Queue</a> / gbif:2573525930</p>
 <div class="head">
   <h1>gbif:2573525930</h1>
-  <span class="badge status-needs_information">needs information</span>
+  <span class="badge status-ready_for_review">ready for review</span>
 </div>
 <p class="meta">Catalog 00372698 · Baca, Colorado · snapshot <code>gbif-cu-2026-11-01</code> · extractor <code>rules-6</code> (hybrid)</p>
 
@@ -87,15 +87,15 @@
   <section class="right">
     <div id="map" class="map" role="img" aria-label="Map of the candidates and the proposed region"></div>
     <p class="mapnote">Points as given (NAD83), drawn on a WGS 84 web map: the difference is about a metre here. A circle appears only for a full region. Basemap: USGS The National Map.</p>
-    <script type="application/json" id="map-data">{"candidates": [{"id": 201785, "lat": 38.0425114, "lon": -102.1257407, "name": "Two Butte Creek", "rank": 1, "selected": true}], "circle": null}</script>
+    <script type="application/json" id="map-data">{"candidates": [{"id": 201785, "lat": 38.0425114, "lon": -102.1257407, "name": "Two Butte Creek", "rank": 1, "selected": true}], "circle": {"lat": 38.0425114, "lon": -102.1257407, "radius_m": 137443.309264865}}</script>
 
     <h2>Region <span class="sub">spatial uncertainty</span></h2>
     
       
   <table class="kv">
-    <tr><th>Outcome</th><td><span class="badge outcome-needs_information">needs information</span></td></tr>
+    <tr><th>Outcome</th><td><span class="badge outcome-computed">computed</span></td></tr>
     <tr><th>Point</th><td>38.04251, -102.12574 (NAD83) · GNIS 201785</td></tr>
-    <tr><th>Radius</th><td><b>unknown</b> (at least 39 m from the known components)</td></tr>
+    <tr><th>Radius</th><td><b>137,443 m</b></td></tr>
     <tr><th>Policy</th><td><code>gbif-bp-2020/1</code></td></tr>
   </table>
   
@@ -104,8 +104,8 @@
     <tbody>
     
       <tr><td>extent</td>
-          <td class="num"><span class="unknown">unknown</span></td>
-          <td>unknown <span class="cite">BP §3.4.1; QRG §2.1.2 Table 1</span></td></tr>
+          <td class="num">137,404</td>
+          <td><details><summary>derived: radial of Two Butte Creek from the GNIS representative point (BP §3.4.1): farthest of 12,411 vertices of the USGS NHD geometry carrying this …</summary>derived: radial of Two Butte Creek from the GNIS representative point (BP §3.4.1): farthest of 12,411 vertices of the USGS NHD geometry carrying this GNIS ID (nhd-co-2023-12-27: NHDFlowline x419); current boundaries, not curator-reviewed (derived-extents-1)</details> <span class="cite">BP §3.4.1; QRG §2.1.2 Table 1</span></td></tr>
     
       <tr><td>datum</td>
           <td class="num">0</td>
@@ -122,7 +122,7 @@
     </tbody>
   </table>
   
-  <p class="question">Question: What is the extent of Two Butte Creek (Stream)? GNIS gives only a representative point, which is not the feature&#39;s extent.</p>
+  
   
   <ul class="assumptions"><li>Assumed: Reference point: GNIS feature 201785 (Two Butte Creek), representative point in NAD83.</li><li>Assumed: &#39;about&#39;/&#39;ca.&#39; does not change coordinates or uncertainty (BP §2.2 (adverbial modifiers such as &#39;about&#39;)).</li><li>Assumed: GNIS places a stream&#39;s representative point at its mouth.</li></ul>
 

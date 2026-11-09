@@ -13,8 +13,12 @@ browser except the map, and decisions and export are switched off. Every page sa
   - No validation or locked-test record is published: `tests/unit/test_demo_site.py` fails if
     a page is not an audit record.
 - **System:** the release system, hybrid-1. The rules (`rules-6`) run first, and the LLM
-  (`llm-x2g2-qwen3.5-4b-q4km`) runs only where the rules reach no gazetteer candidate. The
-  reviewed-extent store is used as committed.
+  (`llm-x2g2-qwen3.5-4b-q4km`) runs only where the rules reach no gazetteer candidate.
+  - **Extents:** hand-measured ones come first. Others are derived from Census place polygons
+    and USGS NHD geometry, and each such region says "derived … not curator-reviewed".
+  - **Result:** 17 records reach "ready for review". Some of those regions are drawn around the
+    wrong reference, the system's known weakness
+    ([results](../docs/results.md#regions-the-main-shortfall)).
 - **No curator decisions** are included. Each record shows the pipeline's proposal awaiting
   review.
 
