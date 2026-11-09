@@ -356,3 +356,19 @@ def test_backup_runs_during_a_write_and_copies_only_committed_rows(
         writer.close()
     assert info.schema == "review-3"  # the uncommitted change is not in the copy
     assert info.counts["decision"] == 1
+
+
+def test_a_curator_approval_answers_the_selection_check(index_path: Path, tmp_path: Path) -> None:
+    s = ReviewStore(tmp_path / "sel.sqlite")
+    rec = to_record(row(77, "2 mi N of Testa Lake; below Vela Lake", county="Alpha"))
+    with Gazetteer(index_path) as gaz:
+        rules = RulesExtractor(Lexicon(gaz.county_names(), gaz.name_keys()))
+        import_records(s, [rec], "gbif-synthetic", gaz, system="rules", rules=rules, llm=None,
+                       release="test", extents=EXTENTS, selection=True)  # fmt: skip
+    assert s.status("gbif:77") is RecordStatus.NEEDS_INFORMATION
+    stored = s.latest_pipeline_proposal("gbif:77")
+    assert stored.proposal is not None
+    assert stored.proposal.radius_m is not None  # the region is kept, only held back
+    assert any("Vela Lake" in q for q in stored.proposal.questions)
+    s.decide("gbif:77", Action.APPROVE, reviewer="r", rationale="Testa Lake is the reference")
+    assert s.status("gbif:77") is RecordStatus.APPROVED

@@ -18,6 +18,10 @@ _WITH_EXTENTS_HELP: Final = "use the -extents reports (runs made with --extents)
 _DERIVED_HELP: Final = (
     "derived-extent store (CSV), used where no reviewed extent exists; needs --extents"
 )
+_SELECTION_HELP: Final = (
+    "hold a region back when the label names another typed feature (selection-1)"
+)
+_WITH_SELECTION_HELP: Final = "use the -sel reports (runs made with --selection-check)"
 _WITH_DERIVED_HELP: Final = "use the -extents-derived reports (runs made with --derived-extents)"
 
 
@@ -159,7 +163,8 @@ def _audit_rules(args: argparse.Namespace) -> int:
     from localitylens.evaluation.audit import load_sample, run_rules, sample_label, write_report
 
     sample = load_sample(Path(args.sample))
-    report = run_rules(sample, Path(args.index), extents=_load_extents(args))
+    report = run_rules(sample, Path(args.index), extents=_load_extents(args),
+                       selection=args.selection_check)  # fmt: skip
     json_path, md_path = write_report(report, Path(args.out), sample_label(sample))
     for name, counts in report["counts"].items():
         print(f"{name:<10} " + "  ".join(f"{k}={v}" for k, v in counts.items()))
@@ -232,6 +237,7 @@ def _audit_llm(args: argparse.Namespace) -> int:
         release,
         server=server,
         extents=_load_extents(args),
+        selection=args.selection_check,
         cache_dir=cache_dir,
     )
     json_path, md_path = write_report(report, Path(args.out), sample_label(sample))
@@ -266,6 +272,7 @@ def _audit_score(args: argparse.Namespace) -> int:
     label = sample_label(sample)
     llm_id = load_release(Path(args.release)).extractor_id
     ext = "-extents-derived" if args.with_derived else "-extents" if args.with_extents else ""
+    ext += "-sel" if args.with_selection else ""
     rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
     llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     reports = {
@@ -302,6 +309,7 @@ def _audit_hybrid(args: argparse.Namespace) -> int:
     label = sample_label(load_sample(Path(args.sample)))
     llm_id = load_release(Path(args.release)).extractor_id
     ext = "-extents-derived" if args.with_derived else "-extents" if args.with_extents else ""
+    ext += "-sel" if args.with_selection else ""
     rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
     llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     try:
@@ -511,7 +519,7 @@ def _review_import(args: argparse.Namespace) -> int:
         counts = import_records(
             store, records, snapshot_id, gaz,
             system=args.system, rules=rules, llm=llm, release=release_id, extents=extents,
-            process_now=not args.no_process, record_ids=record_ids,
+            selection=args.selection_check, process_now=not args.no_process, record_ids=record_ids,
         )  # fmt: skip
     print(f"imported {len(records)} records ({args.system})")
     if args.no_process:
@@ -607,7 +615,7 @@ def _work_round(
         rules, llm, _release = _extractors(args, gaz, b.system)
         counts = work_batch(
             store, queue, b.batch_id, gaz, rules=rules, llm=llm, extents=extents,
-            max_jobs=args.max_jobs, should_stop=should_stop,
+            selection=args.selection_check, max_jobs=args.max_jobs, should_stop=should_stop,
         )  # fmt: skip
         done = ", ".join(f"{s} {n}" for s, n in sorted(counts.items())) or "nothing finished"
         print(f"{b.batch_id} ({b.system}): {done}", flush=True)
@@ -1276,6 +1284,7 @@ def main(argv: list[str] | None = None) -> int:
     aru.add_argument("--out", default="eval/reports")
     aru.add_argument("--extents", help=_EXTENTS_HELP)
     aru.add_argument("--derived-extents", help=_DERIVED_HELP)
+    aru.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     aru.set_defaults(func=_audit_rules)
     alm = aud.add_parser("llm", help="run LLM extraction on the audit sample (llama-server)")
     alm.add_argument("--sample", default="eval/audit/audit-50.json")
@@ -1285,6 +1294,7 @@ def main(argv: list[str] | None = None) -> int:
     alm.add_argument("--release", default="release/manifest.json")
     alm.add_argument("--extents", help=_EXTENTS_HELP)
     alm.add_argument("--derived-extents", help=_DERIVED_HELP)
+    alm.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     alm.add_argument("--cache", default="eval/.cache/llm", help="completion cache directory")
     alm.add_argument("--no-cache", action="store_true", help="call the model for every record")
     alm.set_defaults(func=_audit_llm)
@@ -1299,6 +1309,7 @@ def main(argv: list[str] | None = None) -> int:
     asc.add_argument("--out", default="eval/reports")
     asc.add_argument("--with-extents", action="store_true", help=_WITH_EXTENTS_HELP)
     asc.add_argument("--with-derived", action="store_true", help=_WITH_DERIVED_HELP)
+    asc.add_argument("--with-selection", action="store_true", help=_WITH_SELECTION_HELP)
     asc.set_defaults(func=_audit_score)
 
     ahy = aud.add_parser("hybrid", help="combine the rules and LLM reports into a hybrid report")
@@ -1309,6 +1320,7 @@ def main(argv: list[str] | None = None) -> int:
     ahy.add_argument("--out", default="eval/reports")
     ahy.add_argument("--with-extents", action="store_true", help=_WITH_EXTENTS_HELP)
     ahy.add_argument("--with-derived", action="store_true", help=_WITH_DERIVED_HELP)
+    ahy.add_argument("--with-selection", action="store_true", help=_WITH_SELECTION_HELP)
     ahy.set_defaults(func=_audit_hybrid)
 
     mod = sub.add_parser("model", help="pinned local LLM").add_subparsers(
@@ -1460,6 +1472,7 @@ def main(argv: list[str] | None = None) -> int:
     ri.add_argument("--index", default="data/derived/gazetteer.sqlite")
     ri.add_argument("--extents", help=_EXTENTS_HELP)
     ri.add_argument("--derived-extents", help=_DERIVED_HELP)
+    ri.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     ri.add_argument("--url", default="http://127.0.0.1:8080")
     ri.add_argument("--release", default="release/manifest.json")
     ri.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
@@ -1478,6 +1491,7 @@ def main(argv: list[str] | None = None) -> int:
     rw.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rw.add_argument("--extents", help=_EXTENTS_HELP)
     rw.add_argument("--derived-extents", help=_DERIVED_HELP)
+    rw.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     rw.add_argument("--url", default="http://127.0.0.1:8080")
     rw.add_argument("--release", default="release/manifest.json")
     rw.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")

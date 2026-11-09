@@ -133,6 +133,7 @@ def run_system(
     limit: int = 5,
     meta: dict[str, Any] | None = None,
     extents: ExtentStore | None = None,
+    selection: bool = False,
 ) -> dict[str, Any]:
     """Run one extractor + retrieval + uncertainty policy on every audited record.
 
@@ -147,6 +148,11 @@ def run_system(
     from localitylens.geo.georeference import propose
     from localitylens.pipeline.interpret import interpret
     from localitylens.resolve.county import COUNTY_CONTEXT_VERSION
+    from localitylens.resolve.selection import (
+        SELECTION_VERSION,
+        apply_selection_check,
+        competing_features,
+    )
 
     rows: list[dict[str, Any]] = []
     with Gazetteer(index) as gaz:
@@ -184,6 +190,15 @@ def run_system(
             top = retrieval.candidates[0] if retrieval and retrieval.candidates else None
             extent = extents.get(top.feature_id) if extents is not None and top else None
             proposal = propose(interp, top, extent) if interp is not None else None
+            reference = (
+                interp.reference_feature.name
+                if interp is not None and interp.reference_feature is not None
+                else None
+            )
+            others: list[str] = []
+            if selection and proposal is not None and reference is not None:
+                others = competing_features(item.record.locality, reference)
+                proposal = apply_selection_check(item.record.locality, reference, proposal)
             row |= {
                 "relation": result.extraction.relation.value,
                 "reference": (
@@ -217,6 +232,8 @@ def run_system(
             }
             if extents is not None:
                 row["extent"] = _extent_source(proposal)
+            if selection:
+                row["selection"] = others
             _add_trace(row, extractor, started)
             rows.append(row)
     return {
@@ -232,6 +249,7 @@ def run_system(
         "seed": sample.seed,
         **(meta or {}),
         **({"extent_store": extents.summary()} if extents is not None else {}),
+        **({"selection_version": SELECTION_VERSION} if selection else {}),
         "note": note if extents is None else note.replace("no extent was supplied", _EXTENTS_NOTE),
         "counts": {
             "relation": dict(Counter(str(r["relation"]) for r in rows).most_common()),
@@ -301,7 +319,11 @@ _NOTE_TAIL: Final = (
 
 
 def run_rules(
-    sample: AuditSample, index: Path, limit: int = 5, extents: ExtentStore | None = None
+    sample: AuditSample,
+    index: Path,
+    limit: int = 5,
+    extents: ExtentStore | None = None,
+    selection: bool = False,
 ) -> dict[str, Any]:
     from localitylens.baseline.rules import Lexicon, RulesExtractor
 
@@ -315,6 +337,7 @@ def run_rules(
         "supplied.",
         limit,
         extents=extents,
+        selection=selection,
     )
 
 
@@ -327,6 +350,7 @@ def run_llm(
     server: dict[str, Any] | None = None,
     extents: ExtentStore | None = None,
     cache_dir: Path | None = None,
+    selection: bool = False,
 ) -> dict[str, Any]:
     """Run the LLM extractor. With ``cache_dir``, completions come from the local cache where
     the same request was made before (``extract/cache.py``); ``server`` must then describe the
@@ -362,6 +386,7 @@ def run_llm(
         limit,
         meta,
         extents,
+        selection=selection,
     )
     if caching is not None:
         from localitylens.extract.cache import CACHE_VERSION
@@ -387,9 +412,10 @@ def sample_label(sample: AuditSample) -> str:
 def extents_suffix(report: dict[str, Any]) -> str:
     """``-extents`` for a run that used the reviewed-extent store, so it never overwrites the
     run without it."""
+    sel = "-sel" if "selection_version" in report else ""
     if "extent_store" not in report:
-        return ""
-    return "-extents-derived" if "derived" in report["extent_store"] else "-extents"
+        return sel
+    return ("-extents-derived" if "derived" in report["extent_store"] else "-extents") + sel
 
 
 def write_report(

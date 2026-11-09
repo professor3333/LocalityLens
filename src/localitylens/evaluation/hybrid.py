@@ -24,7 +24,7 @@ _SAME: Final = (
     "seed",
 )
 # Added in later versions: must agree too, and are carried over when present.
-_SAME_IF_PRESENT: Final = ("county_context_version", "extent_store")
+_SAME_IF_PRESENT: Final = ("county_context_version", "extent_store", "selection_version")
 _LLM_META: Final = ("model", "gguf", "prompt", "generation", "server")
 
 
@@ -68,6 +68,11 @@ def combine_reports(rules: dict[str, Any], llm: dict[str, Any]) -> dict[str, Any
         "components": {"rules": rules["extractor_version"], "llm": llm["extractor_version"]},
         **{key: llm[key] for key in _LLM_META if key in llm},
         **({"extent_store": rules["extent_store"]} if "extent_store" in rules else {}),
+        **(
+            {"selection_version": rules["selection_version"]}
+            if "selection_version" in rules
+            else {}
+        ),
         "note": "Rules first; the LLM's result is used only where the rules reach no gazetteer "
         "candidate and the LLM does. Built from the two component reports (both deterministic). "
         "The top candidate is the system's ranking, not a reviewed choice, and "

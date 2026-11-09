@@ -24,6 +24,7 @@ from localitylens.jobs.queue import Clock, JobQueue, default_owner
 from localitylens.jobs.worker import Process, work
 from localitylens.pipeline.hybrid import interpret_hybrid
 from localitylens.pipeline.interpret import Extractor, InterpretResult, interpret
+from localitylens.resolve.selection import apply_selection_check
 from localitylens.review.store import ReviewStore
 
 
@@ -38,6 +39,7 @@ def import_records(
     llm: Extractor | None,
     release: str,
     extents: ExtentStore | None = None,
+    selection: bool = False,
     clock: Clock = time.time,
     owner: str | None = None,
     process_now: bool = True,
@@ -62,7 +64,7 @@ def import_records(
     if not process_now:
         return Counter()
     return work_batch(store, queue, batch_id, gazetteer, rules=rules, llm=llm, extents=extents,
-                      owner=owner)  # fmt: skip
+                      selection=selection, owner=owner)  # fmt: skip
 
 
 def enqueue_records(
@@ -102,6 +104,7 @@ def work_batch(
     rules: Extractor,
     llm: Extractor | None,
     extents: ExtentStore | None = None,
+    selection: bool = False,
     owner: str | None = None,
     max_jobs: int | None = None,
     should_stop: Callable[[], bool] = lambda: False,
@@ -109,7 +112,8 @@ def work_batch(
     """Work one batch's pending jobs. Returns the count per final status reached."""
     batch = queue.batch(batch_id)
     process = pipeline_step(store, gazetteer, system=batch.system, rules=rules, llm=llm,
-                            release=batch.release, extents=extents)  # fmt: skip
+                            release=batch.release, extents=extents,
+                            selection=selection)  # fmt: skip
     before = _job_states(store, batch_id)
     work(
         queue,
@@ -135,6 +139,7 @@ def pipeline_step(
     llm: Extractor | None,
     release: str,
     extents: ExtentStore | None = None,
+    selection: bool = False,
 ) -> Process:
     """``process(record_id)`` for the worker: run the pipeline on the record's allowlisted
     fields (locality text and supplied county) and return the writer of its result."""
@@ -152,6 +157,10 @@ def pipeline_step(
         extent = extents.get(top.feature_id) if extents is not None and top else None
         t0 = time.perf_counter()
         proposal = propose(interp, top, extent) if interp is not None else None
+        if selection and proposal is not None and interp is not None and interp.reference_feature:
+            proposal = apply_selection_check(
+                row["locality"], interp.reference_feature.name, proposal
+            )
         done = time.perf_counter()
 
         def write() -> str:

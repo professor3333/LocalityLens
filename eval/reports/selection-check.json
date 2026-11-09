@@ -1,0 +1,402 @@
+{
+  "selection_version": "selection-1",
+  "in_sample": true,
+  "hybrid_ready_correct_answerable": {
+    "owner_annotated": {
+      "extents": [
+        35,
+        32,
+        92
+      ],
+      "extents-derived": [
+        52,
+        33,
+        92
+      ],
+      "extents-derived-sel": [
+        38,
+        27,
+        92
+      ]
+    },
+    "claude_annotated": {
+      "extents": [
+        16,
+        10,
+        97
+      ],
+      "extents-derived": [
+        51,
+        24,
+        97
+      ],
+      "extents-derived-sel": [
+        29,
+        19,
+        97
+      ]
+    },
+    "dev3_dev4": {
+      "extents": [
+        5,
+        0,
+        61
+      ],
+      "extents-derived": [
+        36,
+        14,
+        61
+      ],
+      "extents-derived-sel": [
+        18,
+        12,
+        61
+      ]
+    }
+  },
+  "held_back_by_check": {
+    "owner": {
+      "correct": 6,
+      "wrong": 8
+    },
+    "claude": {
+      "correct": 5,
+      "wrong": 17
+    }
+  },
+  "by_sample": {
+    "audit-50": {
+      "-extents": {
+        "rules": [
+          11,
+          9,
+          31
+        ],
+        "llm": [
+          9,
+          7,
+          31
+        ],
+        "hybrid": [
+          11,
+          9,
+          31
+        ]
+      },
+      "-extents-derived": {
+        "rules": [
+          16,
+          9,
+          31
+        ],
+        "llm": [
+          11,
+          7,
+          31
+        ],
+        "hybrid": [
+          17,
+          9,
+          31
+        ]
+      },
+      "-extents-derived-sel": {
+        "rules": [
+          12,
+          8,
+          31
+        ],
+        "llm": [
+          8,
+          6,
+          31
+        ],
+        "hybrid": [
+          13,
+          8,
+          31
+        ]
+      }
+    },
+    "dev-1": {
+      "-extents": {
+        "rules": [
+          11,
+          11,
+          29
+        ],
+        "llm": [
+          11,
+          10,
+          29
+        ],
+        "hybrid": [
+          12,
+          12,
+          29
+        ]
+      },
+      "-extents-derived": {
+        "rules": [
+          15,
+          11,
+          29
+        ],
+        "llm": [
+          12,
+          10,
+          29
+        ],
+        "hybrid": [
+          17,
+          12,
+          29
+        ]
+      },
+      "-extents-derived-sel": {
+        "rules": [
+          12,
+          9,
+          29
+        ],
+        "llm": [
+          9,
+          8,
+          29
+        ],
+        "hybrid": [
+          14,
+          10,
+          29
+        ]
+      }
+    },
+    "validation": {
+      "-extents": {
+        "rules": [
+          10,
+          9,
+          32
+        ],
+        "llm": [
+          13,
+          11,
+          32
+        ],
+        "hybrid": [
+          12,
+          11,
+          32
+        ]
+      },
+      "-extents-derived": {
+        "rules": [
+          14,
+          9,
+          32
+        ],
+        "llm": [
+          20,
+          12,
+          32
+        ],
+        "hybrid": [
+          18,
+          12,
+          32
+        ]
+      },
+      "-extents-derived-sel": {
+        "rules": [
+          8,
+          7,
+          32
+        ],
+        "llm": [
+          14,
+          9,
+          32
+        ],
+        "hybrid": [
+          11,
+          9,
+          32
+        ]
+      }
+    },
+    "dev-2": {
+      "-extents": {
+        "rules": [
+          10,
+          9,
+          36
+        ],
+        "llm": [
+          8,
+          7,
+          36
+        ],
+        "hybrid": [
+          11,
+          10,
+          36
+        ]
+      },
+      "-extents-derived": {
+        "rules": [
+          14,
+          9,
+          36
+        ],
+        "llm": [
+          9,
+          7,
+          36
+        ],
+        "hybrid": [
+          15,
+          10,
+          36
+        ]
+      },
+      "-extents-derived-sel": {
+        "rules": [
+          11,
+          7,
+          36
+        ],
+        "llm": [
+          7,
+          6,
+          36
+        ],
+        "hybrid": [
+          11,
+          7,
+          36
+        ]
+      }
+    },
+    "dev-3": {
+      "-extents": {
+        "rules": [
+          2,
+          0,
+          32
+        ],
+        "llm": [
+          2,
+          0,
+          32
+        ],
+        "hybrid": [
+          2,
+          0,
+          32
+        ]
+      },
+      "-extents-derived": {
+        "rules": [
+          17,
+          6,
+          32
+        ],
+        "llm": [
+          14,
+          8,
+          32
+        ],
+        "hybrid": [
+          18,
+          7,
+          32
+        ]
+      },
+      "-extents-derived-sel": {
+        "rules": [
+          8,
+          5,
+          32
+        ],
+        "llm": [
+          8,
+          6,
+          32
+        ],
+        "hybrid": [
+          9,
+          6,
+          32
+        ]
+      }
+    },
+    "dev-4": {
+      "-extents": {
+        "rules": [
+          3,
+          0,
+          29
+        ],
+        "llm": [
+          1,
+          0,
+          29
+        ],
+        "hybrid": [
+          3,
+          0,
+          29
+        ]
+      },
+      "-extents-derived": {
+        "rules": [
+          16,
+          6,
+          29
+        ],
+        "llm": [
+          15,
+          8,
+          29
+        ],
+        "hybrid": [
+          18,
+          7,
+          29
+        ]
+      },
+      "-extents-derived-sel": {
+        "rules": [
+          8,
+          5,
+          29
+        ],
+        "llm": [
+          8,
+          6,
+          29
+        ],
+        "hybrid": [
+          9,
+          6,
+          29
+        ]
+      }
+    }
+  },
+  "rejected_variant": {
+    "rule": "any capitalised name other than the reference, roads and admin words excluded",
+    "owner_annotated": {
+      "ready": 21,
+      "correct": 18,
+      "held_correct": 15,
+      "held_wrong": 16
+    },
+    "claude_annotated": {
+      "ready": 13,
+      "correct": 9,
+      "held_correct": 15,
+      "held_wrong": 23
+    }
+  }
+}

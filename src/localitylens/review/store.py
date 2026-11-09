@@ -44,6 +44,7 @@ from localitylens.geo.georeference import (
     propose,
 )
 from localitylens.ingest.specimens import SpecimenRecord
+from localitylens.resolve.selection import only_selection_questions
 
 # review-2 adds the batch and job tables (persistent jobs); review-3 the trace table
 # (telemetry). Older stores are upgraded in place: the new tables are created empty and nothing
@@ -503,7 +504,11 @@ class ReviewStore:
             old_extent = next((c.metres for c in old if c.name.value == "extent"), None)
             edits["extent_m"] = [old_extent, extent_m]
         if not edits:
-            if base.proposal is None or base.proposal.outcome is not ProposalOutcome.COMPUTED:
+            full = base.proposal is not None and (
+                base.proposal.outcome is ProposalOutcome.COMPUTED
+                or only_selection_questions(base.proposal)  # the approval answers the check
+            )
+            if not full:
                 raise ReviewError(
                     "the proposal has no full region; edit it (feature, extent) or request "
                     "research instead"
