@@ -1,0 +1,17 @@
+{
+  "amends": "eval/benchmark/declaration-test-3.json",
+  "date": "2026-11-09",
+  "pushed": "after the annotation commit and before any system runs on test-3",
+  "change": "Correction of inputs.release_manifest_sha256. The declaration gives a14ead42..., the hash of release/manifest.json at v0.1.0 (4ddb131), copied from the test-2 declarations. At the declared code commit 5c303cdc the file is the v0.1.1 manifest.",
+  "release_manifest_sha256": "89eebcf996ab1cd1d1d9c8a76cff9762ae614b42e398c75ee5c19036835c7e05",
+  "difference": "The two manifests differ only in the label \"release\": \"0.1.0\" -> \"0.1.1\". Model, GGUF, prompt, grammar, generation settings, validation, rules, hybrid and snapshot entries are identical, so the systems are the ones the declaration describes.",
+  "annotations": {
+    "annotator": "Codex",
+    "commit": "ff55e8e",
+    "worksheet_sha256": "13135ff6eb76fb8095651b1fe4ac7cfaa9bd31b3a37098c39f698bb0a3c4a5fb",
+    "rows": 120,
+    "checker": "0 problems"
+  },
+  "unchanged": "Everything else in the declaration stands. Since the declared code commit, only the declaration, this amendment and the worksheet have changed.",
+  "checked_before_any_run": "2026-11-09, by hashes and counts only: 120 rows, every row annotated, audit_id/gbif_id/county/locality byte-identical to the blank worksheet, checker 0 problems; reviewed extents 85b610b3, derived extents 215df866, splits-3 lock 5a0bedff and sample ab5020cf match the declaration."
+}
