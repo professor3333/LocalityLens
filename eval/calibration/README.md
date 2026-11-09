@@ -1,5 +1,8 @@
 # Calibrating a second annotator (Codex) against the owner
 
+> **Result (2026-11-09):** accepted. Category 54/60 and GNIS IDs 55/60, against thresholds of
+> 51 and 48 ([result](../reports/codex-calibration.md)).
+
 The owner's time is the bottleneck for fresh annotations. Claude's annotations are not used for
 held-out claims, because Claude wrote the systems being tested. Codex, an AI coding assistant
 from another provider, did not write this code. Its annotations could serve as **secondary**

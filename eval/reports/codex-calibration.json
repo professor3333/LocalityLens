@@ -1,0 +1,50 @@
+{
+  "plan": "eval/calibration/README.md",
+  "annotator_a": "Codex (eval/calibration/validation/worksheet.csv, commit 5e067b7, sha256 9ee04f1f\u2026)",
+  "annotator_b": "the owner (eval/benchmark/validation/worksheet.csv)",
+  "agreement": {
+    "agreement_version": "1",
+    "rows": 60,
+    "by_field": {
+      "description_type": 51,
+      "supported": 56,
+      "acceptable_gnis_ids": 55,
+      "distance": 57,
+      "unit": 57,
+      "direction": 56,
+      "qualifiers": 55,
+      "category": 54
+    },
+    "every_field": 47,
+    "categories_a": {
+      "answerable": 34,
+      "reference_absent": 20,
+      "unsupported": 6
+    },
+    "categories_b": {
+      "answerable": 32,
+      "reference_absent": 24,
+      "unsupported": 4
+    }
+  },
+  "thresholds": {
+    "category": {
+      "needed": 51,
+      "got": 54
+    },
+    "acceptable_gnis_ids": {
+      "needed": 48,
+      "got": 55
+    }
+  },
+  "decision": "accepted as a second annotator",
+  "copying_diagnostic": {
+    "notes_identical": "0 of 56",
+    "mean_notes_length_chars": {
+      "codex": 71,
+      "owner": 300
+    },
+    "note": "missing_information (fixed vocabulary) and reference_features (copied from the label) are expected to match"
+  },
+  "reference": "Claude vs the owner on test-2's 20 repeats: category 16/20, GNIS IDs 16/20, every field 12/20"
+}
