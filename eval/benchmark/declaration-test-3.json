@@ -1,0 +1,52 @@
+{
+  "declaration": "test-3",
+  "declared": "2026-11-09",
+  "note": "Frozen before Codex annotates test-3 and before any system runs on it. Committed and pushed first; totals are published whatever they are. Per-record outputs are never read.",
+  "code_commit": "5c303cdc9ed1256b7f9bf7042ac1eb95b2a3e9db",
+  "question": "On unread 'place, offset' labels, does selection-2 hold back mostly wrong regions, raising the share of ready regions that are correct without a large loss of useful coverage?",
+  "systems": {
+    "without_check": "hybrid-1 (rules-6 first, llm-x2g2-qwen3.5-4b-q4km where the rules reach no candidate), reviewed + derived extents",
+    "with_check": "the same with --selection-2"
+  },
+  "inputs": {
+    "release_manifest_sha256": "a14ead42792f2075035bfb8023460832689e4bb984e36f85811d332719424601",
+    "reviewed_extents_sha256": "85b610b3c31bdd4b8e003079441b721d8d6a136d8f74d0179cccb39041984a25",
+    "derived_extents_sha256": "215df8667b30584caafbe01c7b8f7bd20df62f80a0c69ee7f72784b6ea3cfae5",
+    "selection_version": "selection-2",
+    "splits_3_lock_sha256": "5a0bedffd7a7d38a75b3c4c3ed4e5afd9a653bca3a20cf76548b8ec6a2f749e4",
+    "test_3_sample_sha256": "ab5020cf1309c302b2a96d80f332ee188f8356065a9feac3bbabcedc122dc785",
+    "test_3_blank_worksheet_sha256": "a99c2c073dab953bf56a3e4cb425cf2e6ccabf5db8d2214e24f1041d5b64d7a2",
+    "draw": "benchmark draw-extra --name test-3 --seed benchmark-3/1 --size 120 --prefix P --shape place_offset --shape-version 2 --repeats 0 (EXTRA_VERSION 1)"
+  },
+  "annotations": {
+    "annotator": "Codex, calibrated against the owner on 60 validation records (record category 54/60, acceptable GNIS IDs 55/60; eval/reports/codex-calibration.md)",
+    "procedure": "Codex fills eval/benchmark/test-3/worksheet.csv from eval/annotation_guide.md and the pinned GNIS snapshot, without opening other annotations, reports or system outputs. The owner's first commit of the worksheet after this declaration counts; it must pass the checker with 0 errors, and fixes go in a recorded further commit before any run.",
+    "label_for_results": "Codex-annotated; agreement with the owner 54/60 (category), 55/60 (GNIS IDs). Secondary evidence."
+  },
+  "how_it_runs": [
+    "Outputs go to the locked folder eval/benchmark/test-3/reports/. Standard output goes to log files there.",
+    "Common options: --sample eval/benchmark/test-3/test-3.json --extents data/reviewed/extents.csv --derived-extents data/extents/derived.csv --out eval/benchmark/test-3/reports.",
+    "Without the check: `audit rules`; `audit llm --no-cache`; `audit hybrid --with-derived`; `audit score --worksheet eval/benchmark/test-3/worksheet.csv --with-derived --hybrid <out>/test-3-hybrid-1-extents-derived.json`.",
+    "With the check: the same with --selection-2 on rules and llm, and --with-derived --with-selection-2 on hybrid and score (hybrid report test-3-hybrid-1-extents-derived-sel2.json)."
+  ],
+  "decision_rule": {
+    "works": "Among the regions selection-2 holds back, wrong ones are at least twice the correct ones, AND the share of ready regions that are correct rises by at least 5 percentage points.",
+    "does_not_work": "Anything else.",
+    "computed_from": "the two hybrid score reports' totals: held back correct = correct ready regions without the check minus with it; held back wrong = wrong ready regions without minus with"
+  },
+  "expectation_stated_in_advance": "On read data selection-2 held back 5 correct and 20 wrong regions and raised precision by 7 (owner-annotated) and 16 (Claude-annotated) points. selection-1 looked similar on read data and failed on unread labels, so either outcome is plausible; the targeted sample should hold more regions than test-2 did.",
+  "secondary_reported": [
+    "ready regions, correct, useful coverage for rules, LLM and hybrid-1, with and without the check",
+    "correct proposal candidates for rules, LLM and hybrid-1, and the hybrid minus rules difference (descriptive: Codex-annotated)",
+    "category counts (answerable, reference absent, unsupported)"
+  ],
+  "caveats": [
+    "Codex is calibrated against the owner, not the owner; blindness cannot be verified.",
+    "selection-2, the derived extents and the systems were written by Claude, on dev data.",
+    "test-3 holds only one label shape (place, offset), chosen because it is where wrong references concentrate."
+  ],
+  "run_rules": [
+    "Each run happens once. A technical failure may be rerun under this declaration and is recorded.",
+    "Only totals are published, in eval/reports/test-3.{md,json}."
+  ]
+}
