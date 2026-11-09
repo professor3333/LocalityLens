@@ -1,121 +1,121 @@
 audit_id,gbif_id,county,locality,description_type,supported,reference_features,acceptable_gnis_ids,distance,unit,direction,qualifiers,missing_information,notes
-P001,2573363614,Las Animas,Vermejo Park Ranch: in Colorow Canyon from the Colorado state line NE to mouth of Bear Canyon; 14 air mi SW of Trinidad.
-P002,2573495975,Jefferson,"Golden; Colorado School of Mines Survey Field: Base of the Rocky Mountain Front Range, northeast-facing slope, above an unnamed stream in the south end of the Survey Field, 2.51 km. south of the GNIS location of Golden."
-P003,2573385385,Gunnison,North Italian Peak; ca. 10 mi. n.e. of Crested Butte.
-P004,2573441721,Garfield,"Flat Tops Wilderness, White River National Forest, along Middle Ford Derby Creek, 2 miles upstream of McMillan Lake."
-P005,2573516952,Moffat,"Dinosaur National Monument. Bower Draw, ca ½ mi N of Yampa River."
-P006,2573497997,Jefferson,"Golden; Colorado School of Mines Survey Field. High plains at the base of the Rocky Mountain Front Range, 2.4 km. south southwest of the GNIS location of Golden"
-P007,2573333847,Gunnison,"Northern Gunnison Basin: Collegiate Peaks Wilderness: on ridge heading toward Continental Divide, ca 9 air mi N of Taylor Park Reservoir."
-P008,2573327493,Summit,"Arapaho National Forest, along Snake River, 1 mile upstream of confluence with Deer Creek."
-P009,2573469690,Fremont,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: Porters Gulch, ca 1 air mi upstream from confluence with Howard Creek."
-P010,2573395420,Jefferson,"Chambers place, 2 miles S. of Broomfield on Wadsworth. On hillside above southernmost bend of creek."
-P011,2573332718,Garfield,"Fraser Creek in Flat Tops Wilderness, 2.5 mi. SE of Trappers Lake."
-P012,2573441220,Montezuma,"North side of Cortez, 1.3 mi N of Jct. Hwys 160 and 145, then 0.4 mi W on Alamosa St."
-P013,2573410150,Teller,"Catamount Ranch, ¼ mi. up drainage SE of easternmost pond."
-P014,2573500008,Jefferson,"Golden; North Table Mountain Park. Southern portion of North Table Mountain just above a break in slope above an unnamed canyon draining into Clear Creek, 1.85 km. north northeast of the GNIS location of Golden.; 39.7716 -105.215"
-P015,2573464833,Archuleta,San Juan National Forest; ~12 miles SE of Pagosa Springs; NE side of Buckles Lake; away from margins of lake
-P016,2573535930,Moffat,"Dinosaur National Monument. Upper end, Sand Canyon, ca 0.5 mi SW of Pearl Park."
-P017,3462350326,Las Animas,"San Isabel National Forest; ~17 miles SW of La Veta, ~1/3 mile S of Trinchera Peak; E side of Continental Divide."
-P018,2573403625,Routt,"Park Range; ca 14.5 air mi S of Steamboat Springs, along Service Creek, ca 1.5 air mi above the Yampa River."
-P019,2573380337,Grand,"Rocky Mountain National Park. Pasture south of Sun Valley Ranch, 2.5 mi NW of Grand Lake."
-P020,2573329504,Boulder,"Baseline Lake, 3 mi. e. of Boulder."
-P021,2573420800,Boulder,Vicinity Castle Rock; Middle Boulder Creek Canyon; 1.5 miles northeast of Tungsten.
-P022,2573337737,Gunnison,"Ridge between Farris Creek and East River, 4 mi SE of Crested Butte-Gunnison highway."
-P023,2573435243,Dolores,"Lone Mesa State Park, 6 miles north of southern entrance at FR 514."
-P024,2573546318,La Plata,"Shellhammer Ridge, 0.9 mi NNE of La Boca."
-P025,2573479841,Gunnison,"Swale along Tomichi Creek, 7 mi E of Gunnison."
-P026,2573445616,Larimer,"Tundra slopes, east face of Cameron Mountain, Medicine Bow Range, 2.5 mi. N.W. of Chambers Lake."
-P027,2573520157,Las Animas,"Beside road from Branson to Trinchera, 2.9 mi. (by road) east of Trinchera."
-P028,2573460094,Archuleta,San Juan National Forest; ~4 miles NW of Chromo; ~2 miles NW of Mesa Cortado
-P029,2573331602,Chaffee/Gunnison,Shoulder of peak; 0.5 miles southwest of Cottonwood Pass.
-P030,2573482612,Grand,"Moist meadow just N of Grand Lake entrance station, 1 mi. N of Grand Lake."
-P031,2573337323,Routt,"North-central Colorado: Park Range: head of Harrison Creek, ca 2 air mi E of Walton Peak, ca 3 air mi SW of Rabbit Ears Pass; ca 13 air mi SE of Steamboat Springs."
-P032,2573447287,Dolores,"Dolores River, 11 mi N of Dove Cr. pumping station, NE of Dove Creek."
-P033,2573337435,Rio Blanco,"Flat Tops/White River Plateau: Flat Tops Wilderness: Marvine Creek, ca 27 air mi E of Meeker. Also SEC7."
-P034,2573324890,Baca,"Junction of Sand and Gallinas Canyons, trib. to Cimarron River, 27 mi. s. of Pritchett."
-P035,2573342936,Rio Blanco,"Flat Tops/White River Plateau: between Killarny Reservoir and old Jeep trail on Little Flat Tops, ca 45 air mi ENE of Meeker; ca 9.5 air mi W of Yampa."
-P036,2573337746,Gunnison,"Southern Gunnison Basin: between Stubbs Gulch and Gold Basin Creek just N of Saguache County, ca 8.3 air mi SSE of Gunnison."
-P037,2573527613,Lake,"North Halfmoon Trail, 2.8 mi NW of the Mt Elbert/Massive trailhead at Elbert Creek campground."
-P038,2573439199,Grand,"Pinto Ranch, approximately 7 air miles northwest of Kremmling."
-P039,2573441301,Weld,"Eagle Rock Ranch, approx. 1.5 miles S of the Wyoming State Line, near Simpson Creek in the Chalk Bluffs. Bluffs south of Geary Creek."
-P040,2573444621,Park,"In Sacramento Gulch, 8 miles west of Fairplay, along Sacramento Creek."
-P041,2573480822,La Plata,"San Juan National Forest: Chicago Basin. Animas River drainage, ca 18 mi SE of Silverton. West of Twin Thumbs Pass."
-P042,2573326745,Lincoln,"Punkin Center, 14 mi S along CO 71. Shortgrass prairie on E side of hwy and along County Rd K."
-P043,2573478119,Otero,Comanche National Grassland; Rourke Rd.; 0.8 mi. N. of David Canyon Rd.
-P044,2573472154,Boulder,"White Rocks. Boulder Creek, 8 mi. NE of Boulder."
-P045,4172812375,Jefferson,"Lippincott Ranch. Southwestern corner of the ranch, at base of railroad embankment, 22.3 km. north northwest of the GNIS location of Golden."
-P046,2573490385,Routt,"Hinman Park Campground, Routt Nat. For., 27 mi. n.e. of Steamboat Springs."
-P047,2573483699,Montezuma,"Jackson Gulch, 1 mi SW of Jackson Reservoir. Wetland along Mesa Verde Park water line."
-P048,2573330416,Eagle,"Flat Tops/ White River Plateau: Derby Mesa, ca 18 air mi NNW of Eagle."
-P049,2573470056,Jefferson,"Turkey Creek Canyon, about 4 miles southwest of Morrison."
-P050,2573418252,Custer,"Along road 368, above Hardscrabble Creek, ca. 10 mi. SE of Wetmore, 2 mi. above intersection of Rd. 387."
-P051,2573481844,Jefferson,"Rocky Flats Site, 7 miles south of Boulder. Church Ditch W of plant site."
-P052,2573538442,Mesa,"Orchard Mesa, 1 mi S of Clifton."
-P053,2573325937,Rio Blanco,"Flat Tops/White River Plateau: Grand Hogback, ca 9 air mi SSW of Meeker."
-P054,2573489826,Fremont,"Upper Arkansas River Valley. San Isabel Land Protection Trust private ranch, ca. 6.87 air miles southwest of Florence. About a ½ mile south of Chandler Road (Co. Rd 78). Along creek behind buildings."
-P055,2573535720,Pueblo,"Bottom of North St. Charles Canyon, ca. 4 mi. ESE of Beulah."
-P056,4172798099,Gunnison,"County Road 31, along Willow Creek, about 1/4 mi S of its junction with County Road 61, about 1/2 mi S of Site 1.; 38.44241 -107.057956"
-P057,2573438206,Moffat,"NE slope of Douglas Mountain; Whisky Springs Ranch, 6 mi NW of Greystone."
-P058,2573447707,Gunnison,"Rimrock of Blue Mesa, 6 mi SW of Sapinero on old Lake City 'cut-off' road."
-P059,2573444518,Boulder,"Abundant on border of pond near Mont Alto, 3 miles west of Gold Hill."
-P060,2573332413,Jefferson,"Rocky Flats Plant, 7 mi S of Boulder on Hwy 93, just NE of old land fill, N of industrial area."
-P061,2573342019,Unknown-E,"Cedar Mesas, 25 mi S of La Junta."
-P062,2573423208,Larimer,"Phantom Canyon Preserve, ca. 25 mi N of Ft. Collins along US Hwy 287; along W side of N. Fork of Cache La Poudre River. Preserve ""Reach 1""."
-P063,2573503883,Mesa,"Battlement Mesa: White River National Forest: creek below Bull Basin between waterfall and USFS boundary, ca 1-2 air mi NNW of Housetop Mountain and ca 7 air mi S of Parachute."
-P064,2573341130,Gunnison,"Northern Gunnison Basin: along Middle Quartz Creek, ca 2 air mi E of Pitkin."
-P065,2573371774,Ouray,"Valley below S side of Mt. Sneffels, 10 mi. SW of Ouray."
-P066,2573326955,Costilla,Vermejo Park Ranch: Culebra Range: southwest slope of Upper Glacier Lake; 0.6 air mi E of summit of State Line Peak.
-P067,2573384364,Rio Blanco,"Flat Tops/White River Plateau: Flat Tops Wilderness: slopes above Sheriff Reservoir, ca 13 air mi W of Yampa."
-P068,2573455589,Boulder,"Sugarloaf Mountain, ca. ten miles west of Boulder."
-P069,2573341119,Garfield,"White River National Forest, 4.5 miles west-northwest of Sweetwater Lake, on Dry Sweetwater Creek near junction of Sweetwater Creek."
-P070,2573468227,Mesa,"Lower John Brown Canyon; 3.6 mi. S. of Colo. 141, by CR 4.4."
-P071,2573436516,Morgan,"Pond margin, Tomkey fish farm, Northeast pond, 3 miles east of Weldona."
-P072,5004052137,Larimer,"Phantom Canyon Preserve, ca. 25 mi N of Ft. Collins along US Hwy 287; along an un-named stream ca. 0.5 mi from preserve gate at highway."
-P073,2573516139,Park,"Platte Gulch to Wheeler Lake, ca. 5 mi. NW of Alma."
-P074,2573324435,Pitkin,Lower Roaring Fork Valley; 1-2 mi E of Aspen.
-P075,2573342015,Pueblo,"Lime Rd, ca 1 mile NE of intersection with I-25."
-P076,2573340383,Boulder,"Beech Open Space, 6 mi N of Boulder. Just south of Neva Road, north of the picnic shelter."
-P077,2573461237,Conejos,Rio Grande National Forest; ~14 miles ENE of Platoro; just N of Forest Road 271
-P078,2573334507,Costilla,In San Luis Valley; 1.0 mile northwest of San Luis on north side of hwy. 142.
-P079,3030083573,Boulder,"Heil Valley Ranch, Geer Canyon, Geer Canyon Drive, ~1.6 miles W of caretakers house;"
-P080,2573415078,Lake,"San Isabel National Forest, Mt. Champion Basin, ca. 17 mi SW of Leadville on Half Moon Road."
-P081,2573551284,Grand,"Arapaho National Forest: Front Range: St. Louis Campground along St. Louis Creek, ca 3 air mi SW of Fraser."
-P082,2573326424,San Juan,"Ice Lake Basin, San Juan Mts., 10 mi from Silverton."
-P083,3950498383,Park,"Mosquito Range; ca. 9.5 miles SW of Breckenridge; E slope of Mt. Lincoln, 1/8 mile NE of ""Russia Mine"""
-P084,2573468887,Montezuma,"Hills above McElmo creek, ca. 21 mi. WW of Cortez."
-P085,2573323742,Moffat,"Whisky Springs Ranch, Douglas Mountain, 6 mi. SW of Greystone."
-P086,2573338748,San Juan,"Stony Basin, ca. 7 miles northeast of Silverton. San Juan National Forest. Fellfield on east-facing ridge of Green Mountain."
-P087,2573374393,Delta,"Northern Gunnison Basin; near W Fork of Terror Creek, ca. 7 air mi. NNW of Paonia."
-P088,2573327496,Weld,"Boulder Creek flats, 1 mile w. of Frederick."
-P089,2573393993,Routt,"Yampa Canyon, 4 mi. from Youghal."
-P090,2573494292,Rio Blanco,"Piceance Creek Road, 3.4 miles S of junction with State Highway 64."
-P091,2573339353,Garfield,"West Fork of Parachute Creek, 13 miles N of Grand Valley."
-P092,2573365332,Moffat,"Dinosaur National Monument. Echo Park, NW base of Jenny Lind Rock, ¼ mile E of Steamboat Rock."
-P093,2573460977,Conejos,Rio Grande National Forest; ~10 miles ENE of Platoro; N of Alamosa River at Alamosa CG
-P094,2573536322,Clear Creek,"Upper Mill Creek, Arapaho National Forest, 3.5 miles SSW of James Peak."
-P095,2573332119,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: Morrison trail, 9.8 air mi. NE of Mancos."
-P096,2573460914,Eagle,"Central Colorado: Sawatch Range, West Slope Continental Divide: off Forest Road 714, just below Sheep Mountain, ca 6 air mi NE of Tennessee Pass."
-P097,2573330563,Rio Blanco,"White River at Beefsteak Gulch, 12 mi. west of Meeker on State Hwy. 64."
-P098,2573516826,Pueblo,"Barrens, ca 1 mi N of north entrance to Red Top Ranch, along county road."
-P099,2573329191,Dolores,"Upper Dolores River Drainage and adjacent areas: San Juan National Forest: Lizard Head Wilderness Area: Lizard Head Peak, ca. 10 air mi N of Rico."
-P100,2573460982,Mineral,"San Juan National Forest; ~16 miles NE of Pagosa Springs; S side of Fall Creek, N side of Fall Creek Road"
-P101,2573438295,Grand,"Pond just S of outlet of Red Gulch, 9½ mi. N of Grand Lake."
-P102,2573558092,Jefferson,"Golden; North Table Mountain Park. Lower north slopes of North Table Mountain, along the Tablerock Trail, 1.0 km. south of the Mesa Spur trailhead on W. 58th Avenue, 4.2 km. north northwest of the GNIS location of Golden."
-P103,2573339562,Jefferson,"Rocky Flats, 7 mi S of Boulder, on Rocky Flats Pediment, N of Lindsay Farm."
-P104,2573339331,Grand,"Rocky Mountain National Park, Timber Creek, ½ mile southeast of Highway 34 and Timber Campground."
-P105,2573324076,Jefferson,"Chambers place, 2 miles S. of Broomfield on Wadsworth. Backyard."
-P106,2573535466,Routt,"Meadows Campground, Routt National Forest, 15 miles southeast of Steamboat Springs on US Highway 40. Open meadow below beaver ponds, a little west of campground."
-P107,2573467943,Routt,"North-central Colorado: Park Range: Hinman Lake and vicinity to Hinman Creek, ca 1.5 air mi N of Elk River, ca 6.5 air mi NE of Clark; ca 20 air mi N of Steamboat Springs."
-P108,2573445710,Jefferson,"Rocky Flats Site, 7 mi S of Boulder on Rocky Flats Pediment. Near crossing of W boundary of site and Woman Ck."
-P109,2573449131,Gunnison,"Northern Gunnison Basin: along Elk Creek, ca 13.5 air mi WSW of Gunnison."
-P110,2573496992,Jefferson,"Golden; Little Scraggy Peak: Buffalo Creek Recreation Area, northeast slopes of Little Scraggy Peak, 1.05 km. southwest of the intersection of County Roads 126 and 550, 46.5 km. south of the GNIS location of Golden."
-P111,2573343376,Moffat,"Dinosaur National Monument. Limestone Ridge, ca. 0.9 mi WNW of Limestone Springs, 3/4 mi E of Green River."
-P112,2573480131,Grand,"Arapaho National Forest: Front Range: Simpson Creek, ca 6 air mi NW of Byers Peak; ca 11.5 air mi SE of Hot Sulphur Springs."
-P113,2573335212,Garfield,"Deer Park Gulch, ca. 24 km N of DeBeque."
-P114,2573436938,BOULDER,"City of Boulder Mountain Park, Homestead Mesa, ca. 0.5 mi. NW of South Mesa Trailhead."
-P115,2573394049,Routt,"North-central Colorado: Park Range: along Forest Spur Road 471.1 from Forest Road 471 to upper Long Draw, NE of Mount Candy, ca 2.5 air mi SE of Clark; ca 14 air mi N of Steamboat Springs."
-P116,2573340872,Rio Blanco,"Flat Tops/White River Plateau: Fowler Creek Trail to Hill Creek Campground from top to midpoint, ca 8-9 air mi SE of Buford."
-P117,2573471962,Costilla,"Vermejo Park Ranch: Culebra Range: in alpine basin at headwaters of East Fork Costilla Creek, 3.88 air mi NE of State Line Peak."
-P118,2573439671,Montrose,"Upper Dolores River Drainage and Adjacent Area: Slick Rock Canyon, ca 19 air mi WNW of Naturita in Dolores River Canyon, N of La Sal Creek confluence."
-P119,2573488507,Rio Blanco,"Yellow Creek drainage, 22 miles and 79° from Rangely."
-P120,2573332064,Rio Blanco,"Vaughn Creek in White River National Forest, 6 mi. south of Buford."
+P001,2573363614,Las Animas,Vermejo Park Ranch: in Colorow Canyon from the Colorado state line NE to mouth of Bear Canyon; 14 air mi SW of Trinidad.,named_feature,yes,Colorow Canyon,194838,,,,,extent,From state line NE to mouth Bear Canyon. multi: Vermejo Park Ranch;14 air mi SW Trinidad.
+P002,2573495975,Jefferson,"Golden; Colorado School of Mines Survey Field: Base of the Rocky Mountain Front Range, northeast-facing slope, above an unnamed stream in the south end of the Survey Field, 2.51 km. south of the GNIS location of Golden.",distance_and_direction,yes,Golden,202837,2.51,kilometre,S,,extent,multi: Survey Field south end above unnamed stream;NE-facing slope;Front Range.
+P003,2573385385,Gunnison,North Italian Peak; ca. 10 mi. n.e. of Crested Butte.,named_feature,yes,North Italian Peak,188796?,,,,,extent;which_feature,multi: ca.10 mi NE Crested Butte. Northern peak may be distinct from indexed Italian Mountain; identity uncertain.
+P004,2573441721,Garfield,"Flat Tops Wilderness, White River National Forest, along Middle Ford Derby Creek, 2 miles upstream of McMillan Lake.",route_relative?,no,McMillan Lake,173695,2,mile,,,route_geometry,Upstream along Middle Ford Derby Creek; river-path distance assumed? multi: Flat Tops Wilderness;White River NF.
+P005,2573516952,Moffat,"Dinosaur National Monument. Bower Draw, ca ½ mi N of Yampa River.",named_feature,yes,Bower Draw,170622,,,,,extent,multi: ca ½ mi N Yampa River;Dinosaur National Monument.
+P006,2573497997,Jefferson,"Golden; Colorado School of Mines Survey Field. High plains at the base of the Rocky Mountain Front Range, 2.4 km. south southwest of the GNIS location of Golden",distance_and_direction,yes,Golden,202837,2.4,kilometre,SSW,,extent,multi: Colorado School of Mines Survey Field;high plains Front Range.
+P007,2573333847,Gunnison,"Northern Gunnison Basin: Collegiate Peaks Wilderness: on ridge heading toward Continental Divide, ca 9 air mi N of Taylor Park Reservoir.",distance_and_direction,yes,Taylor Park Reservoir,188911,9,mile,N,ca,extent,air distance. multi: Northern Gunnison Basin;Collegiate Peaks Wilderness;ridge toward Continental Divide.
+P008,2573327493,Summit,"Arapaho National Forest, along Snake River, 1 mile upstream of confluence with Deer Creek.",route_relative?,no,Deer Creek,182353,1,mile,,,route_geometry;other: confluence origin,Upstream along Snake River from confluence; river-path distance assumed? multi: Arapaho NF.
+P009,2573469690,Fremont,"Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: Sangre de Cristo Range: Porters Gulch, ca 1 air mi upstream from confluence with Howard Creek.",distance_only,yes,Howard Creek,191728,1,mile,,ca,extent;direction;other: confluence origin,Air distance upstream in Porters Gulch from confluence; no compass bearing. multi: Wet Mountains;Wet Mountain Valley;Sangre de Cristo Range.
+P010,2573395420,Jefferson,"Chambers place, 2 miles S. of Broomfield on Wadsworth. On hillside above southernmost bend of creek.",named_feature,yes,Chambers place,absent,,,,,extent;feature_not_in_gnis,Hillside above southernmost creek bend. multi:2 miles S Broomfield on Wadsworth.
+P011,2573332718,Garfield,"Fraser Creek in Flat Tops Wilderness, 2.5 mi. SE of Trappers Lake.",named_feature,yes,Fraser Creek,173665,,,,,extent,multi: Flat Tops Wilderness;2.5 mi SE Trappers Lake.
+P012,2573441220,Montezuma,"North side of Cortez, 1.3 mi N of Jct. Hwys 160 and 145, then 0.4 mi W on Alamosa St.",itinerary,no,Jct. Hwys 160 and 145;Alamosa St.,absent,,,,,route_geometry;feature_not_in_gnis,Sequential 1.3 mi N then 0.4 mi W. multi:north Cortez.
+P013,2573410150,Teller,"Catamount Ranch, ¼ mi. up drainage SE of easternmost pond.",route_relative?,no,easternmost pond,absent,¼,mile,SE,,route_geometry;which_feature;feature_not_in_gnis,Up drainage implies path distance? multi:Catamount Ranch.
+P014,2573500008,Jefferson,"Golden; North Table Mountain Park. Southern portion of North Table Mountain just above a break in slope above an unnamed canyon draining into Clear Creek, 1.85 km. north northeast of the GNIS location of Golden.; 39.7716 -105.215",distance_and_direction,yes,Golden,202837,1.85,kilometre,NNE,,extent,multi:North Table Mountain Park;southern mountain above break in slope and unnamed canyon. Embedded coordinates not used.
+P015,2573464833,Archuleta,San Juan National Forest; ~12 miles SE of Pagosa Springs; NE side of Buckles Lake; away from margins of lake,named_feature,yes,Buckles Lake,190985,,,,,extent,NE side away from margins. multi:San Juan NF;~12 miles SE Pagosa Springs.
+P016,2573535930,Moffat,"Dinosaur National Monument. Upper end, Sand Canyon, ca 0.5 mi SW of Pearl Park.",distance_and_direction,yes,Pearl Park,201956,0.5,mile,SW,ca,extent,multi:upper Sand Canyon;Dinosaur National Monument.
+P017,3462350326,Las Animas,"San Isabel National Forest; ~17 miles SW of La Veta, ~1/3 mile S of Trinchera Peak; E side of Continental Divide.",distance_and_direction,yes,Trinchera Peak,192937,1/3,mile,S,~,extent,multi:San Isabel NF;~17 miles SW La Veta;E Continental Divide.
+P018,2573403625,Routt,"Park Range; ca 14.5 air mi S of Steamboat Springs, along Service Creek, ca 1.5 air mi above the Yampa River.",distance_only,yes,Yampa River,169566,1.5,mile,,ca,extent;direction,Air distance above river along Service Creek; compass bearing unstated. multi:Park Range;14.5 air mi S Steamboat Springs.
+P019,2573380337,Grand,"Rocky Mountain National Park. Pasture south of Sun Valley Ranch, 2.5 mi NW of Grand Lake.",direction_only,yes,Sun Valley Ranch,absent,,,S,,extent;distance;feature_not_in_gnis,Pasture. multi:Rocky Mountain NP;2.5 mi NW Grand Lake.
+P020,2573329504,Boulder,"Baseline Lake, 3 mi. e. of Boulder.",named_feature,yes,Baseline Lake,202802,,,,,extent,multi:3 mi E Boulder.
+P021,2573420800,Boulder,Vicinity Castle Rock; Middle Boulder Creek Canyon; 1.5 miles northeast of Tungsten.,named_feature,yes,Castle Rock,181155?,,,,Vicinity,extent;distance;which_feature,multi:Middle Boulder Creek Canyon;1.5 miles NE Tungsten. Middle Boulder Creek context favors this Castle Rock; historical Tungsten offset not independently resolved.
+P022,2573337737,Gunnison,"Ridge between Farris Creek and East River, 4 mi SE of Crested Butte-Gunnison highway.",between_features,no,Farris Creek;East River,188800;188856;186481?,,,,,other: ridge geometry;which_feature,Ridge between streams. multi:4 mi SE Crested Butte-Gunnison highway. East River and Slate River historical variant both returned; identity unresolved.
+P023,2573435243,Dolores,"Lone Mesa State Park, 6 miles north of southern entrance at FR 514.",distance_and_direction?,yes,southern entrance at FR 514,absent,6,mile,N,,extent;which_feature;feature_not_in_gnis,multi:Lone Mesa State Park. Road distance possible? Not explicitly stated.
+P024,2573546318,La Plata,"Shellhammer Ridge, 0.9 mi NNE of La Boca.",named_feature,yes,Shellhammer Ridge,203008,,,,,extent,multi:0.9 mi NNE La Boca.
+P025,2573479841,Gunnison,"Swale along Tomichi Creek, 7 mi E of Gunnison.",distance_and_direction,yes,Gunnison,188995,7,mile,E,,extent,multi:swale along Tomichi Creek.
+P026,2573445616,Larimer,"Tundra slopes, east face of Cameron Mountain, Medicine Bow Range, 2.5 mi. N.W. of Chambers Lake.",named_feature,yes,Cameron Mountain,202423,,,,,extent,East-face tundra slopes. multi:Medicine Bow Range;2.5 mi NW Chambers Lake.
+P027,2573520157,Las Animas,"Beside road from Branson to Trinchera, 2.9 mi. (by road) east of Trinchera.",route_relative,no,Trinchera,204814,2.9,mile,E,,route_geometry,Explicit by-road distance;road Branson to Trinchera.
+P028,2573460094,Archuleta,San Juan National Forest; ~4 miles NW of Chromo; ~2 miles NW of Mesa Cortado,distance_and_direction,yes,Mesa Cortado,191046,2,mile,NW,~,extent,multi:San Juan NF;~4 miles NW Chromo.
+P029,2573331602,Chaffee/Gunnison,Shoulder of peak; 0.5 miles southwest of Cottonwood Pass.,distance_and_direction,yes,Cottonwood Pass,189140,0.5,mile,SW,,extent,Shoulder of unnamed peak.
+P030,2573482612,Grand,"Moist meadow just N of Grand Lake entrance station, 1 mi. N of Grand Lake.",direction_only,yes,Grand Lake entrance station,absent,,,N,,extent;distance;feature_not_in_gnis,Moist meadow just N. multi:1 mi N Grand Lake.
+P031,2573337323,Routt,"North-central Colorado: Park Range: head of Harrison Creek, ca 2 air mi E of Walton Peak, ca 3 air mi SW of Rabbit Ears Pass; ca 13 air mi SE of Steamboat Springs.",named_feature,yes,Harrison Creek,172956,,,,,extent,Head of creek. multi:Park Range;ca2 air mi E Walton Peak;ca3 air mi SW Rabbit Ears Pass;ca13 air mi SE Steamboat Springs.
+P032,2573447287,Dolores,"Dolores River, 11 mi N of Dove Cr. pumping station, NE of Dove Creek.",distance_and_direction,yes,Dove Cr. pumping station,absent,11,mile,N,,extent;feature_not_in_gnis,multi:Dolores River;NE Dove Creek.
+P033,2573337435,Rio Blanco,"Flat Tops/White River Plateau: Flat Tops Wilderness: Marvine Creek, ca 27 air mi E of Meeker. Also SEC7.",named_feature,yes,Marvine Creek,173464,,,,,extent,multi:Flat Tops/White River Plateau;Wilderness;ca27 air mi E Meeker;SEC7.
+P034,2573324890,Baca,"Junction of Sand and Gallinas Canyons, trib. to Cimarron River, 27 mi. s. of Pritchett.",between_features,no,Sand;Gallinas Canyons,1097727?;196329?,,,,,other: confluence geometry;which_feature,Junction of canyons;multi:tributary Cimarron River;27 mi S Pritchett. Cross-border canyon mouths; Sand/Gallinas correspondence uncertain.
+P035,2573342936,Rio Blanco,"Flat Tops/White River Plateau: between Killarny Reservoir and old Jeep trail on Little Flat Tops, ca 45 air mi ENE of Meeker; ca 9.5 air mi W of Yampa.",between_features,no,Killarny Reservoir;old Jeep trail,173387,,,,,other: trail geometry;which_feature;feature_not_in_gnis,multi:Little Flat Tops;45 air mi ENE Meeker;9.5 air mi W Yampa. Old Jeep trail is unindexed; ID describes reservoir only.
+P036,2573337746,Gunnison,"Southern Gunnison Basin: between Stubbs Gulch and Gold Basin Creek just N of Saguache County, ca 8.3 air mi SSE of Gunnison.",between_features,no,Stubbs Gulch;Gold Basin Creek,189604;189006,,,,,other: intervening area,multi:Southern Gunnison Basin;N Saguache County;ca8.3 air mi SSE Gunnison.
+P037,2573527613,Lake,"North Halfmoon Trail, 2.8 mi NW of the Mt Elbert/Massive trailhead at Elbert Creek campground.",distance_and_direction,yes,Mt Elbert/Massive trailhead,absent,2.8,mile,NW,,extent;feature_not_in_gnis,multi:North Halfmoon Trail;trailhead at Elbert Creek campground.
+P038,2573439199,Grand,"Pinto Ranch, approximately 7 air miles northwest of Kremmling.",named_feature,yes,Pinto Ranch,absent,,,,,extent;feature_not_in_gnis,multi:approximately7 air miles NW Kremmling.
+P039,2573441301,Weld,"Eagle Rock Ranch, approx. 1.5 miles S of the Wyoming State Line, near Simpson Creek in the Chalk Bluffs. Bluffs south of Geary Creek.",named_feature,yes,Eagle Rock Ranch,absent,,,,,extent;feature_not_in_gnis,Bluffs S Geary Creek. multi:approx.1.5 miles S Wyoming line;near Simpson Creek;Chalk Bluffs.
+P040,2573444621,Park,"In Sacramento Gulch, 8 miles west of Fairplay, along Sacramento Creek.",named_feature,yes,Sacramento Creek,180229,,,,,extent,multi:Sacramento Gulch;8 miles W Fairplay.
+P041,2573480822,La Plata,"San Juan National Forest: Chicago Basin. Animas River drainage, ca 18 mi SE of Silverton. West of Twin Thumbs Pass.",direction_only,yes,Twin Thumbs Pass,absent,,,W,,extent;distance;feature_not_in_gnis,multi:Chicago Basin;Animas River drainage;ca18 mi SE Silverton;San Juan NF.
+P042,2573326745,Lincoln,"Punkin Center, 14 mi S along CO 71. Shortgrass prairie on E side of hwy and along County Rd K.",route_relative,no,Punkin Center,195180,14,mile,S,,route_geometry,Along CO71;E highway at County Rd K;shortgrass prairie.
+P043,2573478119,Otero,Comanche National Grassland; Rourke Rd.; 0.8 mi. N. of David Canyon Rd.,distance_and_direction?,yes,David Canyon Rd.,absent,0.8,mile,N,,extent;feature_not_in_gnis,multi:Rourke Rd;Comanche National Grassland. Road distance possible? Not explicit.
+P044,2573472154,Boulder,"White Rocks. Boulder Creek, 8 mi. NE of Boulder.",named_feature,yes,White Rocks,absent,,,,,extent;feature_not_in_gnis,multi:Boulder Creek;8 mi NE Boulder.
+P045,4172812375,Jefferson,"Lippincott Ranch. Southwestern corner of the ranch, at base of railroad embankment, 22.3 km. north northwest of the GNIS location of Golden.",named_feature,yes,Lippincott Ranch,absent,,,,,extent;feature_not_in_gnis,SW corner at railroad embankment. multi:22.3 km NNW Golden GNIS location.
+P046,2573490385,Routt,"Hinman Park Campground, Routt Nat. For., 27 mi. n.e. of Steamboat Springs.",named_feature,yes,Hinman Park Campground,absent,,,,,extent;feature_not_in_gnis,multi:Routt NF;27 mi NE Steamboat Springs.
+P047,2573483699,Montezuma,"Jackson Gulch, 1 mi SW of Jackson Reservoir. Wetland along Mesa Verde Park water line.",distance_and_direction,yes,Jackson Reservoir,178856?,1,mile,SW,,extent;which_feature,multi:Jackson Gulch;wetland Mesa Verde Park water line. Jackson Gulch Reservoir fits county and context; shortened reservoir name uncertain.
+P048,2573330416,Eagle,"Flat Tops/ White River Plateau: Derby Mesa, ca 18 air mi NNW of Eagle.",named_feature,yes,Derby Mesa,173712,,,,,extent,multi:Flat Tops/White River Plateau;ca18 air mi NNW Eagle.
+P049,2573470056,Jefferson,"Turkey Creek Canyon, about 4 miles southwest of Morrison.",named_feature,yes,Turkey Creek Canyon,182534,,,,,extent,multi:about4 miles SW Morrison.
+P050,2573418252,Custer,"Along road 368, above Hardscrabble Creek, ca. 10 mi. SE of Wetmore, 2 mi. above intersection of Rd. 387.",route_relative?,no,intersection of Rd. 387,absent,2,mile,,,route_geometry;feature_not_in_gnis,"Above intersection on road368, route interpretation uncertain? multi:above Hardscrabble Creek;ca10 mi SE Wetmore."
+P051,2573481844,Jefferson,"Rocky Flats Site, 7 miles south of Boulder. Church Ditch W of plant site.",named_feature,yes,Church Ditch,181232;202799?,,,,,extent;which_feature,W plant site. multi:Rocky Flats Site;7 miles S Boulder. Upper Church Ditch may denote this section; which segment is unresolved.
+P052,2573538442,Mesa,"Orchard Mesa, 1 mi S of Clifton.",named_feature,yes,Orchard Mesa,174584;174585?,,,,,extent;which_feature,multi:1 mi S Clifton. Landform versus populated place uncertain; both retained.
+P053,2573325937,Rio Blanco,"Flat Tops/White River Plateau: Grand Hogback, ca 9 air mi SSW of Meeker.",named_feature,yes,Grand Hogback,173906;202208?,,,,,extent;which_feature,multi:Flat Tops/White River Plateau;ca9 air mi SSW Meeker. Grand Hogback and historical Coal Ridge variant returned; named extent uncertain.
+P054,2573489826,Fremont,"Upper Arkansas River Valley. San Isabel Land Protection Trust private ranch, ca. 6.87 air miles southwest of Florence. About a ½ mile south of Chandler Road (Co. Rd 78). Along creek behind buildings.",distance_and_direction,yes,Chandler Road,absent,½,mile,S,About,extent;other: road segment;feature_not_in_gnis,multi:Upper Arkansas Valley;private ranch ca6.87 air miles SW Florence;creek behind buildings;Co.Rd78.
+P055,2573535720,Pueblo,"Bottom of North St. Charles Canyon, ca. 4 mi. ESE of Beulah.",named_feature,yes,North St. Charles Canyon,193833,,,,,extent,Bottom of canyon. multi:ca4 mi ESE Beulah.
+P056,4172798099,Gunnison,"County Road 31, along Willow Creek, about 1/4 mi S of its junction with County Road 61, about 1/2 mi S of Site 1.; 38.44241 -107.057956",distance_and_direction?,yes,County Road 61,absent,1/4,mile,S,about,extent;other: road junction;feature_not_in_gnis,From junction with County Road31;road distance possible? multi:Willow Creek;about1/2 mi S Site1. Embedded coordinates not used.
+P057,2573438206,Moffat,"NE slope of Douglas Mountain; Whisky Springs Ranch, 6 mi NW of Greystone.",named_feature,yes,Whisky Springs Ranch,absent,,,,,extent;feature_not_in_gnis,NE Douglas Mountain slope. multi:6 mi NW Greystone.
+P058,2573447707,Gunnison,"Rimrock of Blue Mesa, 6 mi SW of Sapinero on old Lake City 'cut-off' road.",named_feature,yes,Blue Mesa,203337,,,,,extent,Rimrock. multi:6 mi SW Sapinero;old Lake City cut-off road.
+P059,2573444518,Boulder,"Abundant on border of pond near Mont Alto, 3 miles west of Gold Hill.",named_feature,yes,Mont Alto,absent,,,,near,extent;distance;which_feature;feature_not_in_gnis,Unnamed pond border. multi:3 miles W Gold Hill.
+P060,2573332413,Jefferson,"Rocky Flats Plant, 7 mi S of Boulder on Hwy 93, just NE of old land fill, N of industrial area.",named_feature,yes,Rocky Flats Plant,2511997,,,,,extent;other: unidentified landfill,Just NE old landfill N industrial area. multi:7 mi S Boulder on Hwy93.
+P061,2573342019,Unknown-E,"Cedar Mesas, 25 mi S of La Junta.",named_feature,yes,Cedar Mesas,absent,,,,,extent;feature_not_in_gnis,multi:25 mi S La Junta;county uninformative.
+P062,2573423208,Larimer,"Phantom Canyon Preserve, ca. 25 mi N of Ft. Collins along US Hwy 287; along W side of N. Fork of Cache La Poudre River. Preserve ""Reach 1"".",named_feature,yes,Phantom Canyon Preserve,absent,,,,,extent;other: Reach 1 boundary;feature_not_in_gnis,Reach1 W side North Fork river. multi:ca25 mi N Ft.Collins along US287.
+P063,2573503883,Mesa,"Battlement Mesa: White River National Forest: creek below Bull Basin between waterfall and USFS boundary, ca 1-2 air mi NNW of Housetop Mountain and ca 7 air mi S of Parachute.",distance_and_direction,yes,Housetop Mountain,174350,1-2,mile,NNW,ca,extent,range;air miles. multi:creek below Bull Basin between waterfall and USFS boundary;Battlement Mesa;White River NF;ca7 air mi S Parachute.
+P064,2573341130,Gunnison,"Northern Gunnison Basin: along Middle Quartz Creek, ca 2 air mi E of Pitkin.",named_feature,yes,Middle Quartz Creek,189405,,,,,extent,multi:Northern Gunnison Basin;ca2 air mi E Pitkin.
+P065,2573371774,Ouray,"Valley below S side of Mt. Sneffels, 10 mi. SW of Ouray.",named_feature,yes,Mt. Sneffels,196432,,,,,extent,Valley below S side. multi:10 mi SW Ouray.
+P066,2573326955,Costilla,Vermejo Park Ranch: Culebra Range: southwest slope of Upper Glacier Lake; 0.6 air mi E of summit of State Line Peak.,named_feature,yes,Upper Glacier Lake,193167?,,,,,extent;which_feature,"SW slope. multi:Vermejo Park Ranch;Culebra Range;0.6 air mi E State Line Peak summit. Indexed Glacier Lakes group may include upper lake, but individual lake is not resolved."
+P067,2573384364,Rio Blanco,"Flat Tops/White River Plateau: Flat Tops Wilderness: slopes above Sheriff Reservoir, ca 13 air mi W of Yampa.",named_feature,yes,Sheriff Reservoir,173366,,,,,extent,Slopes above reservoir. multi:Flat Tops/White River Plateau;Wilderness;ca13 air mi W Yampa.
+P068,2573455589,Boulder,"Sugarloaf Mountain, ca. ten miles west of Boulder.",named_feature,yes,Sugarloaf Mountain,178591,,,,,extent,multi:ca.ten miles W Boulder.
+P069,2573341119,Garfield,"White River National Forest, 4.5 miles west-northwest of Sweetwater Lake, on Dry Sweetwater Creek near junction of Sweetwater Creek.",named_feature,yes,Dry Sweetwater Creek,173851,,,,near,extent,Near Sweetwater Creek junction. multi:White River NF;4.5 miles WNW Sweetwater Lake.
+P070,2573468227,Mesa,"Lower John Brown Canyon; 3.6 mi. S. of Colo. 141, by CR 4.4.",distance_and_direction?,yes,Colo. 141,absent,3.6,mile,S,,extent;other: road reference point;feature_not_in_gnis,By CR4.4;route distance possible? multi:Lower John Brown Canyon.
+P071,2573436516,Morgan,"Pond margin, Tomkey fish farm, Northeast pond, 3 miles east of Weldona.",named_feature,yes,Tomkey fish farm,absent,,,,,extent;feature_not_in_gnis,NE pond margin. multi:3 miles E Weldona.
+P072,5004052137,Larimer,"Phantom Canyon Preserve, ca. 25 mi N of Ft. Collins along US Hwy 287; along an un-named stream ca. 0.5 mi from preserve gate at highway.",distance_only,yes,preserve gate at highway,absent,0.5,mile,,ca.,extent;direction;which_feature;feature_not_in_gnis,Unnamed stream. multi:Phantom Canyon Preserve;ca25 mi N Ft.Collins along US287.
+P073,2573516139,Park,"Platte Gulch to Wheeler Lake, ca. 5 mi. NW of Alma.",between_features,no,Platte Gulch;Wheeler Lake,179909;179906,,,,,other: connecting corridor,Gulch to lake. multi:ca5 mi NW Alma.
+P074,2573324435,Pitkin,Lower Roaring Fork Valley; 1-2 mi E of Aspen.,distance_and_direction,yes,Aspen,204686,1-2,mile,E,,extent,range;multi:Lower Roaring Fork Valley.
+P075,2573342015,Pueblo,"Lime Rd, ca 1 mile NE of intersection with I-25.",distance_and_direction?,yes,I-25,absent,1,mile,NE,ca,extent;other: intersection origin;feature_not_in_gnis,Intersection with Lime Rd;road distance possible? Not explicit.
+P076,2573340383,Boulder,"Beech Open Space, 6 mi N of Boulder. Just south of Neva Road, north of the picnic shelter.",named_feature,yes,Beech Open Space,absent,,,,,extent;other: shelter location;feature_not_in_gnis,S Neva Road N picnic shelter. multi:6 mi N Boulder.
+P077,2573461237,Conejos,Rio Grande National Forest; ~14 miles ENE of Platoro; just N of Forest Road 271,distance_and_direction,yes,Platoro,190731,14,mile,ENE,~,extent,multi:Rio Grande NF;just N Forest Road271.
+P078,2573334507,Costilla,In San Luis Valley; 1.0 mile northwest of San Luis on north side of hwy. 142.,distance_and_direction,yes,San Luis,204787,1.0,mile,NW,,extent,North hwy142. multi:San Luis Valley.
+P079,3030083573,Boulder,"Heil Valley Ranch, Geer Canyon, Geer Canyon Drive, ~1.6 miles W of caretakers house;",distance_and_direction?,yes,caretakers house,absent,1.6,mile,W,~,extent;which_feature;feature_not_in_gnis,multi:Heil Valley Ranch;Geer Canyon;Geer Canyon Drive. Road distance possible? Not explicit.
+P080,2573415078,Lake,"San Isabel National Forest, Mt. Champion Basin, ca. 17 mi SW of Leadville on Half Moon Road.",named_feature,yes,Mt. Champion Basin,absent,,,,,extent;feature_not_in_gnis,multi:San Isabel NF;ca17 mi SW Leadville on Half Moon Road.
+P081,2573551284,Grand,"Arapaho National Forest: Front Range: St. Louis Campground along St. Louis Creek, ca 3 air mi SW of Fraser.",named_feature,yes,St. Louis Campground,absent,,,,,extent;feature_not_in_gnis,multi:St.Louis Creek;Arapaho NF;Front Range;ca3 air mi SW Fraser.
+P082,2573326424,San Juan,"Ice Lake Basin, San Juan Mts., 10 mi from Silverton.",named_feature,yes,Ice Lake Basin,187524,,,,,extent,multi:San Juan Mts.;10 mi from Silverton.
+P083,3950498383,Park,"Mosquito Range; ca. 9.5 miles SW of Breckenridge; E slope of Mt. Lincoln, 1/8 mile NE of ""Russia Mine""",distance_and_direction,yes,Russia Mine,absent,1/8,mile,NE,,extent;feature_not_in_gnis,multi:Mosquito Range;ca9.5 miles SW Breckenridge;E Mt.Lincoln slope.
+P084,2573468887,Montezuma,"Hills above McElmo creek, ca. 21 mi. WW of Cortez.",named_feature,yes,McElmo creek,201753,,,,,extent,Hills above creek. multi:ca21 mi WW Cortez;WW is not a compass code and not interpreted.
+P085,2573323742,Moffat,"Whisky Springs Ranch, Douglas Mountain, 6 mi. SW of Greystone.",named_feature,yes,Whisky Springs Ranch,absent,,,,,extent;feature_not_in_gnis,multi:Douglas Mountain;6 mi SW Greystone.
+P086,2573338748,San Juan,"Stony Basin, ca. 7 miles northeast of Silverton. San Juan National Forest. Fellfield on east-facing ridge of Green Mountain.",named_feature,yes,Green Mountain,187661,,,,,extent,East-facing ridge fellfield. multi:Stony Basin;ca7 miles NE Silverton;San Juan NF.
+P087,2573374393,Delta,"Northern Gunnison Basin; near W Fork of Terror Creek, ca. 7 air mi. NNW of Paonia.",named_feature,yes,W Fork of Terror Creek,186316,,,,near,extent;distance,multi:Northern Gunnison Basin;ca7 air mi NNW Paonia.
+P088,2573327496,Weld,"Boulder Creek flats, 1 mile w. of Frederick.",distance_and_direction,yes,Frederick,180839,1,mile,W,,extent,multi:Boulder Creek flats.
+P089,2573393993,Routt,"Yampa Canyon, 4 mi. from Youghal.",distance_only,yes,Youghal,absent,4,mile,,,extent;direction;feature_not_in_gnis,multi:Yampa Canyon.
+P090,2573494292,Rio Blanco,"Piceance Creek Road, 3.4 miles S of junction with State Highway 64.",distance_and_direction?,yes,State Highway 64,absent,3.4,mile,S,,extent;other: junction origin;feature_not_in_gnis,Junction with Piceance Creek Road;road distance possible? Not explicitly stated.
+P091,2573339353,Garfield,"West Fork of Parachute Creek, 13 miles N of Grand Valley.",named_feature,yes,West Fork of Parachute Creek,172063,,,,,extent,multi:13 miles N Grand Valley.
+P092,2573365332,Moffat,"Dinosaur National Monument. Echo Park, NW base of Jenny Lind Rock, ¼ mile E of Steamboat Rock.",named_feature,yes,Jenny Lind Rock,170660,,,,,extent,NW base. multi:Echo Park;Dinosaur National Monument;¼ mile E Steamboat Rock.
+P093,2573460977,Conejos,Rio Grande National Forest; ~10 miles ENE of Platoro; N of Alamosa River at Alamosa CG,named_feature,yes,Alamosa CG,absent,,,,,extent;feature_not_in_gnis,N Alamosa River. multi:Rio Grande NF;~10 miles ENE Platoro.
+P094,2573536322,Clear Creek,"Upper Mill Creek, Arapaho National Forest, 3.5 miles SSW of James Peak.",distance_and_direction,yes,James Peak,181399,3.5,mile,SSW,,extent,multi:Upper Mill Creek;Arapaho NF.
+P095,2573332119,Montezuma,"Upper Dolores River Drainage and Adjacent Areas: San Juan National Forest: Morrison trail, 9.8 air mi. NE of Mancos.",named_feature,yes,Morrison trail,absent,,,,,extent;feature_not_in_gnis,multi:Upper Dolores drainage;San Juan NF;9.8 air mi NE Mancos.
+P096,2573460914,Eagle,"Central Colorado: Sawatch Range, West Slope Continental Divide: off Forest Road 714, just below Sheep Mountain, ca 6 air mi NE of Tennessee Pass.",named_feature,yes,Sheep Mountain,175625?,,,,,extent;which_feature,Just below mountain off Forest Road714. multi:Sawatch Range;W Continental Divide;ca6 air mi NE Tennessee Pass. Only Eagle County match does not clearly fit six miles NE Tennessee Pass; identification uncertain.
+P097,2573330563,Rio Blanco,"White River at Beefsteak Gulch, 12 mi. west of Meeker on State Hwy. 64.",named_feature,yes,Beefsteak Gulch,171738,,,,,extent,At White River. multi:12 mi W Meeker on SH64.
+P098,2573516826,Pueblo,"Barrens, ca 1 mi N of north entrance to Red Top Ranch, along county road.",distance_and_direction,yes,north entrance to Red Top Ranch,absent,1,mile,N,ca,extent;feature_not_in_gnis,Barrens along county road.
+P099,2573329191,Dolores,"Upper Dolores River Drainage and adjacent areas: San Juan National Forest: Lizard Head Wilderness Area: Lizard Head Peak, ca. 10 air mi N of Rico.",named_feature,yes,Lizard Head Peak,187465,,,,,extent,multi:Upper Dolores drainage;San Juan NF;Lizard Head Wilderness;ca10 air mi N Rico.
+P100,2573460982,Mineral,"San Juan National Forest; ~16 miles NE of Pagosa Springs; S side of Fall Creek, N side of Fall Creek Road",named_feature,yes,Fall Creek,190968,,,,,extent,S creek N Fall Creek Road. multi:San Juan NF;~16 miles NE Pagosa Springs.
+P101,2573438295,Grand,"Pond just S of outlet of Red Gulch, 9½ mi. N of Grand Lake.",direction_only,yes,Red Gulch,177463,,,S,,extent;distance;which_feature,Pond just S outlet. multi:9½ mi N Grand Lake.
+P102,2573558092,Jefferson,"Golden; North Table Mountain Park. Lower north slopes of North Table Mountain, along the Tablerock Trail, 1.0 km. south of the Mesa Spur trailhead on W. 58th Avenue, 4.2 km. north northwest of the GNIS location of Golden.",distance_and_direction,yes,Mesa Spur trailhead,absent,1.0,kilometre,S,,extent;feature_not_in_gnis,multi:W58th Avenue;Tablerock Trail;lower N North Table Mountain;park;4.2km NNW Golden GNIS location.
+P103,2573339562,Jefferson,"Rocky Flats, 7 mi S of Boulder, on Rocky Flats Pediment, N of Lindsay Farm.",direction_only,yes,Lindsay Farm,absent,,,N,,extent;distance;feature_not_in_gnis,multi:Rocky Flats;7mi S Boulder;Rocky Flats Pediment.
+P104,2573339331,Grand,"Rocky Mountain National Park, Timber Creek, ½ mile southeast of Highway 34 and Timber Campground.",distance_and_direction,yes,Highway 34;Timber Campground,absent,½,mile,SE,,extent;other: reference origin;feature_not_in_gnis,Likely campground/highway junction? multi:Timber Creek;Rocky Mountain NP.
+P105,2573324076,Jefferson,"Chambers place, 2 miles S. of Broomfield on Wadsworth. Backyard.",named_feature,yes,Chambers place,absent,,,,,extent;feature_not_in_gnis,Backyard. multi:2 miles S Broomfield on Wadsworth.
+P106,2573535466,Routt,"Meadows Campground, Routt National Forest, 15 miles southeast of Steamboat Springs on US Highway 40. Open meadow below beaver ponds, a little west of campground.",direction_only,yes,Meadows Campground,absent,,,W,,extent;distance;feature_not_in_gnis,A little west;open meadow below beaver ponds. multi:Routt NF;15 miles SE Steamboat Springs on US40.
+P107,2573467943,Routt,"North-central Colorado: Park Range: Hinman Lake and vicinity to Hinman Creek, ca 1.5 air mi N of Elk River, ca 6.5 air mi NE of Clark; ca 20 air mi N of Steamboat Springs.",between_features,no,Hinman Lake;Hinman Creek,170494;170501,,,,vicinity,other: connecting area,Lake to creek. multi:Park Range;ca1.5 air mi N Elk River;ca6.5 air mi NE Clark;ca20 air mi N Steamboat Springs.
+P108,2573445710,Jefferson,"Rocky Flats Site, 7 mi S of Boulder on Rocky Flats Pediment. Near crossing of W boundary of site and Woman Ck.",named_feature,yes,Woman Ck.,181233,,,,Near,extent;other: site boundary crossing,Near crossing W site boundary and creek. multi:Rocky Flats Site;7mi S Boulder;Rocky Flats Pediment.
+P109,2573449131,Gunnison,"Northern Gunnison Basin: along Elk Creek, ca 13.5 air mi WSW of Gunnison.",named_feature,yes,Elk Creek,186370?;186441?;188484?;186638?,,,,,extent;which_feature,multi:Northern Gunnison Basin;ca13.5 air mi WSW Gunnison. County matches and historical variant retained provisionally; none can be confidently tied to the stated offset.
+P110,2573496992,Jefferson,"Golden; Little Scraggy Peak: Buffalo Creek Recreation Area, northeast slopes of Little Scraggy Peak, 1.05 km. southwest of the intersection of County Roads 126 and 550, 46.5 km. south of the GNIS location of Golden.",distance_and_direction,yes,intersection of County Roads 126 and 550,absent,1.05,kilometre,SW,,extent;feature_not_in_gnis,multi:NE Little Scraggy Peak slopes;Buffalo Creek Recreation Area;46.5km S Golden GNIS location.
+P111,2573343376,Moffat,"Dinosaur National Monument. Limestone Ridge, ca. 0.9 mi WNW of Limestone Springs, 3/4 mi E of Green River.",distance_and_direction,yes,Limestone Springs,170607,0.9,mile,WNW,ca.,extent,multi:Limestone Ridge;3/4mi E Green River;Dinosaur National Monument.
+P112,2573480131,Grand,"Arapaho National Forest: Front Range: Simpson Creek, ca 6 air mi NW of Byers Peak; ca 11.5 air mi SE of Hot Sulphur Springs.",named_feature,yes,Simpson Creek,175666,,,,,extent,multi:Arapaho NF;Front Range;ca6 air mi NW Byers Peak;ca11.5 air mi SE Hot Sulphur Springs.
+P113,2573335212,Garfield,"Deer Park Gulch, ca. 24 km N of DeBeque.",named_feature,yes,Deer Park Gulch,172197,,,,,extent,multi:ca24km N DeBeque.
+P114,2573436938,BOULDER,"City of Boulder Mountain Park, Homestead Mesa, ca. 0.5 mi. NW of South Mesa Trailhead.",distance_and_direction,yes,South Mesa Trailhead,absent,0.5,mile,NW,ca.,extent;feature_not_in_gnis,multi:Homestead Mesa;Boulder Mountain Park.
+P115,2573394049,Routt,"North-central Colorado: Park Range: along Forest Spur Road 471.1 from Forest Road 471 to upper Long Draw, NE of Mount Candy, ca 2.5 air mi SE of Clark; ca 14 air mi N of Steamboat Springs.",named_feature,yes,Forest Spur Road 471.1,absent,,,,,extent;other: road segment geometry;feature_not_in_gnis,From FR471 to upper Long Draw. multi:NE Mount Candy;ca2.5 air mi SE Clark;ca14 air mi N Steamboat Springs;Park Range.
+P116,2573340872,Rio Blanco,"Flat Tops/White River Plateau: Fowler Creek Trail to Hill Creek Campground from top to midpoint, ca 8-9 air mi SE of Buford.",named_feature,yes,Fowler Creek Trail,absent,,,,,extent;other: trail segment geometry;feature_not_in_gnis,Top to midpoint toward Hill Creek Campground. multi:Flat Tops/White River Plateau;ca8-9 air mi SE Buford (range).
+P117,2573471962,Costilla,"Vermejo Park Ranch: Culebra Range: in alpine basin at headwaters of East Fork Costilla Creek, 3.88 air mi NE of State Line Peak.",named_feature,yes,East Fork Costilla Creek,193144,,,,,extent,Alpine basin at headwaters. multi:Vermejo Park Ranch;Culebra Range;3.88 air mi NE State Line Peak.
+P118,2573439671,Montrose,"Upper Dolores River Drainage and Adjacent Area: Slick Rock Canyon, ca 19 air mi WNW of Naturita in Dolores River Canyon, N of La Sal Creek confluence.",named_feature,yes,Slick Rock Canyon,absent,,,,,extent;feature_not_in_gnis,N La Sal Creek confluence. multi:Upper Dolores drainage;Dolores River Canyon;ca19 air mi WNW Naturita.
+P119,2573488507,Rio Blanco,"Yellow Creek drainage, 22 miles and 79° from Rangely.",distance_and_direction,yes,Rangely,171670,22,mile,E?,,extent,"79 degrees cannot be exactly represented by 16-point code;E is nearest bin, uncertain encoding? multi:Yellow Creek drainage. Preserve exact bearing 79°."
+P120,2573332064,Rio Blanco,"Vaughn Creek in White River National Forest, 6 mi. south of Buford.",named_feature,yes,Vaughn Creek,173594,,,,,extent,multi:White River NF;6mi S Buford.
