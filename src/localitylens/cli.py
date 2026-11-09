@@ -249,6 +249,67 @@ def _audit_llm(args: argparse.Namespace) -> int:
     return 0
 
 
+def _audit_calibration_set(args: argparse.Namespace) -> int:
+    """A blind copy of an annotated sample for a second annotator: renumbered in seeded order,
+    blank worksheet, and the pairs back to the original IDs. Prints counts only."""
+    import hashlib
+    import json
+
+    from localitylens.evaluation.audit import load_sample, write_sample
+
+    out = Path(args.out)
+    if (out / "pairs.json").exists():
+        print(
+            f"refused: {out}/pairs.json exists; a calibration set is written once", file=sys.stderr
+        )
+        return 2
+    source = load_sample(Path(args.source))
+
+    def rank(item: Any) -> str:
+        return hashlib.sha256(f"{args.seed}|{item.audit_id}".encode()).hexdigest()
+
+    ordered = sorted(source.items, key=rank)
+    width = len(str(len(ordered)))
+    items = [i.model_copy(update={"audit_id": f"{args.prefix}{n:0{width}d}"})
+             for n, i in enumerate(ordered, start=1)]  # fmt: skip
+    pairs = {new.audit_id: old.audit_id for new, old in zip(items, ordered, strict=True)}
+    sample = source.model_copy(update={"items": tuple(items), "name": args.name, "seed": args.seed})
+    _, worksheet, written = write_sample(sample, out, args.name)
+    with (out / "pairs.json").open("x", encoding="utf-8") as fh:
+        json.dump({"source": args.source, "seed": args.seed, "pairs": pairs}, fh, indent=2)
+        fh.write("\n")
+    print(f"{args.name}: {len(items)} rows -> {worksheet} ({'written' if written else 'exists'})")
+    return 0
+
+
+def _audit_agreement(args: argparse.Namespace) -> int:
+    """Field-by-field agreement of two annotations of the same records (counts only)."""
+    import json
+
+    from localitylens.evaluation.agreement import agreement
+    from localitylens.evaluation.annotations import check_worksheet
+    from localitylens.evaluation.audit import load_sample
+    from localitylens.gazetteer.index import Gazetteer
+
+    pairs = json.loads(Path(args.pairs).read_text(encoding="utf-8"))["pairs"]
+    with Gazetteer(Path(args.index)) as gaz:
+        a = check_worksheet(Path(args.worksheet_a), load_sample(Path(args.sample_a)), gaz)
+        b = check_worksheet(Path(args.worksheet_b), load_sample(Path(args.sample_b)), gaz)
+    if a.errors or b.errors:
+        print(
+            f"refused: worksheet errors (a: {len(a.errors)}, b: {len(b.errors)})", file=sys.stderr
+        )
+        return 2
+    result = agreement(a.annotations, b.annotations, pairs)
+    for name, n in result.by_field.items():
+        print(f"  {name:<20} {n:>3} of {result.rows}")
+    print(f"  {'every field':<20} {result.every_field:>3} of {result.rows}")
+    print(f"  categories a {result.categories_a}  b {result.categories_b}")
+    if args.out:
+        Path(args.out).write_text(json.dumps(result.as_dict(), indent=2) + "\n", encoding="utf-8")
+    return 0
+
+
 def _audit_score(args: argparse.Namespace) -> int:
     import json
 
@@ -1311,6 +1372,22 @@ def main(argv: list[str] | None = None) -> int:
     asc.add_argument("--with-derived", action="store_true", help=_WITH_DERIVED_HELP)
     asc.add_argument("--with-selection", action="store_true", help=_WITH_SELECTION_HELP)
     asc.set_defaults(func=_audit_score)
+    acs = aud.add_parser("calibration-set", help="blind, renumbered copy of an annotated sample")
+    acs.add_argument("--source", required=True, help="an annotated sample (JSON)")
+    acs.add_argument("--name", required=True)
+    acs.add_argument("--seed", required=True)
+    acs.add_argument("--prefix", default="C")
+    acs.add_argument("--out", required=True)
+    acs.set_defaults(func=_audit_calibration_set)
+    aag = aud.add_parser("agreement", help="agreement of two annotations of the same records")
+    aag.add_argument("--sample-a", required=True)
+    aag.add_argument("--worksheet-a", required=True)
+    aag.add_argument("--sample-b", required=True)
+    aag.add_argument("--worksheet-b", required=True)
+    aag.add_argument("--pairs", required=True, help='JSON with {"pairs": {id_a: id_b}}')
+    aag.add_argument("--index", default="data/derived/gazetteer.sqlite")
+    aag.add_argument("--out", help="also write the counts as JSON")
+    aag.set_defaults(func=_audit_agreement)
 
     ahy = aud.add_parser("hybrid", help="combine the rules and LLM reports into a hybrid report")
     ahy.add_argument("--sample", default="eval/audit/audit-50.json")
