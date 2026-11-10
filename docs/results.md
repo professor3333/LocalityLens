@@ -1,4 +1,4 @@
-# Results at v0.1.1: what is shown, how strongly, and what failed
+# Results at v0.1.2: what is shown, how strongly, and what failed
 
 One page. Every number comes from a committed report, linked below; the full measures and
 definitions are in [evaluation](evaluation.md).
@@ -48,14 +48,36 @@ measurements (67 features), and now also from Census place polygons and USGS NHD
 - **The real weakness is choosing the reference.** A label names a specific collecting place
   (often not in GNIS) and gives "N mi of Town", and the town is chosen.
 
+## Adopted in v0.1.2: the selection check
+
+`selection-2` holds a full region back for the curator when the label names another place that
+GNIS has inside the region, or one GNIS lacks. From v0.1.2, `review import` and `review work`
+apply it by default (`--no-selection` turns it off). It was adopted because it passed the last
+of three declared checks, each on 120 unread "place, offset" labels and declared before
+annotation:
+
+| Check | Annotator | Held back: wrong / correct | Precision of ready regions | Result |
+|---|---|---|---|---|
+| [test-3](../eval/reports/test-3.md) | Codex, before the absent-place rule | 22 / 2 | 13% → 17% | does not work (+4.0 < +5) |
+| [test-4](../eval/reports/test-4.md) | Claude (not independent) | 17 / 7 | 55% → 72% | works |
+| [test-5](../eval/reports/test-5.md) | Codex, under the absent-place rule | 14 / 4 | 32% → 42% | works |
+
+- **What it changes:** nothing in the correct proposal candidates, so releases 1–3 still describe
+  the system. It moves ready regions to `needs_information` with a question, and approving
+  answers it.
+- **What it costs:** useful coverage on these labels (test-5: 11.1% → 7.4%).
+- **What it doesn't fix:** precision stays far below 95%. Most wrong regions name a place GNIS
+  has while the system uses the offset's town (test-5: 23 of 25).
+- **None of the three checks was owner-annotated.**
+
 ## Failed or not adopted
 
 - **`selection-1`** held a region back when the label names another typed feature.
   - Read data: precision rose to about 70%.
   - Unread test-2: it held back 8 correct and 7 wrong regions, and halved coverage
     ([result](../eval/reports/test-2-regions.md)). It is opt-in and not recommended.
-- **`selection-2`** holds a region back only when GNIS places the other named place inside the
-  region, or doesn't have it.
+- **`selection-2`, its first check** (adopted later, above): it holds a region back only when GNIS
+  places the other named place inside the region, or doesn't have it.
   - **test-3:** 120 unread "place, offset" labels, Codex-annotated (agreement with the owner
     54/60 on category, 55/60 on GNIS IDs), declared before annotation.
   - **It held back 22 wrong and 2 correct regions.** Precision rose only from 13% to 17%,

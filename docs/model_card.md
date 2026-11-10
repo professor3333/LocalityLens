@@ -2,7 +2,8 @@
 
 The language model in LocalityLens **reads** a specimen's locality description. It never
 places it: coordinates and radii come only from GNIS records and deterministic geometry code.
-This card describes the model as used in release `0.1.1` (the same model, prompt and settings as `0.1.0`).
+This card describes the model as used in release `0.1.2` (the same model, prompt and settings as `0.1.0`;
+0.1.2 adds the `selection-2` review check, which does not change the model's input or output).
 
 ## Intended use
 
@@ -141,7 +142,8 @@ historical names or changed county boundaries beyond what the read samples conta
 ## Release process
 
 - **Thresholds and settings** are chosen on dev and validation data, never on the test.
-  No selection-confidence thresholds are set yet.
+  No numeric selection-confidence thresholds are set. The one selection rule (`selection-2`,
+  default from 0.1.2) was adopted after declared checks on unread labels.
 - **A release candidate** is a new release manifest. Before the test is scored, a declaration
   pins the code commit, manifest hash, data hashes, metric, target and decision rule. It is
   committed and pushed first, and its result is published whatever it shows. Releases 1 to 3

@@ -16,7 +16,10 @@ browser except the map, and decisions and export are switched off. Every page sa
   (`llm-x2g2-qwen3.5-4b-q4km`) runs only where the rules reach no gazetteer candidate.
   - **Extents:** hand-measured ones come first. Others are derived from Census place polygons
     and USGS NHD geometry, and each such region says "derived … not curator-reviewed".
-  - **Result:** 17 records reach "ready for review". Some of those regions are drawn around the
+  - **Selection check:** `selection-2` (on by default from v0.1.2) holds 3 full regions for a
+    question, because each label names another place that GNIS has inside the region or lacks.
+    Against the owner's annotations, 2 of the 3 are drawn around the wrong reference.
+  - **Result:** 14 records reach "ready for review". Some of those regions are drawn around the
     wrong reference, the system's known weakness
     ([results](../docs/results.md#regions-the-main-shortfall)).
 - **No curator decisions** are included. Each record shows the pipeline's proposal awaiting

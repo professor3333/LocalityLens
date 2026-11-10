@@ -207,7 +207,9 @@ opt-in) give regions to about 12,000 features, and they show the honest picture:
   declared before annotation, to settle selection-2): hybrid-1 37 ready regions, 12 correct (32%,
   coverage 11.1%); 23 of the 25 wrong ones name a place GNIS has. selection-2 held back 14 wrong
   and 4 correct, precision 32% → 42%, coverage 11.1% → 7.4%: **it works by the test-3 rule**, and
-  has now passed 2 of 3 declared checks ([result](../eval/reports/test-5.md)).
+  has now passed 2 of 3 declared checks ([result](../eval/reports/test-5.md)). **From v0.1.2 the
+  review pipeline applies it by default** (`--no-selection` turns it off); evaluation commands
+  apply it only when asked.
 
 <details>
 <summary><b>Development history: dev and validation scores by rules version</b></summary>
@@ -268,9 +270,11 @@ the completion cache (`extract/cache.py`) record 0 model seconds and are never u
 - **GEOLocate on held-out data.** It has been compared on read samples only (above).
 - **The second LLM call** (candidate comparison: not built), other quantizations, and a scored
   adversarial set on real labels. The adversarial behaviour tests below use synthetic data.
-- **Review policy thresholds** (`configs/review_policy.yaml`, planned): no selection-confidence
-  thresholds are set yet. A record reaches `ready_for_review` whenever its region is computed,
-  whatever the selection evidence, so the curator still judges the choice of feature.
+- **Review policy thresholds** (`configs/review_policy.yaml`, planned): no numeric
+  selection-confidence thresholds are set. From v0.1.2 the review pipeline applies one rule,
+  `selection-2`: a computed region whose label names another place that GNIS has inside it, or
+  one GNIS lacks, goes to `needs_information` with that question. Every other computed region
+  reaches `ready_for_review`, and the curator still judges the choice of feature.
 - **Annotation self-consistency** (a repeat pass on a subset by the same annotator).
 
 ## Adversarial tests

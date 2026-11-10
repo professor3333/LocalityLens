@@ -23,7 +23,7 @@
   
   <aside class="replay" role="note" aria-label="About this replay">
     <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
-    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate; extents measured by hand where they exist, otherwise derived from Census place polygons and USGS NHD geometry (marked &#39;derived, not curator-reviewed&#39;) · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit a48dbf0, 2026-11-09</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate; extents measured by hand where they exist, otherwise derived from Census place polygons and USGS NHD geometry (marked &#39;derived, not curator-reviewed&#39;); selection-2 holds a region for review when the label names another place that GNIS has inside it, or one GNIS lacks · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit ff53126, 2026-11-10</p>
     <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
   </aside>
   
@@ -32,7 +32,7 @@
 <p class="crumbs"><a href="../index.html">Queue</a> / gbif:2573441754</p>
 <div class="head">
   <h1>gbif:2573441754</h1>
-  <span class="badge status-ready_for_review">ready for review</span>
+  <span class="badge status-needs_information">needs information</span>
 </div>
 <p class="meta">Catalog 00587592 · Delta, Colorado · snapshot <code>gbif-cu-2026-11-01</code> · extractor <code>rules-6</code> (hybrid)</p>
 
@@ -87,13 +87,13 @@
   <section class="right">
     <div id="map" class="map" role="img" aria-label="Map of the candidates and the proposed region"></div>
     <p class="mapnote">Points as given (NAD83), drawn on a WGS 84 web map: the difference is about a metre here. A circle appears only for a full region. Basemap: USGS The National Map.</p>
-    <script type="application/json" id="map-data">{"candidates": [{"id": 186589, "lat": 38.8683204, "lon": -107.5920017, "name": "Paonia", "rank": 1, "selected": true}], "circle": {"lat": 38.80134768352111, "lon": -107.62745021859278, "radius_m": 2956.771593797062}}</script>
+    <script type="application/json" id="map-data">{"candidates": [{"id": 186589, "lat": 38.8683204, "lon": -107.5920017, "name": "Paonia", "rank": 1, "selected": true}], "circle": null}</script>
 
     <h2>Region <span class="sub">spatial uncertainty</span></h2>
     
       
   <table class="kv">
-    <tr><th>Outcome</th><td><span class="badge outcome-computed">computed</span></td></tr>
+    <tr><th>Outcome</th><td><span class="badge outcome-needs_information">needs information</span></td></tr>
     <tr><th>Point</th><td>38.80135, -107.62745 (NAD83) · GNIS 186589</td></tr>
     <tr><th>Radius</th><td><b>2,957 m</b></td></tr>
     <tr><th>Policy</th><td><code>gbif-bp-2020/1</code></td></tr>
@@ -130,7 +130,7 @@
     </tbody>
   </table>
   
-  
+  <p class="question">Question: Selection check: the label also names &#39;Northern Gunnison Basin&#39; (not in GNIS), which this proposal does not use. Is &#39;Paonia&#39; the reference for the collecting place? (selection-2)</p>
   
   <ul class="assumptions"><li>Assumed: Reference point: GNIS feature 186589 (Paonia), representative point in NAD83.</li><li>Assumed: &#39;about&#39;/&#39;ca.&#39; does not change coordinates or uncertainty (BP §2.2 (adverbial modifiers such as &#39;about&#39;)).</li><li>Assumed: &#39;SSW&#39; read as bearing 202.5° ± 11.25° from true north (BP §3.4.5 Table 4; Calculator getDirectionError; QRG §1.6.10).</li><li>Assumed: Offset measured as a straight line: 8,046.7 m.</li></ul>
 

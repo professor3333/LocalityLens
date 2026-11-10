@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/types-mypy%20strict-2A6DB2" alt="mypy strict">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3DA639" alt="MIT licence"></a>
   <br>
-  <img src="https://img.shields.io/badge/release-v0.1.1-F4B860" alt="Release v0.1.1">
+  <img src="https://img.shields.io/badge/release-v0.1.2-F4B860" alt="Release v0.1.2">
   <img src="https://img.shields.io/badge/gazetteer-USGS%20GNIS%202026--09--29-5FD3B5" alt="Gazetteer: USGS GNIS 2026-09-29">
   <img src="https://img.shields.io/badge/inference-local%20only-103A34" alt="Local inference only">
   <a href="https://professor3333.github.io/LocalityLens/"><img src="https://img.shields.io/badge/demo-static%20replay-B45309" alt="Demo: static replay"></a>
@@ -41,7 +41,7 @@ result is. **LocalityLens** is a review workbench for that job. A small, local l
 curator approves, corrects, or defers every result before it is exported as Darwin Core.
 
 > [!NOTE]
-> **Release v0.1.1: a research prototype, not a production georeferencing service.** This
+> **Release v0.1.2: a research prototype, not a production georeferencing service.** This
 > README separates what exists (✅) from what is planned (🔜). [Results on one page](docs/results.md). The first milestone has been measured on a locked test split
 > three times, and every result is published below: the LLM alone fell short
 > ([release 1](eval/reports/test-release-1.md)), and rules with an LLM fallback cleared the
@@ -202,35 +202,45 @@ that says what blocks it:
 $ uv run localitylens review import --sample eval/audit/audit-50.json --system rules \
       --extents data/reviewed/extents.csv
 imported 50 records (rules)
-  needs_information  36
-  ready_for_review   11
+  needs_information  38
+  ready_for_review   9
   unsupported        3
 $ uv run localitylens review queue --status ready_for_review
 gbif:2573344610 ready_for_review   feature 178631, radius 2,039 m
-gbif:2573367322 ready_for_review   feature 178680, radius 18,006 m
 gbif:2573415079 ready_for_review   feature 202381, radius 4,139 m
 gbif:2573416221 ready_for_review   feature 170650, radius 1,342 m
-gbif:2573441754 ready_for_review   feature 186589, radius 2,957 m
 gbif:2573446625 ready_for_review   feature 204798, radius 27,786 m
 gbif:2573488436 ready_for_review   feature 177534, radius 1,639 m
 gbif:2573528015 ready_for_review   feature 186534, radius 13,126 m
 gbif:2573543074 ready_for_review   feature 204755, radius 1,029 m
 gbif:2573548250 ready_for_review   feature 190391, radius 16,039 m
 gbif:4052836581 ready_for_review   feature 204691, radius 8,426 m
-11 records
+9 records
 $ uv run localitylens review decide gbif:2573441754 approve --reviewer <name> --rationale "…"
 $ uv run localitylens review export
 approved       1  -> data/review/export/occurrences.csv
 geojson        1  -> data/review/export/occurrences.geojson
-unresolved    39  -> data/review/export/unresolved.csv
+unresolved    40  -> data/review/export/unresolved.csv
 ```
 
-The approved row is "ca 5 air mi SSW of Paonia": a point 5 miles SSW of the GNIS point,
+**The selection check** (`selection-2`, on by default from v0.1.2) holds back a full region
+when the label names another place that GNIS has inside the region, or one GNIS lacks. The
+record goes to `needs_information` with the question, and approving it answers the question.
+Two audit records are held this way:
+- **gbif:2573367322** ("7 miles south of Boulder"): "the label also names 'Woman Creek' (in
+  GNIS, inside the proposed region) … Is 'Boulder' the reference for the collecting place?"
+  The annotation names a more specific place, so this full region is a wrong one, and the check
+  catches it.
+- **gbif:2573441754** ("Northern Gunnison Basin: ca 5 air mi SSW of Paonia"): the basin is not
+  in GNIS. Here the offset from Paonia is the right reference, so the check costs a click.
+
+The curator approved it above. The approved row is a point 5 miles SSW of the GNIS point,
 `EPSG:4269`, uncertainty 2,957 m, with the GNIS feature and the measured extent named in
-`georeferenceSources`. Review is still needed: gbif:2573416221 reaches GNIS "Five Spring" from
-the label's "Five Springs" by a fuzzy match, which a curator should confirm, and gbif:2573367322
-is an offset from Boulder ("7 miles south of Boulder") where the annotation names a more
-specific place (Rocky Flats): a full region, and a wrong one.
+`georeferenceSources`. Review is still needed on ready records: gbif:2573416221 reaches GNIS
+"Five Spring" from the label's "Five Springs" by a fuzzy match, which a curator should confirm.
+`--no-selection` turns the check off. Across three declared checks on unread "place, offset"
+labels it held back 53 wrong and 13 correct regions, and it passed two of the three
+([test-5](eval/reports/test-5.md)).
 
 **Import your own records** from a CSV with Darwin Core columns. Headers that are Darwin Core
 terms map automatically (`dwc:` prefix and case don't matter); `--map COLUMN=TERM` maps the
@@ -272,7 +282,7 @@ $ uv run localitylens review import --sample eval/audit/audit-50.json --system r
 imported 50 records (rules)
   queued; process with `localitylens review work`
 $ uv run localitylens review work --extents data/reviewed/extents.csv --max-jobs 20
-b-eee06dc4d4ce9984 (rules): needs_information 14, ready_for_review 6
+b-eee06dc4d4ce9984 (rules): needs_information 16, ready_for_review 4
 $ uv run localitylens review cancel b-eee06dc4d4ce9984
 b-eee06dc4d4ce9984: cancelled, 30 pending jobs stopped (records stay queued)
 $ uv run localitylens review cancel b-eee06dc4d4ce9984 --resume
@@ -281,11 +291,11 @@ $ uv run localitylens review work --extents data/reviewed/extents.csv   # after 
 lease expired: job 371d9cfcf844a15f, attempt 1
 b-eee06dc4d4ce9984 (rules): needs_information 22, ready_for_review 5, unsupported 3
 $ uv run localitylens review jobs
-b-eee06dc4d4ce9984  active    rules  2026-11-06T03:51:27+00:00  done 50
+b-eee06dc4d4ce9984  active    rules  2026-11-10T15:53:04+00:00  done 50
 1 batches
 ```
 
-The final statuses (36 needing information, 11 ready, 3 unsupported) are the same as an
+The final statuses (38 needing information, 9 ready, 3 unsupported) are the same as an
 uninterrupted import's.
 
 **Every attempt leaves a trace**: IDs, a SHA-256 of the model input, the versions (extractor,
@@ -303,8 +313,8 @@ $ uv run localitylens review import --sample eval/audit/audit-50.json --system r
       --extents data/reviewed/extents.csv --log-json data/review/traces.jsonl
 $ uv run localitylens review traces
 50 traces
-  outcomes  needs_information 36, ready_for_review 11, unsupported 3
-  rules    50 completed  p50 1.2 ms  p95 2.3 ms
+  outcomes  needs_information 38, ready_for_review 9, unsupported 3
+  rules    50 completed  p50 1.3 ms  p95 3.1 ms
   retries   0
 ```
 
@@ -514,12 +524,12 @@ docker compose --profile llm up -d                                # also llama-s
 `/readyz` answers 503 until the review store exists and `release/manifest.json` matches the
 code, and reports every pinned version (model and revision, GGUF SHA-256, llama.cpp build,
 prompt, schema and policy versions, snapshots, store and API versions). Checked with the audit
-sample: the containerized worker processed all 50 records (36 needing information, 11 ready,
+sample: the containerized worker processed all 50 records (38 needing information, 9 ready,
 3 unsupported, as on the host), and stopped cleanly on SIGTERM:
 
 ```console
 $ curl -s http://127.0.0.1:8000/readyz | jq -c '{ready, release: .release.release, model: .release.model.id, llama_cpp: .release.llama_cpp.build, store: .store_schema}'
-{"ready":true,"release":"0.1.1","model":"Qwen/Qwen3.5-4B","llama_cpp":"b11960-8642541b2","store":"review-3"}
+{"ready":true,"release":"0.1.2","model":"Qwen/Qwen3.5-4B","llama_cpp":"b11960-8642541b2","store":"review-3"}
 ```
 
 - **llama-server never gets a network address:** it shares the worker's network namespace and
@@ -891,7 +901,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · ✅ GeoJSON export (WGS 84, EPSG:1188, +4 m) · candidate disambiguation · footprints | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ [test-2](eval/reports/test-2.md), a fresh held-out sample declared before annotation (Claude-annotated, not independent): hybrid-1 43 vs rules 34 of 80, +11.3 pts, **yes** · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · ✅ GEOLocate on the read samples: points within 5 km of the defensible position, GEOLocate 58 vs hybrid-1 61 of 85 (owner-annotated) · quantization study | 🚧 started |
-| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · ✅ specimen snapshot archived ([data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)) · ✅ [v0.1.0](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.0) · ✅ derived extents (opt-in) and a declared selection-check experiment (failed on unread labels) · ✅ [v0.1.1](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.1), [results on one page](docs/results.md) | ✅ v0.1.1 |
+| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · ✅ specimen snapshot archived ([data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)) · ✅ [v0.1.0](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.0) · ✅ derived extents (opt-in) and a declared selection-check experiment (failed on unread labels) · ✅ [v0.1.1](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.1), [results on one page](docs/results.md) · ✅ v0.1.2: the GNIS-aware selection check on by default, after declared checks on unread labels ([test-5](eval/reports/test-5.md)) | ✅ v0.1.2 |
 
 <details>
 <summary><b>What exists today, module by module</b></summary>

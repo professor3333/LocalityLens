@@ -20,7 +20,7 @@
   
   <aside class="replay" role="note" aria-label="About this replay">
     <p><b>Replay, not live inference.</b> Every page was computed in advance by the real pipeline and saved as static HTML. Nothing is processed in your browser except the map, and decisions and export are disabled.</p>
-    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate; extents measured by hand where they exist, otherwise derived from Census place polygons and USGS NHD geometry (marked &#39;derived, not curator-reviewed&#39;) · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit a48dbf0, 2026-11-09</p>
+    <p>System: hybrid-1: rules-6 first, then llm-x2g2-qwen3.5-4b-q4km only where the rules reach no gazetteer candidate; extents measured by hand where they exist, otherwise derived from Census place polygons and USGS NHD geometry (marked &#39;derived, not curator-reviewed&#39;); selection-2 holds a region for review when the label names another place that GNIS has inside it, or one GNIS lacks · Records: the 50 audit records, University of Colorado Herbarium (development data, not held-out results) · Built: commit ff53126, 2026-11-10</p>
     <p class="sub">Specimen data: GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf, CC BY 4.0. Place names: USGS GNIS (gnis-co-2026-09-29), public domain. Map tiles: USGS The National Map · <a href="https://github.com/professor3333/LocalityLens">Source code and results</a></p>
   </aside>
   
@@ -30,9 +30,9 @@
 <nav class="filters" aria-label="Filter by status">
   <a href="index.html" class="chip on">all <b>50</b></a>
   
-  <a href="status-ready_for_review.html" class="chip status-ready_for_review">ready for review <b>17</b></a>
+  <a href="status-ready_for_review.html" class="chip status-ready_for_review">ready for review <b>14</b></a>
   
-  <a href="status-needs_information.html" class="chip status-needs_information">needs information <b>31</b></a>
+  <a href="status-needs_information.html" class="chip status-needs_information">needs information <b>34</b></a>
   
   <a href="status-unsupported.html" class="chip status-unsupported">unsupported <b>2</b></a>
   
@@ -48,27 +48,11 @@
   <tbody>
   
     <tr>
-      <td><a href="records/gbif-2573330473.html">gbif:2573330473</a></td>
-      <td><span class="badge status-ready_for_review">ready for review</span></td>
-      <td>Larimer</td>
-      <td class="locality">Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake,...</td>
-      <td>Fort Collins, radius 53,578 m</td>
-    </tr>
-  
-    <tr>
       <td><a href="records/gbif-2573344610.html">gbif:2573344610</a></td>
       <td><span class="badge status-ready_for_review">ready for review</span></td>
       <td>Boulder</td>
       <td class="locality">Head of canon on east slope of Flagstaff Mountain, Boulder.</td>
       <td>Flagstaff Mountain, radius 2,039 m</td>
-    </tr>
-  
-    <tr>
-      <td><a href="records/gbif-2573367322.html">gbif:2573367322</a></td>
-      <td><span class="badge status-ready_for_review">ready for review</span></td>
-      <td>Jefferson</td>
-      <td class="locality">Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Along a 2-track road next to Woman...</td>
-      <td>Boulder, radius 18,006 m</td>
     </tr>
   
     <tr>
@@ -85,14 +69,6 @@
       <td>Moffat</td>
       <td class="locality">Dinosaur National Monument. Douglas Mtn Boulevard, ca. 3 mi. WSW of Five Springs.</td>
       <td>Five Spring, radius 1,342 m</td>
-    </tr>
-  
-    <tr>
-      <td><a href="records/gbif-2573441754.html">gbif:2573441754</a></td>
-      <td><span class="badge status-ready_for_review">ready for review</span></td>
-      <td>Delta</td>
-      <td class="locality">Northern Gunnison Basin: ca 5 air mi SSW of Paonia.</td>
-      <td>Paonia, radius 2,957 m</td>
     </tr>
   
     <tr>
@@ -224,6 +200,14 @@
     </tr>
   
     <tr>
+      <td><a href="records/gbif-2573330473.html">gbif:2573330473</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Larimer</td>
+      <td class="locality">Roosevelt National Forest: Front Range: E of Green Ridge Trail or Forest Road 177, just N of Laramie Lake,...</td>
+      <td>Selection check: the label also names &#39;Laramie Lake&#39; (in GNIS, inside the proposed region), which this proposal does not use. Is &#39;Fort Collins&#39; the reference for the collecting place? (selection-2)</td>
+    </tr>
+  
+    <tr>
       <td><a href="records/gbif-2573332102.html">gbif:2573332102</a></td>
       <td><span class="badge status-needs_information">needs information</span></td>
       <td>Boulder</td>
@@ -288,6 +272,14 @@
     </tr>
   
     <tr>
+      <td><a href="records/gbif-2573367322.html">gbif:2573367322</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Jefferson</td>
+      <td class="locality">Rocky Flats Site. 7 miles south of Boulder on Rocky Flats Pediment. Along a 2-track road next to Woman...</td>
+      <td>Selection check: the label also names &#39;Woman Creek&#39; (in GNIS, inside the proposed region), which this proposal does not use. Is &#39;Boulder&#39; the reference for the collecting place? (selection-2)</td>
+    </tr>
+  
+    <tr>
       <td><a href="records/gbif-2573371152.html">gbif:2573371152</a></td>
       <td><span class="badge status-needs_information">needs information</span></td>
       <td>Moffat</td>
@@ -349,6 +341,14 @@
       <td>Gunnison</td>
       <td class="locality">&#34;Hattie Sammon&#39;s Pasture&#34;, Powderhorn.</td>
       <td>What is the extent of Powderhorn (Populated Place)? GNIS gives only a representative point, which is not the feature&#39;s extent.</td>
+    </tr>
+  
+    <tr>
+      <td><a href="records/gbif-2573441754.html">gbif:2573441754</a></td>
+      <td><span class="badge status-needs_information">needs information</span></td>
+      <td>Delta</td>
+      <td class="locality">Northern Gunnison Basin: ca 5 air mi SSW of Paonia.</td>
+      <td>Selection check: the label also names &#39;Northern Gunnison Basin&#39; (not in GNIS), which this proposal does not use. Is &#39;Paonia&#39; the reference for the collecting place? (selection-2)</td>
     </tr>
   
     <tr>

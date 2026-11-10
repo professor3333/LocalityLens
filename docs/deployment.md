@@ -90,6 +90,16 @@ from step 1 instead of reusing the upgraded store.
    manifest pins different ones.
 4. Start and check `/readyz`: the previous release's versions, `ready` true.
 
+## Verified on 2026-11-10 (v0.1.2)
+
+- **What changed:** v0.1.2 changes no store schema (still `review-3`). Proposals already in a
+  store keep the release they were made with. New `review import` and `review work` runs apply
+  the manifest's `selection-2` check.
+- **Compose on a scratch clone of the release branch:** `/readyz` ready, release 0.1.2,
+  `selection_version` selection-2, no problems.
+- **The worker:** it processed the audit sample with rules (38 need information, 9 ready, 3
+  unsupported, as on the host) and stopped cleanly on SIGTERM.
+
 ## Verified on 2026-11-07
 
 **Fresh clone** of `release/deploy` from GitHub into an empty folder, on the development machine
@@ -98,7 +108,7 @@ from step 1 instead of reusing the upgraded store.
   checksums matching.
 - `gazetteer build`, and `extents check`: 67 reviewed, 48 pending, 0 problems.
 - Audit sample imported with rules: 36 need information, 11 ready, 3 unsupported, as in the
-  README.
+  README at the time (v0.1.1, before the default selection check).
 - One record approved, then `review export`: 1 approved row in the CSV and the GeoJSON, 39
   unresolved.
 - `review backup`: 50 records, 50 proposals, 1 decision, integrity ok.
