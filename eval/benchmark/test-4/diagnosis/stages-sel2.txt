@@ -1,0 +1,7 @@
+ready regions 36
+   26  correct
+    4  GNIS identity (same name, other feature)
+    4  clause choice (other place chosen)
+    1  annotated unsupported (relation)
+    1  reading: relation+distance+unit+direction
+dispute candidates (same name or unsure marker) 9

@@ -197,6 +197,12 @@ opt-in) give regions to about 12,000 features, and they show the honest picture:
   - **Precision rose only 4.0 points** (7 of 53 correct → 5 of 29), against the +5 needed, so
     under the declared rule it does not work. It is not used
     ([test-3](../eval/reports/test-3.md)).
+- **test-4** (120 fresh "place, offset" labels, Claude-annotated at the owner's choice under the
+  absent-place rule, declared before annotation; not independent): hybrid-1 60 ready regions, 33
+  correct (55%). 18 of the 27 wrong ones name a place GNIS has while the system uses another (the
+  declared primary question: supported). selection-2 held back 17 wrong and 7 correct regions,
+  precision 55% → 72%, coverage 30.8% → 24.3%: it passes the test-3 rule here, against the
+  stated expectation ([result](../eval/reports/test-4.md)).
 
 <details>
 <summary><b>Development history: dev and validation scores by rules version</b></summary>

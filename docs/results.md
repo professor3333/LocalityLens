@@ -73,6 +73,12 @@ measurements (67 features), and now also from Census place polygons and USGS NHD
     - with the place in GNIS, 2 of 10 are correct.
     - **Estimated ready-region precision ≈ 46%** (approx. 36–57%) instead of 13%. This is an
       estimate, not a test result ([review](../eval/reports/test-3-review.md)).
+- **test-4** (120 fresh "place, offset" labels, Claude-annotated at the owner's choice under the
+  absent-place rule, declared before annotation; not independent): hybrid-1 60 ready regions, 33
+  correct (55%). 18 of the 27 wrong ones name a place GNIS has while the system uses another (the
+  declared primary question: supported). selection-2 held back 17 wrong and 7 correct regions,
+  precision 55% → 72%, coverage 30.8% → 24.3%: it passes the test-3 rule here, against the
+  stated expectation ([result](../eval/reports/test-4.md)).
 - **The rules-3 to rules-6 changes for "place, offset" labels** showed no gain on the samples
   drawn to test them (dev-3, dev-4).
 - **Qwen3.5-2B** as the fallback gives 49 against 4B's 51 of 92, at a quarter of the model time.

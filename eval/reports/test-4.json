@@ -1,0 +1,234 @@
+{
+  "declaration": "eval/benchmark/declaration-test-4.json",
+  "amendments": [
+    "eval/benchmark/declaration-test-4-amendment-1.json"
+  ],
+  "note": "Totals only. Annotations by Claude (the owner chose Claude; Claude also wrote the systems, the stage script and the hypothesis), so not independent. Per-record outputs stay under eval/benchmark/test-4/reports/.",
+  "label": "Claude-annotated; not independent of the systems",
+  "annotations": {
+    "commit": "254000f",
+    "worksheet_sha256": "382ad5587828a317bb965d5596d635991c9d7e2eb591d11abc7e0896f628f26c",
+    "rows": 120,
+    "checker": "0 problems",
+    "rows_using_absent_place_rule": 38
+  },
+  "run": {
+    "code_commit": "0d921e9eb20927dcb99ac555b00d8ac14df66697",
+    "systems": {
+      "rules": "rules-6",
+      "llm": "llm-x2g2-qwen3.5-4b-q4km",
+      "hybrid": "hybrid-1",
+      "specimens": "gbif-cu-2026-11-01"
+    },
+    "without_check": {
+      "started": "2026-11-10T03:47:07Z",
+      "finished": "2026-11-10T04:11:01Z"
+    },
+    "with_check": {
+      "started": "2026-11-10T04:11:01Z",
+      "finished": "2026-11-10T04:37:51Z"
+    },
+    "llm_cache": "off",
+    "llm_wall_clock_minutes": {
+      "without_check": 23.8,
+      "with_check": 26.7
+    },
+    "technical_failures": "none"
+  },
+  "results": {
+    "without_check": {
+      "records": 120,
+      "categories": {
+        "answerable": 107,
+        "unsupported": 7,
+        "reference_absent": 6
+      },
+      "excluding_unsure": {
+        "records": 105,
+        "categories": {
+          "answerable": 93,
+          "unsupported": 6,
+          "reference_absent": 6
+        }
+      },
+      "rules": {
+        "ready": 56,
+        "correct": 31,
+        "useful_coverage": 31,
+        "answerable": 107,
+        "correct_proposal_candidates": 46,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 41,
+        "answerable_excl_unsure": 93
+      },
+      "llm": {
+        "ready": 53,
+        "correct": 27,
+        "useful_coverage": 27,
+        "answerable": 107,
+        "correct_proposal_candidates": 37,
+        "valid_extraction": 112,
+        "correct_candidates_excl_unsure": 34,
+        "answerable_excl_unsure": 93
+      },
+      "hybrid": {
+        "ready": 60,
+        "correct": 33,
+        "useful_coverage": 33,
+        "answerable": 107,
+        "correct_proposal_candidates": 49,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 44,
+        "answerable_excl_unsure": 93
+      },
+      "hybrid_vs_rules": {
+        "n": 107,
+        "rules": 46,
+        "llm": 49,
+        "difference": 0.028,
+        "ci95": [
+          0.0,
+          0.065
+        ],
+        "llm_only": 3,
+        "rules_only": 0,
+        "sign_test_p": 0.25
+      },
+      "llm_vs_rules": {
+        "n": 107,
+        "rules": 46,
+        "llm": 37,
+        "difference": -0.084,
+        "ci95": [
+          -0.187,
+          0.019
+        ],
+        "llm_only": 12,
+        "rules_only": 21,
+        "sign_test_p": 0.1628
+      }
+    },
+    "with_check": {
+      "records": 120,
+      "categories": {
+        "answerable": 107,
+        "unsupported": 7,
+        "reference_absent": 6
+      },
+      "excluding_unsure": {
+        "records": 105,
+        "categories": {
+          "answerable": 93,
+          "unsupported": 6,
+          "reference_absent": 6
+        }
+      },
+      "rules": {
+        "ready": 32,
+        "correct": 24,
+        "useful_coverage": 24,
+        "answerable": 107,
+        "correct_proposal_candidates": 46,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 41,
+        "answerable_excl_unsure": 93
+      },
+      "llm": {
+        "ready": 33,
+        "correct": 20,
+        "useful_coverage": 20,
+        "answerable": 107,
+        "correct_proposal_candidates": 37,
+        "valid_extraction": 112,
+        "correct_candidates_excl_unsure": 34,
+        "answerable_excl_unsure": 93
+      },
+      "hybrid": {
+        "ready": 36,
+        "correct": 26,
+        "useful_coverage": 26,
+        "answerable": 107,
+        "correct_proposal_candidates": 49,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 44,
+        "answerable_excl_unsure": 93
+      },
+      "hybrid_vs_rules": {
+        "n": 107,
+        "rules": 46,
+        "llm": 49,
+        "difference": 0.028,
+        "ci95": [
+          0.0,
+          0.065
+        ],
+        "llm_only": 3,
+        "rules_only": 0,
+        "sign_test_p": 0.25
+      },
+      "llm_vs_rules": {
+        "n": 107,
+        "rules": 46,
+        "llm": 37,
+        "difference": -0.084,
+        "ci95": [
+          -0.187,
+          0.019
+        ],
+        "llm_only": 12,
+        "rules_only": 21,
+        "sign_test_p": 0.1628
+      }
+    }
+  },
+  "stages": {
+    "without_check": {
+      "correct": 33,
+      "clause choice (other place chosen)": 18,
+      "GNIS identity (same name, other feature)": 4,
+      "annotated unsupported (relation)": 3,
+      "reading: qualifiers": 1,
+      "reading: relation+distance+unit+direction": 1
+    },
+    "with_check": {
+      "correct": 26,
+      "GNIS identity (same name, other feature)": 4,
+      "clause choice (other place chosen)": 4,
+      "annotated unsupported (relation)": 1,
+      "reading: relation+distance+unit+direction": 1
+    }
+  },
+  "primary": {
+    "rule": "the stage 'clause choice (other place chosen)' is the largest wrong stage AND covers at least half of the wrong ready regions",
+    "wrong_ready_regions": 27,
+    "other_place_chosen": 18,
+    "largest_wrong_stage": 18,
+    "share": 0.667,
+    "result": "supported"
+  },
+  "selection_2": {
+    "held_back_total": 24,
+    "held_back_correct": 7,
+    "held_back_wrong": 17,
+    "precision_without": 0.55,
+    "precision_with": 0.7222222222222222,
+    "precision_rise_pp": 17.2,
+    "works": true,
+    "result": "works"
+  },
+  "expectations_stated_in_advance": {
+    "precision_without_check": {
+      "expected": "about 46%, 36-57%",
+      "measured": "33 of 60 (55%)",
+      "inside_range": true
+    },
+    "primary": {
+      "expected": "supported",
+      "measured": "supported"
+    },
+    "selection_2": {
+      "expected": "likely does not work",
+      "measured": "works"
+    }
+  }
+}

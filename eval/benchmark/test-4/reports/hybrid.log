@@ -1,0 +1,7 @@
+source     rules=106  llm=14
+llm_call   made=30  skipped=90
+relation   distance_and_direction=85  named_feature=21  route_relative=4  direction_only=4  orthogonal_offsets=3  distance_only=2  between_features=1
+retrieval  candidates_found=104  feature_absent_from_index=15  no_reference_feature=1
+proposal   computed=60  needs_information=52  unsupported=8
+  report  eval/benchmark/test-4/reports/test-4-hybrid-1-extents-derived.md
+  data    eval/benchmark/test-4/reports/test-4-hybrid-1-extents-derived.json
