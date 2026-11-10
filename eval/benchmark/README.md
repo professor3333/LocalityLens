@@ -85,6 +85,13 @@ systems, as dev-2 to dev-4 were not. The 20 repeats now measure agreement betwee
 owner, not one annotator's self-consistency. Locked-test releases 1 to 3, annotated by the owner,
 remain the independent evidence.
 
+## test-4: annotator
+
+[`declaration-test-4.json`](declaration-test-4.json) named the owner as annotator. The owner then
+chose Claude ([amendment](declaration-test-4-amendment-1.json), pushed after the annotation commit
+and before any system runs). Claude also wrote the systems and the error-stage script, so test-4's
+results are not independent of them. Locked-test releases 1 to 3 remain the independent evidence.
+
 ## Declared releases
 
 | Release | Declaration | Result (correct proposal candidates, of 56 answerable) |

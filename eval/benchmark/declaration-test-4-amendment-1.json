@@ -1,0 +1,19 @@
+{
+  "amends": "eval/benchmark/declaration-test-4.json",
+  "date": "2026-11-10",
+  "pushed": "after the annotation commit and before any system runs on test-4",
+  "change": "Annotator. The declaration names the owner. The owner chose Claude as annotator instead.",
+  "annotations": {
+    "commit": "254000f",
+    "worksheet_sha256": "382ad5587828a317bb965d5596d635991c9d7e2eb591d11abc7e0896f628f26c",
+    "rows": 120,
+    "checker": "0 problems (evaluation.annotations.check_worksheet). The declared `audit score` command stops before scoring because no system report exists yet.",
+    "method": "eval/annotation_guide.md at the pinned hash f085cf89, including the absent-place rule, and the pinned GNIS snapshot. Two passes: clause choices fixed from the label text before any GNIS lookup, then GNIS IDs, then the absent-place fallback where the most specific place had no GNIS entry. Only the worksheet under eval/benchmark/test-4/ was opened; no system output existed or was seen."
+  },
+  "unchanged": "Code, model manifest, extent stores, guide, error-stage script, questions, rules and stated expectations: everything else in the declaration stands. Since the declared commit, src/ differs only in evaluation/audit.py, where this amendment's commit adds test-4 to CLAUDE_ANNOTATED so that reports name the annotator.",
+  "consequences": [
+    "The annotator also wrote the systems being judged and the error-stage script. The annotations are not independent of them, so every test-4 result is weaker evidence than an owner-annotated set, as on dev-2 to dev-4 and test-2.",
+    "The primary question and the expected precision were set from a review that Claude also annotated (eval/calibration/test-3-review). The same annotator's habits shape both the expectation and the test, which makes agreement between them less informative.",
+    "Claude had already annotated near-identical wordings in read samples: the Rocky Flats Site labels (Q013, Q044, Q091; like A15, V029, H012 and H033), White Rocks (Q033, Q110; like F13 and R22), Whisky Springs Ranch on Douglas Mountain (Q032, Q116; like E06 and V014), Chambers place (Q005; like R12), Lone Mesa State Park (Q016; like H061), Fox Ranch (Q028; like H015) and Sarvis Creek at Buffalo Park (Q108; like G36). The exclusion removes only identical wording."
+  ]
+}
