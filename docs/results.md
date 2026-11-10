@@ -63,6 +63,9 @@ measurements (67 features), and now also from Census place polygons and USGS NHD
     ([result](../eval/reports/test-3.md)).
   - **On this label shape, most regions are wrong either way.** Of the 53 ready regions
     without the check, 7 are correct.
+  - **Diagnosis** (counts only, used set): 41 of the 46 wrong regions are a clause choice. In 21
+    of them the annotated place is absent from GNIS, a case the annotation guide doesn't settle
+    ([diagnosis](../eval/reports/test-3-diagnosis.md)).
 - **The rules-3 to rules-6 changes for "place, offset" labels** showed no gain on the samples
   drawn to test them (dev-3, dev-4).
 - **Qwen3.5-2B** as the fallback gives 49 against 4B's 51 of 92, at a quarter of the model time.
