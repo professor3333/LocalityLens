@@ -10,6 +10,7 @@ The final comparison of the rules baseline, the LLM pipeline and later GEOLocate
 | `test/` | 120 | **Locked.** Read only by the final, authorised evaluation, after targets are frozen. Scored three times (releases 1–3) |
 | `test-2/` | 120 new + 20 blind repeats | **Locked.** A fresh held-out test for v0.1.0, declared before annotation (below) |
 | `test-3/` | 120 "place, offset" labels | **Locked.** A fresh, targeted test of the selection-2 check, annotated by Codex (calibrated against the owner), declared before annotation |
+| `test-4/` | 120 "place, offset" labels | **Locked.** A fresh test under the annotation guide's absent-place rule (GBIF BP §3.2.2), to be annotated by the owner, declared before annotation |
 
 ## How it was drawn
 
