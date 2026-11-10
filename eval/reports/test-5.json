@@ -1,0 +1,255 @@
+{
+  "declaration": "eval/benchmark/declaration-test-5.json",
+  "amendments": [
+    "eval/benchmark/declaration-test-5-amendment-1.json"
+  ],
+  "note": "Totals only. Annotations by Codex, run on the owner's side, under the guide's absent-place rule. Per-record outputs stay under eval/benchmark/test-5/reports/.",
+  "label": "Codex-annotated; agreement with the owner 54/60 category, 55/60 GNIS IDs (calibration before the absent-place rule)",
+  "annotations": {
+    "commit": "76307b3",
+    "worksheet_sha256": "df83717cb0d622b564e98f9d5c84181fd08a84b04612f6e481e3fc167fa78a44",
+    "rows": 120,
+    "checker": "0 problems",
+    "rows_using_absent_place_rule": 41
+  },
+  "run": {
+    "code_commit": "a61c767a30afa7bf03792d4c35876da1a56f4bca",
+    "systems": {
+      "rules": "rules-6",
+      "llm": "llm-x2g2-qwen3.5-4b-q4km",
+      "hybrid": "hybrid-1",
+      "specimens": "gbif-cu-2026-11-01"
+    },
+    "without_check": {
+      "started": "2026-11-10T09:25:58Z",
+      "finished": "2026-11-10T09:50:05Z"
+    },
+    "with_check": {
+      "started": "2026-11-10T09:50:05Z",
+      "finished": "2026-11-10T10:13:53Z"
+    },
+    "llm_cache": "off",
+    "llm_wall_clock_minutes": {
+      "without_check": 24.0,
+      "with_check": 23.7
+    },
+    "llm_model_seconds": {
+      "without_check": {
+        "p50": 11.4,
+        "p95": 16.8
+      },
+      "with_check": {
+        "p50": 11.7,
+        "p95": 16.0
+      }
+    },
+    "hybrid_llm_called": 38,
+    "hybrid_answers_from_llm": 11,
+    "technical_failures": "none",
+    "llm_repeatability": "Same 120 prompts in both LLM passes (greedy, cache off); 1 record's extraction differed, valid in one pass and invalid in the other. hybrid-1 took that record from the rules in both, so the hybrid totals and the selection-2 decision do not depend on it."
+  },
+  "results": {
+    "without_check": {
+      "records": 120,
+      "categories": {
+        "answerable": 108,
+        "unsupported": 7,
+        "reference_absent": 5
+      },
+      "excluding_unsure": {
+        "records": 105,
+        "categories": {
+          "answerable": 97,
+          "unsupported": 5,
+          "reference_absent": 3
+        }
+      },
+      "rules": {
+        "ready": 32,
+        "correct": 11,
+        "useful_coverage": 11,
+        "answerable": 108,
+        "correct_proposal_candidates": 25,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 24,
+        "answerable_excl_unsure": 97
+      },
+      "llm": {
+        "ready": 30,
+        "correct": 10,
+        "useful_coverage": 10,
+        "answerable": 108,
+        "correct_proposal_candidates": 21,
+        "valid_extraction": 107,
+        "correct_candidates_excl_unsure": 21,
+        "answerable_excl_unsure": 97
+      },
+      "hybrid": {
+        "ready": 37,
+        "correct": 12,
+        "useful_coverage": 12,
+        "answerable": 108,
+        "correct_proposal_candidates": 28,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 27,
+        "answerable_excl_unsure": 97
+      },
+      "hybrid_vs_rules": {
+        "n": 108,
+        "rules": 25,
+        "llm": 28,
+        "difference": 0.028,
+        "ci95": [
+          0.0,
+          0.065
+        ],
+        "llm_only": 3,
+        "rules_only": 0,
+        "sign_test_p": 0.25
+      },
+      "llm_vs_rules": {
+        "n": 108,
+        "rules": 25,
+        "llm": 21,
+        "difference": -0.037,
+        "ci95": [
+          -0.12,
+          0.046
+        ],
+        "llm_only": 9,
+        "rules_only": 13,
+        "sign_test_p": 0.5235
+      }
+    },
+    "with_check": {
+      "records": 120,
+      "categories": {
+        "answerable": 108,
+        "unsupported": 7,
+        "reference_absent": 5
+      },
+      "excluding_unsure": {
+        "records": 105,
+        "categories": {
+          "answerable": 97,
+          "unsupported": 5,
+          "reference_absent": 3
+        }
+      },
+      "rules": {
+        "ready": 15,
+        "correct": 7,
+        "useful_coverage": 7,
+        "answerable": 108,
+        "correct_proposal_candidates": 25,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 24,
+        "answerable_excl_unsure": 97
+      },
+      "llm": {
+        "ready": 16,
+        "correct": 6,
+        "useful_coverage": 6,
+        "answerable": 108,
+        "correct_proposal_candidates": 21,
+        "valid_extraction": 106,
+        "correct_candidates_excl_unsure": 21,
+        "answerable_excl_unsure": 97
+      },
+      "hybrid": {
+        "ready": 19,
+        "correct": 8,
+        "useful_coverage": 8,
+        "answerable": 108,
+        "correct_proposal_candidates": 28,
+        "valid_extraction": 120,
+        "correct_candidates_excl_unsure": 27,
+        "answerable_excl_unsure": 97
+      },
+      "hybrid_vs_rules": {
+        "n": 108,
+        "rules": 25,
+        "llm": 28,
+        "difference": 0.028,
+        "ci95": [
+          0.0,
+          0.065
+        ],
+        "llm_only": 3,
+        "rules_only": 0,
+        "sign_test_p": 0.25
+      },
+      "llm_vs_rules": {
+        "n": 108,
+        "rules": 25,
+        "llm": 21,
+        "difference": -0.037,
+        "ci95": [
+          -0.12,
+          0.046
+        ],
+        "llm_only": 9,
+        "rules_only": 13,
+        "sign_test_p": 0.5235
+      }
+    }
+  },
+  "stages": {
+    "without_check": {
+      "ready": 37,
+      "correct": 12,
+      "clause choice (other place chosen)": 23,
+      "GNIS identity (same name, other feature)": 1,
+      "reading: qualifiers": 1,
+      "dispute_candidates": 4
+    },
+    "with_check": {
+      "ready": 19,
+      "correct": 8,
+      "clause choice (other place chosen)": 9,
+      "GNIS identity (same name, other feature)": 1,
+      "reading: qualifiers": 1,
+      "dispute_candidates": 3
+    },
+    "held_back_by_stage": {
+      "correct": 4,
+      "clause choice (other place chosen)": 14,
+      "GNIS identity (same name, other feature)": 0,
+      "reading: qualifiers": 0
+    }
+  },
+  "primary": {
+    "question": "selection-2 under the test-3 rule",
+    "held_back": 18,
+    "held_back_wrong": 14,
+    "held_back_correct": 4,
+    "precision_without": 0.324,
+    "precision_with": 0.421,
+    "precision_rise_pp": 9.7,
+    "useful_coverage_without": 0.111,
+    "useful_coverage_with": 0.074,
+    "decision": "works"
+  },
+  "secondary_stages": {
+    "wrong_ready_regions": 25,
+    "clause choice (other place chosen)": 23,
+    "share": 0.92,
+    "largest": true,
+    "decision": "supported"
+  },
+  "expectations_stated_in_advance": {
+    "primary": {
+      "expected": "uncertain, leaning works",
+      "measured": "works"
+    },
+    "precision_without_check": {
+      "expected": "about 50%, 35-65%",
+      "measured": "32%, below the range"
+    },
+    "secondary_stages": {
+      "expected": "supported",
+      "measured": "supported (23 of 25)"
+    }
+  },
+  "what_follows": "Declared: selection-2 has now passed 2 of 3 declared checks, including this one by a non-Claude annotator under the current guide. Proposed: turn it on by default in the next release, which the owner approves."
+}

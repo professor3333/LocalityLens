@@ -1,0 +1,5 @@
+relation   distance_and_direction=77  named_feature=30  direction_only=6  between_features=3  route_relative=2  distance_only=2
+retrieval  candidates_found=82  feature_absent_from_index=33  no_reference_feature=5
+proposal   needs_information=83  computed=32  unsupported=5
+  report  eval/benchmark/test-5/reports/test-5-rules-6-extents-derived.md
+  data    eval/benchmark/test-5/reports/test-5-rules-6-extents-derived.json

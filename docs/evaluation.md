@@ -203,6 +203,11 @@ opt-in) give regions to about 12,000 features, and they show the honest picture:
   declared primary question: supported). selection-2 held back 17 wrong and 7 correct regions,
   precision 55% → 72%, coverage 30.8% → 24.3%: it passes the test-3 rule here, against the
   stated expectation ([result](../eval/reports/test-4.md)).
+- **test-5** (120 fresh "place, offset" labels, Codex-annotated under the absent-place rule,
+  declared before annotation, to settle selection-2): hybrid-1 37 ready regions, 12 correct (32%,
+  coverage 11.1%); 23 of the 25 wrong ones name a place GNIS has. selection-2 held back 14 wrong
+  and 4 correct, precision 32% → 42%, coverage 11.1% → 7.4%: **it works by the test-3 rule**, and
+  has now passed 2 of 3 declared checks ([result](../eval/reports/test-5.md)).
 
 <details>
 <summary><b>Development history: dev and validation scores by rules version</b></summary>

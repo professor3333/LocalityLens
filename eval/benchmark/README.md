@@ -118,6 +118,8 @@ uv run localitylens benchmark draw-extra --name test-5 --seed benchmark-5/1 --si
   test-5 could not settle the question. Whoever annotates is recorded before any system runs.
 - **Annotated by Codex** (worksheet commit 76307b3; [amendment](declaration-test-5-amendment-1.json),
   pushed before any system runs).
+- **Result:** selection-2 works by the test-3 rule (held back 14 wrong, 4 correct; precision
+  32% → 42%). [Totals](../reports/test-5.md).
 
 ## Declared releases
 

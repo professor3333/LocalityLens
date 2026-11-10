@@ -1,0 +1,6 @@
+ready regions 37
+   23  clause choice (other place chosen)
+   12  correct
+    1  reading: qualifiers
+    1  GNIS identity (same name, other feature)
+dispute candidates (same name or unsure marker) 4

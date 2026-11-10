@@ -79,6 +79,11 @@ measurements (67 features), and now also from Census place polygons and USGS NHD
   declared primary question: supported). selection-2 held back 17 wrong and 7 correct regions,
   precision 55% → 72%, coverage 30.8% → 24.3%: it passes the test-3 rule here, against the
   stated expectation ([result](../eval/reports/test-4.md)).
+- **test-5** (120 fresh "place, offset" labels, Codex-annotated under the absent-place rule,
+  declared before annotation, to settle selection-2): hybrid-1 37 ready regions, 12 correct (32%,
+  coverage 11.1%); 23 of the 25 wrong ones name a place GNIS has. selection-2 held back 14 wrong
+  and 4 correct, precision 32% → 42%, coverage 11.1% → 7.4%: **it works by the test-3 rule**, and
+  has now passed 2 of 3 declared checks ([result](../eval/reports/test-5.md)).
 - **The rules-3 to rules-6 changes for "place, offset" labels** showed no gain on the samples
   drawn to test them (dev-3, dev-4).
 - **Qwen3.5-2B** as the fallback gives 49 against 4B's 51 of 92, at a quarter of the model time.
