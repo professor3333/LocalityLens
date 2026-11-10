@@ -274,6 +274,15 @@ def _audit_calibration_set(args: argparse.Namespace) -> int:
         )
         return 2
     source = load_sample(Path(args.source))
+    if args.ids:
+        wanted = {line.strip() for line in Path(args.ids).read_text().splitlines() if line.strip()}
+        unknown = wanted - {i.audit_id for i in source.items}
+        if unknown:
+            print(f"refused: {len(unknown)} listed IDs are not in the source", file=sys.stderr)
+            return 2
+        source = source.model_copy(
+            update={"items": tuple(i for i in source.items if i.audit_id in wanted)}
+        )
 
     def rank(item: Any) -> str:
         return hashlib.sha256(f"{args.seed}|{item.audit_id}".encode()).hexdigest()
@@ -1409,6 +1418,7 @@ def main(argv: list[str] | None = None) -> int:
     acs.add_argument("--seed", required=True)
     acs.add_argument("--prefix", default="C")
     acs.add_argument("--out", required=True)
+    acs.add_argument("--ids", help="keep only the records listed in this file (one ID per line)")
     acs.set_defaults(func=_audit_calibration_set)
     aag = aud.add_parser("agreement", help="agreement of two annotations of the same records")
     aag.add_argument("--sample-a", required=True)

@@ -14,6 +14,17 @@ Pass 2: look up GNIS IDs. Doing it second keeps search results from shaping how 
 georeference: the most specific one, giving the smallest area. List the other clauses in `notes`
 as `multi: …`.
 
+**When the most specific place is not in GNIS** (from 2026-11-10; earlier worksheets were not
+redone). Annotate the next less specific clause instead, for example the "3 mi N of Town" in
+"Place, 3 mi N of Town". Write `absent-specific: <place as on the label>` in `notes`, and add
+`found-on-map` if you found the place on a map.
+- **Why:** the GBIF Georeferencing Best Practices (§3.2.2) say that when the more specific part
+  of a locality can't be identified, "the next less specific part of the locality … should be
+  georeferenced", with a remark that the place couldn't be found.
+- **Order:** you find out in pass 2, so go back and redo the row's pass-1 columns for the new
+  clause.
+- **If no other clause can be georeferenced,** keep the place and mark it `absent`.
+
 | Column | Fill with |
 |---|---|
 | `description_type` | The chosen clause's type: `named_feature` (including "N slope of X", "summit of X", "above X"), `distance_and_direction` (straight line; "air mi" counts), `distance_only`, `direction_only`, `route_relative` ("road mi", "up the road", "along the trail"), `itinerary`, `between_features`, `orthogonal_offsets`, `admin_only`, `habitat_only`, `no_locality` |

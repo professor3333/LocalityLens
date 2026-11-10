@@ -1,0 +1,33 @@
+{
+  "seed": "test-3-review/1",
+  "rule": "first 10 of each clause-choice list in sha256(seed|id) order, plus unsure-marker ready-region rows not already drawn",
+  "clause_choice_absent": [
+    "P019",
+    "P032",
+    "P038",
+    "P041",
+    "P044",
+    "P045",
+    "P076",
+    "P080",
+    "P105",
+    "P118"
+  ],
+  "clause_choice_in_gnis": [
+    "P005",
+    "P018",
+    "P020",
+    "P026",
+    "P033",
+    "P040",
+    "P053",
+    "P097",
+    "P099",
+    "P109"
+  ],
+  "unsure_marker": [
+    "P008",
+    "P034",
+    "P119"
+  ]
+}

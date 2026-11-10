@@ -90,3 +90,30 @@ def test_the_calibration_copy_is_renumbered_blank_and_paired(tmp_path: Path) -> 
         rows = list(csv.DictReader(fh))
     assert all(not r["acceptable_gnis_ids"] for r in rows)  # blank: nothing to copy from
     assert main(argv) == 2  # written once
+
+
+def test_the_calibration_copy_can_keep_only_listed_records(tmp_path: Path) -> None:
+    items = tuple(
+        AuditItem(audit_id=f"P{i:02d}", group_size=1, record=to_record(row(i, f"Place {i}.")))
+        for i in range(1, 6)
+    )
+    src = AuditSample(
+        snapshot_id="s",
+        screen_version="1",
+        grouping_version="1",
+        seed="x",
+        eligible_records=5,
+        eligible_groups=5,
+        items=items,
+        name="test-x",
+    )
+    (tmp_path / "t.json").write_text(src.model_dump_json(), encoding="utf-8")
+    (tmp_path / "ids.txt").write_text("P02\nP04\n\n", encoding="utf-8")
+    base = ["audit", "calibration-set", "--source", str(tmp_path / "t.json"), "--name", "rev",
+            "--seed", "r/1", "--prefix", "R"]  # fmt: skip
+    assert main([*base, "--out", str(tmp_path / "rev"), "--ids", str(tmp_path / "ids.txt")]) == 0
+    pairs = json.loads((tmp_path / "rev" / "pairs.json").read_text())["pairs"]
+    assert sorted(pairs.values()) == ["P02", "P04"]
+    assert len(load_sample(tmp_path / "rev" / "rev.json").items) == 2
+    (tmp_path / "bad.txt").write_text("P09\n", encoding="utf-8")
+    assert main([*base, "--out", str(tmp_path / "bad"), "--ids", str(tmp_path / "bad.txt")]) == 2

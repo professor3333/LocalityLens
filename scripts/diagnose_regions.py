@@ -2,7 +2,7 @@
 
 Usage (repo root): uv run python scripts/diagnose_regions.py <sample> <worksheet>
 <hybrid report> <score report> [<dispute-candidates.txt>]. With the last argument, the
-dispute-candidate and clause-choice row IDs (IDs only) are written next to it.
+dispute-candidate and clause-choice row IDs (all, absent-place, in-GNIS) (IDs only) are written next to it.
 Used for eval/reports/test-3-diagnosis.md.
 """
 
@@ -32,6 +32,8 @@ def keys(n: str) -> set[str]:
 
 
 stage, disputes, clause = Counter(), [], []
+absent: list[str] = []
+in_gnis: list[str] = []
 for aid, r in rows.items():
     if r["proposal"] != "computed":
         continue
@@ -66,6 +68,7 @@ for aid, r in rows.items():
     stage[s] += 1
     if s.startswith("clause"):
         clause.append(aid)
+        (absent if "absent" in s else in_gnis).append(aid)
     if s != "correct" and (same_name or unsure):
         disputes.append(aid)
     if s == "correct" and unsure:
@@ -76,6 +79,8 @@ for k, v in stage.most_common():
 print("dispute candidates (same name or unsure marker)", len(disputes))
 if len(sys.argv) > 5:
     Path(sys.argv[5]).write_text("\n".join(sorted(disputes)) + "\n")
-    Path(sys.argv[5].replace("dispute-candidates", "clause-choice")).write_text(
-        "\n".join(sorted(clause)) + "\n"
-    )
+    for part, ids in (("clause-choice", clause), ("clause-choice-absent", absent),
+                      ("clause-choice-in-gnis", in_gnis)):  # fmt: skip
+        Path(sys.argv[5].replace("dispute-candidates", part)).write_text(
+            "\n".join(sorted(ids)) + "\n"
+        )
