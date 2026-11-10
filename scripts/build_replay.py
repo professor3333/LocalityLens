@@ -5,7 +5,7 @@
 Steps:
 1. Import eval/audit/audit-50.json into a new, temporary review store with the release system
    (hybrid-1: rules first, the LLM only where the rules reach no gazetteer candidate), the
-   reviewed-extent store and the derived extents. These are the real pipeline and the real
+   reviewed-extent store, the derived extents and the release's selection check. These are the real pipeline and the real
    model, run once here.
 2. Freeze the review screen into static pages (localitylens.web.replay).
 3. Replace demo/site.
@@ -68,7 +68,9 @@ def main() -> int:
             system=f"hybrid-1: {manifest['rules_version']} first, then "
             f"{manifest['extractor_id']} only where the rules reach no gazetteer candidate; "
             "extents measured by hand where they exist, otherwise derived from Census place "
-            "polygons and USGS NHD geometry (marked 'derived, not curator-reviewed')",
+            "polygons and USGS NHD geometry (marked 'derived, not curator-reviewed'); "
+            f"{manifest['selection_version']} holds a region for review when the label names "
+            "another place that GNIS has inside it, or one GNIS lacks",
             records="the 50 audit records, University of Colorado Herbarium (development data, "
             "not held-out results)",
             built=f"commit {commit}, {datetime.now(UTC).date().isoformat()}",
