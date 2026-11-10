@@ -1,0 +1,95 @@
+{
+  "plan": "eval/calibration/test-3-review/README.md",
+  "annotator": "Claude (at the owner's request; not a human check, and Claude wrote the systems). Compared against Codex's test-3 annotations.",
+  "note": "Diagnosis of a used set; counts only. test-3's declared result stands.",
+  "review_worksheet_sha256_prefix": "d4dd4b1f",
+  "clause_choice_absent": {
+    "rows": 10,
+    "of": 21,
+    "correct_under_codex": 0,
+    "correct_under_reviewer": 6,
+    "same_acceptable_ids_as_codex": 0,
+    "reviewer_finds_specific_place_absent": 9,
+    "reviewer_category": {
+      "answerable": 10,
+      "no_reference": 0,
+      "reference_absent": 0,
+      "unsupported": 0
+    }
+  },
+  "clause_choice_in_gnis": {
+    "rows": 10,
+    "of": 20,
+    "correct_under_codex": 0,
+    "correct_under_reviewer": 2,
+    "same_acceptable_ids_as_codex": 7,
+    "reviewer_finds_specific_place_absent": 1,
+    "reviewer_category": {
+      "answerable": 10,
+      "no_reference": 0,
+      "reference_absent": 0,
+      "unsupported": 0
+    }
+  },
+  "unsure_rows": {
+    "rows": 3,
+    "every_field_agrees": 2,
+    "by_field": {
+      "description_type": 2,
+      "supported": 2,
+      "acceptable_gnis_ids": 2,
+      "distance": 2,
+      "unit": 2,
+      "direction": 2,
+      "qualifiers": 3,
+      "category": 2
+    },
+    "correct_under_codex": 0,
+    "correct_under_reviewer": 1
+  },
+  "all_23": {
+    "agreement": {
+      "agreement_version": "1",
+      "rows": 23,
+      "by_field": {
+        "description_type": 10,
+        "supported": 22,
+        "acceptable_gnis_ids": 9,
+        "distance": 12,
+        "unit": 12,
+        "direction": 10,
+        "qualifiers": 19,
+        "category": 12
+      },
+      "every_field": 9,
+      "categories_a": {
+        "answerable": 22,
+        "unsupported": 1
+      },
+      "categories_b": {
+        "answerable": 11,
+        "reference_absent": 10,
+        "unsupported": 2
+      }
+    },
+    "ready_regions_correct_under_codex": 0,
+    "ready_regions_correct_under_reviewer": 9
+  },
+  "estimate": {
+    "label": "estimate, not a measurement",
+    "ready_regions": 53,
+    "correct_estimated": 24.6,
+    "precision_estimated": 0.464,
+    "precision_95_interval_approx": [
+      0.355,
+      0.574
+    ],
+    "precision_under_codex": 0.132,
+    "other_ready_regions": {
+      "rows": 12,
+      "reviewed": 2,
+      "correct_used": 8
+    },
+    "method": "stratified: 21 x (absent-stratum share) + 20 x (in-GNIS share) + the other 12 ready regions; normal approximation with finite-population correction"
+  }
+}

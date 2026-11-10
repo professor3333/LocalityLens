@@ -66,6 +66,13 @@ measurements (67 features), and now also from Census place polygons and USGS NHD
   - **Diagnosis** (counts only, used set): 41 of the 46 wrong regions are a clause choice. In 21
     of them the annotated place is absent from GNIS, a case the annotation guide doesn't settle
     ([diagnosis](../eval/reports/test-3-diagnosis.md)).
+  - **Second-annotator review of 23 disputed rows** (Claude, at the owner's request; not a human
+    check, and Claude wrote the systems), under the guide's new BP §3.2.2 rule (annotate the
+    offset when the specific place is not in GNIS):
+    - with Codex's place absent from GNIS, 6 of 10 offset regions become correct;
+    - with the place in GNIS, 2 of 10 are correct.
+    - **Estimated ready-region precision ≈ 46%** (approx. 36–57%) instead of 13%. This is an
+      estimate, not a test result ([review](../eval/reports/test-3-review.md)).
 - **The rules-3 to rules-6 changes for "place, offset" labels** showed no gain on the samples
   drawn to test them (dev-3, dev-4).
 - **Qwen3.5-2B** as the fallback gives 49 against 4B's 51 of 92, at a quarter of the model time.
