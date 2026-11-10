@@ -9,6 +9,20 @@ whether those rows are system errors, annotator (Codex) errors, or a convention 
 
 This plan was committed and pushed **before the owner annotated anything**.
 
+**Annotator changed (2026-11-10), before anything was computed.** At the owner's request, Claude
+annotated the sheet, not the owner (commit `5884e9a`, SHA-256 `d4dd4b1f…`, 0 checker problems;
+`pairs.json`, `eval/benchmark/test-3/` and the test-3 reports were not opened). The computation
+below runs as written, with "the owner" read as "Claude". This changes what it can show:
+- **It is not a human check.** Claude also wrote the systems being judged, so "correct under
+  Claude's annotation" is not independent of them, and agreement with Codex is agreement between
+  two AI annotators, not a human's verdict on Codex.
+- **It can still show** whether a second annotator, using the new BP §3.2.2 fallback rule, reads
+  these rows the way Codex did, and how much the fallback rule alone changes.
+- **Not new to the annotator:** R01 (Lippincott Ranch, measured from the GNIS location of Golden)
+  and R22 (White Rocks, 8 mi NE of Boulder) are worded like dev-3 records Claude annotated. Claude
+  also knew the stratum design and the diagnosis totals from the published reports, but no
+  per-record answer.
+
 ## The sheet
 
 `worksheet.csv` holds 23 test-3 rows, renumbered `R01`–`R23` in seeded order
@@ -67,5 +81,6 @@ Published as `eval/reports/test-3-review.{md,json}`.
   clause, from Codex's annotations, or from the absent-place convention.
 - **It can't show** what a future rule would achieve. That needs fresh, unread labels and a new
   declaration.
-- **The owner is independent of Codex and did not write the systems.** The owner is one
-  annotator, and these rows were chosen because the system and Codex disagree on them.
+- **As planned, the owner would have been independent of Codex and of the systems.** With Claude
+  as annotator (see above) the first holds and the second does not. One annotator either way, and
+  these rows were chosen because the system and Codex disagree on them.

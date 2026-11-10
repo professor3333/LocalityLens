@@ -312,7 +312,7 @@ def _add_trace(row: dict[str, Any], extractor: Extractor, started: float) -> Non
 
 # Who filled each sample's worksheet. Every other sample was annotated by the project owner.
 CLAUDE_ANNOTATED: Final = frozenset(
-    {"dev-2", "dev-3", "dev-4", "test-2", "test-2-new", "test-2-repeats"}
+    {"dev-2", "dev-3", "dev-4", "test-2", "test-2-new", "test-2-repeats", "test-3-review"}
 )
 
 
