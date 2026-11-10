@@ -33,6 +33,13 @@ def test_normalized_text_has_no_whitespace_runs(original: str) -> None:
     assert all(not ch.isspace() or ch == " " for ch in n.text)
 
 
+@pytest.mark.parametrize("original", ["\r\u20e5", "0\r\u20e5", "a \u0301b", "\t\u0301"])
+def test_whitespace_before_a_combining_mark_is_still_whitespace(original: str) -> None:
+    n = normalize(original)  # found by Hypothesis: "\r" + a mark used to survive as one cluster
+    assert n.text == n.text.strip()
+    assert all(not ch.isspace() or ch == " " for ch in n.text)
+
+
 @given(texts)
 def test_normalization_is_idempotent(original: str) -> None:
     once = normalize(original).text

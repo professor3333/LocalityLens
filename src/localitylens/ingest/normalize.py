@@ -7,7 +7,9 @@ coordinates. This single module is used by evaluation and serving alike, so both
 
 Rules (version ``NORMALIZATION_VERSION``):
 1. Unicode NFC, applied per cluster (a base character plus its combining marks) so every output
-   character maps to a definite original range.
+   character maps to a definite original range. A combining mark never joins a whitespace
+   character: it starts its own cluster (version 2; version 1 kept "\r" + mark as one non-space
+   cluster, so whitespace survived. No record in the specimen snapshot has this.)
 2. Every run of whitespace (including CR, LF, tabs) becomes a single space.
 3. Leading and trailing whitespace is dropped.
 
@@ -20,7 +22,7 @@ from __future__ import annotations
 import unicodedata
 from dataclasses import dataclass
 
-NORMALIZATION_VERSION = "1"
+NORMALIZATION_VERSION = "2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,7 +52,7 @@ def _clusters(text: str) -> list[tuple[int, int]]:
     i, n = 0, len(text)
     while i < n:
         j = i + 1
-        while j < n and unicodedata.combining(text[j]):
+        while j < n and unicodedata.combining(text[j]) and not text[i].isspace():
             j += 1
         ranges.append((i, j))
         i = j
