@@ -1,0 +1,11 @@
+{
+  "amends": "declaration-test-5.json",
+  "amended": "2026-11-10",
+  "note": "Pushed after the annotation commit and before any system runs on test-5. Nothing else in the declaration changes.",
+  "annotator": "Codex, run on the owner's side (the owner confirmed this on 2026-11-10; the worksheet commit's message does not name the annotator, as the declaration asked, so it is recorded here instead).",
+  "worksheet_commit": "76307b3e05deb4a832dfe7838f599bf657d80b6f",
+  "worksheet_sha256": "df83717cb0d622b564e98f9d5c84181fd08a84b04612f6e481e3fc167fa78a44",
+  "checks_before_any_run": "120 rows; audit_id, gbif_id, county and locality unchanged from the blank worksheet; 0 checker problems; 41 rows note absent-specific; 6 rows reference absent. Checked by counts only.",
+  "labelling": "Every test-5 result is labelled 'Codex-annotated; agreement with the owner 54/60 category, 55/60 GNIS IDs (calibration before the absent-place rule)'. test-5 is added to the code's list of Codex-annotated samples in this commit.",
+  "primary_question": "Unchanged. Codex is not Claude, so the declaration's primary question is answered by test-5."
+}

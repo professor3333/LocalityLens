@@ -327,7 +327,7 @@ CLAUDE_ANNOTATED: Final = frozenset(
 
 # Filled by Codex on the owner's side, calibrated against the owner
 # (eval/reports/codex-calibration.md).
-CODEX_ANNOTATED: Final = frozenset({"calibration-validation", "test-3"})
+CODEX_ANNOTATED: Final = frozenset({"calibration-validation", "test-3", "test-5"})
 
 
 def annotations_by(label: str) -> str:

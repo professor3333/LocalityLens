@@ -157,5 +157,5 @@ def test_reports_name_who_annotated_each_sample() -> None:
         assert annotations_by(label) == "Claude's annotations"
     for label in ("audit-50", "dev-1", "validation", "test"):
         assert annotations_by(label) == "the owner's annotations"
-    for label in ("calibration-validation", "test-3"):
+    for label in ("calibration-validation", "test-3", "test-5"):
         assert annotations_by(label) == "Codex's annotations"

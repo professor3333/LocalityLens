@@ -11,7 +11,7 @@ The final comparison of the rules baseline, the LLM pipeline and later GEOLocate
 | `test-2/` | 120 new + 20 blind repeats | **Locked.** A fresh held-out test for v0.1.0, declared before annotation (below) |
 | `test-3/` | 120 "place, offset" labels | **Locked.** A fresh, targeted test of the selection-2 check, annotated by Codex (calibrated against the owner), declared before annotation |
 | `test-4/` | 120 "place, offset" labels | **Locked.** A fresh test under the annotation guide's absent-place rule (GBIF BP §3.2.2), annotated by Claude (not independent), declared before annotation |
-| `test-5/` | 120 "place, offset" labels | **Locked.** The deciding check of selection-2 under the absent-place rule, annotated by someone other than Claude (the owner, or Codex), declared before annotation |
+| `test-5/` | 120 "place, offset" labels | **Locked.** The deciding check of selection-2 under the absent-place rule, annotated by Codex (calibrated against the owner), declared before annotation |
 
 ## How it was drawn
 
@@ -116,6 +116,8 @@ uv run localitylens benchmark draw-extra --name test-5 --seed benchmark-5/1 --si
 - **Annotator:** the owner, or Codex on the owner's side, under the annotation guide at the hash
   pinned in [`declaration-test-5.json`](declaration-test-5.json). Not Claude: a Claude-annotated
   test-5 could not settle the question. Whoever annotates is recorded before any system runs.
+- **Annotated by Codex** (worksheet commit 76307b3; [amendment](declaration-test-5-amendment-1.json),
+  pushed before any system runs).
 
 ## Declared releases
 
