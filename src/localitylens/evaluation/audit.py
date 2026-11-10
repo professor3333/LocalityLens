@@ -325,9 +325,18 @@ CLAUDE_ANNOTATED: Final = frozenset(
 )
 
 
+# Filled by Codex on the owner's side, calibrated against the owner
+# (eval/reports/codex-calibration.md).
+CODEX_ANNOTATED: Final = frozenset({"calibration-validation", "test-3"})
+
+
 def annotations_by(label: str) -> str:
     """Whose annotations a sample's reports rest on, in words for the report text."""
-    return "Claude's annotations" if label in CLAUDE_ANNOTATED else "the owner's annotations"
+    if label in CLAUDE_ANNOTATED:
+        return "Claude's annotations"
+    if label in CODEX_ANNOTATED:
+        return "Codex's annotations"
+    return "the owner's annotations"
 
 
 _NOTE_TAIL: Final = (

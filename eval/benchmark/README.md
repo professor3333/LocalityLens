@@ -10,7 +10,8 @@ The final comparison of the rules baseline, the LLM pipeline and later GEOLocate
 | `test/` | 120 | **Locked.** Read only by the final, authorised evaluation, after targets are frozen. Scored three times (releases 1–3) |
 | `test-2/` | 120 new + 20 blind repeats | **Locked.** A fresh held-out test for v0.1.0, declared before annotation (below) |
 | `test-3/` | 120 "place, offset" labels | **Locked.** A fresh, targeted test of the selection-2 check, annotated by Codex (calibrated against the owner), declared before annotation |
-| `test-4/` | 120 "place, offset" labels | **Locked.** A fresh test under the annotation guide's absent-place rule (GBIF BP §3.2.2), to be annotated by the owner, declared before annotation |
+| `test-4/` | 120 "place, offset" labels | **Locked.** A fresh test under the annotation guide's absent-place rule (GBIF BP §3.2.2), annotated by Claude (not independent), declared before annotation |
+| `test-5/` | 120 "place, offset" labels | **Locked.** The deciding check of selection-2 under the absent-place rule, annotated by someone other than Claude (the owner, or Codex), declared before annotation |
 
 ## How it was drawn
 
@@ -91,6 +92,30 @@ remain the independent evidence.
 chose Claude ([amendment](declaration-test-4-amendment-1.json), pushed after the annotation commit
 and before any system runs). Claude also wrote the systems and the error-stage script, so test-4's
 results are not independent of them. Locked-test releases 1 to 3 remain the independent evidence.
+
+## test-5: why, and who annotates
+
+test-3 and test-4 disagree on selection-2: it failed on test-3 (Codex, before the absent-place
+rule) and passed on test-4 (Claude, after it). Both the annotator and the guide changed between
+them. test-5 keeps the new guide and changes the annotator back to someone who did not write the
+systems.
+
+```bash
+uv run localitylens benchmark draw-extra --name test-5 --seed benchmark-5/1 --size 120 \
+  --prefix S --shape place_offset --shape-version 2 --repeats 0 \
+  --exclude-lock eval/splits-2.lock.json --exclude-lock eval/splits-3.lock.json \
+  --exclude-lock eval/splits-4.lock.json --lock-out eval/splits-5.lock.json \
+  --out eval/benchmark/test-5
+```
+
+- **Excluded:** 4,587 viewed or reserved groups, 37 more by repeated wording, and 788 components
+  touching them (9,017 groups).
+- **The lock:** [`../splits-5.lock.json`](../splits-5.lock.json) reserves 518 groups.
+- **Checked by counts, hashes and key sets only:** 0 overlap with the four earlier locks and the
+  viewed-groups registry; the worksheet has 120 rows.
+- **Annotator:** the owner, or Codex on the owner's side, under the annotation guide at the hash
+  pinned in [`declaration-test-5.json`](declaration-test-5.json). Not Claude: a Claude-annotated
+  test-5 could not settle the question. Whoever annotates is recorded before any system runs.
 
 ## Declared releases
 

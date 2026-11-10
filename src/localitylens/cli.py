@@ -445,6 +445,7 @@ _LOCKED: Final = (
     Path("eval/benchmark/test-2"),
     Path("eval/benchmark/test-3"),
     Path("eval/benchmark/test-4"),
+    Path("eval/benchmark/test-5"),
 )
 
 
@@ -926,6 +927,7 @@ def _dev_sample(args: argparse.Namespace) -> int:
         "eval/splits-2.lock.json",
         "eval/splits-3.lock.json",
         "eval/splits-4.lock.json",
+        "eval/splits-5.lock.json",
     ]:
         viewed |= reserved_groups(Path(lock_path))  # held-out components are never dev data
     summary = ScreenSummary(snapshot_id="")
