@@ -26,3 +26,27 @@ def test_build_and_search_commands(
 
     assert main(["gazetteer", "search", "Nowhere Gulch", "--index", str(index)]) == 0
     assert capsys.readouterr().out.strip() == "feature_absent_from_index"
+
+
+def test_review_commands_apply_the_release_selection_check_by_default(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import localitylens.cli as cli
+
+    seen: list[str | None] = []
+
+    def capture(args: object) -> int:
+        seen.append(cli._selection(args))  # type: ignore[arg-type]
+        return 0
+
+    for name in ("_review_import", "_review_work", "_audit_rules"):
+        monkeypatch.setattr(cli, name, capture)
+    assert main(["review", "import", "--sample", "s.json"]) == 0
+    assert main(["review", "work"]) == 0
+    assert main(["review", "work", "--no-selection"]) == 0
+    assert main(["review", "import", "--sample", "s.json", "--selection-check"]) == 0
+    assert main(["audit", "rules", "--sample", "s.json"]) == 0  # evaluation: only when asked
+    assert main(["audit", "rules", "--sample", "s.json", "--selection-2"]) == 0
+    assert seen == ["selection-2", "selection-2", None, "selection-1", None, "selection-2"]
+    with pytest.raises(SystemExit):
+        main(["review", "work", "--no-selection", "--selection-2"])

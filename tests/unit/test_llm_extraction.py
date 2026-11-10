@@ -82,6 +82,9 @@ def test_release_manifest_matches_the_code() -> None:
     from localitylens.resolve.county import COUNTY_CONTEXT_VERSION
 
     assert RELEASE.county_context_version == COUNTY_CONTEXT_VERSION
+    from localitylens.resolve.selection import SELECTION_2_VERSION
+
+    assert RELEASE.selection_version == SELECTION_2_VERSION  # the review default from 0.1.2
     for snapshot in (RELEASE.gazetteer_snapshot, RELEASE.specimen_snapshot):
         assert Path(f"data/manifests/{snapshot}.json").is_file()
 

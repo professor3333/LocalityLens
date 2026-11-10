@@ -23,6 +23,7 @@ from localitylens.geo.uncertainty import POLICY_ID
 from localitylens.jobs.queue import JOBS_VERSION
 from localitylens.release import ReleaseManifest, load_release
 from localitylens.resolve.county import COUNTY_CONTEXT_VERSION
+from localitylens.resolve.selection import SELECTION_2_VERSION, SELECTION_VERSION
 from localitylens.review.store import STORE_SCHEMA_VERSION, ReviewError, ReviewStore
 from localitylens.telemetry.trace import TELEMETRY_VERSION
 from localitylens.web.api import API_VERSION
@@ -47,7 +48,10 @@ def _mismatches(release: ReleaseManifest) -> list[str]:
         "core_key_version": (release.core_key_version, CORE_KEY_VERSION),
         "county_context_version": (release.county_context_version, COUNTY_CONTEXT_VERSION),
     }
-    return [f"{k}: manifest {a!r}, code {b!r}" for k, (a, b) in checks.items() if a != b]
+    out = [f"{k}: manifest {a!r}, code {b!r}" for k, (a, b) in checks.items() if a != b]
+    if release.selection_version not in (None, SELECTION_VERSION, SELECTION_2_VERSION):
+        out.append(f"selection_version: manifest {release.selection_version!r}, not in the code")
+    return out
 
 
 def report(
@@ -67,6 +71,7 @@ def report(
             "uncertainty_policy": POLICY_ID,
             "prompt": PROMPT_VERSION,
             "schema": EXTRACTION_SCHEMA_VERSION,
+            "selection": [SELECTION_VERSION, SELECTION_2_VERSION],
         },
     }
     if not db.is_file():
@@ -96,6 +101,7 @@ def report(
             "grammar_version": release.grammar_version,
             "validation_version": release.validation_version,
             "rules_version": release.rules_version,
+            "selection_version": release.selection_version,
             "uncertainty_policy": release.uncertainty_policy,
             "gazetteer_snapshot": release.gazetteer_snapshot,
             "specimen_snapshot": release.specimen_snapshot,

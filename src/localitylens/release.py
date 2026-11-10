@@ -73,6 +73,9 @@ class ReleaseManifest(BaseModel):
     county_context_version: str  # resolve/county.py COUNTY_CONTEXT_VERSION (supplied county)
     context_budget_tokens: int = Field(gt=0)
     rules_version: str
+    # resolve/selection.py: the check `review import`/`review work` apply by default (from
+    # 0.1.2). None = no check. Evaluation commands (`audit ...`) only apply one when asked.
+    selection_version: str | None = None
     uncertainty_policy: str
     gazetteer_snapshot: str
     specimen_snapshot: str

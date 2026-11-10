@@ -67,6 +67,20 @@ def test_a_manifest_that_disagrees_with_the_code_is_not_ready(tmp_path: Path) ->
     assert _client(db, tmp_path / "absent.json").get("/readyz").status_code == 503
 
 
+def test_an_unknown_selection_check_in_the_manifest_is_not_ready(tmp_path: Path) -> None:
+    db = tmp_path / "review.sqlite"
+    ReviewStore(db).close()
+    data = json.loads(RELEASE.read_text(encoding="utf-8"))
+    assert data["selection_version"] == "selection-2"
+    data["selection_version"] = "selection-9"
+    stale = tmp_path / "manifest.json"
+    stale.write_text(json.dumps(data), encoding="utf-8")
+    r = _client(db, stale).get("/readyz")
+    assert r.status_code == 503
+    assert any("selection_version" in p for p in r.json()["problems"])
+    assert _client(db).get("/api/version").json()["release"]["selection_version"] == "selection-2"
+
+
 def test_the_container_may_bind_all_interfaces_and_nothing_else_may(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

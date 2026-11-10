@@ -1,5 +1,5 @@
 {
-  "release": "0.1.1",
+  "release": "0.1.2",
   "extractor_id": "llm-x2g2-qwen3.5-4b-q4km",
   "model": {
     "id": "Qwen/Qwen3.5-4B",
@@ -45,6 +45,7 @@
   "county_context_version": "1",
   "context_budget_tokens": 4096,
   "rules_version": "rules-6",
+  "selection_version": "selection-2",
   "uncertainty_policy": "gbif-bp-2020/1",
   "gazetteer_snapshot": "gnis-co-2026-09-29",
   "specimen_snapshot": "gbif-cu-2026-11-01"

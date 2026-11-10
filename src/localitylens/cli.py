@@ -24,6 +24,9 @@ _SELECTION_HELP: Final = (
 _SELECTION_2_HELP: Final = (
     "selection-2: hold a region when another named place is in GNIS inside it, or not in GNIS"
 )
+_NO_SELECTION_HELP: Final = (
+    "apply no selection check (the default is the release manifest's: selection-2)"
+)
 _WITH_SELECTION_HELP: Final = "use the -sel reports (runs made with --selection-check)"
 _WITH_DERIVED_HELP: Final = "use the -extents-derived reports (runs made with --derived-extents)"
 
@@ -163,10 +166,20 @@ def _audit_sample(args: argparse.Namespace) -> int:
 
 
 def _selection(args: argparse.Namespace) -> str | None:
-    """The selection check a command asked for: selection-2, selection-1 or none."""
+    """The selection check a command asked for: selection-2, selection-1 or none.
+
+    `review import` and `review work` default to the release manifest's check (selection-2 from
+    0.1.2; `--no-selection` turns it off). Evaluation commands apply one only when asked, so
+    declared runs and earlier reports stay as they were."""
     if getattr(args, "selection_2", False):
         return "selection-2"
-    return "selection-1" if getattr(args, "selection_check", False) else None
+    if getattr(args, "selection_check", False):
+        return "selection-1"
+    if getattr(args, "release_selection", False) and not args.no_selection:
+        from localitylens.release import load_release
+
+        return load_release(Path(args.release)).selection_version
+    return None
 
 
 def _audit_rules(args: argparse.Namespace) -> int:
@@ -1597,8 +1610,11 @@ def main(argv: list[str] | None = None) -> int:
     ri.add_argument("--index", default="data/derived/gazetteer.sqlite")
     ri.add_argument("--extents", help=_EXTENTS_HELP)
     ri.add_argument("--derived-extents", help=_DERIVED_HELP)
-    ri.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
-    ri.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    ri_sel = ri.add_mutually_exclusive_group()
+    ri_sel.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
+    ri_sel.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    ri_sel.add_argument("--no-selection", action="store_true", help=_NO_SELECTION_HELP)
+    ri.set_defaults(release_selection=True)
     ri.add_argument("--url", default="http://127.0.0.1:8080")
     ri.add_argument("--release", default="release/manifest.json")
     ri.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
@@ -1617,8 +1633,11 @@ def main(argv: list[str] | None = None) -> int:
     rw.add_argument("--index", default="data/derived/gazetteer.sqlite")
     rw.add_argument("--extents", help=_EXTENTS_HELP)
     rw.add_argument("--derived-extents", help=_DERIVED_HELP)
-    rw.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
-    rw.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    rw_sel = rw.add_mutually_exclusive_group()
+    rw_sel.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
+    rw_sel.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    rw_sel.add_argument("--no-selection", action="store_true", help=_NO_SELECTION_HELP)
+    rw.set_defaults(release_selection=True)
     rw.add_argument("--url", default="http://127.0.0.1:8080")
     rw.add_argument("--release", default="release/manifest.json")
     rw.add_argument("--log-json", help="also write each attempt's trace as a JSON line here")
