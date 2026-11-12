@@ -1,0 +1,133 @@
+{
+  "note": "Feasibility on read dev data (in-sample, not held out). Counts only. Switched proposal = the first GNIS strong match of the first 'inside' place, read as a named feature with no qualifiers; region needs a reviewed or derived extent.",
+  "samples": {
+    "audit-50": {
+      "annotations": "the owner's annotations",
+      "held": 3,
+      "held_correct": 1,
+      "held_only_absent": 1,
+      "held_with_inside_place": 2,
+      "held_with_inside_place_was_wrong": 2,
+      "held_wrong": 2,
+      "ready_correct": 9,
+      "ready_regions": 17,
+      "switch_correct_candidate": 0,
+      "switch_correct_region": 0,
+      "switch_correct_region_was_wrong": 0,
+      "switch_place_acceptable": 1,
+      "switch_place_acceptable_but_reading_differs": 1,
+      "switch_place_has_extent": 2,
+      "switch_place_classes": {
+        "Lake": 1,
+        "Stream": 1
+      },
+      "switch_place_classes_without_extent": {}
+    },
+    "dev-1": {
+      "annotations": "the owner's annotations",
+      "held": 3,
+      "held_correct": 2,
+      "held_only_absent": 1,
+      "held_with_inside_place": 2,
+      "held_with_inside_place_was_correct": 2,
+      "held_wrong": 1,
+      "ready_correct": 12,
+      "ready_regions": 17,
+      "switch_correct_candidate": 0,
+      "switch_correct_region": 0,
+      "switch_correct_region_was_correct": 0,
+      "switch_place_acceptable": 0,
+      "switch_place_acceptable_but_reading_differs": 0,
+      "switch_place_has_extent": 0,
+      "switch_place_classes": {
+        "Gap": 1,
+        "Valley": 1
+      },
+      "switch_place_classes_without_extent": {
+        "Gap": 1,
+        "Valley": 1
+      }
+    },
+    "validation": {
+      "annotations": "the owner's annotations",
+      "held": 3,
+      "held_only_absent": 3,
+      "held_wrong": 3,
+      "ready_correct": 12,
+      "ready_regions": 18,
+      "switch_place_classes": {},
+      "switch_place_classes_without_extent": {}
+    },
+    "dev-2": {
+      "annotations": "Claude's annotations",
+      "held": 2,
+      "held_correct": 1,
+      "held_with_inside_place": 2,
+      "held_with_inside_place_was_correct": 1,
+      "held_with_inside_place_was_wrong": 1,
+      "held_wrong": 1,
+      "ready_correct": 10,
+      "ready_regions": 15,
+      "switch_correct_candidate": 0,
+      "switch_correct_region": 0,
+      "switch_correct_region_was_correct": 0,
+      "switch_correct_region_was_wrong": 0,
+      "switch_place_acceptable": 1,
+      "switch_place_acceptable_but_reading_differs": 1,
+      "switch_place_has_extent": 2,
+      "switch_place_classes": {
+        "Lake": 1,
+        "Stream": 1
+      },
+      "switch_place_classes_without_extent": {}
+    },
+    "dev-3": {
+      "annotations": "Claude's annotations",
+      "held": 7,
+      "held_only_absent": 2,
+      "held_with_inside_place": 5,
+      "held_with_inside_place_was_wrong": 5,
+      "held_wrong": 7,
+      "ready_correct": 7,
+      "ready_regions": 18,
+      "switch_correct_candidate": 1,
+      "switch_correct_region": 1,
+      "switch_correct_region_was_wrong": 1,
+      "switch_place_acceptable": 3,
+      "switch_place_acceptable_but_reading_differs": 2,
+      "switch_place_has_extent": 2,
+      "switch_place_classes": {
+        "Basin": 1,
+        "Gap": 2,
+        "Stream": 2
+      },
+      "switch_place_classes_without_extent": {
+        "Basin": 1,
+        "Gap": 2
+      }
+    },
+    "dev-4": {
+      "annotations": "Claude's annotations",
+      "held": 7,
+      "held_correct": 1,
+      "held_only_absent": 4,
+      "held_with_inside_place": 3,
+      "held_with_inside_place_was_wrong": 3,
+      "held_wrong": 6,
+      "ready_correct": 7,
+      "ready_regions": 18,
+      "switch_correct_candidate": 3,
+      "switch_correct_region": 0,
+      "switch_correct_region_was_wrong": 0,
+      "switch_place_acceptable": 3,
+      "switch_place_acceptable_but_reading_differs": 0,
+      "switch_place_has_extent": 0,
+      "switch_place_classes": {
+        "Summit": 3
+      },
+      "switch_place_classes_without_extent": {
+        "Summit": 3
+      }
+    }
+  }
+}

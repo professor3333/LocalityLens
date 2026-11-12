@@ -72,6 +72,10 @@ annotation:
 
 ## Failed or not adopted
 
+- **Switching to the place selection-2 finds** (read dev data, counts only): of 25 held-back
+  regions, 14 name a place GNIS has inside the region. Switching to it would give 1 correct region:
+  the place is an acceptable reference in 8, the reading matches in 4, and only 6 have an extent.
+  Not built ([feasibility](../eval/reports/selection-switch-feasibility.md)).
 - **`selection-1`** held a region back when the label names another typed feature.
   - Read data: precision rose to about 70%.
   - Unread test-2: it held back 8 correct and 7 wrong regions, and halved coverage
