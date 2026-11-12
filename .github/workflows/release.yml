@@ -1,0 +1,144 @@
+name: release
+
+# Runs on a version tag: the release candidate is evaluated from scratch on the dev and
+# validation samples (never a held-out test), with the shipped quant and a higher-precision
+# reference quant, and checked against the gates in release/regression.json. On a tag that
+# passes, the Docker image is built and pushed to GHCR and its digest is recorded in the
+# evidence. A manual run (workflow_dispatch) evaluates without pushing an image.
+
+on:
+  push:
+    tags: ["v*"]
+    branches: [ci/release-workflow]  # TEMPORARY: exercise the workflow before merging; removed before merge
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  LLAMA_IMAGE: ghcr.io/ggml-org/llama.cpp:server-b11960@sha256:8052c13edd987de8858f8150031e025ac3d66823f09cf3ec8220899c4abce220
+
+jobs:
+  evaluate:
+    name: evaluate ${{ matrix.quant }} ${{ matrix.sample }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        quant: [q4, q8]
+        sample: [audit-50, dev-1, validation, dev-2, dev-3, dev-4]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - name: Install
+        run: uv sync --locked
+      - name: Sample paths and manifest
+        run: |
+          case "${{ matrix.sample }}" in
+            audit-50)   s=eval/audit/audit-50.json;                 w=eval/audit/worksheet.csv ;;
+            validation) s=eval/benchmark/validation/validation.json; w=eval/benchmark/validation/worksheet.csv ;;
+            *)          s=eval/dev/${{ matrix.sample }}/${{ matrix.sample }}.json; w=eval/dev/${{ matrix.sample }}/worksheet.csv ;;
+          esac
+          m=release/manifest.json; [ "${{ matrix.quant }}" = q8 ] && m=release/manifest-q8.json
+          { echo "SAMPLE=$s"; echo "WORKSHEET=$w"; echo "MANIFEST=$m"; echo "OUT=out"; } >> "$GITHUB_ENV"
+      - name: Pinned GNIS snapshot and gazetteer
+        run: |
+          uv run localitylens data fetch-gnis
+          uv run localitylens gazetteer build
+      - name: Pinned model (revision and SHA-256 from the manifest)
+        run: uv run localitylens model fetch --release "$MANIFEST" --models-dir models
+      - name: llama.cpp server, the build pinned in the manifest
+        run: |
+          file=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['model']['gguf_file'])" "$MANIFEST")
+          docker run -d --name llama -p 127.0.0.1:8080:8080 -v "$PWD/models:/models:ro" "$LLAMA_IMAGE" \
+            -m "/models/$file" --host 0.0.0.0 --port 8080 -c 4096 -np 1 --no-context-shift
+          for i in $(seq 1 120); do curl -sf http://127.0.0.1:8080/health && break; sleep 2; done
+          uv run localitylens model check --release "$MANIFEST"
+          mkdir -p "$OUT"
+          ( while docker inspect -f '{{.State.Running}}' llama 2>/dev/null | grep -q true; do
+              docker stats --no-stream --format '{{.MemUsage}}' llama >> "$OUT/memory.txt"; sleep 5
+            done ) &
+      - name: Evaluate (shipped quant, with and without selection-2)
+        if: matrix.quant == 'q4'
+        run: |
+          X=(--extents data/reviewed/extents.csv --derived-extents data/extents/derived.csv)
+          C=(--sample "$SAMPLE" --out "$OUT" "${X[@]}")
+          S=(--sample "$SAMPLE" --out "$OUT" --worksheet "$WORKSHEET" --with-derived)
+          L=$(python3 -c "import json; print(json.load(open('release/manifest.json'))['extractor_id'])")
+          uv run localitylens audit rules "${C[@]}"
+          uv run localitylens audit llm "${C[@]}" --cache .cache/llm   # empty: every record calls the model
+          uv run localitylens audit hybrid --sample "$SAMPLE" --out "$OUT" --with-derived
+          uv run localitylens audit score "${S[@]}" --hybrid "$OUT/${{ matrix.sample }}-hybrid-1-extents-derived.json"
+          uv run localitylens audit rules "${C[@]}" --selection-2
+          uv run localitylens audit llm "${C[@]}" --selection-2 --cache .cache/llm   # same completions
+          uv run localitylens audit hybrid --sample "$SAMPLE" --out "$OUT" --with-derived --with-selection-2
+          uv run localitylens audit score "${S[@]}" --with-selection-2 --hybrid "$OUT/${{ matrix.sample }}-hybrid-1-extents-derived-sel2.json"
+      - name: Evaluate (reference quant)
+        if: matrix.quant == 'q8'
+        run: |
+          C=(--sample "$SAMPLE" --out "$OUT" --extents data/reviewed/extents.csv --derived-extents data/extents/derived.csv)
+          uv run localitylens audit rules "${C[@]}"
+          uv run localitylens audit llm "${C[@]}" --no-cache --release "$MANIFEST"
+          uv run localitylens audit score --sample "$SAMPLE" --out "$OUT" --worksheet "$WORKSHEET" \
+            --with-derived --release "$MANIFEST"
+      - name: Stop llama.cpp server
+        if: always()
+        run: docker rm -f llama || true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: eval-${{ matrix.quant }}-${{ matrix.sample }}
+          path: out/
+          if-no-files-found: error
+
+  check:
+    needs: evaluate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - name: Install
+        run: uv sync --locked
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: runs
+          pattern: eval-*
+      - name: Release gates (release/regression.json)
+        run: |
+          uv run python -m localitylens.evaluation.release_check --runs runs \
+            --out release-evidence.json --summary "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: release-evidence
+          path: release-evidence.json
+
+  image:
+    needs: check
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build and push the image
+        run: |
+          image="ghcr.io/${GITHUB_REPOSITORY,,}:${GITHUB_REF_NAME}"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker build -t "$image" .
+          docker push "$image"
+          digest=$(docker inspect --format '{{index .RepoDigests 0}}' "$image")
+          echo "$digest" > image-digest.txt
+          echo "Image: \`$digest\`" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: image-digest
+          path: image-digest.txt

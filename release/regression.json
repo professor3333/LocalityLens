@@ -1,0 +1,36 @@
+{
+  "version": "regression-1",
+  "note": "Declared gates for the release workflow (.github/workflows/release.yml). Each tagged release candidate is re-evaluated from scratch on the dev and validation samples (never a held-out test) and compared with the committed score reports. Changing a tolerance is a change to this file, with its reason in the commit.",
+  "samples": ["audit-50", "dev-1", "validation", "dev-2", "dev-3", "dev-4"],
+  "baseline": "eval/reports/<sample>-score-hybrid-1-extents-derived.json and ...-sel2.json, committed and produced on the development machine (Apple M1, Metal)",
+  "gates": {
+    "rules_exact": {
+      "systems": ["rules"],
+      "metrics": ["valid_extraction", "critical_exact_match", "reference_top1", "correct_proposal_candidates", "computed_proposals_correct", "unsupported_flagged", "absent_reported_absent"],
+      "rule": "equal in every sample: the rules involve no model, so any difference is a code or data change"
+    },
+    "model_systems": {
+      "systems": ["llm", "hybrid"],
+      "metrics": ["valid_extraction", "critical_exact_match", "correct_proposal_candidates", "computed_proposals_correct"],
+      "max_pooled_drop": 3,
+      "rule": "pooled over the six samples, no more than 3 records below the baseline. The baseline came from Metal on the development machine; the runner decodes on x86 CPU, where greedy outputs can differ for a few records"
+    },
+    "abstention": {
+      "systems": ["hybrid"],
+      "metrics": ["unsupported_flagged", "absent_reported_absent"],
+      "max_pooled_drop": 3,
+      "rule": "pooled, no more than 3 records below the baseline"
+    },
+    "selection_2": {
+      "rule": "pooled over the six samples, hybrid-1 with selection-2 holds back at least twice as many wrong as correct ready regions, and its ready regions are no less precise than without it (the release default since 0.1.2)"
+    },
+    "quantization_parity": {
+      "shipped": "release/manifest.json (Q4_K_M)",
+      "reference": "release/manifest-q8.json (Q8_0, the same upstream revision and GGUF repository revision)",
+      "metric": "LLM-alone critical_exact_match rate, pooled over the six samples",
+      "max_loss_points": 1.0,
+      "rule": "the shipped quant loses no more than 1 percentage point against the reference, both run on the same runner type"
+    }
+  },
+  "reported_not_gated": "model seconds per record (p50, p95) and the llama-server container's peak memory, for each quant. The GitHub runner is not the declared reference machine, so latency targets are not judged here."
+}
