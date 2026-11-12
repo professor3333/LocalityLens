@@ -4,12 +4,19 @@ name: release
 # validation samples (never a held-out test), with the shipped quant and a higher-precision
 # reference quant, and checked against the gates in release/regression.json. On a tag that
 # passes, the Docker image is built and pushed to GHCR and its digest is recorded in the
-# evidence. A manual run (workflow_dispatch) evaluates without pushing an image.
+# evidence. The deploy check starts the Compose stack (with llama-server) on the Linux runner and
+# takes the bundled sample from import to export. A manual run (workflow_dispatch) never pushes
+# an image, and can skip the evaluation.
 
 on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      evaluate:
+        description: "run the dev and validation evaluation (about 50 minutes)"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -24,6 +31,7 @@ env:
 jobs:
   evaluate:
     name: evaluate ${{ matrix.quant }} ${{ matrix.sample }}
+    if: github.event_name == 'push' || inputs.evaluate
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
@@ -118,8 +126,61 @@ jobs:
           name: release-evidence
           path: release-evidence.json
 
+  deploy:
+    name: deploy check (Compose on Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      LOCALITYLENS_PORT: "8000"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      - name: Install
+        run: uv sync --locked
+      - name: Host
+        run: |
+          {
+            echo "## Deploy host"
+            echo "- CPU: $(lscpu | sed -n 's/^Model name: *//p'), $(nproc) vCPU"
+            echo "- RAM: $(free -g | awk '/^Mem:/ {print $2}') GiB"
+            echo "- OS: $(. /etc/os-release; echo "$PRETTY_NAME"), Docker $(docker version --format '{{.Server.Version}}')"
+          } | tee host.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Pinned GNIS snapshot, gazetteer and model
+        run: |
+          uv run localitylens data fetch-gnis
+          uv run localitylens gazetteer build
+          uv run localitylens model fetch --models-dir models
+      - name: Start the stack (review screen, worker, llama-server)
+        run: |
+          export LOCALITYLENS_UID=$(id -u) LOCALITYLENS_GID=$(id -g)
+          mkdir -p data/review
+          docker compose --profile llm up -d --build
+          for i in $(seq 1 90); do curl -sf http://127.0.0.1:8000/api/health && exit 0; sleep 2; done
+          docker compose --profile llm logs; exit 1
+      - name: Import, process, review and export the bundled sample
+        run: uv run python scripts/deploy_verify.py import --out deploy-evidence.json
+      - name: Restart, then check the decision and export survived
+        run: |
+          export LOCALITYLENS_UID=$(id -u) LOCALITYLENS_GID=$(id -g)
+          docker compose restart review worker
+          uv run python scripts/deploy_verify.py restart --out deploy-evidence.json
+      - name: Logs
+        if: always()
+        run: docker compose --profile llm logs --no-color > compose.log 2>&1 || true
+      - name: Stop the stack
+        if: always()
+        run: docker compose --profile llm down || true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: deploy-evidence
+          path: |
+            deploy-evidence.json
+            host.md
+            compose.log
+
   image:
-    needs: check
+    needs: [check, deploy]
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     timeout-minutes: 20
