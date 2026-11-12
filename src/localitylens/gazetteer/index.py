@@ -5,8 +5,9 @@ Search order: exact key match on official names, exact match on variant names, t
 candidates but never filter them out. GNIS records only a feature's primary county, and old
 labels use old boundaries, so a county mismatch is evidence to show, not a reason to drop.
 
-An empty result means ``feature_absent_from_index``. That is a different outcome from several
-candidates that cannot be told apart, which the caller handles as ``candidates_unresolved``.
+An empty result means ``feature_absent_from_index``. Several candidates that cannot be told
+apart are a different case (``candidates_unresolved`` in the design). It is not detected yet: the
+pipeline proposes the top-ranked candidate and shows the ranked list to the curator.
 """
 
 from __future__ import annotations
