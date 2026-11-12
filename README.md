@@ -538,6 +538,12 @@ $ curl -s http://127.0.0.1:8000/readyz | jq -c '{ready, release: .release.releas
   VM, CPU only) one hybrid record took 540 s, against about 10 s for native llama-server with
   Metal. Run llama-server natively there. Raise the worker's job lease with `LOCALITYLENS_LEASE`
   (default 300 s) on hosts where a call can take longer.
+- **Verified on a Linux host** (4 vCPU, 15 GiB, Ubuntu; a GitHub runner).
+  - **What ran:** the full stack with llama-server took the bundled sample from upload to export.
+  - **The decision** survived a restart.
+  - **Model speed:** about 24 s per LLM call (p50).
+  - **When:** the release workflow repeats this check on every tag
+    ([deployment](docs/deployment.md#releasing)).
 - **On Linux,** run as your own user so the container can write `./data`:
   `LOCALITYLENS_UID=$(id -u) LOCALITYLENS_GID=$(id -g) docker compose up -d`.
 - Images are pinned by digest: Python 3.12 slim, uv 0.12.5, llama.cpp `server-b11960`.
@@ -901,7 +907,7 @@ dev data and too few for the final comparison, which uses the locked benchmark.<
 | **2 · MVP** | ✅ LLM extraction (llama.cpp, Qwen3.5-4B, pinned) · ✅ reviewed-extent store (67 of 115 dev + validation features measured) · ✅ review store + Darwin Core CSV export (command line) · ✅ local map review screen (queue, record page, decisions, export; browser-tested) · ✅ GeoJSON export (WGS 84, EPSG:1188, +4 m) · candidate disambiguation · footprints | 🚧 started |
 | **3 · Production engineering** | ✅ persistent jobs: leases, bounded retries, cancellation, resumable batches, recovery tests · ✅ per-attempt traces (versions, timings, model use; trace ID in the export) · ✅ JSON API with streamed job status · ✅ OpenTelemetry export (opt-in) · ✅ Docker Compose with `/readyz` version check | 🚧 started |
 | **4 · Evaluation** | ✅ benchmark drawn: validation 60 and locked test 120, leakage-grouped by collecting event · ✅ validation scored: LLM v2 15/32, rules 13/32 (+6 pts) · ✅ locked test scored once (release 1): rules 19/56, LLM v2 15/56, −7 pts (CI −23 to +7), milestone answer **no** for this release · ✅ locked test release 2: `hybrid-1` (rules first, LLM fallback) 25/56 vs rules 19, +10.7 pts (CI +3.6 to +19.6), answer **yes**, narrowly · ✅ locked test release 3 (rules-6): hybrid-1 28/56 vs rules 22, +10.7 pts, **yes** again · ✅ [test-2](eval/reports/test-2.md), a fresh held-out sample declared before annotation (Claude-annotated, not independent): hybrid-1 43 vs rules 34 of 80, +11.3 pts, **yes** · ✅ few-shot ablation: without its examples prompt v2 falls from 46 to 11 of 92 · ✅ Qwen3.5-2B vs 4B on dev + validation: 2B alone 27/92 vs 46, as the hybrid's fallback 49 vs 51 at ¼ the model time · ✅ GEOLocate on the read samples: points within 5 km of the defensible position, GEOLocate 58 vs hybrid-1 61 of 85 (owner-annotated) · ✅ release workflow re-evaluates dev + validation on every tag; quantization parity: Q4_K_M 48.7% vs Q8_0 51.0% critical exact match, fails the 1-point gate (correct proposals within one record) | 🚧 started |
-| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · ✅ specimen snapshot archived ([data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)) · ✅ [v0.1.0](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.0) · ✅ derived extents (opt-in) and a declared selection-check experiment (failed on unread labels) · ✅ [v0.1.1](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.1), [results on one page](docs/results.md) · ✅ v0.1.2: the GNIS-aware selection check on by default, after declared checks on unread labels ([test-5](eval/reports/test-5.md)) | ✅ v0.1.2 |
+| **5 · Release** | ✅ GeoJSON export (WGS 84) · ✅ [backup, upgrade and rollback](docs/deployment.md), rehearsed on a fresh clone · ✅ [static replay demo](https://professor3333.github.io/LocalityLens/) on GitHub Pages: the real review screen, precomputed for the 50 audit records, labelled as a replay · ✅ results, model and dataset cards current · ✅ specimen snapshot archived ([data release](https://github.com/professor3333/LocalityLens/releases/tag/data-gbif-cu-2026-11-01)) · ✅ [v0.1.0](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.0) · ✅ derived extents (opt-in) and a declared selection-check experiment (failed on unread labels) · ✅ [v0.1.1](https://github.com/professor3333/LocalityLens/releases/tag/v0.1.1), [results on one page](docs/results.md) · ✅ v0.1.2: the GNIS-aware selection check on by default, after declared checks on unread labels ([test-5](eval/reports/test-5.md)) · ✅ release workflow on every tag: dev + validation re-evaluation, quantization parity, and a deploy check of the Compose stack on Linux | ✅ v0.1.2 |
 
 <details>
 <summary><b>What exists today, module by module</b></summary>
@@ -1009,6 +1015,8 @@ cannot read labels: the test checks the plumbing, not quality.
   - abstention holds;
   - selection-2 still holds back mostly wrong regions;
   - Q4_K_M loses at most 1 point to Q8_0.
+- **Deploy check:** the Compose stack with llama-server runs on Linux, takes a bundled sample
+  from upload to export, and keeps the decision across a restart.
 - **Image:** a passing tag pushes the Docker image to GHCR.
 - **First run:** every gate passed but quantization parity. Q4_K_M reads the critical fields on
   48.7% of records against 51.0%, with correct proposals within one record

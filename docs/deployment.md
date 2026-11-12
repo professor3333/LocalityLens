@@ -101,12 +101,16 @@ A version tag (`git tag -a vX.Y.Z` on `main`, then `git push origin vX.Y.Z`) sta
    alone. No held-out test is touched.
 2. **Check:** the gates in [`release/regression.json`](../release/regression.json), with the
    evidence as an artifact and a summary on the run page.
-3. **Image:** only if every gate passes, the image is built and pushed to
+3. **Deploy check:** the Compose stack (with llama-server) starts on the Linux runner, and
+   `scripts/deploy_verify.py` takes `deploy/sample.csv` from import to export, then checks the
+   saved decision after a restart (below).
+4. **Image:** only if every gate and the deploy check pass, the image is built and pushed to
    `ghcr.io/professor3333/localitylens:<tag>`, and its digest is kept as an artifact.
 
 The digest can't go into the tagged manifest, because the tag fixes that file before the image
 exists. Copy it into the GitHub release notes instead. A manual run (`workflow_dispatch`)
-evaluates without pushing. The first run took 48 minutes.
+evaluates without pushing (`-f evaluate=false` runs only the deploy check). The first
+evaluation took 48 minutes, and the deploy check takes about 3 minutes.
 
 **Known red gate:** quantization parity fails for Q4_K_M (2.3 points against a 1-point limit;
 [parity](../eval/reports/quantization-parity.md)). The owner kept the quant, so the check stays
@@ -170,5 +174,21 @@ red, and no image is pushed, until the quant or the spec changes.
   like this one, run llama-server natively** and point the worker at it. On a larger Linux
   host, raise the lease with `LOCALITYLENS_LEASE` (seconds) if a call can take longer than 300 s.
 
-**Not verified:** a deployment on a Linux host. CI builds the image on Linux on every push, and
-runs the pinned llama-server image with a tiny test model (see the README's testing section).
+**On a Linux host** (verified 2026-11-12 by the release workflow's deploy check, run
+[43232254377](https://github.com/professor3333/LocalityLens/actions/runs/43232254377)):
+- **Host:** a GitHub-hosted runner, AMD EPYC 7763, 4 vCPU, 15 GiB RAM, Ubuntu 26.04.1, Docker
+  29.4.2.
+- **Stack:** the full Compose stack, `llm` profile included, built from the repository with
+  the pinned GNIS snapshot and model.
+- **The sample** (`deploy/sample.csv`, two audit records) went through `POST /api/imports` with
+  hybrid-1. The worker processed both in 70–115 s across two runs, one of them through the
+  LLM, the first after a cold start.
+- **Checks:** `/readyz` ready, and every reported version matched the manifest. selection-2
+  held the Paonia region. The approval was stored, and its retry returned the same decision.
+  The export held it.
+- **After a restart** of the review service and the worker, the decision and the export were
+  still there.
+- **Model speed on this CPU** (release-workflow evaluation, native llama.cpp image): p50 23.8 s,
+  p95 41.2 s per LLM call, llama-server peak 2.2 GiB.
+
+The check runs again on every version tag, and an image is pushed only if it passes.
