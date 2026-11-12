@@ -37,6 +37,8 @@ def _call(url: str, method: str = "GET", body: bytes | None = None,
             status = r.status
     except urllib.error.HTTPError as e:
         raw, status = e.read(), e.code
+    except OSError as e:  # not listening yet, or reset while the service starts
+        return 0, f"{type(e).__name__}: {e}"
     try:
         return status, json.loads(raw)
     except ValueError:
