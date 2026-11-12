@@ -142,8 +142,13 @@ rules, so it is not independent evidence ([result](../eval/reports/test-2.md)).
   160. The examples carry most of the LLM's result.
 - **Qwen3.5-2B against 4B** ([findings](../eval/reports/qwen3.5-2b-findings.md)): alone, 27
   against 46 of 92. As hybrid-1's fallback, 49 against 51, at a quarter of the model time.
+- **Quantization parity** ([parity](../eval/reports/quantization-parity.md)): against the Q8_0
+  reference, Q4_K_M loses 2.3 points of critical exact match (48.7% vs 51.0%, 310 dev and
+  validation records, x86 CPU; 20 against 13 discordant, p = 0.30). That fails the release
+  spec's 1-point gate. Correct proposals are within one record (hybrid-1 102 vs 103). Q4_K_M is
+  kept and the failure recorded.
 - **Not run:** the second LLM call (candidate comparison: not built), admin context removed from
-  the prompt, and other quantizations.
+  the prompt, and quantizations other than Q8_0.
 
 ### Against GEOLocate (read samples only)
 
@@ -268,7 +273,7 @@ the completion cache (`extract/cache.py`) record 0 model seconds and are never u
   measured extents. On dev and validation they are measured with a partly filled store.
 - **Containment with region size, and reviewer time.**
 - **GEOLocate on held-out data.** It has been compared on read samples only (above).
-- **The second LLM call** (candidate comparison: not built), other quantizations, and a scored
+- **The second LLM call** (candidate comparison: not built), quantizations other than Q8_0, and a scored
   adversarial set on real labels. The adversarial behaviour tests below use synthetic data.
 - **Review policy thresholds** (`configs/review_policy.yaml`, planned): no numeric
   selection-confidence thresholds are set. From v0.1.2 the review pipeline applies one rule,

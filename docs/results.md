@@ -72,6 +72,11 @@ annotation:
 
 ## Failed or not adopted
 
+- **Quantization parity gate:** the shipped Q4_K_M loses 2.3 points of critical exact match to
+  Q8_0 (48.7% vs 51.0%, 310 dev and validation records), against the release spec's 1-point
+  limit. The difference is not significant (p = 0.30), and correct proposals are within one
+  record. Q4_K_M is kept, and the release check records the failure
+  ([parity](../eval/reports/quantization-parity.md)).
 - **Switching to the place selection-2 finds** (read dev data, counts only): of 25 held-back
   regions, 14 name a place GNIS has inside the region. Switching to it would give 1 correct region:
   the place is an acceptable reference in 8, the reading matches in 4, and only 6 have an extent.

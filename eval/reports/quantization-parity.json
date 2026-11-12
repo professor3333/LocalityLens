@@ -1,0 +1,225 @@
+{
+  "run": "https://github.com/professor3333/LocalityLens/actions/runs/43214807200",
+  "commit": "release workflow trial on branch ci/release-workflow; pipeline identical to v0.1.2",
+  "runner": "GitHub-hosted ubuntu-latest (x86 CPU), llama.cpp server-b11960 image",
+  "samples": [
+    "audit-50",
+    "dev-1",
+    "validation",
+    "dev-2",
+    "dev-3",
+    "dev-4"
+  ],
+  "release_check": {
+    "version": "release-check-1",
+    "regression": "regression-1",
+    "passed": false,
+    "gates": [
+      {
+        "gate": "rules_exact",
+        "passed": true,
+        "differences": []
+      },
+      {
+        "gate": "model_systems",
+        "passed": true,
+        "rows": [
+          {
+            "system": "llm",
+            "metric": "valid_extraction",
+            "fresh": 292,
+            "baseline": 284,
+            "n": 310,
+            "passed": true
+          },
+          {
+            "system": "llm",
+            "metric": "critical_exact_match",
+            "fresh": 151,
+            "baseline": 150,
+            "n": 310,
+            "passed": true
+          },
+          {
+            "system": "llm",
+            "metric": "correct_proposal_candidates",
+            "fresh": 93,
+            "baseline": 91,
+            "n": 189,
+            "passed": true
+          },
+          {
+            "system": "llm",
+            "metric": "computed_proposals_correct",
+            "fresh": 53,
+            "baseline": 52,
+            "n": 83,
+            "passed": true
+          },
+          {
+            "system": "hybrid",
+            "metric": "valid_extraction",
+            "fresh": 310,
+            "baseline": 310,
+            "n": 310,
+            "passed": true
+          },
+          {
+            "system": "hybrid",
+            "metric": "critical_exact_match",
+            "fresh": 163,
+            "baseline": 164,
+            "n": 310,
+            "passed": true
+          },
+          {
+            "system": "hybrid",
+            "metric": "correct_proposal_candidates",
+            "fresh": 102,
+            "baseline": 101,
+            "n": 189,
+            "passed": true
+          },
+          {
+            "system": "hybrid",
+            "metric": "computed_proposals_correct",
+            "fresh": 57,
+            "baseline": 57,
+            "n": 103,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "gate": "abstention",
+        "passed": true,
+        "rows": [
+          {
+            "system": "hybrid",
+            "metric": "unsupported_flagged",
+            "fresh": 10,
+            "baseline": 10,
+            "n": 29,
+            "passed": true
+          },
+          {
+            "system": "hybrid",
+            "metric": "absent_reported_absent",
+            "fresh": 39,
+            "baseline": 40,
+            "n": 92,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "gate": "selection_2",
+        "passed": true,
+        "held_back_wrong": 20,
+        "held_back_correct": 5,
+        "baseline_held_back": 25,
+        "precision_without": 0.553,
+        "precision_with": 0.667
+      },
+      {
+        "gate": "quantization_parity",
+        "passed": false,
+        "shipped_rate": 0.487,
+        "reference_rate": 0.51,
+        "loss_points": 2.3
+      }
+    ],
+    "resources_reported_not_gated": {
+      "q4": {
+        "model_calls": 310,
+        "model_seconds_p50": 23.8,
+        "model_seconds_p95": 41.2,
+        "llama_server_peak_memory_bytes": 2328946016
+      },
+      "q8": {
+        "model_calls": 310,
+        "model_seconds_p50": 41.6,
+        "model_seconds_p95": 54.6,
+        "llama_server_peak_memory_bytes": 5756329918
+      }
+    }
+  },
+  "paired_q4_vs_q8": {
+    "pooled": {
+      "q4 llm valid_extraction": [
+        292,
+        310
+      ],
+      "q4 llm critical_exact_match": [
+        151,
+        310
+      ],
+      "q4 llm correct_proposal_candidates": [
+        93,
+        189
+      ],
+      "q4 hybrid valid_extraction": [
+        310,
+        310
+      ],
+      "q4 hybrid critical_exact_match": [
+        163,
+        310
+      ],
+      "q4 hybrid correct_proposal_candidates": [
+        102,
+        189
+      ],
+      "q4 hybrid ready regions (correct, ready)": [
+        57,
+        103
+      ],
+      "q8 llm valid_extraction": [
+        297,
+        310
+      ],
+      "q8 llm critical_exact_match": [
+        158,
+        310
+      ],
+      "q8 llm correct_proposal_candidates": [
+        92,
+        189
+      ],
+      "q8 hybrid valid_extraction": [
+        310,
+        310
+      ],
+      "q8 hybrid critical_exact_match": [
+        165,
+        310
+      ],
+      "q8 hybrid correct_proposal_candidates": [
+        103,
+        189
+      ],
+      "q8 hybrid ready regions (correct, ready)": [
+        59,
+        108
+      ]
+    },
+    "discordant_pairs": {
+      "llm critical_ok": {
+        "q8_only": 20,
+        "q4_only": 13,
+        "sign_test_p": 0.296
+      },
+      "llm correct_candidate": {
+        "q8_only": 5,
+        "q4_only": 6,
+        "sign_test_p": 1.0
+      },
+      "hybrid correct_candidate": {
+        "q8_only": 3,
+        "q4_only": 2,
+        "sign_test_p": 1.0
+      }
+    }
+  },
+  "decision": "Owner, 2026-11-12: keep Q4_K_M as the shipped quant and record that it fails the declared 1-point parity gate; the gate is not changed after seeing the result."
+}

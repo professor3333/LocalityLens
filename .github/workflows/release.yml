@@ -9,7 +9,6 @@ name: release
 on:
   push:
     tags: ["v*"]
-    branches: [ci/release-workflow]  # TEMPORARY: exercise the workflow before merging; removed before merge
   workflow_dispatch:
 
 permissions:

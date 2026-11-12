@@ -48,6 +48,14 @@ hybrid-1's fallback it gives 49 against 51, at a quarter of the model time (p50 
 20.4 s in the same session) ([findings](../eval/reports/qwen3.5-2b-findings.md)). 4B stays the
 release model.
 
+**Quantization parity** (Q4_K_M shipped against the Q8_0 reference of the same revisions,
+x86 CPU, 310 dev and validation records): Q4_K_M reads the critical fields correctly on 48.7%
+against 51.0%. That is a 2.3-point loss, against the release spec's limit of 1 point, so the gate
+fails. The record-by-record difference is not significant (20 against 13, p = 0.30), and correct
+proposals are the same within one record (hybrid-1 102 against 103). Q8_0 needs 2.5 times the
+memory and 1.75 times the time. Q4_K_M stays the release quant, and the failure is recorded
+([parity](../eval/reports/quantization-parity.md)).
+
 **Resources measured** on an Apple M1 with 8 GB: llama-server's own footprint is 629 MB on top
 of the 2.74 GB memory-mapped model file. The prompt uses about 2,350 of the 4,096-token
 budget.
@@ -148,6 +156,11 @@ historical names or changed county boundaries beyond what the read samples conta
   pins the code commit, manifest hash, data hashes, metric, target and decision rule. It is
   committed and pushed first, and its result is published whatever it shows. Releases 1 to 3
   are in [`eval/benchmark/`](../eval/benchmark/).
+- **On every version tag** the release workflow re-evaluates the candidate on the dev and
+  validation samples and applies the declared gates in
+  [`release/regression.json`](../release/regression.json): rules identical, model systems
+  within tolerance, abstention, selection-2, and quantization parity. Only a passing tag pushes
+  the Docker image ([deployment](deployment.md#releasing)).
 - **Rollback** means restoring the complete previous bundle (model file, prompt, schema,
   generation settings, gazetteer snapshot, policies) from git and the pinned downloads, and
   the review-store backup taken before the upgrade. The procedure is in

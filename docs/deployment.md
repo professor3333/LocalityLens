@@ -90,6 +90,28 @@ from step 1 instead of reusing the upgraded store.
    manifest pins different ones.
 4. Start and check `/readyz`: the previous release's versions, `ready` true.
 
+## Releasing
+
+A version tag (`git tag -a vX.Y.Z` on `main`, then `git push origin vX.Y.Z`) starts
+[`.github/workflows/release.yml`](../.github/workflows/release.yml):
+1. **Evaluate:** 12 jobs, six dev and validation samples × two quants. Each job fetches the
+   pinned GNIS snapshot and the pinned model (SHA-256 checked), and starts the pinned llama.cpp
+   image (`model check` must pass). It then reruns the systems from scratch: rules, the LLM,
+   hybrid-1 and the scores, with and without selection-2. The Q8_0 reference quant runs the LLM
+   alone. No held-out test is touched.
+2. **Check:** the gates in [`release/regression.json`](../release/regression.json), with the
+   evidence as an artifact and a summary on the run page.
+3. **Image:** only if every gate passes, the image is built and pushed to
+   `ghcr.io/professor3333/localitylens:<tag>`, and its digest is kept as an artifact.
+
+The digest can't go into the tagged manifest, because the tag fixes that file before the image
+exists. Copy it into the GitHub release notes instead. A manual run (`workflow_dispatch`)
+evaluates without pushing. The first run took 48 minutes.
+
+**Known red gate:** quantization parity fails for Q4_K_M (2.3 points against a 1-point limit;
+[parity](../eval/reports/quantization-parity.md)). The owner kept the quant, so the check stays
+red, and no image is pushed, until the quant or the spec changes.
+
 ## Verified on 2026-11-10 (v0.1.2)
 
 - **What changed:** v0.1.2 changes no store schema (still `review-3`). Proposals already in a
