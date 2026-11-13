@@ -1,4 +1,4 @@
-# Results at v0.1.2: what is shown, how strongly, and what failed
+# Results at v0.1.3: what is shown, how strongly, and what failed
 
 One page. Every number comes from a committed report, linked below; the full measures and
 definitions are in [evaluation](evaluation.md).
