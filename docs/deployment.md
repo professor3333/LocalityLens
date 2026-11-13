@@ -36,8 +36,9 @@ uv run localitylens review serve --extents data/reviewed/extents.csv   # http://
 ```
 
 For `--system llm` or `hybrid`, also install llama.cpp, run `localitylens model fetch`, and
-start llama-server as shown in the README. Docker Compose is described in the README
-("Run it with Docker Compose"): the same commands run inside the `review` service.
+start llama-server as shown in the [user guide](guide.md#run-the-local-llm). Docker Compose is
+described there too ([Run it with Docker Compose](guide.md#run-it-with-docker-compose)): the same
+commands run inside the `review` service.
 
 **Check a deployment** with `/readyz`. It answers 200 only when the store opens and
 `release/manifest.json` matches the code. It reports every pinned version: model and revision,

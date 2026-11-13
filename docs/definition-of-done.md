@@ -144,9 +144,10 @@ Every page of the [static replay](https://professor3333.github.io/LocalityLens/)
 ### 11. Docs
 
 - **What exists:**
-  - the README covers setup, usage with verified output, the correctness definition, data
+  - the README and the [user guide](guide.md) cover setup, usage with verified output, data
     sources and licences (code MIT; specimen data CC BY 4.0; GNIS public domain), limitations,
     deployment and results;
+  - [evaluation](evaluation.md) gives the correctness definition;
   - the model card, dataset card, evaluation, results and deployment pages are current.
 - **Verified here:** the 9 README console examples that run offline match their real output
   in the clone. The other 18 need a model server, Docker or stored state, and were checked in
@@ -155,7 +156,7 @@ Every page of the [static replay](https://professor3333.github.io/LocalityLens/)
   `uv run mypy src/` fails on the optional OpenTelemetry exporter. CI installs every extra; the
   README now says `uv sync --all-extras`.
 - **Gaps:**
-  - The README's CSV-import example uses a test file that is not in the repository. It
+  - The user guide's CSV-import example uses a test file that is not in the repository. It
     contains a withheld record, which must not be published, so it stays an illustration.
   - Qwen3.5-2B's process memory has not been measured.
 

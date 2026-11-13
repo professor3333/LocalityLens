@@ -26,7 +26,7 @@ browser except the map, and decisions and export are switched off. Every page sa
   review.
 
 Rebuild after a change that alters the pages (needs `llama-server` on 127.0.0.1:8080 and the
-gazetteer built, both as in the main README):
+gazetteer built, both as in the [user guide](../docs/guide.md)):
 
 ```bash
 uv run python scripts/build_replay.py   # imports, freezes, replaces demo/site
