@@ -1,0 +1,64 @@
+# dev-1: LLM extraction (`llm-x2g2-qwen3.5-4b-q4km`)
+
+Specimens `gbif-cu-2026-11-01` · gazetteer `gnis-co-2026-09-29` · policy `gbif-bp-2020/1` · seed `dev-1/1`
+
+> System output only. Correctness needs the owner's annotations; the top candidate is the system's ranking, not a reviewed choice, and extents come from the reviewed-extent store where it has one.
+
+**relation**: `named_feature` 33 · `distance_and_direction` 8 · `orthogonal_offsets` 2 · `route_relative` 2 · `between_features` 1 · `no_locality` 1 · `itinerary` 1 · `other` 1 · `direction_only` 1
+
+**retrieval**: `candidates_found` 28 · `feature_absent_from_index` 16 · `None` 4 · `no_reference_feature` 2
+
+**proposal**: `needs_information` 30 · `computed` 10 · `unsupported` 6 · `invalid_extraction` 4
+
+| id | locality | relation | reference | retrieval | top candidate | proposal |
+|---|---|---|---|---|---|---|
+| D01 | 12 mi S and 2 mi W of Rico, San Juan Mts., NE edge of Grindstone Lake. | orthogonal_offsets |  |  |  | invalid_extraction |
+| D02 | Swales along R.R. between Boulder and Marshall. | between_features |  |  |  | invalid_extraction |
+| D03 | North slope of Hoosier Ridge, east of Hoosier Pass. | named_feature | Hoosier Ridge | candidates_found | Hoosier Ridge (Ridge, Summit, exact_official) | needs_information |
+| D04 | Black Canyon of the Gunnison National Monument. South rim at the south entrance to the park. | named_feature | Black Canyon of the Gunnison National Monument | feature_absent_from_index |  | needs_information |
+| D05 | Rocky Mountain National Park, Front Range, +/- ½ mi. S of Gem L. | distance_and_direction | Gem L. | feature_absent_from_index |  | needs_information |
+| D06 | Eldorado Springs/Rocky Flats juction S of Boulder. | named_feature |  |  |  | invalid_extraction |
+| D07 | Mineral Basin, ca. 7 miles west of Cottonwood Lake, San Isabel National Forest. Disturbed area on mining road. | named_feature | Mineral Basin | candidates_found | Mineral Basin (Basin, Chaffee, exact_official) | needs_information |
+| D08 | 12 miles south of Hwy. 14 on Long Draw Rd. ½ mile up Neota Creek Valley on glacial moraine. | orthogonal_offsets | Hwy. 14 | feature_absent_from_index |  | unsupported |
+| D09 | Rocky Mountain National Park, Trail Ridge, on N. side of Toll Pass. | named_feature | Toll Pass | feature_absent_from_index |  | needs_information |
+| D10 | ¼ mi. N of Spitzie house site, Brown's Park. | distance_and_direction | Spitzie house site | feature_absent_from_index |  | needs_information |
+| D11 | Ten Mile Range, east slope, southern part; lower slopes of Quandary Peak. | named_feature | Ten Mile Range | candidates_found | Tenmile Range (Range, Summit, fuzzy_official) | needs_information |
+| D12 | Roadside, approximately 2 miles south of the junction of Co. hwys 80 and 145, which is 4 miles east of Naturita. | route_relative | the junction of Co. hwys 80 and 145 | feature_absent_from_index |  | unsupported |
+| D13 | Seasonal pool 1 mi. s. of Baseline Lake, s.e. of Boulder. | distance_and_direction | Baseline Lake | candidates_found | Base Line Reservoir (Reservoir, Boulder, fuzzy_variant) | computed |
+| D14 | Along the highway east from Aspen toward Independence Pass, 11 mi. E of Aspen. | distance_and_direction | Aspen | candidates_found | Aspen (Populated Place, Pitkin, exact_official) | needs_information |
+| D15 | Rocky Mountain National Park, Baker Gulch, 8 mi. NNW of Grand Lake. | distance_and_direction | Grand Lake | candidates_found | Grand Lake (Reservoir, Grand, exact_official) | needs_information |
+| D16 | Dartmouth Ave at Sheridan Blvd., Denver. | named_feature | Dartmouth Ave at Sheridan Blvd. | feature_absent_from_index |  | needs_information |
+| D17 | Denver. Platte River. | no_locality |  | no_reference_feature |  | unsupported |
+| D18 | Wet Mountains, Wet Mountain Valley, Sangre de Cristo Range, and Vicinity: San Luis Valley: by radio tower, ca 2 mi on Colo Hwy 159, S of San Luis. | itinerary | San Luis | candidates_found | San Luis (Populated Place, Costilla, exact_official) | unsupported |
+| D19 | Routt National Forest. Big Creek Lake; trail from the lake to Big Creek Falls. | named_feature | Big Creek Lake | candidates_found | Big Creek Lake (Lake, Routt, exact_official) | computed |
+| D20 | Mosquito Range. Pike National Forest, near SE part of the peak NE of E Buffalo Peak. | named_feature | Mosquito Range | candidates_found | Mosquito Range (Range, Lake, exact_official) | needs_information |
+| D21 | Silver Lake, near Boulder. | named_feature | Silver Lake | candidates_found | Silver Lake (Reservoir, Boulder, exact_official) | needs_information |
+| D22 | Middle Park. South side of Elk Creek, just west of railroad crossing. | named_feature | Middle Park | candidates_found | Middle Park (Flat, Rio Grande, exact_official) | needs_information |
+| D23 | Near Devil Creek on road to Chimney Rock. Piedra. | named_feature | Devil Creek | candidates_found | Devil Creek (Stream, Archuleta, exact_official) | needs_information |
+| D24 | Comanche National Grassland: junction of U.S. Hwy 160 and the Villegreen Road, ca 9.5 mi WSW of Kim; 6 mi S of Villegreen. | named_feature | junction of U.S. Hwy 160 and the Villegreen Road | feature_absent_from_index |  | needs_information |
+| D25 | Grand Mesa Nat. Forest. Oak brush belt east of intersection of old and new roads #65. | named_feature | Grand Mesa Nat. Forest | feature_absent_from_index |  | needs_information |
+| D26 | North of highway, 7 mi. east of Montrose. | distance_and_direction | Montrose | candidates_found | Montrose (Populated Place, Montrose, exact_official) | computed |
+| D27 | Pond, west side of Colorado R. near mouth of Red Creek, 9½ mi N of Grand Lake. | distance_and_direction | Grand Lake | candidates_found | Grand Lake (Reservoir, Grand, exact_official) | computed |
+| D28 | 12.7 road miles east of Delta on Smith Mountain road. | route_relative | Delta | candidates_found | Delta (Populated Place, Delta, exact_official) | unsupported |
+| D29 | San Isabel National Forest, Sangre de Cristo Range, North Colony Creek drainage. | other |  | no_reference_feature |  | unsupported |
+| D30 | Along US 285 (South Platte Valley) just E of South Platte High School. Rotten granite cliffs along S side of road. | named_feature | South Platte High School | feature_absent_from_index |  | needs_information |
+| D31 | Route 24, Woodland Park. | named_feature | Route 24 | feature_absent_from_index |  | needs_information |
+| D32 | Wasson. San Luis Valley; at stream at the edge of the Rio Grande. | named_feature | Wasson | feature_absent_from_index |  | needs_information |
+| D33 | Sapinero. Along Black Canyon on R. R. | named_feature | Sapinero | candidates_found | Sapinero (Populated Place, Gunnison, exact_official) | needs_information |
+| D34 | Near Peach Valley Road in Adobes, E of Olathe. | distance_and_direction |  |  |  | invalid_extraction |
+| D35 | Canon in mesa fronting Flagstaff Hill, Boulder. | named_feature | Flagstaff Hill | feature_absent_from_index |  | needs_information |
+| D36 | Eldorado Springs State Park, South Boulder Creek at emergence from the canyon. Growing along North Canyon Creek Trail by Red Garden Wall. | named_feature | Eldorado Springs State Park | feature_absent_from_index |  | needs_information |
+| D37 | Williams Peak Road. | named_feature | Williams Peak Road | feature_absent_from_index |  | needs_information |
+| D38 | Hartsel. | named_feature | Hartsel | candidates_found | Hartsel (Populated Place, Park, exact_official) | computed |
+| D39 | Dickson Creek. | named_feature | Dickson Creek | candidates_found | Dickson Creek (Stream, Eagle, exact_official) | computed |
+| D40 | La Veta Pass. | named_feature | La Veta Pass | candidates_found | La Veta Pass (Populated Place, Costilla, exact_official) | needs_information |
+| D41 | Two Buttes. | named_feature | Two Buttes | candidates_found | Two Buttes (Populated Place, Baca, exact_official) | computed |
+| D42 | Cardinal. | named_feature | Cardinal | candidates_found | Cardinal (historical) (Populated Place, Boulder, exact_official) | needs_information |
+| D43 | Skull Canyon. | named_feature | Skull Canyon | candidates_found | Skull Canyon (Valley, Baca, exact_official) | needs_information |
+| D44 | Poudre Canyon. | named_feature | Poudre Canyon | feature_absent_from_index |  | needs_information |
+| D45 | At Arboles. | named_feature | Arboles | candidates_found | Arboles (Populated Place, Archuleta, exact_official) | computed |
+| D46 | Rifle Gap. | named_feature | Rifle Gap | candidates_found | Rifle Gap (Gap, Garfield, exact_official) | computed |
+| D47 | Arapaho Pass. | named_feature | Arapaho Pass | candidates_found | Arapaho Pass (Gap, Boulder, exact_official) | computed |
+| D48 | North of Eads. | direction_only | Eads | candidates_found | Eads (Populated Place, Kiowa, exact_official) | needs_information |
+| D49 | North Cheyenne Canon. | named_feature | North Cheyenne Canon | candidates_found | North Cheyenne Canyon (Valley, El Paso, core_official) | needs_information |
+| D50 | Roadside near Florissant. | named_feature | Florissant | candidates_found | Florissant (Populated Place, Teller, exact_official) | needs_information |

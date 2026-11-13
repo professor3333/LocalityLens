@@ -86,6 +86,11 @@ annotation:
   regions, 14 name a place GNIS has inside the region. Switching to it would give 1 correct region:
   the place is an acceptable reference in 8, the reading matches in 4, and only 6 have an extent.
   Not built ([feasibility](../eval/reports/selection-switch-feasibility.md)).
+- **`selection-3`** (same-name ties, `candidates_unresolved`; read data, opt-in): selection-2,
+  plus a hold when another candidate ranks level on every piece of evidence and lies outside the
+  region. On 300 read records it held 3 of 78 ready regions: 2 correct, 1 wrong. Ties are rare,
+  and holding them doesn't raise precision. The default stays selection-2
+  ([findings](../eval/reports/selection-3-findings.md)).
 - **`selection-1`** held a region back when the label names another typed feature.
   - Read data: precision rose to about 70%.
   - Unread test-2: it held back 8 correct and 7 wrong regions, and halved coverage

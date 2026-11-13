@@ -47,6 +47,11 @@ def test_review_commands_apply_the_release_selection_check_by_default(
     assert main(["review", "import", "--sample", "s.json", "--selection-check"]) == 0
     assert main(["audit", "rules", "--sample", "s.json"]) == 0  # evaluation: only when asked
     assert main(["audit", "rules", "--sample", "s.json", "--selection-2"]) == 0
-    assert seen == ["selection-2", "selection-2", None, "selection-1", None, "selection-2"]
+    assert main(["audit", "rules", "--sample", "s.json", "--selection-3"]) == 0
+    assert main(["review", "work", "--selection-3"]) == 0
+    assert seen == ["selection-2", "selection-2", None, "selection-1", None, "selection-2",
+                    "selection-3", "selection-3"]  # fmt: skip
     with pytest.raises(SystemExit):
         main(["review", "work", "--no-selection", "--selection-2"])
+    with pytest.raises(SystemExit):
+        main(["review", "import", "--sample", "s.json", "--selection-2", "--selection-3"])

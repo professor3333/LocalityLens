@@ -216,6 +216,11 @@ opt-in) give regions to about 12,000 features, and they show the honest picture:
   has now passed 2 of 3 declared checks ([result](../eval/reports/test-5.md)). **From v0.1.2 the
   review pipeline applies it by default** (`--no-selection` turns it off); evaluation commands
   apply it only when asked.
+- **A same-name tie check** (`selection-3` = selection-2 plus `candidates_unresolved`: hold a
+  region when another candidate ranks level on all the evidence and lies outside it; read data,
+  in-sample): it held 3 of 78 ready regions on the six read samples, 2 correct and 1 wrong.
+  Precision is unchanged at 67%. It is opt-in; the default stays selection-2
+  ([findings](../eval/reports/selection-3-findings.md)).
 
 <details>
 <summary><b>Development history: dev and validation scores by rules version</b></summary>

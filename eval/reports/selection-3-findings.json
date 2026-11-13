@@ -1,0 +1,30 @@
+{
+  "selection_version": "selection-3",
+  "compared_with": "selection-2",
+  "system": "hybrid-1",
+  "extents": "reviewed + derived",
+  "in_sample": true,
+  "samples": {
+    "owner_annotated": ["audit-50", "dev-1", "validation"],
+    "claude_annotated": ["dev-2", "dev-3", "dev-4"]
+  },
+  "ready_regions": {
+    "owner_annotated": {"selection_2": {"ready": 43, "correct": 30}, "selection_3": {"ready": 41, "correct": 29}},
+    "claude_annotated": {"selection_2": {"ready": 35, "correct": 22}, "selection_3": {"ready": 34, "correct": 21}},
+    "all": {"selection_2": {"ready": 78, "correct": 52}, "selection_3": {"ready": 75, "correct": 50}}
+  },
+  "held_by_tie_check": [
+    {"audit_id": "A38", "chosen_gnis": "Fall River (Larimer)", "ties": [177256], "region_correct": false},
+    {"audit_id": "D40", "chosen_gnis": "La Veta Pass (Costilla)", "ties": [192857], "region_correct": true},
+    {"audit_id": "E40", "chosen_gnis": "Hoosier Pass (Summit)", "ties": [191218], "region_correct": true}
+  ],
+  "per_sample": {
+    "audit-50": {"selection_2": [14, 8], "selection_3": [13, 8]},
+    "dev-1": {"selection_2": [14, 10], "selection_3": [13, 9]},
+    "validation": {"selection_2": [15, 12], "selection_3": [15, 12]},
+    "dev-2": {"selection_2": [13, 9], "selection_3": [12, 8]},
+    "dev-3": {"selection_2": [11, 7], "selection_3": [11, 7]},
+    "dev-4": {"selection_2": [11, 6], "selection_3": [11, 6]}
+  },
+  "per_sample_note": "[ready, correct] hybrid-1 ready regions"
+}

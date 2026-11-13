@@ -24,6 +24,10 @@ _SELECTION_HELP: Final = (
 _SELECTION_2_HELP: Final = (
     "selection-2: hold a region when another named place is in GNIS inside it, or not in GNIS"
 )
+_SELECTION_3_HELP: Final = (
+    "selection-3: selection-2, plus hold a region whose chosen feature ties with another of the "
+    "same evidence that lies outside it (candidates unresolved)"
+)
 _NO_SELECTION_HELP: Final = (
     "apply no selection check (the default is the release manifest's: selection-2)"
 )
@@ -166,11 +170,13 @@ def _audit_sample(args: argparse.Namespace) -> int:
 
 
 def _selection(args: argparse.Namespace) -> str | None:
-    """The selection check a command asked for: selection-2, selection-1 or none.
+    """The selection check a command asked for: selection-3, selection-2, selection-1 or none.
 
     `review import` and `review work` default to the release manifest's check (selection-2 from
     0.1.2; `--no-selection` turns it off). Evaluation commands apply one only when asked, so
     declared runs and earlier reports stay as they were."""
+    if getattr(args, "selection_3", False):
+        return "selection-3"
     if getattr(args, "selection_2", False):
         return "selection-2"
     if getattr(args, "selection_check", False):
@@ -365,7 +371,8 @@ def _audit_score(args: argparse.Namespace) -> int:
     label = sample_label(sample)
     llm_id = load_release(Path(args.release)).extractor_id
     ext = "-extents-derived" if args.with_derived else "-extents" if args.with_extents else ""
-    ext += "-sel2" if args.with_selection_2 else "-sel" if args.with_selection else ""
+    ext += ("-sel3" if args.with_selection_3 else "-sel2" if args.with_selection_2
+            else "-sel" if args.with_selection else "")  # fmt: skip
     rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
     llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     reports = {
@@ -402,7 +409,8 @@ def _audit_hybrid(args: argparse.Namespace) -> int:
     label = sample_label(load_sample(Path(args.sample)))
     llm_id = load_release(Path(args.release)).extractor_id
     ext = "-extents-derived" if args.with_derived else "-extents" if args.with_extents else ""
-    ext += "-sel2" if args.with_selection_2 else "-sel" if args.with_selection else ""
+    ext += ("-sel3" if args.with_selection_3 else "-sel2" if args.with_selection_2
+            else "-sel" if args.with_selection else "")  # fmt: skip
     rules_path = Path(args.rules or f"{args.out}/{label}-{RULES_VERSION}{ext}.json")
     llm_path = Path(args.llm or f"{args.out}/{label}-{llm_id}{ext}.json")
     try:
@@ -1401,6 +1409,7 @@ def main(argv: list[str] | None = None) -> int:
     aru.add_argument("--derived-extents", help=_DERIVED_HELP)
     aru.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     aru.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    aru.add_argument("--selection-3", action="store_true", help=_SELECTION_3_HELP)
     aru.set_defaults(func=_audit_rules)
     alm = aud.add_parser("llm", help="run LLM extraction on the audit sample (llama-server)")
     alm.add_argument("--sample", default="eval/audit/audit-50.json")
@@ -1412,6 +1421,7 @@ def main(argv: list[str] | None = None) -> int:
     alm.add_argument("--derived-extents", help=_DERIVED_HELP)
     alm.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     alm.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    alm.add_argument("--selection-3", action="store_true", help=_SELECTION_3_HELP)
     alm.add_argument("--cache", default="eval/.cache/llm", help="completion cache directory")
     alm.add_argument("--no-cache", action="store_true", help="call the model for every record")
     alm.set_defaults(func=_audit_llm)
@@ -1428,6 +1438,7 @@ def main(argv: list[str] | None = None) -> int:
     asc.add_argument("--with-derived", action="store_true", help=_WITH_DERIVED_HELP)
     asc.add_argument("--with-selection", action="store_true", help=_WITH_SELECTION_HELP)
     asc.add_argument("--with-selection-2", action="store_true", help="use the -sel2 reports")
+    asc.add_argument("--with-selection-3", action="store_true", help="use the -sel3 reports")
     asc.set_defaults(func=_audit_score)
     acs = aud.add_parser("calibration-set", help="blind, renumbered copy of an annotated sample")
     acs.add_argument("--source", required=True, help="an annotated sample (JSON)")
@@ -1457,6 +1468,7 @@ def main(argv: list[str] | None = None) -> int:
     ahy.add_argument("--with-derived", action="store_true", help=_WITH_DERIVED_HELP)
     ahy.add_argument("--with-selection", action="store_true", help=_WITH_SELECTION_HELP)
     ahy.add_argument("--with-selection-2", action="store_true", help="use the -sel2 reports")
+    ahy.add_argument("--with-selection-3", action="store_true", help="use the -sel3 reports")
     ahy.set_defaults(func=_audit_hybrid)
 
     mod = sub.add_parser("model", help="pinned local LLM").add_subparsers(
@@ -1613,6 +1625,7 @@ def main(argv: list[str] | None = None) -> int:
     ri_sel = ri.add_mutually_exclusive_group()
     ri_sel.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     ri_sel.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    ri_sel.add_argument("--selection-3", action="store_true", help=_SELECTION_3_HELP)
     ri_sel.add_argument("--no-selection", action="store_true", help=_NO_SELECTION_HELP)
     ri.set_defaults(release_selection=True)
     ri.add_argument("--url", default="http://127.0.0.1:8080")
@@ -1636,6 +1649,7 @@ def main(argv: list[str] | None = None) -> int:
     rw_sel = rw.add_mutually_exclusive_group()
     rw_sel.add_argument("--selection-check", action="store_true", help=_SELECTION_HELP)
     rw_sel.add_argument("--selection-2", action="store_true", help=_SELECTION_2_HELP)
+    rw_sel.add_argument("--selection-3", action="store_true", help=_SELECTION_3_HELP)
     rw_sel.add_argument("--no-selection", action="store_true", help=_NO_SELECTION_HELP)
     rw.set_defaults(release_selection=True)
     rw.add_argument("--url", default="http://127.0.0.1:8080")

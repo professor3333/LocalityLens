@@ -150,10 +150,13 @@ def run_system(
     from localitylens.resolve.county import COUNTY_CONTEXT_VERSION
     from localitylens.resolve.selection import (
         SELECTION_2_VERSION,
+        SELECTION_3_VERSION,
         apply_selection_2,
+        apply_selection_3,
         apply_selection_check,
         competing_features,
         geographic_competitors,
+        same_name_ties,
     )
 
     rows: list[dict[str, Any]] = []
@@ -198,9 +201,17 @@ def run_system(
                 else None
             )
             others: list[str] = []
+            ties: list[int] = []
             if selection and proposal is not None and reference is not None:
                 text, county = item.record.locality, item.record.county or None
-                if selection == SELECTION_2_VERSION:
+                if selection == SELECTION_3_VERSION:
+                    cands = retrieval.candidates if retrieval else ()
+                    others = [n for n, _ in geographic_competitors(text, reference, proposal, gaz,
+                                                                   county)]  # fmt: skip
+                    if proposal.outcome.value == "computed":
+                        ties = [c.feature_id for c in same_name_ties(proposal, cands)]
+                    proposal = apply_selection_3(text, reference, proposal, gaz, county, cands)
+                elif selection == SELECTION_2_VERSION:
                     others = [n for n, _ in geographic_competitors(text, reference, proposal, gaz,
                                                                    county)]  # fmt: skip
                     proposal = apply_selection_2(text, reference, proposal, gaz, county)
@@ -242,6 +253,8 @@ def run_system(
                 row["extent"] = _extent_source(proposal)
             if selection:
                 row["selection"] = others
+            if selection == SELECTION_3_VERSION:
+                row["candidates_unresolved"] = ties
             _add_trace(row, extractor, started)
             rows.append(row)
     return {
@@ -436,12 +449,14 @@ def sample_label(sample: AuditSample) -> str:
 
 
 SELECTION_V1: Final = "selection-1"  # its reports keep the plain -sel suffix
+_SELECTION_SUFFIX: Final = {None: "", SELECTION_V1: "-sel", "selection-2": "-sel2",
+                            "selection-3": "-sel3"}  # fmt: skip
 
 
 def extents_suffix(report: dict[str, Any]) -> str:
     """``-extents`` for a run that used the reviewed-extent store, so it never overwrites the
     run without it."""
-    sel = {None: "", SELECTION_V1: "-sel"}.get(report.get("selection_version"), "-sel2")
+    sel = _SELECTION_SUFFIX[report.get("selection_version")]
     if "extent_store" not in report:
         return sel
     return ("-extents-derived" if "derived" in report["extent_store"] else "-extents") + sel

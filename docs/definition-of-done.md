@@ -13,7 +13,7 @@ Done, with the evidence for it.
 | 2 | Original text stays preserved and linked to every interpretation | **done** | See [2](#2-original-text) |
 | 3 | Coordinates come from retrieved geographic evidence and explicit calculations | **done** | See [3](#3-coordinates) |
 | 4 | Uncertainty assumptions are visible; unknown uncertainty is never silently zero | **done** | See [4](#4-uncertainty) |
-| 5 | Ambiguous and unsupported descriptions get actionable statuses | **partly**: same-name ambiguity is not flagged | See [5](#5-statuses) |
+| 5 | Ambiguous and unsupported descriptions get actionable statuses | **done, opt-in for same-name ties** (`selection-3`) | See [5](#5-statuses) |
 | 6 | Review decisions persist in the local application and can be audited | **done** | See [6](#6-decisions) |
 | 7 | Approved exports include Darwin Core geography and provenance fields | **done** | See [7](#7-export) |
 | 8 | Benchmark, baselines, ablations and measured results are reproducible | **done, with a caveat** | See [8](#8-reproducibility) |
@@ -69,18 +69,20 @@ Unresolved records carry the question that blocks them, for example:
 Unsupported relations carry a reason and the evidence that would make them supportable. A
 reference GNIS lacks gets `feature_absent_from_index`.
 
-**Gap: same-name ambiguity.** The design has a separate status, `candidates_unresolved`, for
-several candidates the evidence can't tell apart (two "Bear Lake"s in different counties and no
-county context). It is **not implemented**.
-- **What happens instead:** the pipeline proposes the top-ranked candidate, and the record stays
-  `ready_for_review`. On the record page the curator sees the ranked list. When others share the
-  name, the page says "N other candidate(s) share the name: the text must decide."
-- **Why it hasn't been built:** the measured cost is small. On the 189 answerable dev and
-  validation records, the right feature is in the top 5 but not first, with the reading
-  otherwise right, in 2. Same-name confusions were 4 of 27 wrong regions on test-4 and 1 of 25
-  on test-5.
-- **What the audit changed:** a module docstring claimed this status was handled. The audit
-  corrected it.
+**Same-name ambiguity (`candidates_unresolved`): built after the audit, opt-in.** The design
+asks for several candidates the evidence can't tell apart (two "Bear Lake"s in different
+counties and no county context) to be flagged, not proposed as a confident choice.
+- **The audit found it missing:** the pipeline proposed the top-ranked candidate, and a module
+  docstring wrongly claimed the case was handled. The docstring was corrected.
+- **Now:** `selection-3` (selection-2 plus a tie check) holds a computed region when another
+  candidate ranks level with the chosen one on every piece of evidence (match tier, type, state,
+  county, name similarity) and lies outside the region. The record goes to `needs_information`
+  and asks which feature the label means; approving confirms the chosen one.
+  It is available with `--selection-3` or a manifest's `selection_version`.
+- **Why it isn't the default:** on 300 read records it held 3 of 78 ready regions, 2 of them
+  correct ([findings](../eval/reports/selection-3-findings.md)). The release default stays
+  selection-2. Without it, the record page still says "N other candidate(s) share the name: the
+  text must decide."
 
 ### 6. Decisions
 
@@ -180,10 +182,8 @@ targets are met. Most quality targets are not:
 
 ## What remains
 
-One is code, and small:
-- **`candidates_unresolved`** (item 5): hold a region when the top candidates are a same-name tie
-  that the county and feature type can't break. It would be built on dev data, and becoming the
-  default would need a declared check.
+The code item found by the audit, `candidates_unresolved` (item 5), is built as the opt-in
+`selection-3`. Making it the default is a decision: a declared check would see one or two ties.
 
 The rest need people or decisions, not code:
 - **A reviewer-time pilot** with a few curators: the only way to measure the review-effort target.

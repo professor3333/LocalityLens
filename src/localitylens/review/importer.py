@@ -26,7 +26,9 @@ from localitylens.pipeline.hybrid import interpret_hybrid
 from localitylens.pipeline.interpret import Extractor, InterpretResult, interpret
 from localitylens.resolve.selection import (
     SELECTION_2_VERSION,
+    SELECTION_3_VERSION,
     apply_selection_2,
+    apply_selection_3,
     apply_selection_check,
 )
 from localitylens.review.store import ReviewStore
@@ -163,7 +165,10 @@ def pipeline_step(
         proposal = propose(interp, top, extent) if interp is not None else None
         if selection and proposal is not None and interp is not None and interp.reference_feature:
             ref = interp.reference_feature.name
-            if selection == SELECTION_2_VERSION:
+            if selection == SELECTION_3_VERSION:
+                proposal = apply_selection_3(row["locality"], ref, proposal, gazetteer, county,
+                                             candidates)  # fmt: skip
+            elif selection == SELECTION_2_VERSION:
                 proposal = apply_selection_2(row["locality"], ref, proposal, gazetteer, county)
             else:
                 proposal = apply_selection_check(row["locality"], ref, proposal)

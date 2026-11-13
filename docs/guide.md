@@ -163,6 +163,11 @@ Two audit records are held this way:
 - **gbif:2573441754** ("Northern Gunnison Basin: ca 5 air mi SSW of Paonia"): the basin is not
   in GNIS. Here the offset from Paonia is the right reference, so the check costs a click.
 
+`--selection-3` (opt-in) adds a same-name tie check (`candidates_unresolved`). It also holds a
+region when another candidate ranks level with the chosen one on name, type and county, and lies
+outside the region, and asks which feature the label means
+([findings](../eval/reports/selection-3-findings.md)).
+
 The curator approved it above. The approved row is a point 5 miles SSW of the GNIS point,
 `EPSG:4269`, uncertainty 2,957 m, with the GNIS feature and the measured extent named in
 `georeferenceSources`. Review is still needed on ready records: gbif:2573416221 reaches GNIS

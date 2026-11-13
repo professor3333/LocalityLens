@@ -79,6 +79,10 @@ def test_an_unknown_selection_check_in_the_manifest_is_not_ready(tmp_path: Path)
     assert r.status_code == 503
     assert any("selection_version" in p for p in r.json()["problems"])
     assert _client(db).get("/api/version").json()["release"]["selection_version"] == "selection-2"
+    data["selection_version"] = "selection-3"  # known to the code: ready
+    stale.write_text(json.dumps(data), encoding="utf-8")
+    assert not any("selection_version" in p for p in _client(db, stale).get("/readyz").json().get(
+        "problems", []))  # fmt: skip
 
 
 def test_the_container_may_bind_all_interfaces_and_nothing_else_may(

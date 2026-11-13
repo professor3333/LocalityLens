@@ -6,8 +6,9 @@ candidates but never filter them out. GNIS records only a feature's primary coun
 labels use old boundaries, so a county mismatch is evidence to show, not a reason to drop.
 
 An empty result means ``feature_absent_from_index``. Several candidates that cannot be told
-apart are a different case (``candidates_unresolved`` in the design). It is not detected yet: the
-pipeline proposes the top-ranked candidate and shows the ranked list to the curator.
+apart are a different case (``candidates_unresolved`` in the design): :func:`evidence_key` gives
+the ranking evidence without the tie-breakers, and the ``selection-3`` check
+(``resolve/selection.py``) holds a region whose chosen candidate ties with another on it.
 """
 
 from __future__ import annotations
@@ -406,6 +407,15 @@ class Gazetteer:
                 else r["feature_class"] in COMPATIBLE_CLASSES.get(feature_type, frozenset())
             ),
         )
+
+
+def evidence_key(c: Candidate) -> tuple[int, int, int, int, float]:
+    """The evidence a candidate is ranked on: match tier, then feature type, state and county
+    agreement, then name similarity. The rank's last two keys (official over variant, then the
+    lower GNIS ID) only make the order stable; they are not evidence, so two candidates with the
+    same evidence key cannot be told apart by this ranking."""
+    tier, typed, state, county, similarity, _official, _id = _rank_key(c)
+    return tier, typed, state, county, similarity
 
 
 def _rank_key(c: Candidate) -> tuple[int, int, int, int, float, int, int]:

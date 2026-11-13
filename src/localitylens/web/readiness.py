@@ -23,7 +23,11 @@ from localitylens.geo.uncertainty import POLICY_ID
 from localitylens.jobs.queue import JOBS_VERSION
 from localitylens.release import ReleaseManifest, load_release
 from localitylens.resolve.county import COUNTY_CONTEXT_VERSION
-from localitylens.resolve.selection import SELECTION_2_VERSION, SELECTION_VERSION
+from localitylens.resolve.selection import (
+    SELECTION_2_VERSION,
+    SELECTION_3_VERSION,
+    SELECTION_VERSION,
+)
 from localitylens.review.store import STORE_SCHEMA_VERSION, ReviewError, ReviewStore
 from localitylens.telemetry.trace import TELEMETRY_VERSION
 from localitylens.web.api import API_VERSION
@@ -49,7 +53,9 @@ def _mismatches(release: ReleaseManifest) -> list[str]:
         "county_context_version": (release.county_context_version, COUNTY_CONTEXT_VERSION),
     }
     out = [f"{k}: manifest {a!r}, code {b!r}" for k, (a, b) in checks.items() if a != b]
-    if release.selection_version not in (None, SELECTION_VERSION, SELECTION_2_VERSION):
+    if release.selection_version not in (
+        None, SELECTION_VERSION, SELECTION_2_VERSION, SELECTION_3_VERSION
+    ):  # fmt: skip
         out.append(f"selection_version: manifest {release.selection_version!r}, not in the code")
     return out
 
@@ -71,7 +77,7 @@ def report(
             "uncertainty_policy": POLICY_ID,
             "prompt": PROMPT_VERSION,
             "schema": EXTRACTION_SCHEMA_VERSION,
-            "selection": [SELECTION_VERSION, SELECTION_2_VERSION],
+            "selection": [SELECTION_VERSION, SELECTION_2_VERSION, SELECTION_3_VERSION],
         },
     }
     if not db.is_file():

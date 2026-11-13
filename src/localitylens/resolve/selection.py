@@ -20,14 +20,19 @@ A computed proposal with a competing feature keeps its region but goes to
 answers that question. The check never adds a region and never changes one.
 
 Measured on dev data only (in-sample; ``eval/reports/selection-check-findings.md``).
+
+``selection-2`` (below) asks GNIS before holding. ``selection-3`` is selection-2 plus the
+same-name tie check (``candidates_unresolved``): see :func:`same_name_ties`.
 """
 
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 from typing import Any, Final
 
 from localitylens.extract.feature_words import TYPE_WORDS
+from localitylens.gazetteer.index import Candidate, evidence_key
 from localitylens.gazetteer.keys import name_key
 from localitylens.geo.georeference import GeoreferenceProposal as Proposal
 from localitylens.geo.georeference import ProposalOutcome
@@ -179,4 +184,74 @@ def apply_selection_2(
     return proposal.model_copy(update={
         "outcome": ProposalOutcome.NEEDS_INFORMATION,
         "questions": (*proposal.questions, question),
+    })  # fmt: skip
+
+
+# ------------------------------------------------------------------------------- selection-3
+
+SELECTION_3_VERSION: Final = "selection-3"
+
+
+def same_name_ties(proposal: Proposal, candidates: Sequence[Candidate]) -> list[Candidate]:
+    """``candidates_unresolved``: the other retrieved candidates that the evidence cannot tell
+    apart from the chosen one, and that would move the region.
+
+    A candidate ties when its :func:`~localitylens.gazetteer.index.evidence_key` (match tier,
+    feature-type, state and county agreement, name similarity) equals the chosen candidate's:
+    only the stable-order tie-breakers (official over variant name, lower GNIS ID) put the chosen
+    one first. "Mt. Evans" matching today's Mount Blue Sky by a variant and the Park County Mount
+    Evans by its official name is such a tie; so are three Saddle Mountains in one county.
+
+    A tie counts only when its point lies farther from the chosen feature's point than the
+    proposed radius: then the region drawn from it would be centred outside this one. A town
+    and the spring it is named after, 300 m apart, do not count."""
+    from localitylens.geo.geodesy import distance_m
+
+    if proposal.feature_id is None or proposal.radius_m is None:
+        return []
+    chosen = next((c for c in candidates if c.feature_id == proposal.feature_id), None)
+    if chosen is None:
+        return []
+    key = evidence_key(chosen)
+    return [
+        c for c in candidates
+        if c.feature_id != chosen.feature_id and evidence_key(c) == key
+        and distance_m(chosen.primary_point, c.primary_point) > proposal.radius_m
+    ]  # fmt: skip
+
+
+def apply_selection_3(
+    locality: str,
+    reference: str,
+    proposal: Proposal,
+    gazetteer: Any,
+    county: str | None,
+    candidates: Sequence[Candidate],
+) -> Proposal:
+    """selection-2, then hold a computed region in needs_information when
+    :func:`same_name_ties` finds any. The region is kept, and a curator's approval answers the
+    question (it confirms the chosen feature); an edit can choose another."""
+    if proposal.outcome is not ProposalOutcome.COMPUTED:
+        return proposal
+    ties = same_name_ties(proposal, candidates)
+    held = apply_selection_2(locality, reference, proposal, gazetteer, county)
+    if not ties:
+        return held
+    from localitylens.geo.geodesy import distance_m
+
+    chosen = next(c for c in candidates if c.feature_id == proposal.feature_id)
+    others = "; ".join(
+        f"{c.official_name} ({c.feature_class}, {c.county_name} County, GNIS {c.feature_id}, "
+        f"{distance_m(chosen.primary_point, c.primary_point) / 1000:.0f} km away)"
+        for c in ties
+    )
+    question = (
+        f"{QUESTION_PREFIX}candidates unresolved: the name, feature type and county rank "
+        f"{chosen.official_name} ({chosen.feature_class}, {chosen.county_name} County, "
+        f"GNIS {chosen.feature_id}) level with {others}. Which one does the label mean? "
+        f"({SELECTION_3_VERSION})"
+    )
+    return held.model_copy(update={
+        "outcome": ProposalOutcome.NEEDS_INFORMATION,
+        "questions": (*held.questions, question),
     })  # fmt: skip

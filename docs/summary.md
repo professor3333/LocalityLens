@@ -59,5 +59,6 @@ Herbarium, Colorado, English).
 1. **A reviewer-time pilot with two or three people:** the project's main unmeasured claim.
 2. **Place extraction and matching:** positions on features ("N slope of X"), partial and
    variant names. Develop it on dev data, then check it on a fresh declared sample.
-3. **Same-name ambiguity** (`candidates_unresolved`): small, but build it if curators run into
-   it.
+3. **Same-name ambiguity** (`candidates_unresolved`) is built as the opt-in `selection-3`
+   ([findings](../eval/reports/selection-3-findings.md)). Turn it on by default if curators
+   meet ties: on read data it held 3 of 78 ready regions.
