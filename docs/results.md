@@ -72,6 +72,10 @@ annotation:
 
 ## Failed or not adopted
 
+- **A model call to choose the collecting place** (read dev data, one prompt, run once): on 19
+  "place, offset" labels with a real choice, it picks the right reference in 10 against hybrid-1's 9
+  and a plain GNIS-inside rule's 11 (correct candidates 7, 6, 7). The ceiling over all options is
+  only 9 ([spike](../eval/reports/clause-choice-spike.md)). Not pursued.
 - **Quantization parity gate:** the shipped Q4_K_M loses 2.3 to 3.2 points of critical exact
   match to Q8_0 (48.7% vs 51.0% and 51.9% in two runs, 310 dev and validation records), against
   the release spec's 1-point
