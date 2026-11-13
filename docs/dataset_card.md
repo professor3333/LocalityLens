@@ -9,8 +9,8 @@ sampled, split and annotated, and what that means for the results.
 |---|---|---|---|
 | University of Colorado Museum of Natural History Herbarium, vascular plants (GBIF dataset `7c5e863f-3f70-4933-b05d-fc57c66dd3f3`) | `gbif-cu-2026-11-01`: GBIF download `0020715-261023074918325`, DOI [10.15468/dl.hqxjjf](https://doi.org/10.15468/dl.hqxjjf), 311,988 records, the whole dataset as a Darwin Core Archive | [manifest](../data/manifests/gbif-cu-2026-11-01.json): zip SHA-256 `089633a5b80aed48…`, 164,985,562 bytes | CC BY 4.0 |
 | USGS GNIS: Domestic Names (Colorado) and All Names (National) | `gnis-co-2026-09-29`: 26,429 features, 4,190 variant names | [manifest](../data/manifests/gnis-co-2026-09-29.json): SHA-256 of both zips | U.S. public domain |
-| USGS National Hydrography Dataset, Colorado (for derived extents only) | `nhd-co-2023-12-27`: published 2023-12-27, GeoPackage | [manifest](../data/manifests/nhd-co-2023-12-27.json) | U.S. public domain |
-| U.S. Census Bureau TIGER/Line places, Colorado (for derived extents only) | `tiger-place-co-2025`: 482 place polygons | [manifest](../data/manifests/tiger-place-co-2025.json) | Not copyrighted; acknowledge the Census Bureau |
+| USGS National Hydrography Dataset, Colorado (for derived extents only) | `nhd-co-2023-12-27`: published 2023-12-27, GeoPackage | [manifest](../data/manifests/nhd-co-2023-12-27.json); mirrored unchanged in the [data release](https://github.com/professor3333/LocalityLens/releases/tag/data-nhd-co-2023-12-27) | U.S. public domain |
+| U.S. Census Bureau TIGER/Line places, Colorado (for derived extents only) | `tiger-place-co-2025`: 482 place polygons | [manifest](../data/manifests/tiger-place-co-2025.json); mirrored unchanged in the [data release](https://github.com/professor3333/LocalityLens/releases/tag/data-tiger-place-co-2025) | Not copyrighted; acknowledge the Census Bureau |
 
 **Citations:**
 - *GBIF.org (01 November 2026) GBIF Occurrence Download https://doi.org/10.15468/dl.hqxjjf*

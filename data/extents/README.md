@@ -15,9 +15,14 @@ radial as the reviewed store (Georeferencing Best Practices §3.4.1).
 
 - **Format:** each row also records the method, the source snapshot, the source features and
   the vertex count.
-- **Rebuild:** `localitylens extents derive` (needs both snapshots: `localitylens data
-  fetch-geometry`) rebuilds the file byte for byte. On load, every row is checked against the
-  pinned GNIS snapshot.
+- **Rebuild:** `localitylens extents derive` rebuilds the file byte for byte (checked on a
+  fresh clone on 2026-11-12). On load, every row is checked against the pinned GNIS snapshot.
+- **Getting both snapshots:** `localitylens data fetch-geometry`. It downloads the original
+  files unchanged, first from this repository's data releases
+  ([NHD](https://github.com/professor3333/LocalityLens/releases/tag/data-nhd-co-2023-12-27),
+  [TIGER](https://github.com/professor3333/LocalityLens/releases/tag/data-tiger-place-co-2025)),
+  then from the agencies. A file is kept only if its SHA-256 matches the committed manifest, so
+  the rebuild doesn't depend on USGS or the Census Bureau still serving these exact files.
 
 **Limits:**
 - **Boundaries are current, not historical.** A town was often smaller when a label was written.

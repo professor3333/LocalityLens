@@ -117,10 +117,13 @@ GeoJSON (WGS 84, 4 m datum allowance) and the unresolved report are written alon
   `data/extents/derived.csv` byte for byte (SHA-256 215df866…, 11,993 extents).
 - **Test runs:** every locked-test run has its declaration and totals committed. They are not
   rerun here, by design: each test is scored only under a declaration.
-- **Caveat:** the derived extents come from USGS NHD (1.05 GB) and Census TIGER (2.8 MB) at
-  their agency URLs, checked by SHA-256 but not mirrored. GNIS and the specimen archive are
-  mirrored in this repository's data releases because USGS republished GNIS once, which broke
-  the pinned fetch. The same could happen to NHD or TIGER.
+- **Caveat, resolved 2026-11-13:** the derived extents came from USGS NHD (1.05 GB) and Census
+  TIGER (2.8 MB) at their agency URLs, checked by SHA-256 but not mirrored. GNIS and the specimen
+  archive were already mirrored, after USGS republished GNIS once and broke the pinned fetch.
+  - **The fix:** both files are now mirrored unchanged in data releases
+    (`data-nhd-co-2023-12-27`, `data-tiger-place-co-2025`).
+  - **Order:** `data fetch-geometry` tries the mirror first, and keeps a file only if its
+    checksum matches.
 
 ### 9. Tests
 
@@ -187,6 +190,5 @@ The rest need people or decisions, not code:
   Codex-annotated.
 - **Containment and region size on the locked test:** needs test-feature extents measured by the
   owner, and a declaration.
-- **Mirroring NHD and TIGER** in a data release (publishing files: the owner's decision).
 - **The quantization-parity gate** fails for the shipped Q4_K_M, so no release image is pushed
   until the quant or the spec changes ([parity](../eval/reports/quantization-parity.md)).
