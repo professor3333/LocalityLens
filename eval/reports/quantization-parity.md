@@ -31,14 +31,30 @@ The first run of the release workflow ([run 43214807200](https://github.com/prof
 | hybrid-1: ready regions correct | 57 of 103 | 59 of 108 | | |
 | LLM alone: valid extractions | 292 | 297 | | |
 | Model seconds per record, p50 / p95 | 23.8 / 41.2 | 41.6 / 54.6 | | |
-| llama-server peak memory | 2.2 GiB | 5.4 GiB | | |
+| Model file | 2.74 GB | 4.48 GB | | |
 
 - **The loss is in the reading, not in the result.**
   - Q8_0 reads the critical fields correctly on 7 more records, but the record-by-record
     difference is not significant.
   - Correct proposals are the same within one record, for the LLM alone and for hybrid-1.
-- **Q8_0 costs** 2.5 times the server memory and runs 1.75 times slower here. Its memory on
-  the 8 GB development machine has not been measured.
+- **Q8_0 costs:**
+  - **Size:** its model file is 1.6 times larger.
+  - **Speed:** it ran 1.75 times slower here.
+  - **Memory:** not measured reliably. The release check's `docker stats` figure doesn't
+    consistently count the memory-mapped model, so it is not used: it said 5.4 GiB here and
+    0.9 GiB on the next run.
+  - **On the 8 GB development machine:** not measured.
+
+## Second run: the v0.1.3 tag ([run 43353616244](https://github.com/professor3333/LocalityLens/actions/runs/43353616244))
+
+- **The same gate fails again,** by more: Q4_K_M 48.7% against Q8_0 51.9%, a 3.2-point loss.
+  The other gates pass, and so does the Linux deploy check.
+- **Repeated runs on x86 CPU differ by a few records.**
+  - **Q8_0:** 161 critical exact matches here, against 158 in the first run.
+  - **LLM alone:** 289 valid extractions here, against 292.
+  - **Why:** the runners may get different CPUs, so greedy decoding can differ for a few
+    records. The parity gap itself moves by about a point between runs.
+- **Model time per call:** p50 28.6 / 39.5 s and p95 44.6 / 53.2 s (Q4_K_M / Q8_0).
 
 ## Decision
 

@@ -188,7 +188,11 @@ red, and no image is pushed, until the quant or the spec changes.
   The export held it.
 - **After a restart** of the review service and the worker, the decision and the export were
   still there.
-- **Model speed on this CPU** (release-workflow evaluation, native llama.cpp image): p50 23.8 s,
-  p95 41.2 s per LLM call, llama-server peak 2.2 GiB.
+- **Model speed on this CPU** (release-workflow evaluation, native llama.cpp image, two runs):
+  - **Q4_K_M:** p50 23.8–28.6 s and p95 41.2–44.6 s per LLM call.
+  - **Memory:** not reliably measured. `docker stats` doesn't consistently count the
+    memory-mapped model file: the two runs reported 2.2 and 3.2 GiB for Q4_K_M, and 5.4 and
+    0.9 GiB for Q8_0, whose file alone is 4.5 GB.
+  - **Model file:** 2.74 GB, and on the M1 llama-server adds 629 MB on top of it.
 
 The check runs again on every version tag, and an image is pushed only if it passes.

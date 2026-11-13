@@ -32,5 +32,5 @@
       "rule": "the shipped quant loses no more than 1 percentage point against the reference, both run on the same runner type"
     }
   },
-  "reported_not_gated": "model seconds per record (p50, p95) and the llama-server container's peak memory, for each quant. The GitHub runner is not the declared reference machine, so latency targets are not judged here."
+  "reported_not_gated": "model seconds per record (p50, p95) and the llama-server container's peak memory from docker stats, for each quant. The memory figure does not reliably include the memory-mapped model file (two runs: Q8_0 5.4 and 0.9 GiB for a 4.5 GB file), so it is a hint, not a measurement. The GitHub runner is not the declared reference machine, so latency targets are not judged here."
 }

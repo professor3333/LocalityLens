@@ -144,7 +144,8 @@ rules, so it is not independent evidence ([result](../eval/reports/test-2.md)).
   against 46 of 92. As hybrid-1's fallback, 49 against 51, at a quarter of the model time.
 - **Quantization parity** ([parity](../eval/reports/quantization-parity.md)): against the Q8_0
   reference, Q4_K_M loses 2.3 points of critical exact match (48.7% vs 51.0%, 310 dev and
-  validation records, x86 CPU; 20 against 13 discordant, p = 0.30). That fails the release
+  validation records, x86 CPU; 20 against 13 discordant, p = 0.30), and 3.2 points in the v0.1.3
+  run (Q8_0 51.9%: repeated CPU runs differ by a few records). That fails the release
   spec's 1-point gate. Correct proposals are within one record (hybrid-1 102 vs 103). Q4_K_M is
   kept and the failure recorded.
 - **Not run:** the second LLM call (candidate comparison: not built), admin context removed from

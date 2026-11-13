@@ -50,10 +50,11 @@ release model.
 
 **Quantization parity** (Q4_K_M shipped against the Q8_0 reference of the same revisions,
 x86 CPU, 310 dev and validation records): Q4_K_M reads the critical fields correctly on 48.7%
-against 51.0%. That is a 2.3-point loss, against the release spec's limit of 1 point, so the gate
-fails. The record-by-record difference is not significant (20 against 13, p = 0.30), and correct
-proposals are the same within one record (hybrid-1 102 against 103). Q8_0 needs 2.5 times the
-memory and 1.75 times the time. Q4_K_M stays the release quant, and the failure is recorded
+against 51.0% (first run) and 51.9% (v0.1.3 run). That is a 2.3- to 3.2-point loss, against the
+release spec's limit of 1 point, so the gate fails. The record-by-record difference is not
+significant (20 against 13, p = 0.30), and correct proposals are the same within one record
+(hybrid-1 102 against 103). Q8_0's model file is 1.6 times larger (4.48 against 2.74 GB), and it
+took 1.4 to 1.75 times as long per call. Q4_K_M stays the release quant, and the failure is recorded
 ([parity](../eval/reports/quantization-parity.md)).
 
 **Resources measured** on an Apple M1 with 8 GB: llama-server's own footprint is 629 MB on top

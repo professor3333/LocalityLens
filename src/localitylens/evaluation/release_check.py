@@ -188,7 +188,7 @@ def summary_markdown(evidence: dict[str, Any]) -> str:
         mem = f"{peak / 2**30:.2f} GiB" if peak else "not measured"
         lines.append(f"- {quant}: {res['model_calls']} model calls, p50 "
                      f"{res['model_seconds_p50']} s, p95 {res['model_seconds_p95']} s, "
-                     f"llama-server peak memory {mem}")  # fmt: skip
+                     f"container memory (docker stats; misses the mapped model) {mem}")  # fmt: skip
     return "\n".join(lines) + "\n"
 
 

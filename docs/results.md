@@ -72,8 +72,9 @@ annotation:
 
 ## Failed or not adopted
 
-- **Quantization parity gate:** the shipped Q4_K_M loses 2.3 points of critical exact match to
-  Q8_0 (48.7% vs 51.0%, 310 dev and validation records), against the release spec's 1-point
+- **Quantization parity gate:** the shipped Q4_K_M loses 2.3 to 3.2 points of critical exact
+  match to Q8_0 (48.7% vs 51.0% and 51.9% in two runs, 310 dev and validation records), against
+  the release spec's 1-point
   limit. The difference is not significant (p = 0.30), and correct proposals are within one
   record. Q4_K_M is kept, and the release check records the failure
   ([parity](../eval/reports/quantization-parity.md)).
